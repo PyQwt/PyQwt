@@ -14,7 +14,7 @@
 \newcommand{\numarrayTarGz}{\ulink{numarray-0.7.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.tar.gz?download}}
 \newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.8.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.8.tar.gz?download}}
 \newcommand{\PyQwtTarGzOld}{\ulink{PyQwt-3.7.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.7.tar.gz?download}}
-\newcommand{\ReadMePatches}{\ulink{}{http://pyqwt.sourceforge.net/patches/README}}
+\newcommand{\ReadMePatches}{\ulink{README}{http://pyqwt.sourceforge.net/patches/README}}
 
 % Installers for MS-Windows
 \newcommand{\PythonExeBB}{\ulink{Python-2.2.3.exe}{http://www.python.org/ftp/python/2.2.3/Python-2.2.3.exe}}
@@ -37,7 +37,6 @@
 
 \date{\today}
 \release{3.8}
-%\setreleaseinfo{cvs}
 \setshortversion{3.8}
 
 \makeindex
@@ -418,6 +417,12 @@ have access to those versions of Qt and PyQt.
 
 \section{Binary Installation on Windows \label{win-binary-install}}
 
+\begin{notice}[warning]
+This documentation is for the future PyQwt-3.8. If your only choice is
+\PyQwtExeBB, you will need to install \PythonExeBB{}, \NumericExeBB{},
+\QtNcExe{} and \PyQtExeBB{}.
+\end{notice}
+
 First, you have to install Python, Numeric, Qt-Non-Commercial and
 PyQt-Non-Commercial by executing the following installation programs:
 \begin{enumerate}
@@ -433,12 +438,6 @@ PyQt-Non-Commercial by executing the following installation programs:
 Then, run \PyQwtExeBC{} and you are set.
 Example programs and documentation for PyQwt and \Qwt{} are installed in the
 folder \file{C:/Python23/PyQwt}.
-
-\begin{notice}[warning]
-This documentation is for the future PyQwt-3.8. If your only choice is
-\PyQwtExeBB, you will need to install \PythonExeBB{}, \NumericExeBB{},
-\QtNcExe{} and \PyQtExeBB{}.
-\end{notice}
 
 
 \section{Source installation on \POSIX{} \label{posix-source-install}}
