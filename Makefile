@@ -1,7 +1,7 @@
 PWD := $(shell pwd)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "25 Jun 2003 23:59:59 GMT"
+CVS-DATE := "26 Jun 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -19,6 +19,7 @@ all:
 doc: qwt-user-docs
 	cp setup_cfg_nt setup_cfg_posix Doc/pyqwt/
 	(cd Doc; make doc)
+	(cd examples; make html)
 
 qwt-user-docs: qwt-sources/doc/html/index.html
 
