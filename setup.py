@@ -32,7 +32,7 @@ version = '4.1'
 sip_version = get_config('sip').get('sip_version')
 if sip_version and sip_version < 0x030a00 and sip_version > 0x040000:
     raise SystemExit, (
-        "Building '%s' with requires sip-3.10.x or sip-4.0" % name)
+        "Building '%s' with requires at least sip-3.10.x or sip-4.0" % name)
 
 #
 # CHECK FOR A RECENT PYTHON
@@ -42,14 +42,14 @@ if sip_version < 0x040000:
         or sys.version_info < (2,1,0, 'alpha', 0)
         or sys.version_info > (2,4,9, 'final', 0)):
         raise SystemExit, (
-            "Building '%s' with sip-%s requires Python-2.3, 2.2, or 2.1."
+            "Building '%s' with sip-%s requires Python-2.4, 2.3, 2.2, or 2.1."
             % (name, hex(sip_version)))
 else:
     if (not hasattr(sys, 'version_info')
         or sys.version_info < (2,3,0, 'alpha', 0)
         or sys.version_info > (2,4,9, 'final', 0)):
         raise SystemExit, (
-            "Building '%s' with sip-%s requires Python-2.3."
+            "Building '%s' with sip-%s requires Python-2.4, or 2.3."
             % (name, hex(sip_version)))
     
 
