@@ -141,6 +141,9 @@ class Plot(QwtPlot):
         (3) string or QString -- sets the title.
         (4) tuples of 2 integer -- sets the size.
         """
+
+        if QFontInfo(QFont('verdana')).family() == 'verdana':
+            self.setFont('verdana')
         self.size = (600, 400)
         # get an optional parent widget
         parent = None
@@ -168,6 +171,8 @@ class Plot(QwtPlot):
                 self.plotCurve(arg)
             elif (isinstance(arg, StringType) or isinstance(arg, QString)):
                 self.setTitle(arg)
+                self.setTitleFont(
+                    QFont(QFontInfo(self.font()).family(), 14, QFont.Bold))
             elif (isinstance(arg, tuple) and len(tuple) == 2
                   and isinstance(arg[0], int) and isinstance(arg[1], int)):
                 self.size = arg
@@ -216,6 +221,9 @@ class Plot(QwtPlot):
         self.setAxisOptions(orientation, options)
         if title:
             self.setAxisTitle(orientation, title)
+            self.setAxisTitleFont(
+                orientation,
+                QFont(QFontInfo(self.font()).family(), 12, QFont.Bold))
 
     # plotAxis()
 
@@ -552,12 +560,15 @@ class Pen(QPen):
         
         Pen takes any number of optional arguments. The interpretation
         of each optional argument depends on its data type:
-        (1) QColor -- sets the color of the pen.
-        (2) int -- sets the width of the pen.
+        (1) PenStyle -- sets the style of the pen.
+        (2) QColor -- sets the color of the pen.
+        (3) int -- sets the width of the pen.
         """
         QPen.__init__(self)
         for arg in args:
-            if isinstance(arg, QColor):
+            if isinstance(arg, PenStyle):
+                self.setStyle(arg.style)
+            elif isinstance(arg, QColor):
                 self.setColor(arg)
             elif isinstance(arg, int):
                 self.setWidth(arg)
@@ -672,7 +683,12 @@ class IPlot(QMainWindow):
         self.show()
 
     def printPlot(self):
-        p = QPrinter()
+        try:
+            p = QPrinter(QPrinter.HighResolution)
+        except AttributeError:
+            p = QPrinter()
+        p.setColorMode(QPrinter.Color)
+        p.setOutputToFile(True)
         if p.setup():
             self.__plot.printPlot(p)
 
