@@ -3,11 +3,11 @@ See Doc/html/pyqwt/index.html.
 If you never read docs:
 
 (1) On Windows:
-    - edit 'setup.cfg.nt'.
+    - edit 'setup_cfg_nt'.
     - run 'python setup.py bdist_wininst'
     - execute the dist/*.exe installer. 
 (2) On Posix:
-    - edit 'setup.cfg.posix'.
+    - edit 'setup_cfg_posix'.
     - run 'python setup.py build'.
     - do 'cd examples' and play.
 
