@@ -11,7 +11,7 @@ QWTDIR := /home/packer/RPM/BUILD/qwt-4.2.0
 CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "8 Jan 2005 23:59:59 GMT"
+CVS-DATE := "22 Jan 2005 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -23,47 +23,40 @@ DIFFERS := -d 'qwt-sources qwt-sources/include qwt-sources/src'
 
 FREE := $(HOME)/Free
 
-all:
+all: symlinks
 	(cd configure; \
 	python configure.py -I $(INCDIR) -L $(LIBDIR) \
 	&& $(MAKE) CXX="$(CXX)")
-	(cd examples; ln -sf ../configure/iqt)
-	(cd examples; ln -sf ../configure/qwt)
 
-all-log: distclean
+all-log: distclean symlinks
 	(cd configure; \
 	python configure.py -I $(INCDIR) -L $(LIBDIR) 2>&1 > ../LOG.all \
 	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.all)
-	(cd examples; ln -sf ../configure/iqt)
-	(cd examples; ln -sf ../configure/qwt)
 
-420-static:
+420-static: symlinks
 	(cd configure; \
 	python configure.py -Q $(QWTDIR) \
 	&& $(MAKE) CXX="$(CXX)")
-	(cd examples; ln -sf ../configure/iqt)
-	(cd examples; ln -sf ../configure/qwt)
 
-420-static-log:
+420-static-log: symlinks
 	(cd configure; \
 	python configure.py -Q $(QWTDIR) 2>&1 > ../LOG.420-static \
 	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.420-static)
-	(cd examples; ln -sf ../configure/iqt)
-	(cd examples; ln -sf ../configure/qwt)
 
-cvs-static:
+cvs-static: symlinks
 	(cd configure; \
 	python configure.py -Q ../qwt-sources \
 	&& $(MAKE) CXX="$(CXX)")
-	(cd examples; ln -sf ../configure/iqt)
-	(cd examples; ln -sf ../configure/qwt)
 
-cvs-static-log:
+cvs-static-log: symlinks
 	(cd configure; \
 	python configure.py -Q ../qwt-sources  > ../LOG.cvs-static \
 	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.cvs-static)
-	(cd examples; ln -sf ../configure/iqt)
-	(cd examples; ln -sf ../configure/qwt)
+
+symlinks:
+	(cd iqt; ln -sf ../configure/iqt/_iqt.so)
+	(cd qwt; ln -sf ../configure/qwt/_qwt.so)
+	(cd examples; ln -sf ../configure/iqt; ln -sf ../configure/qwt)
 
 doc: qwt-docs
 	cp -pu setup_cfg_nt setup_cfg_posix Doc/pyqwt/
@@ -86,7 +79,7 @@ cvs: clean
 	python setup.py sdist -t MANIFEST.cvs 2>&1 | tee LOG.cvs
 
 # build a distribution tarball
-dist: cvs-static clean doc
+dist: 420-static clean doc
 	python DIFFER $(DIFFERS)
 	unix2dos qwt-sources/msvc-qmake.bat 
 	unix2dos qwt-sources/msvc-tmake.bat 
