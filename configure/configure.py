@@ -138,6 +138,7 @@ def create_config(module, template):
 
 def check_readline():
     try:
+        import readline
         pyqwt_packages.append('iqt')
     except ImportError:
         pass
