@@ -68,18 +68,18 @@ public:
     const QwtSymbol &symbol() const;
 
     void setLabel(const char *);
-    const QString& label() const;
+    const QString label() const;
 
     void setLabelAlignment(int);
     int labelAlignment() const;
 
     void setLabelPen(const QPen &);
-    const QPen &labelPen() const;
+    const QPen labelPen() const;
     void setLinePen(const QPen &);
     const QPen &linePen() const;
 
     void setFont(const QFont &);
-    const QFont &font() const;
+    const QFont font() const;
     
     virtual void draw(QPainter *, int, int, const QRect &);
 

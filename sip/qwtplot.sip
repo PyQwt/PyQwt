@@ -451,7 +451,7 @@ public:
     bool setMarkerPen(long, const QPen &);
 
     bool setMarkerLabel(long, const char *);
-    const QString& markerLabel(long) const;
+    const QString markerLabel(long) const;
     bool setMarkerLabelAlign(long, int);
     int markerLabelAlign(long) const;
     bool setMarkerLabelPen(long, const QPen &);

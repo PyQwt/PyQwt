@@ -37,14 +37,6 @@
 // part of PyQwt.
 
 
-%HeaderCode
-#include <qwt_text_maker.h>
-%End
-
-QwtText *makeQwtText(const QString &, const QFont &, int,
-                     const QColor & = QColor(),
-                     Qt::TextFormat = Qt::AutoText);
-
 class QwtText
 {
 %HeaderCode
@@ -61,22 +53,27 @@ public:
 %End
 %End
 
-    void setText(const QString &);
+    static QwtText *makeText(const QString &, const QFont &, int,
+                             const QColor & = QColor(),
+                             Qt::TextFormat = Qt::AutoText);
+
+    virtual void setText(const QString &);
     QString text() const;
 
-    void setFont(const QFont &);
+    virtual void setFont(const QFont &);
     QFont font() const;
-
     QFontMetrics fontMetrics() const;
 
-    void setAlignment(int);
-    int alignment();
+    virtual void setAlignment(int);
+    int alignment() const;
 
-    void setColor(const QColor &);
+    virtual void setColor(const QColor &);
     QColor color() const;
 
-    virtual int heightForWidth(int) = 0;
-    virtual void draw(QPainter *, const QRect &) = 0;
+    virtual int heightForWidth(int) const = 0;
+    virtual QRect boundingRect(QPainter * = 0) const = 0;
+
+    virtual void draw(QPainter *, const QRect &) const = 0;
 
 protected:
     QwtText(QString &, const QFont &, int, const QColor &);
@@ -103,8 +100,10 @@ public:
                 const QColor & = QColor());
     //FIXME QwtPlainText(const QString &, const QFont &, const QColor & = QColor());
 
-    int heightForWidth(int);
-    void draw(QPainter *, const QRect &);
+    virtual int heightForWidth(int) const;
+    virtual QRect boundingRect(QPainter * = 0) const;
+
+    virtual void draw(QPainter *, const QRect &) const;
 };
 
 class QwtRichText: QwtText
@@ -129,10 +128,14 @@ public:
                 const QColor & = QColor());
     QwtRichText(const QString &, const QFont &, const QColor &);
 
-    void setText(const QString &);
+    virtual void setText(const QString &);
+    virtual void setFont(const QFont &);
+    virtual void setAlignment(int);
 
-    int heightForWidth(int);
-    void draw(QPainter *, const QRect &);
+    virtual int heightForWidth(int) const;
+    virtual QRect boundingRect(QPainter * = 0) const;
+
+    virtual void draw(QPainter *, const QRect &) const;
 };
 
 // Local Variables:

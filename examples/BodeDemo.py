@@ -103,8 +103,12 @@ class BodePlot(QwtPlot):
     def __init__(self, *args):
         QwtPlot.__init__(self, *args)
 
-        self.setTitle('Frequency Response of a Second-Order System');
-
+        fn = 'luxy sans [b&h]' # ??
+        fn = 'arial'           # ??
+        fn = 'verdana'         # works best
+        self.setTitle('Frequency Response a 2<sup>nd</sub>-order System')
+        self.setTitleFont(QFont(fn, 16, QFont.Bold))
+        
         self.setCanvasBackground(Qt.darkBlue)
 
         # outline
@@ -124,9 +128,12 @@ class BodePlot(QwtPlot):
 
         # axes
         self.enableAxis(QwtPlot.yRight);
-        self.setAxisTitle(QwtPlot.xBottom, 'Normalized Frequency');
-        self.setAxisTitle(QwtPlot.yLeft, 'Amplitude [dB]');
-        self.setAxisTitle(QwtPlot.yRight, 'Phase [deg]');
+        self.setAxisTitle(QwtPlot.xBottom, u'\u03c9/\u03c9<sub>0</sub>')
+        self.setAxisTitleFont(QwtPlot.xBottom, QFont(fn, 14, QFont.Bold))
+        self.setAxisTitle(QwtPlot.yLeft, 'Amplitude [dB]')
+        self.setAxisTitleFont(QwtPlot.yLeft, QFont(fn, 14, QFont.Bold))
+        self.setAxisTitle(QwtPlot.yRight, u'Phase [\u00b0]')
+        self.setAxisTitleFont(QwtPlot.yRight, QFont(fn, 14, QFont.Bold))
 
         self.setAxisOptions(QwtPlot.xBottom, QwtAutoScale.Logarithmic);
         self.setAxisMaxMajor(QwtPlot.xBottom, 6);
@@ -146,17 +153,25 @@ class BodePlot(QwtPlot):
         self.setMarkerLineStyle(self.mrk1, QwtMarker.VLine)
         self.setMarkerPos(self.mrk1, 0.0, 0.0)
         self.setMarkerLabelAlign(self.mrk1, Qt.AlignRight | Qt.AlignBottom)
-        self.setMarkerPen(self.mrk1, QPen(Qt.green, 0, Qt.DashDotLine))
-        self.setMarkerFont(self.mrk1, QFont('Helvetica', 10, QFont.Bold))
+        self.setMarkerPen(self.mrk1, QPen(Qt.green, 2, Qt.DashDotLine))
+        self.setMarkerFont(self.mrk1, QFont(fn, 12, QFont.Bold))
 
         self.mrk2 = self.insertLineMarker('', QwtPlot.yLeft)
         self.setMarkerLabelAlign(self.mrk2, Qt.AlignRight | Qt.AlignBottom)
-        self.setMarkerPen(self.mrk2, QPen(
-            QColor(200, 150, 0), 0, Qt.DashDotLine))
-        self.setMarkerFont(self.mrk2, QFont('Helvetica', 10, QFont.Bold))
+        self.setMarkerPen(self.mrk2, QPen(QColor(Qt.red), 2, Qt.DashDotLine))
+        self.setMarkerFont(self.mrk2, QFont(fn, 12, QFont.Bold))
         self.setMarkerSymbol(self.mrk2, QwtSymbol(
             QwtSymbol.Diamond, QBrush(Qt.yellow), QPen(Qt.green), QSize(7,7)))
 
+        # text marker
+        m = self.insertMarker(QString(
+            u'[1-(\u03c9/\u03c9<sub>0</sub>)<sup>2</sup>+2j\u03c9/Q]'
+            '<sup>-1</sup>'))
+        self.setMarkerPos(m, 0.1, -20.0)
+        self.setMarkerLabelAlign(m, Qt.AlignRight | Qt.AlignBottom)
+        self.setMarkerFont(m, QFont(fn, 12, QFont.Bold, False))
+        self.setMarkerPen(m, QPen(Qt.blue))
+        
         self.setDamp(0.01)
             
 
@@ -173,7 +188,7 @@ class BodePlot(QwtPlot):
         i3 = argmax(where(less(a, -3.0), a, -100.0))
         f3 = f[i3] - (a[i3]+3.0)*(f[i3]-f[i3-1])/(a[i3]-a[i3-1])
         self.setMarkerPos(self.mrk1, f3, 0.0)
-        self.setMarkerLabel(self.mrk1, '-3 dB at f %4g' % f3)
+        self.setMarkerLabel(self.mrk1, '-3 dB at f = %4g' % f3)
         imax = argmax(a)
         self.setMarkerPos(self.mrk2, f[imax], a[imax]);
         self.setMarkerLabel(self.mrk2, 'Peak: %4g dB' % a[imax])
@@ -237,7 +252,14 @@ class BodeDemo(QMainWindow):
                         self.plotMouseReleased)
 
     def printPlot(self):
-        p = QPrinter()
+        try:
+            p = QPrinter(QPrinter.HighResolution)
+        except AttributeError:
+            p = QPrinter()
+        p.setColorMode(QPrinter.Color)
+        p.setOutputToFile(True)
+        p.setOutputFileName('test.ps')
+        #p = QPrinter()
         if p.setup():
             self.plot.printPlot(p);
 
