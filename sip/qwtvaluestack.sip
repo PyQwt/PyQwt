@@ -1,7 +1,7 @@
 // The SIP interface definition for QValueStack types, implemented:
 //      QValueStack<QwtDoubleRect>.
 //
-// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2001-2004 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.

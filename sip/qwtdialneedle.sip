@@ -4,7 +4,7 @@
 //	QwtCompassMagnetNeedle,
 //	QwtCompassWindArrow.
 //
-// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2001-2004 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.

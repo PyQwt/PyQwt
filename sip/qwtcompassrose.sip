@@ -2,7 +2,7 @@
 //	QwtCompassRose,
 //	QwtSimpleCompassRose.
 //
-// Copyright (C) 2003 Gerard Vermeulen
+// Copyright (C) 2004 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.

@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtSlider.
 //
-// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2001-2004 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // PyQwt is free software; you can redistribute it and/or modify it under the

@@ -1,6 +1,6 @@
 // The SIP interface definition file for QwtKnob.
 //
-// Copyright (C) 2000-2003 Gerard Vermeulen
+// Copyright (C) 2000-2004 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
