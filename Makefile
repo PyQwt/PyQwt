@@ -1,9 +1,17 @@
-# The environment variable QTDIR must be set 
-PWD := $(shell pwd)
+# GNU-Makefile for PyQwt
+
+# Edit INCDIR and LIBDIR to suit your QwtPlot installation.
+INCDIR := /usr/lib/qt3/include/qwt
+LIBDIR := /usr/lib/qt3/lib
+
+# To compile and link the Qwt-4.2.0 sources statically into PyQwt.
+QWTDIR := /home/packer/RPM/BUILD/qwt-4.2.0
+
+# Do not edit below this line, unless you know what you are doing.
 CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "20 Nov 2004 23:59:59 GMT"
+CVS-DATE := "8 Jan 2005 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -11,12 +19,39 @@ QWT-SOURCES := $(shell echo qwt-sources/include/*.h)
 QWT-SOURCES += $(shell echo qwt-sources/src/*.{cpp,dox})
 
 DIFFERS := -d 'qwt-sources qwt-sources/include qwt-sources/src'
-DIFFERS += -s '.debug .autoscale'
+#DIFFERS += -s '.debug .autoscale'
 
 FREE := $(HOME)/Free
 
 all:
-	python setup.py build 2>&1 | tee LOG.all
+	(cd configure; \
+	python configure.py -I $(INCDIR) -L $(LIBDIR) \
+	&& $(MAKE) CXX="$(CXX)")
+	(cd examples; ln -sf ../configure/iqt)
+	(cd examples; ln -sf ../configure/qwt)
+
+log: distclean
+	(cd configure; \
+	python configure.py -I $(INCDIR) -L $(LIBDIR) 2>&1 > ../LOG.all \
+	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.all)
+	(cd examples; ln -sf ../configure/iqt)
+	(cd examples; ln -sf ../configure/qwt)
+
+420-static:
+	(cd configure; python configure.py -Q $(QWTDIR) \
+		2>&1 | tee ../LOG.420-static) \
+	&& (cd configure; $(MAKE) CXX="$(CXX)" \
+		2>&1 | tee --append ../LOG.420-static)
+	(cd examples; ln -sf ../configure/iqt)
+	(cd examples; ln -sf ../configure/qwt)
+
+cvs-static:
+	(cd configure; python configure.py -Q ../qwt-sources \
+		2>&1 | tee ../LOG.cvs-static) \
+	&& (cd configure; $(MAKE) CXX="$(CXX)" \
+		2>&1 | tee --append ../LOG.cvs-static)
+	(cd examples; ln -sf ../configure/iqt)
+	(cd examples; ln -sf ../configure/qwt)
 
 doc: qwt-docs
 	cp -pu setup_cfg_nt setup_cfg_posix Doc/pyqwt/
@@ -29,16 +64,7 @@ qwt-sources/doc/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile
 	(cd qwt-sources; doxygen Doxyfile)
 
 install:
-	python setup.py install --record=LOG.record 2>&1 | tee LOG.install
-
-# test: installs to a temporary directory
-install-root:
-	rm -rf tmp/usr; mkdir tmp
-	python setup.py install --root=tmp 2>&1 | tee LOG.install-root
-
-# force a complete rebuild
-force:
-	python setup.py build --force 2>&1 | tee LOG.force
+	(cd configure; make install)
 
 .PHONY: dist qwt-sources
 
@@ -65,7 +91,7 @@ qwt-sources:
 	fi
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
-	python PATCHER
+#	python PATCHER
 
 qwt-sources-ssh:
 	rm -rf qwt-sources
@@ -77,7 +103,7 @@ qwt-sources-ssh:
 	fi
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
-	python PATCHER
+#	python PATCHER
 
 makefiles:
 	(cd qwt-sources; qmake qwt.pro)
@@ -106,5 +132,4 @@ distclean: clean makefiles
 	(cd qwt-sources/examples; make distclean)
 	(cd qwt-sources; qmake qwt.pro)
 	(cd qwt-sources/examples; qmake examples)
-	rm -rf build tmp/usr
-
+	rm -rf configure/iqt configure/qwt
