@@ -5,6 +5,9 @@ CVS-DATE := "25 Jun 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
+QWT-SOURCES := $(shell echo qwt-sources/include/*.h)
+QWT-SOURCES += $(shell echo qwt-sources/src/*.{cpp,dox})
+
 DIFFERS := -d 'qwt-sources/include qwt-sources/src'
 DIFFERS += -s '.canvas'
 
@@ -13,10 +16,19 @@ FREE := $(HOME)/Free
 all:
 	python setup.py build 2>&1 | tee LOG.all
 
-doc:
+doc: qwt-user-docs
 	cp setup_cfg_nt setup_cfg_posix Doc/pyqwt/
 	(cd Doc; make doc)
+
+qwt-user-docs: qwt-sources/doc/html/index.html
+
+qwt-sources/doc/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile.users
 	(cd qwt-sources; QTDIR=/usr/lib/qt3 doxygen Doxyfile.users)
+
+qwt-devel-docs: qwt-sources/doc/devel/html/index.html
+
+qwt-sources/doc/devel/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile
+	(cd qwt-sources; QTDIR=/usr/lib/qt3 doxygen Doxyfile)
 
 install:
 	python setup.py install --record=LOG.record 2>&1 | tee LOG.install
