@@ -7,8 +7,9 @@
 #
 # Beautified and expanded by Gerard Vermeulen.
 
-import sys
 import math
+import random
+import sys
 from qt import *
 from qwt import *
 
@@ -99,14 +100,16 @@ class QwtBarPlotDemo(QMainWindow):
         self.penComboBox = QComboBox(self.toolBar)
         for name in self.table.keys():
             self.penComboBox.insertItem(name)
-        self.penComboBox.setCurrentText('black')
+        self.penComboBox.setCurrentItem(
+            random.randint(0, self.penComboBox.count()-1))
 
         QLabel("Brush:", self.toolBar)
 
         self.brushComboBox = QComboBox(self.toolBar)
         for name in self.table.keys():
             self.brushComboBox.insertItem(name)
-        self.brushComboBox.setCurrentText('red')
+        self.brushComboBox.setCurrentItem(
+            random.randint(0, self.brushComboBox.count()-1))
 
         self.toolBar.setStretchableWidget(QWidget(self.toolBar))
 
