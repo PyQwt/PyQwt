@@ -40,70 +40,12 @@
 #include <qwt_python.h>
 %End
 
-%C++Code
 
-// Hack: more than 1 sipSubClass_QObject() is not supported by sip.
-// So we do it, with a little bit of help from pyqwt_sip_output_patch.py
-
-static PyObject *sipSubClass_QObject(const QObject *sipCpp)
-{
-    // The table of Python class objects indexed by their names.
-    // The table must be sorted by name.
-#ifdef OLD_SIP_NAMES
-    static sipStringTypeClassMap map[] = {
-        { sipName_qwt_QwtAnalogClock, &sipClass_QwtAnalogClock },
-        { sipName_qwt_QwtArrowButton, &sipClass_QwtArrowButton },
-        { sipName_qwt_QwtCompass, &sipClass_QwtCompass },
-        { sipName_qwt_QwtCounter, &sipClass_QwtCounter },
-        { sipName_qwt_QwtDial, &sipClass_QwtDial },
-        { sipName_qwt_QwtDynGridLayout, &sipClass_QwtDynGridLayout },
-        { sipName_qwt_QwtKnob, &sipClass_QwtKnob },
-        { sipName_qwt_QwtLegend, &sipClass_QwtLegend },
-        { sipName_qwt_QwtLegendButton, &sipClass_QwtLegendButton },
-        { sipName_qwt_QwtLegendLabel, &sipClass_QwtLegendLabel },
-        { sipName_qwt_QwtPicker, &sipClass_QwtPicker },
-        { sipName_qwt_QwtPlot, &sipClass_QwtPlot },
-        { sipName_qwt_QwtPlotCanvas, &sipClass_QwtPlotCanvas },
-        { sipName_qwt_QwtPlotPicker, &sipClass_QwtPlotPicker },
-        { sipName_qwt_QwtPushButton, &sipClass_QwtPushButton },
-        { sipName_qwt_QwtScale, &sipClass_QwtScale },
-        { sipName_qwt_QwtSlider, &sipClass_QwtSlider },
-        { sipName_qwt_QwtSliderBase, &sipClass_QwtSliderBase },
-        { sipName_qwt_QwtThermo, &sipClass_QwtThermo },
-        { sipName_qwt_QwtWheel, &sipClass_QwtWheel },
-    };
-#else
-    static sipStringTypeClassMap map[] = {
-        { sipName_QwtAnalogClock, &sipClass_QwtAnalogClock },
-        { sipName_QwtArrowButton, &sipClass_QwtArrowButton },
-        { sipName_QwtCompass, &sipClass_QwtCompass },
-        { sipName_QwtCounter, &sipClass_QwtCounter },
-        { sipName_QwtDial, &sipClass_QwtDial },
-        { sipName_QwtDynGridLayout, &sipClass_QwtDynGridLayout },
-        { sipName_QwtKnob, &sipClass_QwtKnob },
-        { sipName_QwtLegend, &sipClass_QwtLegend },
-        { sipName_QwtLegendButton, &sipClass_QwtLegendButton },
-        { sipName_QwtLegendLabel, &sipClass_QwtLegendLabel },
-        { sipName_QwtPicker, &sipClass_QwtPicker },
-        { sipName_QwtPlot, &sipClass_QwtPlot },
-        { sipName_QwtPlotCanvas, &sipClass_QwtPlotCanvas },
-        { sipName_QwtPlotPicker, &sipClass_QwtPlotPicker },
-        { sipName_QwtPushButton, &sipClass_QwtPushButton },
-        { sipName_QwtScale, &sipClass_QwtScale },
-        { sipName_QwtSlider, &sipClass_QwtSlider },
-        { sipName_QwtSliderBase, &sipClass_QwtSliderBase },
-        { sipName_QwtThermo, &sipClass_QwtThermo },
-        { sipName_QwtWheel, &sipClass_QwtWheel },
-    };
-#endif
-
-    return sipMapStringToClass(
-        sipCpp->className(), map, sizeof(map)/sizeof(map[0]));
-}
-%End    
-
-// Hack: improve rlcompleter support for PyQt & sip-3.6 and earlier
+// Improve rlcompleter support for PyQt & sip-3.6 and earlier.
 %Include qwtgetlazynames.sip
+
+// Provide "static PyObject *sipSubClass___QwtObject__(const QObject *sipCpp)".
+%Include qwtobject.sip
 
 // Normal include files
 %Include qwt.sip

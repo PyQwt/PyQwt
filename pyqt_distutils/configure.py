@@ -729,6 +729,7 @@ def get_sip_t_options(qt_version_str, os_name):
         '3.2.0': 'Qt_3_2_0',
         '3.2.1': 'Qt_3_2_0',
         '3.2.2': 'Qt_3_2_0',
+        '3.2.3': 'Qt_3_2_0',
         }.get(qt_version_str)
 
     if not qt:

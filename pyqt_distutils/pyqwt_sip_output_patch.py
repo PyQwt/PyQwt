@@ -44,16 +44,6 @@ def pyqwt_sip_output_patch(directory, name):
     file = open(cpp_module, 'r')
     text = file.read()
     file.close()
-    print '... adding "RegisterSubClassConvertors" to %s' % cpp_module 
-    text = text.replace(
-        '\tif (sipRegisterClasses(&sipModule,-1) < 0)'
-        '\n\t\treturn NULL;',
-        '\tif (sipRegisterClasses(&sipModule,-1) < 0)'
-        '\n\t\treturn NULL;'
-        '\n\n\t// pyqwt_sip_output_patch.py'
-        '\n\n\tsipRegisterSubClassConvertor(sipClass_QObject,'
-        '(PyObject *(*)(const void*))sipSubClass_QObject);'
-        )
     print '... adding "Numerical Python Extensions" to %s' % cpp_module 
     text = text.replace(
         '\tPy_InitModule("lib%sc",methods);'
