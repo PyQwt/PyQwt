@@ -2,6 +2,8 @@ PWD := $(shell pwd)
 CVS-QWT := :pserver:anonymous@cvs.qwt.sourceforge.net:/cvsroot/qwt
 CVS-DATE := "14 Jun 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
+CVS-QWT-SSH := :ext:gvermeul@cvs.qwt.sourceforge.net:/cvsroot/qwt
+
 
 all:
 	python setup.py build 2>&1 | tee LOG.all
@@ -45,7 +47,18 @@ qwt-sources:
 	    (cd tmp; cvs -q -z3 -d $(CVS-QWT) checkout -D $(CVS-DATE) qwt); \
 	fi
 	cp -dpRu tmp/qwt qwt-sources
-	#cp -dpRu ../CVS/qwt qwt-sources # if CVS is lagging
+	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
+	python PATCHER
+
+qwt-sources-ssh:
+	rm -rf qwt-sources
+	mkdir -p tmp
+	if [ -e tmp/qwt ]; then \
+	    (cd tmp; cvs -q -z3 -d $(CVS-QWT-SSH) update qwt); \
+	else \
+	    (cd tmp; cvs -q -z3 -d $(CVS-QWT-SSH) checkout qwt); \
+	fi
+	cp -dpRu tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
 	python PATCHER
 
