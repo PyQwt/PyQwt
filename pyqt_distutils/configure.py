@@ -641,7 +641,7 @@ class QtInfo(ConfigInfo):
                 libraries.append(make['LIBS_THREAD'])
                 define_macros.append(('QT_THREAD_SUPPORT', None))
             else:
-                libraries.append(make_info['LIBS_QT'])
+                libraries.append(make['LIBS_QT'])
             # normalize, chop of the leading '-l'
             libraries = [ lib[2:] for lib in ' '.join(libraries).split()]
             
@@ -728,7 +728,7 @@ def get_sip_t_options(qt_version_str, os_name):
         '3.1.1': 'Qt_3_1_1',
         '3.1.2': 'Qt_3_1_2',
         '3.2.0': 'Qt_3_2_0',
-        '3.2.1': 'Qt_3_2_0', # true for snapshot 2003-08-25
+        '3.2.1': 'Qt_3_2_0',
         }.get(qt_version_str)
 
     if not qt:
