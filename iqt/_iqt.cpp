@@ -11,7 +11,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -19,18 +19,14 @@
 // Suite 330, Boston, MA 02111-1307, USA.
 //
 // In addition, as a special exception, Gerard Vermeulen gives permission to
-// link PyQwt with commercial, non-commercial and educational versions of Qt,
+// link PyQwt with commercial, non-commercial or educational versions of Qt,
 // PyQt and sip, and distribute PyQwt in this form, provided that equally
 // powerful versions of Qt, PyQt and sip have been released under the terms
 // of the GNU General Public License.
 //
-// If PyQwt is linked with commercial, non-commercial and educational versions
-// of Qt, PyQt and sip, Python scripts using PyQwt do not have to be released
-// under the terms of the GNU General Public License.
-//
-// You must obey the GNU General Public License in all respects for all of the
-// code used other than Qt, PyQt and sip, including the Python scripts that are
-// part of PyQwt.
+// If PyQwt is dynamically linked with commercial, non-commercial or
+// educational versions of Qt, PyQt and sip, PyQwt becomes a free plug-in
+// for a non-free program.
 
 
 #include <Python.h>
@@ -38,7 +34,7 @@
 #ifndef MS_WIN32
 extern "C" void Py_GetArgcArgv(int *argc, char ***argv);
 #else
-#error "MicroSoft Windows is unsupport because it has no readline module"
+#error "MicroSoft Windows is unsupported because it has no readline module"
 #endif
 
 
