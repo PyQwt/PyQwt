@@ -245,7 +245,7 @@ setup(
     description       = "Python bindings for the Qwt library",
     url               = "http://pyqwt.sourceforge.net",
     author            = "Gerard Vermeulen",
-    author_email      = "gvermeul@grenoble.cnrs.fr",
+    author_email      = "gerard.vermeulen@grenoble.cnrs.fr",
     license           = "GPL",
     long_description  = long_description,
     platforms         = "Unix, Windows (MSVC)",
