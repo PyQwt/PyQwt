@@ -791,12 +791,15 @@ def more_qmake_conf_info(info, qtlibdir, tag='', platform=None):
         platform = os.name
     if platform == 'nt':
         # qmake.conf's library names seem incomplete
-        globs = glob.glob(os.path.join(qtlibdir, 'qt-mt%s*.lib' % tag))
-        if not globs:
+        # look for commercial, if not for educational, if not for evaluation
+        for pattern in ('qt-mt%s*.lib', 'qt-mtedu%s*.lib', 'qt-mteval%s*.lib'):
+            globs = glob.glob(os.path.join(qtlibdir, pattern % tag))
+            if globs:
+                break
+        else:
             raise DistutilsFileError, "Failed to find the Qt library"
         type = ['thread']
-        library_dir, library = os.path.split(
-            os.path.splitext(globs[0])[0])
+        library_dir, library = os.path.split(os.path.splitext(globs[0])[0])
         info['LIBS_QT_THREAD'] = library
         if not info.has_key('LIBDIR_QT'):
             info['LIBDIR_QT'] = library_dir                
