@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '4.0rc0'
+version = '4.0'
 
 #
 # SIP VERSION
@@ -40,17 +40,17 @@ if sip_version and sip_version < 0x030a00 and sip_version > 0x040000:
 if sip_version < 0x040000:
     if (not hasattr(sys, 'version_info')
         or sys.version_info < (2,1,0, 'alpha', 0)
-        or sys.version_info > (2,3,9, 'final', 0)):
+        or sys.version_info > (2,4,9, 'final', 0)):
         raise SystemExit, (
             "Building '%s' with sip-%s requires Python-2.3, 2.2, or 2.1."
-            % (sip_version, name))
+            % (name, hex(sip_version)))
 else:
     if (not hasattr(sys, 'version_info')
         or sys.version_info < (2,3,0, 'alpha', 0)
-        or sys.version_info > (2,3,9, 'final', 0)):
+        or sys.version_info > (2,4,9, 'final', 0)):
         raise SystemExit, (
             "Building '%s' with sip-%s requires Python-2.3."
-            % (sip_version, name))
+            % (name, hex(sip_version)))
     
 
 #
