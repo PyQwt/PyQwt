@@ -747,47 +747,49 @@ Build prerequisites for \PyQwtTarGz{} on Windows are:
 \item
   Unpack \PyQwtTarGz{} and read this \ReadMePatches{} to check for patches.
 \item
-  Configure PyQwt by running the following commands:
+  Do a quick start to test the installation by running the commands:
 \begin{verbatim}
-cd PyQwt-4.1
+cd PyQwt-4.2
 cd configure
-python configure.py
-\end{verbatim}
-  This assumes that the correct Python interpreter is on your path.
-  The configure.py script takes many options.
-  Use the "-h" command line option to display a full list of the available
-  options.
-\item
-  The next step is to build PyQwt using your platform's make command (nmake
-  for MSVC): 
-\begin{verbatim}
+python configure.py -Q ../qwt-4.2.0
 make
-\end{verbatim}
-\item
-  The final step is to install PyQwt by running the following command (nmake
-  for MSVC):
-\begin{verbatim}
 make install
 \end{verbatim}
+  This assumes that the correct Python interpreter is on your path. Replace
+  \strong{make} by \strong{nmake}, if you use MSVC or MSVC.net.
+  The commands build PyQwt against the included Qwt-4.2.0 library which is
+  slightly patched and install PyQwt.
+  Test the installation by playing with the example programs.
+\item
+  Fine tune (optional)
+\begin{verbatim}
+make distclean
+python configure.py -I /usr/lib/qt3/include/qwt -L /usr/lib/qt3/lib
+make
+make install
+\end{verbatim}
+  Those commands build PyQwt against a system Qwt-4.2.0 library with its
+  header files in \file{/usr/lib/qt3/include/qwt} and its library in 
+  \file{/usr/lib/qt3/lib}.
 \end{enumerate}
 
+Contact the \mailinglist{}, if you run into problems.
+FIXME: provide output of configure.py and make.
+
 \begin{notice}[note]
-  New: PyQwt-4.1 can be linked against an external \Qwt{}-4.2.0 library (does
-  not work with PyQwt and \Qwt{}-4.2.0rcX release candidates).
-  Run for instance:
-\begin{verbatim}
-python configure.py -i /usr/lib/qt3/include/qwt -l /usr/lib/qt3/lib
-\end{verbatim}
-  to use the Qwt include files in \file{/usr/lib/qt3/include/qwt} and
-  the Qwt library in \file{/usr/lib/qt3/lib}.
+  Check if all development packages have been installed when make produces
+  lots of errors on Linux.
 \end{notice}
 
-\begin{notice}[warning]
-  If the make command produces a lot of errors on Linux, check if all
-  development packages have been installed.  Try the \file{setup.py}
-  script in \ref{build-setup}, because does a better job of detecting
-  missing files than \file{configure.py}. 
+\begin{notice}[note]
+  The configure.py script takes many options. The command
+\begin{verbatim}
+python configure.py -h
+\end{verbatim}
+  displays a full list of the available options:
+  \verbatiminput{configure.help}
 \end{notice}
+
 
 
 \section{Build with \file{setup.py}\label{build-setup}}
