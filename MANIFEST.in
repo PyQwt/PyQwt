@@ -6,7 +6,7 @@ include AUTHORS COPYING COPYING.PyQwt
 include INSTALL MANIFEST.in README* REGISTRATION.SF THANKS
 include DIFFER PATCHER patches.py
 include Makefile 
-include pyqwt.spec
+include PyQwt.spec
 
 # Documentation
 graft Doc
