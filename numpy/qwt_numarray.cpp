@@ -82,7 +82,7 @@ int try_NumarrayArray_to_QImage(PyObject *in, QImage &out)
     int ystride = ((PyArrayObject *)in)->strides[1];
 
     //  8 bit data
-    if (((PyArrayObject *)in)->descr->elsize == 1) {
+    if (((PyArrayObject *)in)->descr->type_num == tUInt8) {
         if (!out.create(nx, ny, 8, 256)) {
             PyErr_SetString(PyExc_RuntimeError,
                             "failed to create a 8 bit image");
@@ -104,7 +104,7 @@ int try_NumarrayArray_to_QImage(PyObject *in, QImage &out)
 
     // 16 bit data
     // FIXME: endianness
-    if (((PyArrayObject *)in)->descr->elsize == 2) {
+    if (((PyArrayObject *)in)->descr->type_num == tUInt16) {
 #if QT_VERSION < 300
         PyErr_SetString(PyExc_RuntimeError,
                         "Qt < 3.0.0 does not support 16 bit images");
@@ -131,7 +131,7 @@ int try_NumarrayArray_to_QImage(PyObject *in, QImage &out)
     // 32 bit data
     // FIXME: what does it do on a 64 bit platform?
     // FIXME: endianness
-    if (((PyArrayObject *)in)->descr->elsize == 4) {
+    if (((PyArrayObject *)in)->descr->type_num == tUInt32) {
         if (!out.create(nx, ny, 32)) {
             PyErr_SetString(PyExc_RuntimeError,
                             "failed to create a 32 bit image");
@@ -151,14 +151,14 @@ int try_NumarrayArray_to_QImage(PyObject *in, QImage &out)
         return 1;
     }
 
-    PyErr_SetString(PyExc_RuntimeError, "FIXME");
+    PyErr_SetString(
+        PyExc_RuntimeError, "Data type must be UInt8, UInt16 or UInt32");
 
     return -1;
 }
 
 PyObject *to_na_array(const QImage &image)
 {
-#ifdef HAS_NUMARRAY
     PyArrayObject *result = 0;
     const int nx = image.width();
     const int ny = image.height();
@@ -251,12 +251,6 @@ PyObject *to_na_array(const QImage &image)
         return PyArray_Return(result);
     }
     return 0;
-#else
-    PyErr_SetString(
-        PyExc_RuntimeError,
-        "Trying to convert to a numeric array without support for numeric");
-    return 0;
-#endif
 }
 
 

@@ -82,7 +82,7 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
     const int ystride = ((PyArrayObject *)in)->strides[1];
     
     //  8 bit data
-    if (((PyArrayObject *)in)->descr->elsize == 1) {
+    if (((PyArrayObject *)in)->descr->type_num == PyArray_UBYTE) {
         if (!out.create(nx, ny, 8, 256)) {
             PyErr_SetString(PyExc_RuntimeError,
                             "failed to create a 8 bit image");
@@ -104,7 +104,7 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
 
     // 16 bit data
     // FIXME: endianness
-    if (((PyArrayObject *)in)->descr->elsize == 2) {
+    if (((PyArrayObject *)in)->descr->type_num == PyArray_USHORT) {
 #if QT_VERSION < 300
         PyErr_SetString(PyExc_RuntimeError,
                         "Qt < 3.0.0 does not support 16 bit images");
@@ -131,7 +131,7 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
     // 32 bit data.
     // FIXME: what does it do on a 64 bit platform?
     // FIXME: endianness
-    if (((PyArrayObject *)in)->descr->elsize == 4) {
+    if (((PyArrayObject *)in)->descr->type_num == PyArray_UINT) {
         if (!out.create(nx, ny, 32)) {
             PyErr_SetString(PyExc_RuntimeError,
                             "failed to create a 32 bit image");
@@ -151,7 +151,9 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
         return 1;
     }
     
-    PyErr_SetString(PyExc_RuntimeError, "FIXME");
+    PyErr_SetString(
+        PyExc_RuntimeError,
+        "Data type must be UnsignedInt8, UnsignedInt16 or UnsignedInt32");
     
     return -1;
 }
@@ -161,7 +163,6 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
 
 PyObject *to_np_array(const QImage &image)
 {
-#if HAS_NUMERIC
     PyArrayObject *result = 0;
     const int nx = image.width();
     const int ny = image.height();
@@ -255,12 +256,6 @@ PyObject *to_np_array(const QImage &image)
     }
 
     return 0;
-#else
-    PyErr_SetString(
-        PyExc_RuntimeError,
-        "Trying to convert to a numarray array without support for numarray");
-    return 0;
-#endif
 }
 
 // Local Variables:

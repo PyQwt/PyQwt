@@ -54,6 +54,7 @@ QImage &toQImage(void *);
     }
 %End
 
+%If (HAS_NUMARRAY)
 void /* PyObject */ to_na_array(const QImage &);
 %MemberCode
     QImage *image;
@@ -63,7 +64,9 @@ void /* PyObject */ to_na_array(const QImage &);
         return to_na_array(*image);
     }
 %End
+%End
 
+%If (HAS_NUMERIC)
 void /* PyObject */ to_np_array(const QImage &);
 %MemberCode
     QImage *image;
@@ -73,7 +76,7 @@ void /* PyObject */ to_np_array(const QImage &);
         return to_np_array(*image);
     }
 %End
-
+%End
 
 // Local Variables:
 // mode: C++
