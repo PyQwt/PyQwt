@@ -20,18 +20,14 @@
 // Suite 330, Boston, MA 02111-1307, USA.
 //
 // In addition, as a special exception, Gerard Vermeulen gives permission to
-// link PyQwt with commercial, non-commercial and educational versions of Qt,
+// link PyQwt with commercial, non-commercial or educational versions of Qt,
 // PyQt and sip, and distribute PyQwt in this form, provided that equally
 // powerful versions of Qt, PyQt and sip have been released under the terms
 // of the GNU General Public License.
 //
-// If PyQwt is linked with commercial, non-commercial and educational versions
-// of Qt, PyQt and sip, Python scripts using PyQwt do not have to be released
-// under the terms of the GNU General Public License. 
-//
-// You must obey the GNU General Public License in all respects for all of the
-// code used other than Qt, PyQt and sip, including the Python scripts that are
-// part of PyQwt.
+// If PyQwt is dynamically linked with commercial, non-commercial or
+// educational versions of Qt, PyQt and sip, PyQwt becomes a free plug-in
+// for a non-free program.
 
 
 #include <qwt_python.h>
@@ -46,20 +42,20 @@ static int try_PySequence_to_QwtArray(PyObject *in, QwtArray<double> &out)
     out.resize(size);
 
     for (int i=0; i<size; i++) {
-    PyObject *element = PySequence_Fast_GET_ITEM(in, i);
-    if (PyFloat_Check(element)) {
-        out[i] = PyFloat_AsDouble(element);
-    } else if (PyInt_Check(element)) {
-        out[i] = double(PyInt_AsLong(element));    
-    } else if (PyLong_Check(element)) {
-        out[i] = double(PyInt_AsLong(element));
-    } else if (PyComplex_Check(element)) {
-        out[i] = PyComplex_RealAsDouble(element);
-    } else {
-        PyErr_SetString(PyExc_TypeError,
-                "The sequence may only contain python numbers.");
-        return -1;
-    }
+        PyObject *element = PySequence_Fast_GET_ITEM(in, i);
+        if (PyFloat_Check(element)) {
+            out[i] = PyFloat_AsDouble(element);
+        } else if (PyInt_Check(element)) {
+            out[i] = double(PyInt_AsLong(element));    
+        } else if (PyLong_Check(element)) {
+            out[i] = double(PyInt_AsLong(element));
+        } else if (PyComplex_Check(element)) {
+            out[i] = PyComplex_RealAsDouble(element);
+        } else {
+            PyErr_SetString(PyExc_TypeError,
+                            "The sequence may only contain python numbers.");
+            return -1;
+        }
     }
 
     return 1;
@@ -71,7 +67,7 @@ int try_PyObject_to_QwtArray(PyObject *in, QwtArray<double> &out)
 
 #ifdef HAS_NUMERIC
     if ((result = try_NumericArray_to_QwtArray(in, out)))
-    return result;
+        return result;
 #endif
     
 #ifdef HAS_NUMARRAY
@@ -106,7 +102,7 @@ int try_PyObject_to_QImage(PyObject *in, QImage &out)
 
 #ifdef HAS_NUMERIC
     if ((result = try_NumericArray_to_QImage(in, out)))
-    return result;
+        return result;
 #endif
 
 #ifdef HAS_NUMARRAY
