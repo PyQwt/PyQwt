@@ -1,0 +1,25 @@
+PyQwt-4.0 = FAST and EASY data plotting for Python and (Py)Qt. 
+
+PyQwt is a set of Python bindings for the Qwt C++ class library which
+extends the Qt framework with widgets for scientific and engineering
+applications.
+
+It supports the use of PyQt, Qt, Qwt, the Numerical Python extensions
+(either Numeric, or numarray or both) and optionally SciPy in a GUI
+Python application or in an interactive Python session.
+
+The home page of PyQwt is http://pyqwt.sourceforge.net.
+
+Main changes in PyQwt-4.0:
+
+1. supports PyQt-3.11, PyQt-3.10, and PyQt-3.9.
+
+2. supports sip-4.0, sip-3.10.1, sip-3.10, and sip-3.9.
+
+3. supports Qt-3.3.1 downto -2.3.0.
+
+4. supports Mac OS X.
+
+5. based on Qwt-20040418 (a snapshot later than Qwt-4.2.0rc2). 
+
+Gerard Vermeulen

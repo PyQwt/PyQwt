@@ -1,7 +1,7 @@
 # MANIFEST template file to make a distribution tarball
 
 # Package stuff
-include ANNOUNCEMENT-3.9.TXT
+include ANNOUNCEMENT-4.0.TXT
 include AUTHORS COPYING COPYING.PyQwt
 include INSTALL MANIFEST.in README* REGISTRATION.SF THANKS
 include DIFFER PATCHER patches.py
@@ -10,45 +10,51 @@ include setup_cfg_nt setup_cfg_posix
 include win-pyqt.bat win-sip.bat
 include configure.py pyqwtconfig.py.in
 
-exclude setup.cfg CONFIGURE
-
-# PyQtDistutils
-graft pyqt_distutils
-recursive-exclude pyqt_distutils *.pyc *cvsignore*
-
-# Examples
-graft examples
-recursive-exclude examples log *.html *.png *.ps *.pyc *cvsignore*
-recursive-exclude examples/iqt *
-recursive-exclude examples/qwt *
-
-# Numerical Python interface
-graft numpy
-
-# sip files
-graft sip
-
-# qwt package
-graft qwt
-recursive-exclude qwt _qwt.py *.pyc *cvsignore*
-
-# iqt package
-graft iqt
-recursive-exclude iqt *.pyc *cvsignore*
-
-# Qwt stuff
-graft qwt-sources
-prune qwt-sources/admin
-prune qwt-sources/doc/devel
-prune qwt-sources/lib
-prune qwt-sources/src/moc
-prune qwt-sources/src/obj
-recursive-exclude qwt-sources Makefile .qmake.internal.cache *.LOG *cvsignore*
+exclude setup.cfg
 
 # Documentation
 graft Doc
 prune Doc/html/htdoc
 recursive-exclude Doc *cvsignore*
+
+# configure
+graft configure
+prune configure/iqt
+prune configure/qwt
+recursive-exclude configure Makefile *.cpp *.pyc *cvsignore*
+
+# examples
+graft examples
+recursive-exclude examples log *.html *.png *.ps *.pyc *cvsignore*
+recursive-exclude examples/iqt *
+recursive-exclude examples/qwt *
+
+# iqt package
+graft iqt
+recursive-exclude iqt *.pyc *cvsignore*
+
+# Numerical Python interface
+graft numpy
+
+# PyQtDistutils
+graft pyqt_distutils
+recursive-exclude pyqt_distutils *.pyc *cvsignore*
+
+# qwt package
+graft qwt
+recursive-exclude qwt _qwt.py *.pyc *cvsignore*
+
+# Qwt stuff
+graft qwt-sources
+prune qwt-sources/admin
+prune qwt-sources/doc/man
+prune qwt-sources/lib
+prune qwt-sources/src/moc
+prune qwt-sources/src/obj
+recursive-exclude qwt-sources Makefile .qmake.internal.cache *.LOG *cvsignore*
+
+# sip files
+graft sip
 
 # Local Variables: ***
 # mode: sh ***

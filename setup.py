@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '3.9'
+version = '4.0'
 
 #
 # SIP VERSION
@@ -205,7 +205,7 @@ if os.name == 'posix':
             if os.path.islink(link):
                 os.remove(link)
             os.symlink(lib, link)
-        os.chdir('..')
+        os.chdir(os.pardir)
 else:
     print "FIXME"
 

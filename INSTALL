@@ -2,14 +2,19 @@ See Doc/html/pyqwt/index.html.
 
 If you never read docs:
 
-(1) On Windows:
-    - edit 'setup_cfg_nt'.
-    - run 'python setup.py bdist_wininst'
-    - execute the dist/*.exe installer. 
-(2) On Posix:
-    - edit 'setup_cfg_posix'.
-    - run 'python setup.py build'.
-    - do 'cd examples' and play.
+(1) Start the Python interpreter and try:
+    >>> import pyqtconfig; print pyqtconfig.Configuration().pyqt_sip_dir
+    
+    If this fails, sip and PyQt have not been installed with the configure.py
+    scripts, or you are running PyQt-3.9 and sip-3.9. Read the manual.
+
+(2) Execute the following commands from a command line:
+    cd PyQwt-4.0
+    cd configure
+    python configure.py
+    make
+    make install
+
 
 Q: It did not work?
 A: Read the manual.
