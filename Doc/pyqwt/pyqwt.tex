@@ -321,20 +321,55 @@ Is a SLOT for SIGNAL('legendClicked(long)') to dis/enable a curve.
   \item
     \class{Symbol}, to select a symbol to the data points.
   \item
-    \class{string} or \class{QString},  to set the title of the curve.
+    \class{string} or \class{QString}, to set the title of the curve.
   \end{itemize}
 \end{classdesc}
 
+\subsubsection{qwt.qplt.Axis \label{intro-qplt-axis}}
+
 \begin{classdesc}{Axis}{*arguments}
-FIXME
+  \class{Axis} takes any number of optional arguments.
+  The data-directed interpretation of each optional argument is:
+  \begin{itemize}
+  \item
+    \class{AxisOrientation}, to set the orientation of the axis.  Predefined
+    instances of \class{AxisOrientation} are \constant{Left}, \constant{Right},
+    \constant{Bottom} and \constant{Top}.
+  \item
+    \class{int}, to set the options of the axis.
+  \item
+    \class{string} or \class{QString}, to set the title of the axis.
+  \end{itemize}
 \end{classdesc}
+
+\subsubsection{qwt.qplt.Pen \label{intro-qplt-pen}}
 
 \begin{classdesc}{Pen}{*arguments}
-FIXME
+  \class{Pen} takes any number of optional arguments.
+  The data-directed interpretation of each optional argument is:
+  \begin{itemize}
+  \item
+    \class{QColor}, to set the color of the pen.
+  \item
+    \class{int}, to set the width of the pen.
+  \end{itemize}
 \end{classdesc}
 
+\subsubsection{qwt.qplt.Symbol \label{intro-qplt-symbol}}
+
 \begin{classdesc}{Symbol}{*arguments}
-FIXME
+  \class{Symbol} takes any number of optional arguments.
+  The data-directed interpretation of each optional argument is:
+  \begin{itemize}
+  \item
+    \class{QColor}, to set the fill color of the symbol.
+  \item
+    \class{SymbolStyle}, to set the style of the symbol. Predefined instances
+    of \class{SymbolStyle} are \constant{NoSymbol}, \constant{Circle},
+    \constant{Square} and \constant{Diamond}.
+  \item
+    \class{int}, to set the size of the symbol.
+  \end{itemize}
 \end{classdesc}
 
 \chapter{Installation \label{installation}}
