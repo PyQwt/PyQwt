@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtCurve.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -64,6 +64,7 @@ public:
 
     // FIXME: const QwtCurve& operator=(const QwtCurve &);
 
+    void setData(QwtArrayDouble &, QwtArrayDouble &);
     void setData(SIP_PYOBJECT, SIP_PYOBJECT);
 %MethodCode
 	QwtArray<double> xArray;
