@@ -7,22 +7,23 @@ from qt import *
 from qwt import *
 
 class SliderDemo(QWidget):
+    
     def __init__(self, *args):
-        apply(QWidget.__init__, (self,) + args)
+        QWidget.__init__(self, *args)
         # make sliders
         sldV1 = QwtSlider(self, "", Qt.Vertical, QwtSlider.Left,
                           QwtSlider.BgSlot)
         sldV2 = QwtSlider(self, "", Qt.Vertical, QwtSlider.None,
                           QwtSlider.BgTrough)
         sldV3 = QwtSlider(self, "", Qt.Vertical, QwtSlider.Right,
-                          QwtSlider.BgSlot | QwtSlider.BgTrough)
+                          QwtSlider.BgBoth)
     
         sldH1 = QwtSlider(self, "", Qt.Horizontal, QwtSlider.Top,
                           QwtSlider.BgTrough)
         sldH2 = QwtSlider(self, "", Qt.Horizontal, QwtSlider.None,
-			  QwtSlider.BgSlot | QwtSlider.BgTrough)
-        sldH3 = QwtSlider(self, "", Qt.Horizontal,
-                          QwtSlider.Bottom, QwtSlider.BgSlot)
+			  QwtSlider.BgBoth)
+        sldH3 = QwtSlider(self, "", Qt.Horizontal, QwtSlider.Bottom,
+                          QwtSlider.BgSlot)
 
         # slider properties
         sldV1.setRange(0.0, 100.0, 1.0, 5)
@@ -134,8 +135,14 @@ class SliderDemo(QWidget):
         
         self.setMinimumSize(550, 250)
 
+    # __init__()
+
     def setV3(self, value):
         self.lblV3.setNum(10.0**value)
+
+    # setV3()
+
+# class SliderDemo
 
 
 def make():
@@ -143,11 +150,17 @@ def make():
     demo.show()
     return demo
 
+# make()
+
+
 def main(args):
-    app = QApplication(sys.argv)
+    app = QApplication(args)
     demo = make()
     app.setMainWidget(demo)
     app.exec_loop()
+
+# main()
+
 
 # Admire!
 if __name__ == '__main__':
