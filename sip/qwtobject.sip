@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -33,7 +33,8 @@
 // Provide "static PyObject *sipSubClass___QwtObject__(const QObject *sipCpp)".
 class __QwtObject__: QObject
 {
-%HeaderCode
+%TypeHeaderCode
+#include <qobject.h>
 class __QwtObject__: public QObject
 {
 };

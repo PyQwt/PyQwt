@@ -1,6 +1,7 @@
 // The SIP interface definition for QwtMetricsMap and QwtLayoutMetrics.
 //
-// Copyright (C) 2003 Gerard Vermeulen
+// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -31,20 +32,11 @@
 
 class QwtMetricsMap
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_layout_metrics.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtMetricsMap();
 
     bool isIdentity() const;
@@ -80,20 +72,11 @@ public:
 
 class QwtLayoutMetrics
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_layout_metrics.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtLayoutMetrics();
     QwtLayoutMetrics(const QwtMetricsMap &);
 

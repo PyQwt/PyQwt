@@ -32,7 +32,7 @@
 
 class QwtSliderBase: QWidget, QwtDblRange
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_sldbase.h>
 %End
 
@@ -45,17 +45,9 @@ public:
 	ScrPage,
     };
 
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtSliderBase(Qt::Orientation, QWidget * /TransferThis/ = 0,
 		  const char * = 0, WFlags = 0);
+    virtual ~QwtSliderBase();
 
     void setUpdateTime(int);
     void stopMoving();
@@ -97,61 +89,7 @@ protected:
     virtual void wheelEvent(QWheelEvent *);
 
     virtual double getValue(const QPoint &) = 0;
-    virtual void getScrollMode(const QPoint &, int &, int &) = 0;
-    // see 'virtual State QValidator::validate(QString &, int &) = 0;'
-    // see 'virtual void getButtonShift(int &, int &) = 0;
-%MemberCode
-    // The Python interface takes a QPoint and returns a tuple.
-    QPoint *point;
-    sipQwtSliderBase *ptr;
-
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "pJ1",
- 		     sipThisObj, sipClass_QwtSliderBase, &ptr,
-		     sipClass_QPoint, &point)) {
-	int scrollMode, direction;
-
-	Py_BEGIN_ALLOW_THREADS
-	ptr->getScrollMode(*point, scrollMode, direction);
-	Py_END_ALLOW_THREADS
-	
-	return Py_BuildValue("(ii)", scrollMode, direction);
-    }
-%End
-%VirtualCode
-    // The Python interface takes a QPoint and returns a tuple.
-    PyObject *pyArgs, *pyRes;
-
-    if (0 == (pyArgs = Py_BuildValue(
-	"ON", sipThis->sipSelf, sipMapCppToSelf(&a0, sipClass_QPoint))))
-	goto reperr;
-
-    pyRes = sipEvalMethod(&pymc->pyMethod, pyArgs);
-
-    Py_DECREF(pyArgs);
-
-    if (0 != pyRes) {
-	int scrollMode, direction, rc;
-
-	rc = PyArg_ParseTuple(pyRes, "ii", &scrollMode, &direction);
-	Py_DECREF(pyRes);
-	if (rc) {
-	    a1 = scrollMode;
-	    a2 = direction;
-	    goto releaseLock;
-	}
-#ifdef OLD_SIP_NAMES
-	sipBadVirtualResultType(sipName_qwt_QwtSliderBase,
-				sipName_qwt_getScrollMode);
-#else
-	sipBadVirtualResultType(sipName_QwtSliderBase,
-				sipName_getScrollMode);
-#endif
-    }
-reperr:
-    PyErr_Print();
-releaseLock:
-    SIP_UNBLOCK_THREADS
-%End
+    virtual void getScrollMode(const QPoint &, int & /Out/, int & /Out/) = 0;
 };
 
 // Local Variables:

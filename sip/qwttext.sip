@@ -15,7 +15,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -35,20 +35,11 @@
 
 class QwtText
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_text.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-        return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
 %If (CXX_DYNAMIC_CAST)
 %ConvertToSubClassCode
     if (dynamic_cast<const QwtPlainText *>(sipCpp))
@@ -109,20 +100,11 @@ protected:
 
 class QwtPlainText: QwtText
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_text.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtPlainText(const QString &, const QFont &,
                 int = Qt::AlignCenter | Qt::WordBreak | Qt::ExpandTabs,
                 const QColor & = QColor());
@@ -138,21 +120,11 @@ public:
 
 class QwtRichText: QwtText
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_text.h>
 %End
 
 public:
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtRichText(const QString &, const QFont &,
                 int = Qt::AlignCenter | Qt::WordBreak | Qt::ExpandTabs,
                 const QColor & = QColor(),

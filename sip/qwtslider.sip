@@ -1,7 +1,7 @@
 // The SIP interface definition for QwtSlider.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // PyQwt is free software; you can redistribute it and/or modify it under the
 // terms of the GNU General Public License as published by the Free Software
@@ -10,7 +10,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -30,7 +30,7 @@
 
 class QwtSlider: QwtSliderBase, QwtScaleIf
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_slider.h>
 %End
 
@@ -40,22 +40,13 @@ public:
 	Left,
 	Right,
 	Top,
-	Bottom
+	Bottom,
     };
     enum BGSTYLE {
 	BgTrough = 0x1,
 	BgSlot = 0x2,
-	BgBoth = 0x3
+	BgBoth = 0x3,
     };  
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
     QwtSlider(QWidget * /TransferThis/, const char * = 0, 
 	      Orientation = Horizontal, ScalePos = None, int = BgTrough);
@@ -83,27 +74,7 @@ public:
 	
 protected:
     virtual double getValue(const QPoint &);
-    virtual void getScrollMode(const QPoint &, int &, int &);
-%MemberCode
-    // Python interface takes a QPoint and returns a tuple.
-    const QPoint *point;
-    sipQwtSlider *ptr;
-
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "pJ1",
-		     sipThisObj, sipClass_QwtSlider, &ptr,
-		     sipClass_QPoint, &point)) {
-	int scrollMode, direction;
-
-        Py_BEGIN_ALLOW_THREADS
-	ptr->sipProtect_getScrollMode(*point, scrollMode, direction);
-	Py_END_ALLOW_THREADS
-
-	return Py_BuildValue("(ii)", scrollMode, direction);
-    }
-%End
-%VirtualCode
-    // sip requires VirtualCode, but does not use it :-)
-%End
+    virtual void getScrollMode(const QPoint &, int & /Out/, int & /Out/);
     void draw(QPainter *, const QRect &);
     virtual void drawSlider(QPainter *, const QRect &);
     virtual void drawThumb(QPainter *, const QRect &, int);

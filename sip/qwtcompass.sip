@@ -1,6 +1,7 @@
 // The SIP interface definition for QwtCompass.
 //
 // Copyright (C) 2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -31,7 +32,7 @@
 
 %MappedType QMap<double, QString>
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_compass.h>
 %End
 
@@ -42,24 +43,23 @@
 	return d;
 
     const QMap<double, QString> map = *sipCpp;
-    QMap<double, QString>::ConstIterator i;
+    QMap<double, QString>::ConstIterator it;
 
-    for (i=map.begin(); i!=map.end(); ++i) {
-	PyObject *k, *v;
-	if (0 == (k = PyFloat_FromDouble(i.key())) 
-	    || 0 == (v = sipNewCppToSelf(new QString(i.data()),
-					 sipClass_QString,
-					 SIP_SIMPLE || SIP_PY_OWNED))
-	    || 0 > PyDict_SetItem(d, k, v)) {
-	    Py_XDECREF(k);
-	    Py_XDECREF(v);
+    for (it = map.begin(); it !=map.end(); ++it) {
+	PyObject *key = PyFloat_FromDouble(it.key());
+        PyObject *val = sipBuildResult(0, "N",
+                                       new QString(it.data()),
+                                       sipClass_QString);
+	if ((0 == key) || (0 == val) || (0 > PyDict_SetItem(d, key, val))) {
+	    Py_XDECREF(key);
+	    Py_XDECREF(val);
 	    Py_DECREF(d);
 	    return 0;
 	}
     }
 
     return d;
-%End
+%End // ConvertFromTypeCode
 
 %ConvertToTypeCode
     if (0 == sipIsErr)
@@ -67,16 +67,15 @@
 
     QMap<double, QString> *map = new QMap<double, QString>;
 
-    PyObject *k, *v;
-    double ck;
-    QString *cv;
+    PyObject *key, *val;
     int i = 0;
 
-    while (PyDict_Next(sipPy, &i, &k, &v)) {
+    while (PyDict_Next(sipPy, &i, &key, &val)) {
 	int iserr = 0;
 	
-	ck = PyFloat_AS_DOUBLE(k);
-	sipConvertTo_QString(v, &cv, &iserr);
+	double cKey = PyFloat_AS_DOUBLE(key);
+        QString *cVal = reinterpret_cast<QString *>(
+            sipForceConvertTo_QString(val, &iserr));
 	
 	if (iserr) {
 	    *sipIsErr = 1;
@@ -84,31 +83,23 @@
 	    return 0;
 	}
        
-	map->insert(ck, *cv);
+	map->insert(cKey, *cVal);
     }
 
     *sipCppPtr = map;
     
     return 1;
-%End
-};
+%End // ConvertToTypeCode
+}; // QMap<double, QString>
+
 
 class QwtCompass: QwtDial
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_compass.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtCompass(QWidget * /TransferThis/ = 0, const char * = 0);
 
     void setRose(QwtCompassRose * /Transfer/);

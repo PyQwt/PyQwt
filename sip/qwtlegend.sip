@@ -1,7 +1,7 @@
 // The SIP interface definition for QwtLegend.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -32,26 +32,16 @@
 
 class QwtLegend: QScrollView
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_legend.h>
 %End
 
 public:
-    enum LegendDisplayPolicy
-    {
+    enum LegendDisplayPolicy {
         None = 0,
         Fixed = 1,
-        Auto = 2
+        Auto = 2,
     };
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
     QwtLegend(QWidget * /TransferThis/ = 0, const char * = 0);
 

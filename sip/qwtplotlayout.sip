@@ -1,6 +1,7 @@
 // The SIP interface definition for QwtPlotLayout.
 //
-// Copyright (C) 2002-2003 Gerard Vermeulen
+// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt. 
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -31,28 +32,18 @@
 
 class QwtPlotLayout
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_plot_layout.h>
 %End
 
 public:
-    enum Options
-    {
+    enum Options {
         AlignScales = 1,
         IgnoreScrollbars = 2,
         IgnoreFrames = 4,
         IgnoreMargin = 8,
-        IgnoreLegend = 16
+        IgnoreLegend = 16,
     };
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
     QwtPlotLayout();
 
@@ -87,56 +78,32 @@ protected:
     QRect layoutLegend(int, const QRect &) const;
     QRect alignLegend(const QRect &, const QRect &) const;
 
-    void expandLineBreaks(int, const QRect &, int &, int *) const;
-%MemberCode
-    // takes an integer and a QRect
-    // returns a tuple of 5 ints (title, yLeft, yRight, xBottom, xTop)
-    int options;
-    QRect *rect;
-    sipQwtPlotLayout *ptr;
+    void expandLineBreaks(int, const QRect &, int &, int * = 0) const;
+%MethodCode
+    int axis[QwtPlot::axisCnt] = {0, 0, 0, 0};
 
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "piJ1",
-		     sipThisObj, sipClass_QwtPlotLayout, &ptr,
-		     &options, sipClass_QRect, &rect))
-	{
-	    int title;
-	    int axis[QwtPlot::axisCnt];
-
-	    Py_BEGIN_ALLOW_THREADS
-	    ptr->sipProtect_expandLineBreaks(options, *rect, title, axis);
-	    Py_END_ALLOW_THREADS
-
-	    return Py_BuildValue("(iiiii)",
-				 title, axis[0], axis[1], axis[2], axis[3]);
-	}
+    sipCpp->sipProtect_expandLineBreaks(a0, *a1, a2, axis);
+    return sipBuildResult(&sipIsErr, "(iiiii)",
+                          a2, axis[0], axis[1], axis[2], axis[3]);
 %End
+
     void alignScales(int, QRect &, QRect *) const;
-%MemberCode
-    // takes an integer
-    // returns a tuple of 4 QRects
-    int options;
-    QRect *rect;
-    sipQwtPlotLayout *ptr;
+%MethodCode
+    QRect *canvasRect = new QRect();
+    QRect scaleRect[QwtPlot::axisCnt];
 
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "piJ1",
-		     sipThisObj, sipClass_QwtPlotLayout, &ptr,
-		     &options, sipClass_QRect, &rect))
-	{
-	    QRect scaleRect[QwtPlot::axisCnt];
-	    PyObject *result[QwtPlot::axisCnt];
+    sipCpp->sipProtect_alignScales(a0, *canvasRect, scaleRect);
+    
+    QRect *heapCopy[QwtPlot::axisCnt];
+    for (int i=0; i<QwtPlot::axisCnt; i++)
+        heapCopy[i] = new QRect(scaleRect[i]);
 
-	    Py_BEGIN_ALLOW_THREADS
-	    ptr->sipProtect_alignScales(options, *rect, scaleRect);
-	    Py_END_ALLOW_THREADS
-
-	    for (int i=0; i<QwtPlot::axisCnt; i++)
-                // FIXME: scaleRect lives on the stack, should be on the heap?
-		result[i] = sipNewCppToSelf(&scaleRect[i], sipClass_QRect,
-					    SIP_PY_OWNED|SIP_SIMPLE);
-
-	    return Py_BuildValue("(NNNN)", 
-				 result[0], result[1], result[2], result[3]);
-	}
+    return sipBuildResult(&sipIsErr,"(NNNNN)",
+                          canvasRect, sipClass_QRect,
+                          &heapCopy[0], sipClass_QRect,
+                          &heapCopy[1], sipClass_QRect,
+                          &heapCopy[2], sipClass_QRect, 
+                          &heapCopy[3], sipClass_QRect);
 %End
 };
 

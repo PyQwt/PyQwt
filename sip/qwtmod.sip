@@ -30,19 +30,24 @@
 // a non-free program.
 
 
-%Module qwt
+%Module _qwt 0
 
 %Include features.sip
 
-%Import qtmod.sip
+%Import qt/qtmod.sip
 
-%HeaderCode
+%ModuleHeaderCode
 #include <qwt_python.h>
 %End
 
-
-// Improve rlcompleter support for PyQt & sip-3.6 and earlier.
-%Include qwtgetlazynames.sip
+%PostInitialisationCode
+#ifdef HAS_NUMARRAY
+    qwt_import_libnumarray();
+#endif
+#ifdef HAS_NUMERIC
+    qwt_import_array();
+#endif
+%End
 
 // Provide "static PyObject *sipSubClass___QwtObject__(const QObject *sipCpp)".
 %Include qwtobject.sip
@@ -58,7 +63,7 @@
 %Include qwtcounter.sip
 %Include qwtcurve.sip
 %Include qwtcurvedict.sip
-%Include qwtdata.sip
+//%Include qwtdata.sip
 %Include qwtdblrange.sip
 %Include qwtdial.sip
 %Include qwtdialneedle.sip

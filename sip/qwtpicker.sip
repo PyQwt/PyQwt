@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -32,7 +32,7 @@
 
 class QwtPicker: QObject, QwtEventPattern
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_picker.h>
 %End
 
@@ -77,18 +77,9 @@ public:
         KeepSize
     };
 
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtPicker(QWidget * = 0, const char * = 0);
     QwtPicker(int, RubberBand,DisplayMode, QWidget *, const char * = 0);
-    // virtual ~QwtPicker();
+    virtual ~QwtPicker();
 
     virtual void setSelectionFlags(int);
     int selectionFlags() const;

@@ -1,6 +1,7 @@
 // The SIP interface definition for QwtDynGridLayout.
 //
-// Copyright (C) 2003 Gerard Vermeulen
+// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -31,22 +32,13 @@
 
 class QwtDynGridLayout: QLayout
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_dyngrid_layout.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtDynGridLayout(QWidget *, int = 0, int = -1, const char * = 0);
-    QwtDynGridLayout(QLayout *, int =-1, const char * = 0);
+    QwtDynGridLayout(QLayout *, int = -1, const char * = 0);
     QwtDynGridLayout(int = -1, const char * = 0);
 
     void setMaxCols(uint);

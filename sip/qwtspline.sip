@@ -1,6 +1,7 @@
 // The SIP interface definition for QwtSpline.
 //
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -31,52 +32,27 @@
 
 class QwtSpline
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_spline.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtSpline();
 
     double value(double) const;
-    int recalc(double *, double *, int, bool = FALSE);
-%MemberCode
-    // C++ code takes pointer to x and y arrays, the array size and periodic.
-    // Python interface takes two sequences of double:
-    // - either list, tuple or array,
-    // - excess data is ignored,
-    // and optional periodic flag as bool
-    bool periodic = 0;
-    PyObject *xObject = 0, *yObject = 0;
-    QwtSpline *self;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mOO|i",
-		     sipThisObj, sipClass_QwtSpline, &self,
-		     &xObject, &yObject, &periodic)) {
-
+    int recalc(SIP_PYOBJECT, SIP_PYOBJECT, bool = 0);
+%MethodCode
         QwtArray<double> xArray;
-        if (-1 == try_PyObject_to_QwtArray(xObject, xArray))
+        if (-1 == try_PyObject_to_QwtArray(a0, xArray))
             return 0;
 
         QwtArray<double> yArray;
-        if (-1 == try_PyObject_to_QwtArray(yObject, yArray))
+        if (-1 == try_PyObject_to_QwtArray(a1, yArray))
             return 0;
 
-	int error;
 	Py_BEGIN_ALLOW_THREADS
-	error = self->recalc(xArray, yArray, periodic);
+	sipRes = sipCpp->QwtSpline::recalc(xArray, yArray, a2);
 	Py_END_ALLOW_THREADS
-
-	return Py_BuildValue("i", error);
-    }
 %End
     //void copyValues(bool = TRUE); dangling pointers clash with Python
 };

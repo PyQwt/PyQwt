@@ -18,7 +18,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -38,7 +38,7 @@
 
 class QwtPickerMachine
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_picker_machine.h>
 %End
 
@@ -48,17 +48,8 @@ public:
         Begin,
         Append,
         Move,
-        End
+        End,
     };
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
 %If (CXX_DYNAMIC_CAST)
 %ConvertToSubClassCode
@@ -77,9 +68,6 @@ public:
 %End
 %End
 
-    // virtual ~QwtPickerMachine();
-
-    //! Transition
     virtual QValueList<QwtPickerMachine::Command> transition(
         const QwtEventPattern &, const QEvent *) = 0;
     void reset();
@@ -93,80 +81,55 @@ protected:
 
 class QwtPickerClickPointMachine: QwtPickerMachine
 {
-public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
+%TypeHeaderCode
+#include <qwt_picker_machine.h>
 %End
 
+public:
     virtual QValueList<QwtPickerMachine::Command> transition(
         const QwtEventPattern &, const QEvent *);
 };
 
 class QwtPickerDragPointMachine: QwtPickerMachine
 {
-public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
+%TypeHeaderCode
+#include <qwt_picker_machine.h>
 %End
 
+public:
     virtual QValueList<QwtPickerMachine::Command> transition(
         const QwtEventPattern &, const QEvent *);
 };
 
 class QwtPickerClickRectMachine: QwtPickerMachine
 {
-public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
+%TypeHeaderCode
+#include <qwt_picker_machine.h>
 %End
 
+public:
     virtual QValueList<QwtPickerMachine::Command> transition(
         const QwtEventPattern &, const QEvent *);
 };
 
 class QwtPickerDragRectMachine: QwtPickerMachine
 {
-public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
+%TypeHeaderCode
+#include <qwt_picker_machine.h>
 %End
 
+public:
     virtual QValueList<QwtPickerMachine::Command> transition(
         const QwtEventPattern &, const QEvent *);
 };
 
 class QwtPickerPolygonMachine: QwtPickerMachine
 {
-public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
+%TypeHeaderCode
+#include <qwt_picker_machine.h>
 %End
 
+public:
     virtual QValueList<QwtPickerMachine::Command> transition(
         const QwtEventPattern &, const QEvent *);
 };

@@ -32,7 +32,7 @@
 
 class QwtAnalogClock: QwtDial
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_analog_clock.h>
 %End
 
@@ -43,17 +43,9 @@ public:
         HourHand,
         NHands,
     };
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
-    QwtAnalogClock(QWidget * /TransferThis/ = 0, const char* = 0);
-    // virtual ~QwtAnalogClock();
+    QwtAnalogClock(QWidget* /TransferThis/ = 0, const char* = 0);
+    virtual ~QwtAnalogClock();
 
     virtual void setHand(Hand, QwtDialNeedle * /Transfer/);
     // dead code: const QwtDialNeedle *hand(Hand) const;

@@ -32,26 +32,16 @@
 
 class QwtPlotCanvas: QFrame
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_plot_canvas.h>
 %End
 
 public:
-    enum FocusIndicator
-    {
+    enum FocusIndicator {
         NoFocusIndicator,
         CanvasFocusIndicator,
         ItemFocusIndicator,
     };
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
     void setFocusIndicator(FocusIndicator);
     FocusIndicator focusIndicator() const;
@@ -71,7 +61,7 @@ protected:
 
     void drawCanvas(QPainter * = 0);
 
-%If (QWT_COMPAT)
+%If (Qwt_COMPAT)
 public:
     void enableOutline(bool);
     bool outlineEnabled() const;

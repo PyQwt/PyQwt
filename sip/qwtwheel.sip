@@ -1,7 +1,7 @@
 // The SIP interface definition for QwtWheel.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -32,20 +32,11 @@
 
 class QwtWheel: QwtSliderBase 
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_wheel.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtWheel(QWidget * /TransferThis/ = 0, const char * = 0);
     
     virtual void setOrientation(Qt::Orientation);
@@ -81,26 +72,7 @@ protected:
     virtual void paletteChange(const QPalette &);
 
     virtual double getValue(const QPoint &);
-    virtual void getScrollMode(const QPoint &, int &, int &);
-%MemberCode
-    QPoint *point;
-    sip$C *ptr;
-
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "pJ1",
-		     sipThisObj, sipClass_$C, &ptr,
-		     sipClass_QPoint, &point)) {
-	int scrollMode, direction;
-
-        Py_BEGIN_ALLOW_THREADS
-	ptr->sipProtect_getScrollMode(*point, scrollMode, direction);
-        Py_END_ALLOW_THREADS
-
-	return Py_BuildValue("(ii)", scrollMode, direction);
-    }
-%End
-%VirtualCode
-    // sip requires VirtualCode, but does not use it :-)
-%End
+    virtual void getScrollMode(const QPoint &, int & /Out/, int & /Out/);
 };
 
 // Local Variables:

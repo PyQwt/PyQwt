@@ -1,7 +1,7 @@
 // The SIP interface definition for QwtDoublePoint and QwtDoubleRect.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -32,20 +32,11 @@
 
 class QwtDoublePoint
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_double_rect.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtDoublePoint();
     QwtDoublePoint(double, double);
     QwtDoublePoint(const QPoint &);
@@ -69,10 +60,8 @@ public:
     const QwtDoublePoint operator*(double) const;
     const QwtDoublePoint operator/(double) const;
 
-%If (SIP_ALL_OPERATORS)
     QwtDoublePoint &operator+=(const QwtDoublePoint &);
     QwtDoublePoint &operator-=(const QwtDoublePoint &);
-%End
     QwtDoublePoint &operator*=(double);
     QwtDoublePoint &operator/=(double);
 
@@ -80,20 +69,11 @@ public:
 
 class QwtDoubleSize
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_double_rect.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtDoubleSize();
     QwtDoubleSize(double, double);
     QwtDoubleSize(const QSize &);
@@ -123,30 +103,19 @@ public:
     const QwtDoubleSize operator*(double) const;
     const QwtDoubleSize operator/(double) const;
 
-%If (SIP_ALL_OPERATORS)
     QwtDoubleSize &operator+=(const QwtDoubleSize &);
     QwtDoubleSize &operator-=(const QwtDoubleSize &);
-%End
     QwtDoubleSize &operator*=(double);
     QwtDoubleSize &operator/=(double);
 };
 
 class QwtDoubleRect
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_double_rect.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtDoubleRect();
     QwtDoubleRect(double, double, double, double);
     QwtDoubleRect(double, double, const QwtDoubleSize &);
@@ -193,11 +162,8 @@ public:
 
     QwtDoubleRect  operator|(const QwtDoubleRect &) const;
     QwtDoubleRect  operator&(const QwtDoubleRect &) const;
-%If (SIP_ALL_OPERATORS)
     QwtDoubleRect &operator|=(const QwtDoubleRect &);
     QwtDoubleRect &operator&=(const QwtDoubleRect &);
-%End
-
     bool operator==( const QwtDoubleRect &) const;
     bool operator!=( const QwtDoubleRect &) const;
 

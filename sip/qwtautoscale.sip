@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -32,7 +32,7 @@
 
 class QwtAutoScale
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_autoscl.h>
 %End
 
@@ -43,17 +43,8 @@ public:
 	Symmetric = 2,
 	Floating = 4, 
 	Logarithmic = 8,
-	Inverted = 16
+	Inverted = 16,
     };
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
     QwtAutoScale();
 
@@ -83,36 +74,17 @@ public:
     void setScale(double, double, double = 0.0);
     const QwtScaleDiv &scaleDiv() const;
 
-    void adjust(double, double, int);
-%MemberCode
-    long reset = 0;
-    double minVal, maxVal;
-    PyObject *xObject;
-    QwtAutoScale *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mdd|l",
-		     sipThisObj, sipClass_QwtAutoScale, &ptr,
-		     &minVal, &maxVal, &reset)) {
+    void adjust(double, double, int = 0);
+    void adjust(SIP_PYOBJECT, int = 0);
+%MethodCode
+    QwtArray<double> array;
+    // Numeric is not thread-safe
+    if (-1 == try_PyObject_to_QwtArray(a0, array))
+        return 0;
 
-	Py_BEGIN_ALLOW_THREADS
-	ptr->adjust(minVal, maxVal, (int)reset);
-	Py_END_ALLOW_THREADS
-
-	Py_INCREF(Py_None);
-	return Py_None;
-    } else if (sipParseArgs(&sipArgsParsed, sipArgs, "mO|l",
-			    sipThisObj, sipClass_QwtAutoScale, &ptr,
-			    &xObject, &reset)) {
-	QwtArray<double> xArray;
-        if (-1 == try_PyObject_to_QwtArray(xObject, xArray))
-            return 0;
-
-	Py_BEGIN_ALLOW_THREADS
-	ptr->adjust(xArray, (int)reset);
-	Py_END_ALLOW_THREADS
-
-	Py_INCREF(Py_None);
-	return Py_None;
-    }
+    Py_BEGIN_ALLOW_THREADS
+    sipCpp->QwtAutoScale::adjust(array, a1);
+    Py_END_ALLOW_THREADS
 %End
 
     void build();

@@ -32,7 +32,7 @@
 
 class QwtPlot: QFrame
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_plot.h>
 %End
 
@@ -42,17 +42,8 @@ public:
 	yRight,
 	xBottom,
 	xTop,
-	axisCnt
+	axisCnt,
     };
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
     QwtPlot(QWidget * /TransferThis/ = 0, const char * = 0);
     QwtPlot(const QString &, QWidget * /TransferThis/ = 0, const char * = 0);
@@ -78,7 +69,7 @@ public:
 
     void clear();
 
-%If (QWT_COMPAT)
+%If (Qwt_COMPAT)
     // Outline
 
     void enableOutline(bool);
@@ -136,68 +127,25 @@ public:
     void removeCurves();
 
     QwtArray<long> curveKeys() const;
-%MemberCode
-    QwtPlot *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "m",
-		     sipThisObj, sipClass_QwtPlot, &ptr)) {
-	QwtArray<long> keys;
-	Py_BEGIN_ALLOW_THREADS
-	keys = ptr->curveKeys();
-	Py_END_ALLOW_THREADS
-	PyObject *result = PyList_New(keys.size());
-	if (!(result))
-	    return 0;
-	for (uint i=0; i<keys.size(); i++)
-	    PyList_SetItem(result, (int) i, PyInt_FromLong(keys.at(i)));
-	return result;
-    }
-%End
-
-    long closestCurve(int, int, int &, double &, double &, int &) const;
-%MemberCode
-    int xPos, yPos;
-    QwtPlot *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mii",
-		     sipThisObj, sipClass_QwtPlot, &ptr, 
-		     &xPos, &yPos)) {
-	int distance, index;
-	double xVal, yVal;
-	long key;
-	Py_BEGIN_ALLOW_THREADS
-	key = ptr->closestCurve(xPos, yPos, distance, xVal, yVal, index);
-	Py_END_ALLOW_THREADS
-	return Py_BuildValue("(liddi)", key, distance, xVal, yVal, index);
-    }
-%End
+    long closestCurve(int, int, int & /Out/,
+                      double & /Out/, double & /Out/, int & /Out/) const;
 
     bool setCurveBaseline(long, double);
     double curveBaseline(long) const;
 
-    bool setCurveData(long, const double *, const double *, int);
-%MemberCode
-    long key;
-    PyObject *xObject, *yObject;
-    QwtPlot *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mlOO",
-		     sipThisObj, sipClass_QwtPlot, &ptr, 
-		     &key, &xObject, &yObject)) {
+    bool setCurveData(long, SIP_PYOBJECT, SIP_PYOBJECT);
+%MethodCode
+    QwtArray<double> xArray;
+    if (-1 == try_PyObject_to_QwtArray(a1, xArray))
+        return 0;
 
-	QwtArray<double> xArray;
-	if (-1 == try_PyObject_to_QwtArray(xObject, xArray))
-	    return 0;
+    QwtArray<double> yArray;
+    if (-1 == try_PyObject_to_QwtArray(a2, yArray))
+        return 0;
 
-	QwtArray<double> yArray;
-	if (-1 == try_PyObject_to_QwtArray(yObject, yArray))
-	    return 0;
-
-	bool result;
-
-	Py_BEGIN_ALLOW_THREADS
-	result = sipConvertFromBool(ptr->setCurveData(key, xArray, yArray));
-	Py_END_ALLOW_THREADS
-
-	return sipConvertFromBool(result);
-    }
+    Py_BEGIN_ALLOW_THREADS
+    sipRes = sipCpp->setCurveData(a0, xArray, yArray);
+    Py_END_ALLOW_THREADS
 %End
 
     bool setCurveOptions(long, int);
@@ -265,21 +213,7 @@ public:
     const QFont axisFont(int);
 
     void setAxisMargins(int, double, double);
-    bool axisMargins(int, double &, double &) const;
-%MemberCode
-    int axis;
-    QwtPlot *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mi",
-		     sipThisObj, sipClass_QwtPlot, &ptr,
-		     &axis)) {
-	double lowMargin, highMargin;
-	int valid;
-	Py_BEGIN_ALLOW_THREADS
-	valid = ptr->axisMargins(axis, lowMargin, highMargin);
-	Py_END_ALLOW_THREADS
-	return Py_BuildValue("(idd)", valid, lowMargin, highMargin);
-    }
-%End
+    bool axisMargins(int, double & /Out/, double & /Out/) const;
 
     void setAxisScale(int, double, double, double = 0.0);
     void setAxisScaleDraw(int, QwtScaleDraw * /Transfer/);
@@ -288,22 +222,7 @@ public:
     const QwtScale *axis(int) const;
 
     void setAxisLabelFormat(int, char, int);
-    void axisLabelFormat(int, char &, int &, int &) const;
-%MemberCode
-    int axis;
-    QwtPlot *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mi",
-		     sipThisObj, sipClass_QwtPlot, &ptr, &axis)) {
-	char format;
-	int precision;
-	int width;
-	Py_BEGIN_ALLOW_THREADS
-	ptr->axisLabelFormat(axis, format, precision, width);
-	Py_END_ALLOW_THREADS
-	return Py_BuildValue("(cii)", int(format), precision, width);
-    }
-%End
-
+    void axisLabelFormat(int, char & /Out/, int & /Out/, int & /Out/) const;
     void setAxisLabelAlignment(int, int);
     void setAxisLabelRotation(int, double);
 
@@ -335,37 +254,8 @@ public:
     bool removeMarker(long);
     void removeMarkers();
 
-    long closestMarker(int, int, int &) const;
-%MemberCode
-    int x, y;
-    QwtPlot *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mii",
-		     sipThisObj, sipClass_QwtPlot, &ptr, &x, &y)) {
-	int distance;
-	long key;
-	Py_BEGIN_ALLOW_THREADS
-	key = ptr->closestMarker(x, y, distance);
-	Py_END_ALLOW_THREADS
-	return Py_BuildValue("(li)", key, distance);
-    }
-%End
+    long closestMarker(int, int, int & /Out/) const;
     QwtArray<long> markerKeys() const;
-%MemberCode
-    QwtPlot *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "m",
-		     sipThisObj, sipClass_QwtPlot, &ptr)) {
-	QwtArray<long> keys;
-	Py_BEGIN_ALLOW_THREADS
-	keys = ptr->markerKeys();
-	Py_END_ALLOW_THREADS
-	PyObject *result = PyList_New(keys.size());
-	if (!(result))
-	    return 0;
-	for (uint i=0; i<keys.size(); i++)
-	    PyList_SetItem(result, (int) i, PyInt_FromLong(keys.at(i)));
-	return result;
-    }
-%End
 
     bool setMarkerXAxis(long, int);
     int markerXAxis(long) const;
@@ -375,19 +265,7 @@ public:
     bool setMarkerPos(long, double, double);
     bool setMarkerXPos(long, double);
     bool setMarkerYPos(long, double);
-    void markerPos(long, double &, double &) const;
-%MemberCode
-    long key;
-    QwtPlot *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "ml",
-		     sipThisObj, sipClass_QwtPlot, &ptr, &key)) {
-	double x, y;
-	Py_BEGIN_ALLOW_THREADS
-	ptr->markerPos(key, x, y);
-	Py_END_ALLOW_THREADS
-	return Py_BuildValue("(dd)", x, y);
-    }
-%End
+    void markerPos(long, double & /Out/, double & /Out/) const;
 
     bool setMarkerFont(long, const QFont &);
     QFont markerFont(long) const;
@@ -448,7 +326,7 @@ public slots:
 protected slots:
     virtual void lgdClicked();
 
-%If (QWT_COMPAT)
+%If (Qwt_COMPAT)
 signals:
     void plotMousePressed(const QMouseEvent &);
     void plotMouseReleased(const QMouseEvent &);

@@ -2,7 +2,8 @@
 //      QValueList<QRect>,
 //      QValueList<QwtPickerMachine::Command>.
 //
-// Copyright (C) 2003 Gerard Vermeulen
+// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -13,7 +14,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -33,7 +34,7 @@
 
 %MappedType QValueList<QRect>
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_dyngrid_layout.h>
 %End
 
@@ -46,19 +47,16 @@
     if (0 == l)
 	return 0;
 
-
     int i = 0;
     QValueListConstIterator<QRect> it;
 
     for (it = sipCpp->begin(); it != sipCpp->end(); ++it, ++i) {
-	PyObject *t;
-
-	if (0 == (t = sipNewCppToSelf(new QRect(*it), sipClass_QRect,
-                                      SIP_SIMPLE | SIP_PY_OWNED)) 
-	    || PyList_SetItem(l, i, t) < 0) {
-	    Py_XDECREF(t);
+	PyObject *object = sipBuildResult(0, "N",
+                                          new QRect(*it),
+                                          sipClass_QRect);
+	if ((0 == object) || PyList_SetItem(l, i, object) < 0) {
+	    Py_XDECREF(object);
 	    Py_DECREF(l);
-	    
 	    return 0;
 	}
     }
@@ -72,7 +70,6 @@
 
     if (sipPy == Py_None) {
 	*sipCppPtr = 0;
-	
 	return 0;
     }
 
@@ -81,28 +78,27 @@
     for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
 	int iserr = 0;
 
-	QRect *t = sipForceConvertTo_QRect(
-	    PyList_GET_ITEM(sipPy, i), &iserr);
+	QRect *t = reinterpret_cast<QRect *>(
+            sipForceConvertTo_QRect(PyList_GET_ITEM(sipPy, i), &iserr));
 
 	if (!t || iserr) {
 	    *sipIsErr = 1;
 	    delete l;
-
 	    return 0;
 	}
 
-	l -> append(*t);
+	l->append(*t);
     }
 
     *sipCppPtr = l;
-
     return 1;
+
 %End // %ConvertToTypeCode
 };
 
 %MappedType QValueList<QwtPickerMachine::Command>
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qvaluelist.h>
 #include <qwt_picker_machine.h>
 %End
@@ -113,7 +109,6 @@
 
     PyObject *l = PyList_New(sipCpp->count());
 
-    // Create the list.
     if (0 == l)
         return 0;
 
@@ -125,7 +120,7 @@
         }
 
     return l;
-%End
+%End // %ConvertFromTypeCode
 
 %ConvertToTypeCode
     if (0 == sipIsErr)
@@ -133,7 +128,6 @@
 
     if (sipPy == Py_None) {
         *sipCppPtr = 0;
-
         return 0;
     }
 
@@ -149,15 +143,14 @@
         if (0 != PyErr_Occurred()) {
             *sipIsErr = 1;
             delete l;
-            
             return 0;
         }
     }
 
     *sipCppPtr = l;
-
     return 1;
-%End
+
+%End // %ConvertToTypeCode
 };
 
 

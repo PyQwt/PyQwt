@@ -30,7 +30,7 @@
 // for a non-free program.
 
 
-%HeaderCode
+%ModuleHeaderCode
 #include <qwt_math.h>
 %End
 

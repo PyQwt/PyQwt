@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -33,30 +33,20 @@
 class QwtLegendItem
 {
 public:
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_legend.h>
 %End
-    enum IdentifierMode
-    {
+    enum IdentifierMode {
         NoIdentifier = 0,
         ShowLine = 1,
         ShowSymbol = 2,
-        ShowText = 4
+        ShowText = 4,
     };
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
     QwtLegendItem();
     QwtLegendItem(const QwtSymbol &, const QPen &);
 
-    // virtual ~QwtLegendItem();
+    virtual ~QwtLegendItem();
 
     void setIdentifierMode(int);
     int identifierMode() const;

@@ -1,6 +1,7 @@
 // The SIP interface definition for QwtPlotCurve.
 //
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -31,20 +32,11 @@
 
 class QwtPlotCurve: QwtCurve, QwtPlotMappedItem
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_plot_classes.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtPlotCurve(QwtPlot * /TransferThis/, const char * = 0);
 protected:
     virtual void curveChanged();

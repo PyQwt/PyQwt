@@ -32,7 +32,7 @@
 
 class QwtScale: QWidget
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_scale.h>
 %End
 
@@ -44,17 +44,9 @@ public:
 	Bottom,
     };
 
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtScale(Position, QWidget * /TransferThis/, const char * = 0);
-
+    virtual ~QwtScale();
+    
     void setTitle(const QString &);
     const QString title() const;
 
@@ -70,52 +62,18 @@ public:
     void setBorderDist(int, int);
     int startBorderDist() const;
     int endBorderDist() const;
-    void minBorderDist() const;
-%MemberCode
-    // The Python interface returns a tuple
-    QwtScale *ptr;
-
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "m",
-                     sipThisObj, sipClass_QwtScale, &ptr)) {
-        int start, end;
-
-        Py_BEGIN_ALLOW_THREADS
-        ptr->minBorderDist(start, end);
-        Py_END_ALLOW_THREADS
-
-        return Py_BuildValue("(ii)", start, end);
-    }
-%End
+    void minBorderDist(int & /Out/, int & /Out/) const;
 
     void setBaselineDist(int);
     int baseLineDist() const;
-
-    void setTitleDist(int);
-    int titleDist() const;
 
     void setScaleDiv(const QwtScaleDiv &);
     void setScaleDraw(QwtScaleDraw *);
     const QwtScaleDraw *scaleDraw() const;
 
     void setLabelFormat(char, int, int);
-    void labelFormat(char &, int &, int &) const;
-    // The Python interface returns a tuple
-%MemberCode
-    QwtScale *ptr;
-   
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "m",
-		     sipThisObj, sipClass_QwtScale, &ptr)) {
-	char format;
-	int precision;
-	int width;
+    void labelFormat(char & /Out/, int & /Out/, int & /Out/) const;
 
-        Py_BEGIN_ALLOW_THREADS
-	ptr->labelFormat(format, precision, width);
-        Py_END_ALLOW_THREADS
-
-	return Py_BuildValue("(cii)", int(format), precision, width);
-    }
-%End
     void setLabelAlignment(int);
     void setLabelRotation(double);
 

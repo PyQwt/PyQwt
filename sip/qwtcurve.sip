@@ -1,7 +1,7 @@
 // The SIP interface definition for QwtCurve.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -32,7 +32,7 @@
 
 class QwtCurve
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_curve.h>
 %End
     
@@ -44,7 +44,7 @@ public:
 	Steps,
 	Dots,
 	Spline,
-	UserCurve = 100
+	UserCurve = 100,
     };
     enum CurveOption {
 	Auto = 0,
@@ -55,43 +55,24 @@ public:
 	Inverted = 16
     };
 
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtCurve(const QString & = QString::null);
     QwtCurve(const QwtCurve &);
 
-    // FIXME: const QwtCurve& operator= (const QwtCurve &);
-    
-    void setData(const double *, const double *, int);
-%MemberCode
-    PyObject *xObject, *yObject;
-    QwtCurve *ptr;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mOO",
-		     sipThisObj, sipClass_QwtCurve, &ptr,
-		     &xObject, &yObject)) {
+    // FIXME: const QwtCurve& operator=(const QwtCurve &);
 
+    void setData(SIP_PYOBJECT, SIP_PYOBJECT);
+%MethodCode
 	QwtArray<double> xArray;
-	if (-1 == try_PyObject_to_QwtArray(xObject, xArray))
+        if (-1 == try_PyObject_to_QwtArray(a0, xArray))
 	    return 0;
 
 	QwtArray<double> yArray;
-	if (-1 == try_PyObject_to_QwtArray(yObject, yArray))
+	if (-1 == try_PyObject_to_QwtArray(a1, yArray))
 	    return 0;
 
 	Py_BEGIN_ALLOW_THREADS
-	ptr->setData(xArray, yArray);
+	sipCpp->setData(xArray, yArray);
 	Py_END_ALLOW_THREADS
-
-	Py_INCREF(Py_None);
-	return Py_None;
-    }
 %End
 
     int dataSize() const;
@@ -147,20 +128,7 @@ protected:
     void closePolyline(const QwtDiMap &, const QwtDiMap &,
 		       QPointArray &) const;
     virtual void curveChanged();
-    int verifyRange(int &, int &);
-%MemberCode
-    int first, last;
-    sipQwtCurve *sipCpp;
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "pii",
-		     sipThisObj, sipClass_QwtCurve, &sipCpp, 
-		     &first, &last)) {
-	int length;
-	Py_BEGIN_ALLOW_THREADS
-	length = sipCpp->sipProtect_verifyRange(first, last);
-	Py_END_ALLOW_THREADS
-	return Py_BuildValue("(iii)", length, first, last);
-    }
-%End
+    int verifyRange(int & /In,Out/, int & /In,Out/);
 };
 
 // Local Variables:

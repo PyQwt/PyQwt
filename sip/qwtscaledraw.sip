@@ -1,6 +1,7 @@
 // The SIP interface definition for QwtScaleDraw.
 //
 // Copyright (C) 2002-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -31,7 +32,7 @@
 
 class QwtScaleDraw: QwtDiMap
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_scldraw.h>
 %End
 
@@ -49,16 +50,8 @@ public:
 	Backbone = 1,
     };
 
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtScaleDraw();
+    virtual ~QwtScaleDraw();
     
     void setScale(const QwtScaleDiv &);
     void setScale(double, double, int, int, double = 0.0, int = 0);
@@ -82,67 +75,18 @@ public:
     int maxWidth(const QPen &, const QFontMetrics &) const;
     int maxHeight(const QPen &, const QFontMetrics &) const;
 
-    void minBorderDist(const QFontMetrics &, int &, int &) const;
-%MemberCode
-    // The Python interface returns (start, end)
-    QwtScaleDraw *ptr;
-    const QFontMetrics *fm;
-
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "mJ1",
-		     sipThisObj, sipClass_QwtScaleDraw, &ptr,
-		     sipClass_QFontMetrics, &fm)) {
-	int start, end;
-
-	Py_BEGIN_ALLOW_THREADS
-	ptr->minBorderDist(*fm, start, end);
-	Py_END_ALLOW_THREADS
-	
-	return Py_BuildValue("(ii)", start, end);
-    }
-%End
-
+    void minBorderDist(const QFontMetrics &, int & /Out/, int & /Out/) const;
     int minLabelDist(const QFontMetrics &) const;
 
     int minHeight(const QPen &, const QFontMetrics &) const; 
     int minWidth(const QPen &, const QFontMetrics &) const; 
-    void labelFormat(char &, int &, int &) const;
-%MemberCode
-    // The Python interface returns (format, precision, width)
-    QwtScaleDraw *ptr;
-   
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "m",
-		     sipThisObj, sipClass_QwtScaleDraw, &ptr)) {
-	char format;
-	int precision;
-	int width;
 
-	Py_BEGIN_ALLOW_THREADS
-	ptr->labelFormat(format, precision, width);
-	Py_END_ALLOW_THREADS
-
-	return Py_BuildValue("(cii)", int(format), precision, width);
-    }
-%End
+    void labelFormat(char & /Out/, int & /Out/, int & /Out/) const;
         
     int labelAlignment() const;
     double labelRotation() const;
+
     void tickLength(unsigned int &, unsigned int &, unsigned int &) const;
-%MemberCode
-    // The Python interface returns (minLen, medLen, majLen)
-    QwtScaleDraw *ptr;
-   
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "m",
-		     sipThisObj, sipClass_QwtScaleDraw, &ptr)) {
-	unsigned int minLen, medLen, majLen;
-
-	Py_BEGIN_ALLOW_THREADS
-	ptr->tickLength(minLen, medLen, majLen);
-	Py_END_ALLOW_THREADS
-
-	return Py_BuildValue("(iii)", minLen, medLen, majLen);
-    }
-%End
-        
     unsigned int majTickLength() const;
          
     virtual void draw(QPainter *) const;
@@ -150,69 +94,7 @@ public:
 
 protected:
     virtual void labelPlacement(const QFontMetrics &, double, QPoint &,
-				int &, double &) const;
-%MemberCode
-    // The Python interface returns (alignment, rotation)
-    QFontMetrics *a0;
-    double a1;
-    QPoint *a2;
-    sipQwtScaleDraw *ptr;
-
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "pJ1dJ1",
-		     sipThisObj, sipClass_QwtScaleDraw, &ptr,
-		     sipClass_QFontMetrics, &a0,
-		     &a1,
-		     sipClass_QPoint, &a2)) {
-	int alignment;
-	double rotation;
-	
-	Py_BEGIN_ALLOW_THREADS
-	ptr->sipProtect_labelPlacement(*a0, a1, *a2, alignment, rotation);
-	Py_END_ALLOW_THREADS
-
-	return Py_BuildValue("(id)", alignment, rotation);
-    }
-%End // %MemberCode
-
-%VirtualCode
-    PyObject *pyRes;
-
-    PyObject *a0obj = sipMapCppToSelf(&a0, sipClass_QFontMetrics);
-    PyObject *a2obj = sipMapCppToSelf(&a2, sipClass_QPoint);
-
-    PyObject *sipArgs = Py_BuildValue(
-	"(ONdN)", sipThis->sipSelf, a0obj, a1, a2obj);
-    if (0 == sipArgs)
-	goto reportError;
-
-    pyRes = sipEvalMethod(&pymc->pyMethod, sipArgs);
-    Py_DECREF(sipArgs);
-
-    if (0 != pyRes) {
-	int alignment;
-	double rotation;
-
-	int ok = PyArg_ParseTuple(pyRes, "id", &alignment, &rotation);
-	Py_DECREF(pyRes);
-	if (ok) {
-	    a3 = alignment;
-	    a4 = rotation;
-	    goto releaseLock;
-	}
-#ifdef OLD_SIP_NAMES
-	sipBadVirtualResultType(sipName_qwt_QwtScaleDraw,
-				sipName_qwt_labelPlacement);
-#else
-	sipBadVirtualResultType(sipName_QwtScaleDraw,
-				sipName_labelPlacement);
-#endif
-    }
-
-reportError:
-    PyErr_Print();
-releaseLock:
-    SIP_UNBLOCK_THREADS
-%End // %VirtualCode
+				int & /Out/, double & /Out/) const;
 
     virtual int maxLabelHeight(const QFontMetrics &) const;
     virtual int maxLabelWidth(const QFontMetrics &) const;

@@ -30,22 +30,22 @@
 // for a non-free program.
 
 
-%HeaderCode
+class Qwt 
+{
+%TypeHeaderCode
 #include <qwt.h>
 %End
 
-class Qwt 
-{
 public:
     enum Position {
 	Left = 0x01,
 	Right = 0x02,
 	Top = 0x04,
 	Bottom = 0x08,
-	Center = 0x10
+	Center = 0x10,
     };
 
-%If (QWT_COMPAT)
+%If (Qwt_COMPAT)
     enum Shape {
         HLine,
         VLine,
@@ -56,26 +56,17 @@ public:
         UTriangle,
         DTriangle,
         LTriangle,
-        RTriangle
+        RTriangle,
     };
 %End
 
     enum Errors {
 	ErrNone,
 	ErrNoMem,
-	ErrMono
+	ErrMono,
     };
 
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
-};
+}; // class Qwt
 
 // Local Variables:
 // mode: C++

@@ -32,51 +32,30 @@
 // educational versions of Qt, PyQt and sip, PyQwt becomes a free plug-in
 // for a non-free program.
 
-
-QImage &toQImage(void *);
-%MemberCode
-    PyObject *object;
-
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "O", &object)) {
-	QImage *image;
-	int code;
-	
-	// Numeric is not thread-safe, no Py_BEGIN_ALLOW_THREADS
-	image = new QImage();
-	code = try_PyObject_to_QImage(object, *image);
-	// Numeric is not thread-safe, no Py_END_ALLOW_THREADS
-
-	if (-1 == code)
-	    return 0;
-	    
-        return sipNewCppToSelf(image, sipClass_QImage,
-			       SIP_SIMPLE | SIP_PY_OWNED);
-    }
+%ModuleHeaderCode
+#include <sipqtQImage.h>
+QImage &toQImage(PyObject *);
 %End
+
+
+QImage &toQImage(SIP_PYOBJECT);
+%MethodCode
+    // Numeric is not thread-safe
+    sipRes = new QImage();
+    if (-1 == try_PyObject_to_QImage(a0, *sipRes))
+        return 0;
+%End
+
 
 %If (HAS_NUMARRAY)
-void /* PyObject */ to_na_array(const QImage &);
-%MemberCode
-    QImage *image;
-    if (sipParseArgs(&sipArgsParsed, sipArgs,
-                     "J1" , sipClass_QImage, &image)) {
-        // Numeric is not thread-safe, no Py_BEGIN/END_ALLOW_THREADS
-        return to_na_array(*image);
-    }
-%End
+SIP_PYOBJECT to_na_array(const QImage &);
 %End
 
+
 %If (HAS_NUMERIC)
-void /* PyObject */ to_np_array(const QImage &);
-%MemberCode
-    QImage *image;
-    if (sipParseArgs(&sipArgsParsed, sipArgs,
-                     "J1" , sipClass_QImage, &image)) {
-        // Numeric is not thread-safe, no Py_BEGIN/END_ALLOW_THREADS
-        return to_np_array(*image);
-    }
+SIP_PYOBJECT to_np_array(const QImage &);
 %End
-%End
+
 
 // Local Variables:
 // mode: C++

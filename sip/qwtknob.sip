@@ -1,7 +1,7 @@
 // The SIP interface definition file for QwtKnob.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2000-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -32,24 +32,15 @@
 
 class QwtKnob: QwtSliderBase, QwtScaleIf
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_knob.h>
 %End
 
 public:
     enum Symbol {
 	Line,
-	Dot
+	Dot,
     };
-
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
 
     QwtKnob(QWidget * /TransferThis/ = 0, const char * = 0);
 
@@ -77,10 +68,7 @@ protected:
 private:
     void layoutKnob(bool = 1);
     double getValue(const QPoint &);
-    void getScrollMode(const QPoint &, int &, int &);
-%MemberCode
-    // sip requires MemberCode to generate a dummy wrapper :-)
-%End
+    void getScrollMode(const QPoint &, int & /Out/, int & /Out/);
     void recalcAngle();
  
     virtual void valueChange();

@@ -3,6 +3,7 @@
 //	QwtSimpleCompassRose.
 //
 // Copyright (C) 2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -13,7 +14,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -33,20 +34,11 @@
 
 class QwtCompassRose
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_compass_rose.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     virtual void setPalette(const QPalette &);
     const QPalette &palette() const;
 
@@ -57,20 +49,11 @@ public:
 
 class QwtSimpleCompassRose: QwtCompassRose
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_compass_rose.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtSimpleCompassRose(int = 8, int = -1);
 
     void setWidth(double);

@@ -31,9 +31,7 @@
 
 
 %Feature CXX_DYNAMIC_CAST
-%Feature QWT_COMPAT
-%Feature SIP_DUMB_DIR
-%Feature SIP_ALL_OPERATORS
+%Feature Qwt_COMPAT
 %Feature HAS_NUMARRAY
 %Feature HAS_NUMERIC
 
