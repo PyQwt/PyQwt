@@ -41,8 +41,27 @@ public:
     QwtMarkerDict();
 };
 
+class QwtPlotMarkerIterator //: QwtIntDictIterator<QwtPlotMarker>
+{
+%TypeHeaderCode
+#include <qwt_plot_dict.h>
+%End
+
+public:
+    QwtPlotMarkerIterator(const QwtMarkerDict &);
+    ~QwtPlotMarkerIterator();
+    uint count() const;
+    bool isEmpty() const;
+    QwtPlotMarker *toFirst();
+    //operator QwtPlotMarker *() const;
+    QwtPlotMarker *current() const;
+    long currentKey() const;
+    //QwtPlotMarker *operator()();
+    //QwtPlotMarker *operator++();
+    QwtPlotMarker *operator+=(uint);
+};
+
 // Local Variables:
 // mode: C++
 // c-file-style: "stroustrup"
 // End:
-

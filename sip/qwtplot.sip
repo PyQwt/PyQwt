@@ -105,8 +105,8 @@ public:
     void setCanvasLineWidth(int);
     int canvasLineWidth() const;
 
-    // FIXME: QwtPlotCurveIterator curveIterator() const;
-    // FIXME: QwtPlotMarkerIterator markerIterator() const;
+    QwtPlotCurveIterator curveIterator() const;
+    QwtPlotMarkerIterator markerIterator() const;
 
     QwtDiMap canvasMap(int) const;
 

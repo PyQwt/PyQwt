@@ -41,8 +41,27 @@ public:
     QwtCurveDict();
 };
 
+class QwtPlotCurveIterator //: QwtIntDictIterator<QwtPlotCurve>
+{
+%TypeHeaderCode
+#include <qwt_plot_dict.h>
+%End
+
+public:
+    QwtPlotCurveIterator(const QwtCurveDict &);
+    ~QwtPlotCurveIterator();
+    uint count() const;
+    bool isEmpty() const;
+    QwtPlotCurve *toFirst();
+    //operator QwtPlotCurve *() const;
+    QwtPlotCurve *current() const;
+    long currentKey() const;
+    //QwtPlotCurve *operator()();
+    //QwtPlotCurve *operator++();
+    QwtPlotCurve *operator+=(uint);
+};
+
 // Local Variables:
 // mode: C++
 // c-file-style: "stroustrup"
 // End:
-
