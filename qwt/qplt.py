@@ -14,7 +14,7 @@ Provides a Command Line Interpreter friendly interface to QwtPlot.
 #
 # PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
@@ -147,7 +147,7 @@ class Plot(QwtPlot):
                 parent = arg
                 self.size = None
         QwtPlot.__init__(self, parent)
-        font = QFont('verdana')
+        font = QFont('Verdana')
         if font.exactMatch():
             self.setFont(font)
 
@@ -157,9 +157,26 @@ class Plot(QwtPlot):
         self.setAutoLegend(1)
         self.setLegendPos(Qwt.Right)
 
-        # zoom
-        self.zoomStack = []
-        self.zoomState = None
+        self.zoomers = []
+        zoomer = QwtPlotZoomer(QwtPlot.xBottom,
+                               QwtPlot.yLeft,
+                               QwtPicker.DragSelection,
+                               QwtPicker.AlwaysOff,
+                               self.canvas())
+        old = zoomer.mousePattern()
+        new = [old[0], old[2], old[1], old[3], old[5], old[4]]
+        zoomer.setMousePattern(new);
+        zoomer.setRubberBandPen(QPen(Black))
+        self.zoomers.append(zoomer)
+
+        zoomer = QwtPlotZoomer(QwtPlot.xTop,
+                               QwtPlot.yRight,
+                               QwtPicker.DragSelection,
+                               QwtPicker.AlwaysOff,
+                               self.canvas())
+        zoomer.setMousePattern(new);
+        zoomer.setRubberBand(QwtPicker.NoRubberBand)
+        self.zoomers.append(zoomer)
         
         # initialization
         for arg in args:
@@ -184,18 +201,14 @@ class Plot(QwtPlot):
             apply(self.resize, self.size)
         self.replot()
 
-        self.connect(self, SIGNAL('plotMouseMoved(const QMouseEvent&)'),
-                     self.onMouseMoved)
-        self.connect(self, SIGNAL('plotMousePressed(const QMouseEvent&)'),
-                     self.onMousePressed)
-        self.connect(self, SIGNAL('plotMouseReleased(const QMouseEvent&)'),
-                     self.onMouseReleased)
         self.connect(self, SIGNAL("legendClicked(long)"), self.toggleCurve)
         self.show()
 
     # __init__()
 
     def __getattr__(self, attr):
+        """Delegate to QwtPlot
+        """
         if hasattr(QwtPlot, attr):
             return getattr(self.sipThis, attr)
         else:
@@ -210,6 +223,8 @@ class Plot(QwtPlot):
                 self.plotCurve(arg)
             else:
                 print "Plot.plot() fails to accept %s." % arg
+        for zoomer in self.zoomers:
+            zoomer.setZoomBase()
         self.replot()
 
     # plot()
@@ -222,6 +237,7 @@ class Plot(QwtPlot):
             self.setAxisTitleFont(
                 orientation,
                 QFont(QFontInfo(self.font()).family(), 12, QFont.Bold))
+        self.replot()
 
     # plotAxis()
 
@@ -250,70 +266,6 @@ class Plot(QwtPlot):
         return result
 
     # formatCoordinates()
-
-    def onMouseMoved(self, e):
-        pass
-
-    # onMouseMoved()
-    
-    def onMousePressed(self, e):
-        if Qt.LeftButton == e.button():
-            # Python semantics: self.pos = e.pos() does not work; force a copy
-            self.xpos = e.pos().x()
-            self.ypos = e.pos().y()
-            self.enableOutline(1)
-            self.setOutlinePen(QPen(Qt.black))
-            self.setOutlineStyle(Qwt.Rect)
-            self.zooming = 1
-            if self.zoomStack == []:
-                self.zoomState = (
-                    self.axisScale(QwtPlot.xBottom).lBound(),
-                    self.axisScale(QwtPlot.xBottom).hBound(),
-                    self.axisScale(QwtPlot.yLeft).lBound(),
-                    self.axisScale(QwtPlot.yLeft).hBound(),
-                    )
-        elif Qt.RightButton == e.button():
-            self.zooming = 0
-        # fake a mouse move to show the cursor position
-        self.onMouseMoved(e)
-
-    # onMousePressed()
-
-    def onMouseReleased(self, e):
-        if Qt.LeftButton == e.button():
-            xmin = min(self.xpos, e.pos().x())
-            xmax = max(self.xpos, e.pos().x())
-            ymin = min(self.ypos, e.pos().y())
-            ymax = max(self.ypos, e.pos().y())
-            self.setOutlineStyle(Qwt.Cross)
-            for axis in [QwtPlot.xBottom]:
-                if self.axisEnabled(axis):
-                    xmin = self.invTransform(axis, xmin)
-                    xmax = self.invTransform(axis, xmax)
-            for axis in [QwtPlot.yLeft]:
-                if self.axisEnabled(axis):
-                    ymin = self.invTransform(axis, ymin)
-                    ymax = self.invTransform(axis, ymax)
-            if xmin == xmax or ymin == ymax:
-                return
-            self.zoomStack.append(self.zoomState)
-            self.zoomState = (xmin, xmax, ymin, ymax)
-            self.enableOutline(0)
-        elif Qt.RightButton == e.button():
-            if len(self.zoomStack):
-                xmin, xmax, ymin, ymax = self.zoomStack.pop()
-            else:
-                return
-            
-        for axis in [QwtPlot.xBottom]:
-            if self.axisEnabled(axis):
-                self.setAxisScale(axis, xmin, xmax)
-        for axis in [QwtPlot.yLeft]:
-            if self.axisEnabled(axis):
-                self.setAxisScale(axis, ymin, ymax)
-        self.replot()
-
-    # onMouseReleased()
 
     def toggleCurve(self, key):
         curve = self.curve(key)
@@ -578,51 +530,102 @@ class Pen(QPen):
 # class Pen
 
 
-print_xpm = ['32 32 12 1',
-             'a c #ffffff',
-             'h c #ffff00',
-             'c c #ffffff',
-             'f c #dcdcdc',
-             'b c #c0c0c0',
-             'j c #a0a0a4',
-             'e c #808080',
-             'g c #808000',
-             'd c #585858',
-             'i c #00ff00',
-             '# c #000000',
-             '. c None',
-             '................................',
-             '................................',
-             '...........###..................',
-             '..........#abb###...............',
-             '.........#aabbbbb###............',
-             '.........#ddaaabbbbb###.........',
-             '........#ddddddaaabbbbb###......',
-             '.......#deffddddddaaabbbbb###...',
-             '......#deaaabbbddddddaaabbbbb###',
-             '.....#deaaaaaaabbbddddddaaabbbb#',
-             '....#deaaabbbaaaa#ddedddfggaaad#',
-             '...#deaaaaaaaaaa#ddeeeeafgggfdd#',
-             '..#deaaabbbaaaa#ddeeeeabbbbgfdd#',
-             '.#deeefaaaaaaa#ddeeeeabbhhbbadd#',
-             '#aabbbeeefaaa#ddeeeeabbbbbbaddd#',
-             '#bbaaabbbeee#ddeeeeabbiibbadddd#',
-             '#bbbbbaaabbbeeeeeeabbbbbbaddddd#',
-             '#bjbbbbbbaaabbbbeabbbbbbadddddd#',
-             '#bjjjjbbbbbbaaaeabbbbbbaddddddd#',
-             '#bjaaajjjbbbbbbaaabbbbadddddddd#',
-             '#bbbbbaaajjjbbbbbbaaaaddddddddd#',
-             '#bjbbbbbbaaajjjbbbbbbddddddddd#.',
-             '#bjjjjbbbbbbaaajjjbbbdddddddd#..',
-             '#bjaaajjjbbbbbbjaajjbddddddd#...',
-             '#bbbbbaaajjjbbbjbbaabdddddd#....',
-             '###bbbbbbaaajjjjbbbbbddddd#.....',
-             '...###bbbbbbaaajbbbbbdddd#......',
-             '......###bbbbbbjbbbbbddd#.......',
-             '.........###bbbbbbbbbdd#........',
-             '............###bbbbbbd#.........',
-             '...............###bbb#..........',
-             '..................###...........']
+print_xpm = [
+    '32 32 12 1',
+    'a c #ffffff',
+    'h c #ffff00',
+    'c c #ffffff',
+    'f c #dcdcdc',
+    'b c #c0c0c0',
+    'j c #a0a0a4',
+    'e c #808080',
+    'g c #808000',
+    'd c #585858',
+    'i c #00ff00',
+    '# c #000000',
+    '. c None',
+    '................................',
+    '................................',
+    '...........###..................',
+    '..........#abb###...............',
+    '.........#aabbbbb###............',
+    '.........#ddaaabbbbb###.........',
+    '........#ddddddaaabbbbb###......',
+    '.......#deffddddddaaabbbbb###...',
+    '......#deaaabbbddddddaaabbbbb###',
+    '.....#deaaaaaaabbbddddddaaabbbb#',
+    '....#deaaabbbaaaa#ddedddfggaaad#',
+    '...#deaaaaaaaaaa#ddeeeeafgggfdd#',
+    '..#deaaabbbaaaa#ddeeeeabbbbgfdd#',
+    '.#deeefaaaaaaa#ddeeeeabbhhbbadd#',
+    '#aabbbeeefaaa#ddeeeeabbbbbbaddd#',
+    '#bbaaabbbeee#ddeeeeabbiibbadddd#',
+    '#bbbbbaaabbbeeeeeeabbbbbbaddddd#',
+    '#bjbbbbbbaaabbbbeabbbbbbadddddd#',
+    '#bjjjjbbbbbbaaaeabbbbbbaddddddd#',
+    '#bjaaajjjbbbbbbaaabbbbadddddddd#',
+    '#bbbbbaaajjjbbbbbbaaaaddddddddd#',
+    '#bjbbbbbbaaajjjbbbbbbddddddddd#.',
+    '#bjjjjbbbbbbaaajjjbbbdddddddd#..',
+    '#bjaaajjjbbbbbbjaajjbddddddd#...',
+    '#bbbbbaaajjjbbbjbbaabdddddd#....',
+    '###bbbbbbaaajjjjbbbbbddddd#.....',
+    '...###bbbbbbaaajbbbbbdddd#......',
+    '......###bbbbbbjbbbbbddd#.......',
+    '.........###bbbbbbbbbdd#........',
+    '............###bbbbbbd#.........',
+    '...............###bbb#..........',
+    '..................###...........',
+    ]
+
+grace_xpm = [
+    '48 39 6 1',
+    '  c #000000000000',
+    '. c #FFFFFFFFFFFF',
+    'X c #BEFBBEFBBEFB',
+    'o c #51445144FFFF',
+    'O c #FFFF14514103',
+    '+ c #0000AAAA1861',
+    '                                                ',
+    ' .............................................. ',
+    ' .............................................. ',
+    ' ...............                  ............. ',
+    ' .............................................. ',
+    ' .................              ............... ',
+    ' .............................................. ',
+    ' .......                                 ...... ',
+    ' ....... XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ...... ',
+    ' ....... XXXXXXXXXXXXXXXXXXXXXXXXXXoXXXX ...... ',
+    ' ..... . XXoooXX      XXXXXXXXXXXoooXXXX ...... ',
+    ' .. .... XXXXXXXXXXXXXXXXXXXXXXXXoXooOXX ...... ',
+    ' .. .... XXOOOXX     XXXXXXXXXXXXoXOoXXX ...... ',
+    ' .. .... XXXXXXXXXXXXXXXXXXXXXXXoOOXooXX ...... ',
+    ' .. .... XX+++XX     XXXXooXXXXOoXXXXoXX ...... ',
+    ' .. .. . XXXXXXXXXXXXXXXoXoXXXOoXXXXXXXX ...... ',
+    ' .. .... XXXXXXXXXXXXXXXoXoXOOooXXXXXXXX ...... ',
+    ' .. .... XXXXXXXXXXXXXXoXXooXXoXXXXXXXXX ...... ',
+    ' .. .... XXXXXXXoXXXXXooXOOoXoXXXXXXXXXX ...... ',
+    ' .. .... XXXXXXooXXXXXoOOXXooXXXXXXXXXXX ...... ',
+    ' .. .. . XXXXXXoXoXXXoOXXXXXXXXXXXXXXXXX ...... ',
+    ' .. .... XXXXXooXoXXOoXXXXXXXXXXXXXXXXXX ...... ',
+    ' .. .... XXXXooXXooOooXXXXXXXXXXXXXXXXXX ...... ',
+    ' .. .... XXXXoXXOOoXoXXXXXXXXXX+++++XXXX ...... ',
+    ' .. .... XXXXoXOXXoXoXXXXXXXXXX+++++XXXX ...... ',
+    ' .. .. . XXXooOXXXXoXXXX+++++XX+++++XXXX ...... ',
+    ' .. .... XXOoXXXXXXXXXXX+++++XX+++++XXXX ...... ',
+    ' .. .... XOoXXXXX+++++XX+++++XX+++++XXXX ...... ',
+    ' .. .... XXoXXXXX+++++XX+++++XX+++++XXXX ...... ',
+    ' ....... XooXXXXX+++++XX+++++XX+++++XXXX ...... ',
+    ' ..... . XXXXXXXX+++++XX+++++XX+++++XXXX ...... ',
+    ' .......                                 ...... ',
+    ' .............................................. ',
+    ' ........ .... .... .... .... .... .... ....... ',
+    ' .............................................. ',
+    ' ..............                    ............ ',
+    ' .............................................. ',
+    ' .............................................. ',
+    '                                                ',
+    ]
 
 
 class IPlot(QMainWindow):
@@ -662,23 +665,40 @@ class IPlot(QMainWindow):
 
         graceButton = QToolButton(self.toolBar)
         graceButton.setTextLabel("Grace")
-        graceButton.setUsesTextLabel(1)
+        graceButton.setPixmap(QPixmap(grace_xpm))
         self.toolBar.addSeparator()
 
-        #helpButton = QToolBar(self.toolBar)
-        #helpButton.setTextLabel("Help")
+        QWhatsThis.whatsThisButton(self.toolBar)
 
         self.connect(printButton, SIGNAL('clicked()'), self.printPlot)
         self.connect(graceButton, SIGNAL('clicked()'), self.gracePlot)
 
         self.statusBar().message("Move the mouse within the plot canvas"
-                                 " to show the cursor position")
+                                 " to show the cursor position.")
         self.__plot.canvas().setMouseTracking(1)
         self.connect(self.__plot, SIGNAL('plotMouseMoved(const QMouseEvent&)'),
                      self.onMouseMoved)
 
+        QWhatsThis.add(printButton,
+                       'Print to a printer or an (E)PS file.')
+
+        QWhatsThis.add(graceButton,
+                       'Clone the plot into Grace.\n\n'
+                       'The hardcopy output of Grace is better for\n'
+                       'scientific journals and LaTeX documents.')
+        
+        QWhatsThis.add(self.__plot.legend(),
+                       'Clicking on a legend button\n'
+                       'toggles the visibility of a curve.')
+
+        QWhatsThis.add(self.__plot.canvas(),
+                       'Zooming\n'
+                       'Zooming')
+
         self.resize(700, 500)
         self.show()
+
+    # __init__()
 
     def printPlot(self):
         try:
@@ -690,24 +710,63 @@ class IPlot(QMainWindow):
         if p.setup():
             self.__plot.printPlot(p)
 
+    # printPlot()
+
     def onMouseMoved(self, e):
         self.statusBar().message(
             ' -- '.join(self.formatCoordinates(e.pos().x(), e.pos().y())))
+
+    # onMouseMoved()
         
     def __getattr__(self, attr):
+        """Delegate to QMainWindow and Plot
+        """
         if hasattr(QMainWindow, attr):
             return getattr(self.sipThis, attr)
         elif hasattr(self.__plot, attr):
             return getattr(self.__plot, attr)
         else:
             raise AttributeError, ('%s has no attribute named %s'
-                                   % (self.__class__.__name__, attr)
-                                   )
+                                   % (self.__class__.__name__, attr))
+
+    # __getattr__()
+
+# class IPlot
         
         
 # Admire!
 from Numeric import *
 import random
+
+def testPlot():
+    x = arange(-2*pi, 2*pi, 0.01)
+    p = Plot(Curve(x, cos(x), Pen(Magenta, 2), "cos(x)"),
+             Axis(Bottom, "x axis"),
+             Axis(Left, "linear y axis"),
+             Axis(Right, Logarithmic, "logarithmic y axis"),             
+             Curve(x, exp(x), Pen(Red), "exp(x)", Right),
+             ("PyQwt demo based on Qwt-%s (http://qwt.sf.net)"
+              % QWT_VERSION_STR))
+    x = x[0:-1:10]
+    p.plot(Curve(x, cos(x-pi/4), Symbol(Circle, Yellow), "circle"),
+           Curve(x, cos(x+pi/4), Pen(Blue), Symbol(Square, Cyan), "square"))
+    return p
+
+
+def testIPlot():
+    x = arange(-2*pi, 2*pi, 0.01)
+    p = IPlot(Curve(x, cos(x), Pen(Magenta, 2), "cos(x)"),
+              Axis(Bottom, "x axis"),
+              Axis(Left, "linear y axis"),
+              Axis(Right, Logarithmic, "logarithmic y axis"),
+              Curve(x, exp(x), Pen(Red), "exp(x)", Right),
+              ("PyQwt demo based on Qwt-%s (http://qwt.sf.net)"
+               % QWT_VERSION_STR))
+    x = x[0:-1:10]
+    p.plot(Curve(x, cos(x-pi/4), Symbol(Circle, Yellow), "circle"),
+           Curve(x, cos(x+pi/4), Pen(Blue), Symbol(Square, Cyan), "square"))
+    return p
+
 
 def standard_map(x, y, kappa, n):
     xs = zeros(n, Float)
@@ -728,7 +787,7 @@ def standard_map(x, y, kappa, n):
     return xs, ys
         
         
-def testIPlot():
+def testStandardMap():
     x = random.random()
     y = random.random()
     kappa = random.random()
@@ -737,21 +796,6 @@ def testIPlot():
     p = IPlot(Curve(xs, ys, Symbol(Circle, Red), "standard_map"),
               ("PyQwt demo based on Qwt-%s (http://qwt.sf.net)"
                % QWT_VERSION_STR))
-    return p
-
-
-def testPlot():
-    x = arange(-2*pi, 2*pi, 0.01)
-    p = Plot(Curve(x, cos(x), Pen(Magenta, 2), "cos(x)"),
-             Axis(Bottom, "x axis"),
-             Axis(Left, "y axis"),
-             Axis(Right, Logarithmic),
-             Curve(x, exp(x), Pen(Red), "exp(x)", Right),
-             ("PyQwt demo based on Qwt-%s (http://qwt.sf.net)"
-              % QWT_VERSION_STR))
-    x = x[0:-1:10]
-    p.plot(Curve(x, cos(x-pi/4), Symbol(Circle, Yellow), "circle"),
-           Curve(x, cos(x+pi/4), Pen(Blue), Symbol(Square, Cyan), "square"))
     return p
 
 

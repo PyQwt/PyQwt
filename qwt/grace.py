@@ -11,7 +11,7 @@
 #
 # PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
@@ -41,7 +41,6 @@ class GracePlotter:
         self.command("view ymin 0.15")
         self.command("view ymax 0.85")
         self.flush()
-        self.curves = 0
 
     def command(self, cmd):
         if self.debug:
@@ -49,7 +48,6 @@ class GracePlotter:
         self.p.tochild.write(cmd + '\n')
 
     def flush(self):
-        #self.command('redraw')
         self.p.tochild.flush()
 
     def wait(self):
