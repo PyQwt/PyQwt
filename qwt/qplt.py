@@ -263,7 +263,7 @@ class Plot(QwtPlot):
 
     # toggleCurve()
 
-    def gracePlot(self, pause=0.2):
+    def gracePlot(self, saveall="", pause=0.2):
         """Clone the plot into Grace for very high quality hard copy output.
 
         Know bug: Grace does not scale the data correctly when Grace cannot
@@ -356,7 +356,10 @@ class Plot(QwtPlot):
 
         # finalize
         g('redraw')
-        
+        if saveall:
+            time.sleep(pause)
+            g('saveall "%s"' % saveall)
+            
     # gracePlot()
         
 # class Plot
