@@ -611,9 +611,9 @@ def main(argv):
                 continue
             os.chdir(dir)
             for lib in glob.glob(os.path.join(os.pardir, 'configure', '*')):
-                if not os.path.isdir(lib):
-                    continue
                 link = lib.split(os.sep)[-1]
+                if not link in ['iqt', 'qwt']:
+                    continue
                 if os.path.islink(link):
                     os.remove(link)
                 os.symlink(lib, link)
