@@ -15,7 +15,7 @@ def bytescale(data, cmin=None, cmax=None, high=255, low=0):
         cmin = min(ravel(data))
     if cmax is None:
         cmax = max(ravel(data))
-    scale = high *1.0 / (cmax-cmin)
+    scale = high *1.0 / (cmax-cmin or 1)
     bytedata = ((data*1.0-cmin)*scale + 0.4999).astype(UInt8)
     return bytedata + asarray(low).astype(UInt8)
 
@@ -50,6 +50,8 @@ class QwtPlotImage(QwtPlotMappedItem):
         self.xyzs = None
         self.plot = parent
 
+    # __init__()
+    
     def setData(self, xyzs, xScale = None, yScale = None):
         self.xyzs = xyzs
         shape = xyzs.shape
@@ -66,31 +68,42 @@ class QwtPlotImage(QwtPlotMappedItem):
         self.image = toQImage(bytescale(self.xyzs)).mirror(0, 1)
         for i in range(0, 256):
             self.image.setColor(i, qRgb(i, 0, 255-i))
-        
+
+    # setData()    
 
     def drawImage(self, painter, xMap, yMap):
-        #print "drawImage call"
+        """Paint image to zooming to xMap, yMap
+
+        Calculate (x1, y1, x2, y2) so that it contains at least 1 pixel,
+        and copy the visible region to scale it to the canvas.
+        """
+        # calculate y1, y2
         y1 = y2 = self.image.height()
         y1 *= (self.yMap.d2() - yMap.d2())
         y1 /= (self.yMap.d2() - self.yMap.d1())
-        y1 = max(0, int(y1+0.5))
+        y1 = max(0, int(y1-0.5))
         y2 *= (self.yMap.d2() - yMap.d1())
         y2 /= (self.yMap.d2() - self.yMap.d1())
         y2 = min(self.image.height(), int(y2+0.5))
-        #print y1, y2
+        # calculate x1, x1
         x1 = x2 = self.image.width()
         x1 *= (self.xMap.d2() - xMap.d2())
         x1 /= (self.xMap.d2() - self.xMap.d1())
-        x1 = max(0, int(x1+0.5))
+        x1 = max(0, int(x1-0.5))
         x2 *= (self.xMap.d2() - xMap.d1())
         x2 /= (self.xMap.d2() - self.xMap.d1())
         x2 = min(self.image.width(), int(x2+0.5))
-        #print x1, x2
-        # copy the region to zoom
+        # copy
         image = self.image.copy(x1, y1, x2-x1, y2-y1)
+        # zoom
         image = image.smoothScale(xMap.i2()-xMap.i1()+1, yMap.i1()-yMap.i2()+1)
+        # draw
         painter.drawImage(xMap.i1(), yMap.i2(), image)
-        
+
+    # drawImage()
+
+# QwtPlotImage()
+    
 class QwtImagePlot(QwtPlot):
 
     def __init__(self, *args):
