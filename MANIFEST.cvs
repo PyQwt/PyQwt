@@ -13,6 +13,7 @@ exclude setup.cfg
 
 # PyQtDistutils
 graft pyqt_distutils
+recursive-exclude pyqt_distutils *.pyc
 
 # Examples
 graft examples
@@ -42,7 +43,6 @@ prune qwt-sources
 # Documentation
 recursive-include Doc *
 prune Doc/html/pyqwt
-recursive-exclude Doc/pyqwt *.ilg *.ind *.log
 
 # Local Variables: ***
 # mode: sh ***
