@@ -1,7 +1,7 @@
 # MANIFEST template file to make a CVS tree
 
 # Package stuff
-include ANNOUNCEMENT-3.7.TXT
+include ANNOUNCEMENT-3.8.TXT
 include AUTHORS COPYING COPYING.PyQwt
 include INSTALL MANIFEST* README* REGISTRATION.SF THANKS
 include DIFFER PATCHER patches.py
@@ -18,7 +18,7 @@ recursive-exclude pyqt_distutils *.pyc
 
 # Examples
 graft examples
-recursive-exclude examples *.html *.png *.pyc
+recursive-exclude examples log *.html *.png *.ps *.pyc
 recursive-exclude examples/iqt *
 recursive-exclude examples/qwt *
 

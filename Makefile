@@ -1,7 +1,9 @@
+# The environment variable QTDIR must be set 
 PWD := $(shell pwd)
+CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "06 Aug 2003 23:59:59 GMT"
+CVS-DATE := "24 Aug 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -9,8 +11,7 @@ QWT-SOURCES := $(shell echo qwt-sources/include/*.h)
 QWT-SOURCES += $(shell echo qwt-sources/src/*.{cpp,dox})
 
 DIFFERS := -d 'qwt-sources/include qwt-sources/src'
-#DIFFERS += -s '.canvas .rich'
-DIFFERS += -s '.canvas .debug'
+DIFFERS += -s '.readonly .font'
 
 FREE := $(HOME)/Free
 
@@ -25,12 +26,12 @@ doc: qwt-user-docs
 qwt-user-docs: qwt-sources/doc/html/index.html
 
 qwt-sources/doc/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile.users
-	(cd qwt-sources; QTDIR=/usr/lib/qt3 doxygen Doxyfile.users)
+	(cd qwt-sources; doxygen Doxyfile.users)
 
 qwt-devel-docs: qwt-sources/doc/devel/html/index.html
 
 qwt-sources/doc/devel/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile
-	(cd qwt-sources; QTDIR=/usr/lib/qt3 doxygen Doxyfile)
+	(cd qwt-sources; doxygen Doxyfile)
 
 install:
 	python setup.py install --record=LOG.record 2>&1 | tee LOG.install
@@ -41,7 +42,7 @@ install-root:
 	python setup.py install --root=tmp 2>&1 | tee LOG.install-root
 
 # force a complete rebuild
-force: distclean
+force:
 	python setup.py build --force 2>&1 | tee LOG.force
 
 .PHONY: dist qwt-sources
@@ -80,8 +81,12 @@ qwt-sources-ssh:
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
 	python PATCHER
-	(cd qwt-sources; QTDIR=/usr/lib/qt3 qmake qwt.pro)
-	(cd qwt-sources/examples; QTDIR=/usr/lib/qt3 qmake examples.pro)
+	(cd qwt-sources; qmake qwt.pro)
+	(cd qwt-sources/examples; qmake examples.pro)
+
+build-qwt:
+	(cd qwt-sources; make CXX="$(CXX)")
+	(cd qwt-sources/examples; make CXX="$(CXX)")
 
 free:
 	find . -name '*~' | xargs rm -f
@@ -97,11 +102,14 @@ patch:
 	cd qwt-sources; patch -p1 -b -z .rich <$(PWD)/qwt.rich.patch
 
 clean:
+	(cd qwt-sources; make distclean)
 	(cd qwt-sources/examples; make distclean)
 	rm -f MANIFEST
 	find . -name '*~' -o -name '.mappedfiles' | xargs rm -f
 	rm -f *.pyc qwt/*.{cpp,h}
 
 distclean: clean
+	(cd qwt-sources; qmake qwt.pro)
+	(cd qwt-sources/examples; qmake examples)
 	rm -rf build tmp/usr
 
