@@ -69,7 +69,6 @@ public:
 
     bool isNull() const;
     bool isEmpty() const;
-    // bool operator!() const { return !text(); }
 
     virtual void setFont(const QFont &);
     QFont font() const;

@@ -49,7 +49,8 @@ public:
     };  
 
     QwtSlider(QWidget * /TransferThis/, const char * = 0, 
-	      Orientation = Horizontal, ScalePos = None, int = BgTrough);
+	      Qt::Orientation = Qt::Horizontal, ScalePos = None,
+	      int = BgTrough);
 	
     virtual void setOrientation(Qt::Orientation);
 

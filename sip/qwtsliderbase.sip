@@ -46,7 +46,7 @@ public:
     };
 
     QwtSliderBase(Qt::Orientation, QWidget * /TransferThis/ = 0,
-		  const char * = 0, WFlags = 0);
+		  const char * = 0, Qt::WFlags = 0);
     virtual ~QwtSliderBase();
 
     void setUpdateTime(int);

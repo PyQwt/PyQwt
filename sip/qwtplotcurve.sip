@@ -37,7 +37,7 @@ class QwtPlotCurve: QwtCurve, QwtPlotMappedItem
 %End
 
 public:
-    QwtPlotCurve(QwtPlot * /TransferThis/, const char * = 0);
+    QwtPlotCurve(QwtPlot * /TransferThis/, const QString & = QString::null);
 protected:
     virtual void curveChanged();
 };
