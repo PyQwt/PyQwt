@@ -30,10 +30,6 @@
 // for a non-free program.
 
 %Feature CXX_DYNAMIC_CAST
-%Feature SIZE_T_IS_INT
-%Feature SIZE_T_IS_LONG
-%Feature SIZE_T_IS_UNSIGNED_INT
-%Feature SIZE_T_IS_UNSIGNED_LONG
 %Feature Qwt_COMPAT
 %Feature HAS_NUMARRAY
 %Feature HAS_NUMERIC

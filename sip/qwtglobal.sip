@@ -37,19 +37,6 @@
 const int QWT_VERSION;
 const char *QWT_VERSION_STR;
 
-%If (SIZE_T_IS_INT)
-typedef int size_t;
-%End
-%If (SIZE_T_IS_LONG)
-typedef long size_t;
-%End
-%If (SIZE_T_IS_UNSIGNED_INT)
-typedef unsigned int size_t;
-%End
-%If (SIZE_T_IS_UNSIGNED_LONG)
-typedef unsigned long size_t;
-%End
-
 // Local Variables:
 // mode: C++
 // c-file-style: "stroustrup"

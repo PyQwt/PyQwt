@@ -33,6 +33,7 @@
 %Module _qwt 0
 
 %Include features.sip
+%Include types.sip
 
 %Import qt/qtmod.sip
 
