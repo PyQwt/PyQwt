@@ -56,7 +56,7 @@ python configure.py -c -j $(getconf _NPROCESSORS_ONLN) \
 %endif
 %if %buildForSuSE
 python configure.py -c -j $(getconf _NPROCESSORS_ONLN) \
-	-i %qtdir/include/qwt
+	-i %qtdir/include/qwt -l %{_libdir}
 %endif
 %else
 python configure.py -c -j $(getconf _NPROCESSORS_ONLN)
