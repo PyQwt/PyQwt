@@ -6,22 +6,22 @@ License: GPL with exceptions for use with non-GPL'ed releases of
 Almost all the functionality of the Qwt library is implemented: feel free
 to request missing features.
 
-PyQwt is being developed on Mandrake-8.1 and 8.2, Linux-From-Scratch and
-Win4Lin/Windows98 with:
+PyQwt is being developed on Mandrake-8.2, Linux-From-Scratch and
+Win4Lin/Windows-98 with:
 
 Python-2.2.2    http://www.python.org
-Python-2.3b2    http://www.python.org
-Numeric-23.0    http://www.numpy.org
-numarray-0.5.1  http://www.stsci.edu/resources/software_hardware/numarray)
+Python-2.3.2    http://www.python.org
+Numeric-23.1    http://www.numpy.org
+numarray-0.7    http://www.stsci.edu/resources/software_hardware/numarray)
 Qwt             http://qwt.sourceforge.net
-Qt-3.1.2        http://www.trolltech.com
+Qt-3.2.2        http://www.trolltech.com
 Qt-2.3.1        http://www.trolltech.com
 Qt-2.3.0-NC     http://www.trolltech.com
-sip-3.7         http://www.river-bank.demon.co.uk/download/sip
-PyQt-3.7        http://www.river-bank.demon.co.uk/download/pyqt
+sip-3.8         http://www.river-bank.demon.co.uk/download/sip
+PyQt-3.8.x      http://www.river-bank.demon.co.uk/download/pyqt
 
-This version of PyQwt requires PyQt-3.7 & sip-3.7, PyQt-3.6 & sip-3.6,
-PyQt-3.5 & sip-3.5 or PyQt-3.4 & sip-3.4.
+This version of PyQwt requires PyQt-3.8.x & sip-3.8, PyQt-3.7 & sip-3.7,
+PyQt-3.6 & sip-3.6, PyQt-3.5 & sip-3.5.
 
 
 INSTALLATION
