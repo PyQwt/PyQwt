@@ -82,12 +82,12 @@
 
 \newcommand{\Future}{
   \begin{notice}[warning]
-    The documentation is for the future PyQwt-4.1 which is only available from
+    The documentation is for the future PyQwt-4.2 which is only available from
     CVS. The \Download{} page has links for the latest releases.
   \end{notice}
 }
 
-\renewcommand{\Future}{}
+%\renewcommand{\Future}{}
 
 
 \title{PyQwt Manual}
@@ -96,8 +96,8 @@
 \author{Gerard Vermeulen}
 
 \date{\today}
-\release{4.1}
-\setshortversion{4.1}
+\release{4.2}
+\setshortversion{4.2}
 
 \makeindex
 
@@ -149,6 +149,8 @@ The main features of PyQwt are:
 
 
 \chapter{Introduction \label{introduction}}
+
+\Future{}
 
 PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
 plotting of Python lists and tuples and the powerful array types provided
@@ -202,6 +204,8 @@ on your hard disk or \Qwt{} on the web.
 
 \section{The Python Numerical Extension modules \label{numeric-intro}}
 
+\Future{}
+
 The \Numeric{} and \numarray{} modules extend Python with multi-dimensional
 array types and a complete set of 'standard' functions and operators to
 manipulate the arrays.
@@ -225,6 +229,8 @@ All this in C, for a manifold speedup with respect to pure Python.
 
 \section{PyQwt \label{pyqwt-intro}}
 
+\Future{}
+
 The PyQwt widgets can be used in Graphical User Interface (GUI)
 programs as well as from the Command Line Interpreter (CLI).
 This section addresses:
@@ -243,6 +249,8 @@ between PyQwt and Qwt.
 
 
 \subsection{iqt \label{iqt-intro}}
+
+\Future{}
 
 \begin{notice}[warning]
   The module \module{iqt} will not work with a MSVC-compiled Python, because
@@ -291,6 +299,8 @@ while setting up the help system for \module{scipy}:
 
 \subsection{PyCute \label{pycute-intro}}
 
+\Future{}
+
 \program{PyCute} embeds a Python shell in a \class{QMultiLineEdit} widget
 (Qt-2.x) or a \class{QTextEdit} widget (Qt-3.x) that works nicely with
 \module{qwt.qplt}, see \ref{qwt-qplt}.
@@ -332,6 +342,8 @@ Type \kbd{Control-D} to exit the shell.
 
 \subsection{qwt.qplt \label{qwt-qplt}}
 
+\Future{}
+
 The module \module{qwt.qplt} defines a tiny data-directed programming
 language to simplify the use of \class{QwtPlot} from the Python command
 line interpreter or from an embedded Python shell like in \program{PyCute}.
@@ -340,6 +352,8 @@ Here follows a small example:
 \verbatiminput{qplt.example}
 
 \subsubsection{qwt.qplt.Plot \label{intro-qplt-plot}}
+
+\Future{}
 
 \begin{classdesc}{Plot}{*arguments}
   \class{Plot} takes any number of optional arguments.
@@ -423,6 +437,8 @@ Toggle a curve between hidden and shown.
 
 \subsubsection{qwt.qplt.IPlot \label{intro-qplt-iplot}}
 
+\Future{}
+
 \begin{classdesc}{IPlot}{*arguments}
   \class{IPlot} is a main window with a Plot widget as central widget.
 
@@ -467,6 +483,8 @@ print the plot.
 
 \subsubsection{qwt.qplt.Curve \label{intro-qplt-curve}}
 
+\Future{}
+
 \begin{classdesc}{Curve}{x, y, *arguments}
   \class{Curve} takes two obligatory arguments followed by any number of
   optional arguments. The arguments \var{x} and \var{y} must be sequences
@@ -486,6 +504,8 @@ print the plot.
 
 \subsubsection{qwt.qplt.Axis \label{intro-qplt-axis}}
 
+\Future{}
+
 \begin{classdesc}{Axis}{*arguments}
   \class{Axis} takes any number of optional arguments.
   The data-directed interpretation of each optional argument is:
@@ -503,6 +523,8 @@ print the plot.
 
 \subsubsection{qwt.qplt.Pen \label{intro-qplt-pen}}
 
+\Future{}
+
 \begin{classdesc}{Pen}{*arguments}
   \class{Pen} takes any number of optional arguments.
   The data-directed interpretation of each optional argument is:
@@ -517,6 +539,8 @@ print the plot.
 \end{classdesc}
 
 \subsubsection{qwt.qplt.Symbol \label{intro-qplt-symbol}}
+
+\Future{}
 
 \begin{classdesc}{Symbol}{*arguments}
   \class{Symbol} takes any number of optional arguments.
@@ -534,6 +558,8 @@ print the plot.
 \end{classdesc}
 
 \subsection{QImage and Numeric/numarray arrays \label{qwt-qimage}}
+
+\Future{}
 
 \begin{funcdesc}{toImage}{array}
   Convert \var{array} to a QImage, where \var{array} must be a two-dimensional
@@ -608,6 +634,8 @@ Contact the \mailinglist{}, if you run into problems.
 \end{notice}
 
 \section{Build prerequisites \label{prerequisites}}
+
+\Future{}
 
 \subsection{Build prerequisites for PyQwt on \POSIX{} \label{posix-prereqs}}
 
@@ -763,6 +791,8 @@ python configure.py -i /usr/lib/qt3/include/qwt -l /usr/lib/qt3/lib
 
 
 \section{Build with \file{setup.py}\label{build-setup}}
+
+\Future{}
 
 \subsection{Build on \POSIX{} with \file{setup.py}\label{posix-setup}}
 
@@ -944,6 +974,8 @@ in the folder \file{C:/Python23/PyQwt}.
 
 \chapter{PyQwt Module Reference \label{reference}}
 
+\Future{}
+
 The reference should be used in conjunction with the
 \ulink{Qwt manual}{qwt/index.html} on your hard disk or \Qwt{} on the web.
 Only the differences specific to the Python bindings are documented here.
@@ -963,6 +995,96 @@ The classes in the Qwt library have quite a few protected attributes.
 They are not yet available in Python (as far as I know, sip wraps
 protected member function, but not protected attributes).
 I may try to implement protected attributes on demand.
+
+\section{Wrappers for \ctype{QwtArray<T>} \label{qwtarray}}
+
+\Future{}
+
+PyQwt has a partial interface to the following C++ QwtArray templates:
+\begin{enumerate}
+\item
+  \class{QwtArrayDouble} for \ctype{QwtArray<double>}
+\item
+  \class{QwtArrayLong} for \ctype{QwtArray<double>}
+\item
+  \class{QwtArrayQwtDiMap} for \ctype{QwtArray<QwtDiMap>}
+\item
+  \class{QwtArrayQwtDoublePoint} for \ctype{QwtArray<QwtDoublePoint>}
+\item
+  \class{QwtArrayQwtKeyPattern} for
+  \ctype{QwtArray<QwtEventPattern::KeyPattern>}
+\item
+  \class{QwtArrayQwtMousePattern} for
+  \ctype{QwtArray<QwtEventPattern::MousePattern>}
+\end{enumerate}
+
+Those classes have at least 3 constructors -- taking QwtArrayLong as an
+example:
+\begin{enumerate}
+\item
+  \code{array = QwtArrayLong()}
+\item
+  \code{array = QwtArrayLong(int)}
+\item
+  \code{array = QwtArrayLong(otherArray)}
+\end{enumerate}
+
+QwtArrayDouble and QwtArrayLong have also a constructor which takes a
+sequence of items convertable to a C++ double and a C++ long:
+\begin{itemize}
+\item
+  \code{array = QwtArrayDouble(Numeric.array([0.0, 1.0]))}
+\item
+  \code{array = QwtArrayLong(Numeric.array([0, 1]))}
+\end{itemize}
+
+All those classes have 16 member functions -- taking QwtArrayLong as example:
+\begin{enumerate}
+\item
+  \code{array = array.assign(otherArray)}
+\item
+  \code{item = array.at(index)}
+\item
+  \code{index = array.bsearch(item)}
+\item
+  \code{index = contains(item)}
+\item
+  \code{array = otherArray.copy()}
+\item
+  \code{result = array.count()}
+\item
+  \code{array.detach()}
+\item
+  \code{array = array.duplicate(otherArray)}
+\item
+  \code{bool = array.fill(item, index=-1)}
+\item
+  \code{index = array.find(item, index=0)}
+\item
+  \code{bool = array.isEmpty()}
+\item
+  \code{bool = array.isNull()}
+\item
+  \code{bool = array.resize(index)}
+\item
+  \code{result = array.size()}
+\item
+  \code{array.sort()}
+\item
+  \code{bool = array.truncate(index)}
+\end{enumerate}
+
+Iterators are not yet implemented. However, the implementation of the
+Python slots \function{__getitem__}, \function{__len__} and
+\function{__setitem__} let you use those classes almost as a sequence.
+For instance:
+
+\verbatiminput{QwtArrayLongExample.txt}
+
+
+\section{Class reference \label{classes}}
+
+\Future{}
 
 \begin{classdesc}{Qwt}{*args}
 \emph{is fully implemented}.
@@ -1199,12 +1321,6 @@ void print(QPainter *, const QRect &, const QwtPlotPrintFilter &);
       \end{verbatim}
       \code{print} has been renamed to \code{printPlot} in Python.
 
-    \item{curveKeys}. C++ declaration:
-      \begin{verbatim}
-QArray<long> curveKeys() const;
-      \end{verbatim}
-      \code{curveKeys} returns a list containing the keys of all curves.
-
     \item{closestCurve}. C++ declaration:
       \begin{verbatim}
 long closestCurve(int xPos, int yPos, int& distance) const;
@@ -1265,12 +1381,6 @@ key, distance = plot.closestMarker(xPos, yPos)
       \code{closestMarker} takes the x- and y-coordinates of a point and
       returns a tuple containing the key of the closest marker and the distance
       between the closest marker and the point.
-
-    \item{markerKeys}. C++ declaration:
-      \begin{verbatim}
-QArray<long> markerKeys() const;
-      \end{verbatim}
-      \code{markerKeys} returns a list containing the keys of all markers.
 
     \item{markerPos}. C++ declaration:
       \begin{verbatim}

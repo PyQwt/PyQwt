@@ -1,6 +1,7 @@
 FREE := $(HOME)/Free
 
 SOURCES := \
+	pyqwt/QwtArrayLongExample.txt \
 	pyqwt/copyright.tex \
 	pyqwt/numeric.example \
 	pyqwt/pyqwt.tex \
