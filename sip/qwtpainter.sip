@@ -38,9 +38,9 @@ class QwtPainter
 
 public:
     enum TextXorRopMode {
-        textNormalMode = 0,
-        textFontSubstitutionMode = 1,
-        textPixmapBufferMode = 2,
+        XorRopTextNormal = 0,
+        XorRopTextKeepFont = 1,
+        XorRopTextKeepColor = 2
     };
 
     static void setMetricsMap(const QPaintDevice *, const QPaintDevice *);
