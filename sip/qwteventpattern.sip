@@ -68,7 +68,7 @@ public:
     {
     public:
 %If (SIP_DUMB_DIR)
-        void getLazyNames();
+          void getLazyNames();
 %MemberCode
     if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
         return getLazyNames(sipClassAttrTab_$C);
@@ -77,6 +77,8 @@ public:
 %End
 
         MousePattern(int = Qt::NoButton, int = Qt::NoButton);
+        int button;
+        int state;
     };
 
     class KeyPattern
@@ -91,8 +93,10 @@ public:
 %End
 %End
 
-    KeyPattern(int = 0, int = Qt::NoButton);
-};
+        KeyPattern(int = 0, int = Qt::NoButton);
+        int key;
+        int state;
+    };
 
 public: // recalled, because sip seems to have lost its memory
 %If (SIP_DUMB_DIR)
