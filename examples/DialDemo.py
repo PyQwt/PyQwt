@@ -6,6 +6,43 @@ import sys
 from qt import *
 from qwt import *
 
+def enumColorGroups():
+    """Masks the change in enum/int type checking new in SIP-4.2.x
+    """
+    if isinstance(int, QPalette.ColorGroup):
+        return range(QPalette.NColorGroups)
+    else:
+        return [QPalette.ColorGroup(i)
+                for i in range(QPalette.NColorGroups)
+                ]
+
+# enumColorRoles()
+
+def enumColorRoles():
+    """Masks the change in enum/int type checking new in SIP-4.2.x
+    """
+    if isinstance(int, QColorGroup.ColorRole):
+        return range(QColorGroup.NColorRoles)
+    else:
+        return [QColorGroup.ColorRole(i)
+                for i in range(QColorGroup.NColorRoles)
+                ]
+
+# enumColorRoles()
+
+def enumHands():
+    """Masks the change in enum/int type checking new in SIP-4.2.x
+    """
+    if isinstance(int, QwtAnalogClock.Hand):
+        return range(QwtAnalogClock.NHands)
+    else:
+        return [QwtAnalogClock.Hand(i)
+                for i in range(QwtAnalogClock.NHands)
+                ]
+
+# enumHands()
+
+
 class CompassGrid(QGrid):
 
     def __init__(self, *args):
@@ -24,8 +61,8 @@ class CompassGrid(QGrid):
     
     def __createCompass(self, pos):
         colorGroup = QColorGroup()
-        for c in range(QColorGroup.NColorRoles):
-            colorGroup.setColor(c, QColor())
+        for cr in enumColorRoles():
+            colorGroup.setColor(cr, QColor())
 
         colorGroup.setColor(
             QColorGroup.Base, self.paletteBackgroundColor().light(120))
@@ -97,12 +134,12 @@ class CompassGrid(QGrid):
             compass.setValue(315.0)
 
         palette = compass.palette()
-        for c in range(QColorGroup.NColorRoles):
-            if colorGroup.color(c).isValid():
-                for cg in range(QPalette.NColorGroups):
-                    palette.setColor(cg, c, colorGroup.color(c))
+        for cr in enumColorRoles():
+            if colorGroup.color(cr).isValid():
+                for cg in enumColorGroups():
+                    palette.setColor(cg, cr, colorGroup.color(cr))
 
-        for cg in range(QPalette.NColorGroups):
+        for cg in enumColorGroups():
             light = palette.color(cg, QColorGroup.Base).light(170)
             dark = palette.color(cg, QColorGroup.Base).dark(170)
             if compass.frameShadow() == QwtDial.Raised:
@@ -166,7 +203,7 @@ class AttitudeIndicatorNeedle(QwtDialNeedle):
     def __init__(self, color):
         QwtDialNeedle.__init__(self)
         palette = QPalette()
-        for cg in range(QPalette.NColorGroups):
+        for cg in enumColorGroups():
             palette.setColor(cg, QColorGroup.Text, color)
         self.setPalette(palette)
 
@@ -332,17 +369,17 @@ class CockpitGrid(QGrid):
         if pos == 0:
             self.__clock = QwtAnalogClock(self)
             knobColor = Qt.gray.light(130)
-            for i in range(QwtAnalogClock.NHands):
+            for h in enumHands():
                 handColor = Qt.gray.light(150)
                 width = 8
-                if i == QwtAnalogClock.SecondHand:
+                if h == QwtAnalogClock.SecondHand:
                     handColor = Qt.gray
                     width = 5
 
                 hand = QwtDialSimpleNeedle(
                     QwtDialSimpleNeedle.Arrow, True, handColor, knobColor)
                 hand.setWidth(width)
-                self.__clock.setHand(i, hand)
+                self.__clock.setHand(h, hand)
             timer = QTimer(self.__clock)
             timer.connect(timer, SIGNAL('timeout()'),
                           self.__clock, SLOT('setCurrentTime()'))
@@ -435,5 +472,6 @@ def make():
 if __name__ == '__main__':
     main(sys.argv)
     
-
-
+# Local Variables: ***
+# mode: python ***
+# End: ***
