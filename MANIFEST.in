@@ -6,11 +6,7 @@ include AUTHORS COPYING COPYING.PyQwt
 include INSTALL MANIFEST.in README* REGISTRATION.SF THANKS
 include DIFFER PATCHER patches.py
 include Makefile 
-include setup_cfg_nt setup_cfg_posix
-include win-pyqt.bat win-sip.bat
 include pyqwt.spec
-
-exclude setup.cfg
 
 # Documentation
 graft Doc
@@ -21,8 +17,13 @@ recursive-exclude Doc *cvsignore*
 graft configure
 prune configure/iqt
 prune configure/qwt
-prune configure/tmp
-recursive-exclude configure Makefile *.cpp *.pyc *cvsignore*
+prune configure/tmp*
+prune configure/Makefile
+prune configure/test.cpp
+prune configure/qwt_version_info
+prune configure/qwt_version_info.exe
+prune configure/qwt_version_info.py
+recursive-exclude configure *.in *.pyc *cvsignore*
 
 # examples
 graft examples
@@ -37,10 +38,6 @@ recursive-exclude iqt *.pyc *cvsignore*
 # Numerical Python interface
 graft numpy
 
-# PyQtDistutils
-graft pyqt_distutils
-recursive-exclude pyqt_distutils *.pyc *cvsignore*
-
 # qwt package
 graft qwt
 recursive-exclude qwt _qwt.py *.pyc *cvsignore*
@@ -52,7 +49,8 @@ prune qwt-sources/doc/man
 prune qwt-sources/lib
 prune qwt-sources/src/moc
 prune qwt-sources/src/obj
-recursive-exclude qwt-sources Makefile .qmake.internal.cache *.LOG *cvsignore*
+recursive-exclude qwt-sources Makefile .qmake.internal.cache
+recursive-exclude qwt-sources *.md5 *.LOG *cvsignore*
 
 # sip files
 graft sip
