@@ -1,6 +1,6 @@
 // The SIP interface definition file for QwtPlot.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -42,17 +42,17 @@ class QwtPlot: QFrame
 
 public:
     enum Axis {
-	yLeft,
-	yRight,
-	xBottom,
-	xTop,
-	axisCnt,
+        yLeft,
+        yRight,
+        xBottom,
+        xTop,
+        axisCnt,
     };
     enum Position {
-	Left,
-	Right,
-	Bottom,
-	Top,
+        Left,
+        Right,
+        Bottom,
+        Top,
     };
 
     QwtPlot(QWidget * /TransferThis/ = 0, const char * = 0);
@@ -71,11 +71,11 @@ public:
     bool autoReplot() const;
 
     void print(QPaintDevice &,
-	       const QwtPlotPrintFilter & = QwtPlotPrintFilter()) const
-	/PyName=printPlot/;
+               const QwtPlotPrintFilter & = QwtPlotPrintFilter()) const
+        /PyName=printPlot/;
     virtual void print(QPainter *, const QRect &,
-		       const QwtPlotPrintFilter & = QwtPlotPrintFilter()) const
-	/PyName=printPlot/;
+                       const QwtPlotPrintFilter & = QwtPlotPrintFilter()) const
+        /PyName=printPlot/;
 
 %If (Qwt_COMPAT)
     // Outline
@@ -138,6 +138,7 @@ public:
     bool setCurveBaseline(long, double);
     double curveBaseline(long) const;
 
+    bool setCurveData(long, QwtArrayDouble &, QwtArrayDouble &);
     bool setCurveData(long, SIP_PYOBJECT, SIP_PYOBJECT);
 %MethodCode
     QwtArray<double> xArray;
@@ -209,27 +210,54 @@ public:
 
     // Axes
 
+%If (QWT_4_3_0 - )
+    QwtAutoScaler *autoScaler(int);
+    // dead code: const QwtAutoScaler *autoScaler(int) const;
+    void setAutoScaler(int, QwtAutoScaler *);
+%End // (QWT_4_3_0 - )
+
     void setAxisAutoScale(int);
     bool axisAutoScale(int) const;
 
     void enableAxis(int, bool = 1);
     bool axisEnabled(int) const;
 
+%If (QWT_4_2_0 - QWT_4_3_0)
     void changeAxisOptions(int, int, bool);
     void setAxisOptions(int, int);
     int axisOptions(int) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
 
     void setAxisFont(int, const QFont &);
     const QFont axisFont(int);
 
+%If (QWT_4_2_0 - QWT_4_3_0)
     void setAxisMargins(int, double, double);
     bool axisMargins(int, double & /Out/, double & /Out/) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
 
     void setAxisScale(int, double, double, double = 0.0);
     void setAxisScaleDraw(int, QwtScaleDraw * /Transfer/);
+
+%If (QWT_4_2_0 - QWT_4_3_0)
     const QwtScaleDiv *axisScale(int) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+    // dead code: const QwtScaleDiv *axisScaleDiv(int) const;
+    QwtScaleDiv *axisScaleDiv(int) const;
+%End // (QWT_4_3_0 -)
+
     const QwtScaleDraw *axisScaleDraw(int) const;
+
+%If (QWT_4_2_0 - QWT_4_3_0)
     const QwtScale *axis(int) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+    // dead code: const QwtScale *axis(int) const;
+    const QwtScale *axis(int) const;
+%End // (QWT_4_3_0 -)
 
     void setAxisLabelFormat(int, char, int);
     void axisLabelFormat(int, char & /Out/, int & /Out/, int & /Out/) const;
@@ -249,14 +277,16 @@ public:
     void setAxisMaxMajor(int, int);
     int axisMaxMinor(int) const;
 
+%If (QWT_4_2_0 - QWT_4_3_0)
     void setAxisReference(int, double);
     double axisReference(int) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
 
     // Markers
 
     long insertMarker(QwtPlotMarker *);
     long insertMarker(
-	const QString & = QString::null, int = xBottom, int = yLeft);
+        const QString & = QString::null, int = xBottom, int = yLeft);
     long insertLineMarker(const QString, int);
 
     QwtPlotMarker *marker(long);
@@ -383,7 +413,7 @@ protected:
 
     virtual void printTitle(QPainter *, const QRect &) const;
     virtual void printScale(
-	QPainter *, int, int, int, int, const QRect &) const;
+        QPainter *, int, int, int, int, const QRect &) const;
     virtual void printCanvas(QPainter *,
                              const QRect &,
                              const QwtArray<QwtDiMap> &,
@@ -391,7 +421,9 @@ protected:
     virtual void printLegend(QPainter *, const QRect &) const;
 };
 
+
 // Local Variables:
 // mode: C++
 // c-file-style: "stroustrup"
+// indent-tabs-mode: nil
 // End:
