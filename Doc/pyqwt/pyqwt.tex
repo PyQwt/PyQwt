@@ -7,33 +7,34 @@
 
 % Source code
 \newcommand{\Download}{\ulink{download}{http://pyqwt.sourceforge.net/download.html}}
+\newcommand{\Snapshot}{\ulink{snapshot}{http://pyqwt.sourceforge.net/snapshot}}
 \newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.10.tar.gz}{http://pyqwt.sourceforge.net/support/sip-x11-gpl-3.10.tar.gz}}
 \newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}{http://pyqwt.sourceforge.net/support/sip-win-nc-3.8.zip}}
 \newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.10.tar.gz}{http://pyqwt.sourceforge.net/support/PyQt-x11-gpl-3.10.tar.gz}}
 \newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}{http://pyqwt.sourceforge.net/support/PyQt-win-nc-3.8.zip}}
 \newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
 \newcommand{\NumericTarGz}{\ulink{Numeric-23.1.tar.gz}{http://prdownloads.sourceforge.net/numpy/Numeric-23.1.tar.gz?download}}
-\newcommand{\numarrayTarGz}{\ulink{numarray-0.8.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.8.tar.gz?download}}
-\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.10.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.10.tar.gz?download}}
+\newcommand{\numarrayTarGz}{\ulink{numarray-0.9.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.9.tar.gz?download}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.9.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.9.tar.gz?download}}
 \newcommand{\ReadMePatches}{\ulink{README}{http://pyqwt.sourceforge.net/patches/README}}
 
 % Installers for MS-Windows
 \newcommand{\PythonExe}{\ulink{Python-2.3.3.exe}{http://www.python.org/ftp/python/2.3.3/Python-2.3.3.exe}}
 \newcommand{\NumericExe}{\ulink{Numeric-23.1.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.1.win32-py2.3.exe?download}}
-\newcommand{\NumArrayExe}{\ulink{numarray-0.8.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.win32-py2.3.exe?download}}
+\newcommand{\NumArrayExe}{\ulink{numarray-0.9.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/numarray-0.9.win32-py2.3.exe?download}}
 \newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}{ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
 \newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.8.exe}{http://pyqwt.sourceforge.net/download/PyQt-win-nc-3.8.exe}}
 \newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.8.win32-py2.3.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8.win32-py2.3.exe?download}}
 
 \newcommand{\Future}{
 \begin{notice}[warning]
-This documentation is for the future PyQwt-3.10. Check the \Download{}
-page for the latest releases.
+This documentation is for the future PyQwt-3.9. Check the \Download{}
+page for the latest releases or try a \Snapshot{}.
 \end{notice}
 }
 \newcommand{\NonCommercial}{
 \begin{notice}[note]
-\PyQwtExe{} is the latest ``non-commercial'' version of PyQwt on Window for
+\PyQwtExe{} is the latest ``non-commercial'' version of PyQwt on Windows for
 \QtNcExe{} and \PyQtExe{}, because Trolltech and Riverbank Computing have
 discontinued their non-commercial software.  Hopefully, this situation will
 change with the availability of a new book on Qt programming including a
@@ -51,8 +52,8 @@ be inaccurate or obsolete.
 \author{Gerard Vermeulen}
 
 \date{\today}
-\release{3.10}
-\setshortversion{3.10}
+\release{3.9}
+\setshortversion{3.9}
 
 \makeindex
 
@@ -475,6 +476,8 @@ Feedback, please.
 
 \chapter{Installation \label{installation}}
 
+\Future{}
+
 \NonCommercial{}
 
 You can install PyQwt on \POSIX{} and Microsoft Windows operating systems:
@@ -490,7 +493,8 @@ You can install PyQwt on \POSIX{} and Microsoft Windows operating systems:
     see \ref{win-source-install} for installation instructions starting from
     source code for Windows, MSVC and Qt-Non-Commercial.
     Thanks to feedback from developers with a commercial Qt license the
-    installation scripts have been adapted to Qt-3.0.x, Qt-3.1.x and Qt-3.2.x.
+    installation scripts have been adapted to Qt-3.0.x, Qt-3.1.x,  Qt-3.2.x
+    and Qt-3.3.x.
     Contact the \mailinglist{}, if you run into problems.
 \end{enumerate}
 
@@ -508,8 +512,8 @@ access to those versions of Qt and PyQt.
 
 \section{Binary Installation on Windows \label{win-binary-install}}
 
-%\NonCommercial{}
-%\Future{}
+\NonCommercial{}
+
 First, you have to install Python, Numeric, Qt-Non-Commercial and
 PyQt-Non-Commercial by executing the following installation programs:
 \begin{enumerate}
@@ -532,6 +536,8 @@ folder \file{C:/Python23/PyQwt}.
 \subsection{Prerequisites for building PyQwt on \POSIX{}
   \label{posix-prereq}}
 
+\Future{}
+
 Recent versions of the following software should be installed on your system:
 \begin{enumerate}
   \item
@@ -541,18 +547,18 @@ Recent versions of the following software should be installed on your system:
     Earlier versions of Python are not supported.
   \item
     \ulink{Qt}{http://www.trolltech.com}.\\
-    \PyQwtTarGz{} is compatible with Qt-3.2.x, Qt-3.1.x, Qt-3.0.x, Qt-2.3.1 and
-    Qt-2.3.0.
+    \PyQwtTarGz{} is compatible with Qt-3.3.x, Qt-3.2.x, Qt-3.1.x, Qt-3.0.x,
+    Qt-2.3.1 and Qt-2.3.0.
     Earlier versions of Qt are not supported.
   \item
     \SipGpl{}.\\
-    \PyQwtTarGz{} is compatible with sip-4.0, -3.10, and -3.9, but the most
-    recent version gets most testing.
+    \PyQwtTarGz{} is compatible with sip-4.0, -3.10.1, -3.10, and -3.9, but the
+    most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtGpl{}.\\
-    \PyQwtTarGz{} is compatible with PyQt-3.10 and -3.9, but the most recent
-    version gets most testing.
+    \PyQwtTarGz{} is compatible with PyQt-3.11, -3.10 and -3.9, but the most
+    recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
     Read \ReadMePatches{} to check out bug fixes and upgrades.
@@ -577,6 +583,8 @@ on version 4.2.0rc2.
 
 
 \subsection{Build on \POSIX{} \label{posix-build}}
+
+\Future{}
 
 \begin{enumerate}
 \item
@@ -700,7 +708,7 @@ script instead of the deprecated 'build.py' script and make sure that the
 \code{pyqtconfig._pkg_config['pyqt_sip_dir']}.
 
 \begin{notice}[warning]
-  Most bug reports are related to the presence of
+  Most installation problems are related to the presence of
   old executables (\file{sip.exe}),
   old libraries (\file{libqt*.exp}, \file{libqt*.lib}, \file{lib.qt*.pyd},
   \file{libsip.exp}, \file{libsip.lib}, \file{libsip.pyd}),
