@@ -12,24 +12,29 @@ The home page of PyQwt is http://pyqwt.sourceforge.net.
 
 Main changes in PyQwt-3.8:
 
-1. New classes QwtDial, QwtCompass and QwtAnalogClock.
+1. PyQwt inherits from Qwt the new classes QwtPicker, QwtPlotPicker and
+   QwtPlotZoomer.
+   QwtPicker can make any widget react to events by event filtering.
+   QwtPlotZoomer is a QwtPicker taylored to the plot canvas.
+   QwtPlotZoomer implements infinite deep zooming on the plot canvas.
 
-2. New classes QwtPicker, QwtPlotPicker and QwtPlotZoomer.  QwtPicker allows
-   to make any widget interact with events.  QwtPlotZoomer implements infinite
-   deep recursive zooming.
+2. PyQwt inherits from Qwt the support for Qt's rich text format in QwtPlot
+   to display equations like E=mc<sup>2</sup>.
+   Caveat: in principle, a truetype font with full unicode support is better
+   to typeset of equations.
 
-3. Support for Qt's rich text format in QwtPlot to display equations like
-   E=mc<sup>2</sup>. Caveat: a truetype font with full unicode support is
-   better to typeset of equations.
+3. Bug fixes to support event filtering code (see EventFilterDemo.py). 
 
-4. Bug fixes to support event filtering code (see EventFilterDemo.py). 
+4. Conversion of a QImage to a Numeric array or numarray array.
 
-5. Conversion of a QImage to a Numeric array or numarray array and vice versa.
+5. Better support for cloning a plot into Grace from the command line
+   interpreter friendly plot classes.
 
-6. The command line interpreter friendly plot classes contain better support
-   for cloning a plot into Grace ( http://plasma-gate.weizmann.ac.il/Grace ).
+6. PyQwt-3.8 works with PyQt-3.8.1 downto -3.6 and Qt-3.2.3 downto -2.3.0.
 
-7. PyQwt-3.8 works with PyQt-3.8.1 downto -3.6 and Qt-3.2.3 downto -2.3.0.
+7. License change: GPL with permission for dynamic linking to commercial,
+   educational and non-commercial versions of Qt, PyQt and sip.  In this
+   case PyQwt becomes a free plug-in for a non-free program.
 
 
 Gerard Vermeulen
