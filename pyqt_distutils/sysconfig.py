@@ -64,7 +64,7 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                 '%(CXXFLAGS_WARN_ON)s '
                 ) % make_info
 
-        if make_info.has_key('RPATH'):
+        if make_info.get('RPATH'):
             linker_so = (
                 '%(CXX)s '
                 '%(RPATH)s%(LIBDIR_QT)s '
