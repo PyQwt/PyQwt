@@ -48,6 +48,15 @@ public:
     QwtArrayLong();
     QwtArrayLong(int);
     QwtArrayLong(const QwtArrayLong &);
+    QwtArrayLong(SIP_PYOBJECT); 
+%MethodCode
+    QwtArray<long> array;
+    // Numeric is not thread-safe
+    if (-1 == try_PyObject_to_QwtArray(a0, array))
+        return 0;
+
+    sipCpp = new QwtArrayLong(array);
+%End
     ~QwtArrayLong(); 
     // not possible: QwtArray<type> &operator=(const QArray<type> &); 
     // not Pythonic: type *data() const;

@@ -46,6 +46,15 @@ public:
     %(ARRAY)s();
     %(ARRAY)s(int);
     %(ARRAY)s(const %(ARRAY)s &);
+    %(ARRAY)s(SIP_PYOBJECT); 
+%%MethodCode
+    QwtArray<%(ITEM)s> array;
+    // Numeric is not thread-safe
+    if (-1 == try_PyObject_to_QwtArray(a0, array))
+        return 0;
+
+    sipCpp = new %(ARRAY)s(array);
+%%End
     ~%(ARRAY)s(); 
     // not possible: QwtArray<type> &operator=(const QArray<type> &); 
     // not Pythonic: type *data() const;

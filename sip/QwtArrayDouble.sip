@@ -48,6 +48,15 @@ public:
     QwtArrayDouble();
     QwtArrayDouble(int);
     QwtArrayDouble(const QwtArrayDouble &);
+    QwtArrayDouble(SIP_PYOBJECT); 
+%MethodCode
+    QwtArray<double> array;
+    // Numeric is not thread-safe
+    if (-1 == try_PyObject_to_QwtArray(a0, array))
+        return 0;
+
+    sipCpp = new QwtArrayDouble(array);
+%End
     ~QwtArrayDouble(); 
     // not possible: QwtArray<type> &operator=(const QArray<type> &); 
     // not Pythonic: type *data() const;
