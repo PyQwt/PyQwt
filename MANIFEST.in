@@ -43,14 +43,14 @@ graft qwt
 recursive-exclude qwt _qwt.py *.pyc *cvsignore*
 
 # Qwt stuff
-graft qwt-sources
-prune qwt-sources/admin
-prune qwt-sources/doc/man
-prune qwt-sources/lib
-prune qwt-sources/src/moc
-prune qwt-sources/src/obj
-recursive-exclude qwt-sources Makefile .qmake.internal.cache
-recursive-exclude qwt-sources *.md5 *.LOG *cvsignore*
+graft qwt-4.2.0
+prune qwt-4.2.0/admin
+prune qwt-4.2.0/doc/man
+prune qwt-4.2.0/lib
+prune qwt-4.2.0/src/moc
+prune qwt-4.2.0/src/obj
+recursive-exclude qwt-4.2.0 Makefile .qmake.internal.cache
+recursive-exclude qwt-4.2.0 *.map *.md5 *.LOG *cvsignore*
 
 # sip files
 graft sip
