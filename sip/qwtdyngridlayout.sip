@@ -45,6 +45,8 @@ public:
     QwtDynGridLayout(QLayout *, int = -1, const char * = 0);
     QwtDynGridLayout(int = -1, const char * = 0);
 
+    virtual void invalidate();
+
     void setMaxCols(uint);
     uint maxCols() const;
 
@@ -67,6 +69,7 @@ public:
     virtual QSizePolicy::ExpandData expanding() const;
 
     virtual bool isEmpty() const;
+    uint itemCount() const;
 
     virtual uint columnsForWidth(int) const;
 
