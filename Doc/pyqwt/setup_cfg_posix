@@ -6,7 +6,7 @@
 # *.cpp, *.h and *.py files.
 # It requires also the PyQt-*/sip/*.sip files that have been
 # used to build PyQt.
-# The option 'sip_file_dirs' indicate the command 'run_sip'
+# The option 'sip_file_dirs' indicates the command 'run_sip'
 # where to find the PyQt-*/sip/*.sip files.
 #
 # If you cannot find those files on your system, you have to
@@ -56,21 +56,20 @@ concatenate=0
 # 'ccache ccache g++' are working fine.
 #ccache=0
 ccache=1
-define=QWT_DEBUG
 #
 #
 [bdist_rpm]
 # The 'use_rpm_opt_flags' option indicates the 'bdist_rpm' command
-# whether to use RPM_OPT_FLAGS or not. I prefer to use the same
-# compiler flags that has been used to build Qt.
+# whether to use RPM_OPT_FLAGS or not. It is safer to use the compiler
+# flags which have been used to build Qt.
 use_rpm_opt_flags=0
 #
 #
 [install]
 # The option 'install-data' indicates the command 'install'
 # where to install the documentation and examples.
-# I want it in /usr/share/doc/PyQwt-3.7
-install_data=/usr/share/doc/PyQwt-3.7
+# I want it in /usr/share/doc/PyQwt-3.8
+install_data=/usr/share/doc/PyQwt-3.8
 # If you prefer another directory, uncomment and edit: 
 #install_data=/2000/light/years/from/home
 #

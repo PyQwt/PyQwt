@@ -5,22 +5,23 @@
 \newcommand{\Qwt}{\ulink{Qwt}{http://qwt.sourceforge.net}}
 
 % Source code
-\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.7.tar.gz}{http://www.river-bank.demon.co.uk/download/sip/sip-x11-gpl-3.7.tar.gz}}
-\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.7.zip}{http://www.river-bank.demon.co.uk/download/sip/sip-win-nc-3.7.zip}}
-\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.7.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.7.tar.gz}}
-\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.7.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.7.zip}}
+\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.8.tar.gz}{http://www.river-bank.demon.co.uk/download/sip/sip-x11-gpl-3.8.tar.gz}}
+\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}{http://www.river-bank.demon.co.uk/download/sip/sip-win-nc-3.8.zip}}
+\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.8.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.8.tar.gz}}
+\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.8.zip}}
 \newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
 \newcommand{\NumericTarGz}{\ulink{Numeric-23.0.tar.gz}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.tar.gz?download}}
-\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.7.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.7.tar.gz?download}}
+\newcommand{\numarrayTarGz}{\ulink{numarray-0.6.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.6.tar.gz?download}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.8.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.8.tar.gz?download}}
 \newcommand{\PyQwtShot}{\ulink{PyQwt-snapshot}{http://gerard.vermeulen.free.fr/index.html\#snapshot}}
 
 % Installers for MS-Windows
-\newcommand{\PythonExe}{\ulink{Python-2.2.3.exe}{http://www.python.org/ftp/python/2.2.3/Python-2.2.3.exe}}
-\newcommand{\NumericExe}{\ulink{Numeric-23.0.win32-py2.2.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.win32-py2.2.exe?download}}
+\newcommand{\PythonExe}{\ulink{Python-2.3.exe}{http://www.python.org/ftp/python/2.3/Python-2.3.exe}}
+\newcommand{\NumericExe}{\ulink{Numeric-23.0.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.win32-py2.3.exe?download}}
 \newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}{ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
-\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.7.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.7.exe}}
-\newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.7.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.7.exe}}
-\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.7.win32-py2.2.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.7.win32-py2.2.exe?download}}
+\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.8.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.8.exe}}
+\newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.8.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.8.exe}}
+\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.8.win32-py2.3.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8.win32-py2.3.exe?download}}
 
 \title{PyQwt Manual}
 
@@ -28,9 +29,9 @@
 \author{Gerard Vermeulen}
 
 \date{\today}
-\release{3.7}
+\release{3.8}
 %\setreleaseinfo{cvs}
-\setshortversion{3.7}
+\setshortversion{3.8}
 
 \makeindex
 
@@ -388,8 +389,8 @@ You can install PyQwt on \POSIX{} and Microsoft Windows operating systems:
     see \ref{win-source-install} for installation instructions starting from
     source code for Windows, MSVC and Qt-Non-Commercial.
     Thanks to feedback from developers with a commercial Qt license the
-    installation scripts have been adapted to Qt-Educational, Qt-3.0.x
-    and Qt-3.1.x.
+    installation scripts have been adapted to Qt-Educational, Qt-3.0.x,
+    Qt-3.1.x and Qt-3.2.0.
     Contact \me, if you run into problems.
 \end{enumerate}
 \begin{notice}[note]
@@ -414,7 +415,7 @@ PyQt-Non-Commercial by executing the following installation programs:
 \end{enumerate}
 Then, run \PyQwtExe{} or a \PyQwtShot{} and you are set.
 Example programs and documentation for PyQwt and \Qwt{} are installed in the
-folder \file{C:/Python22/PyQwt}.
+folder \file{C:/Python23/PyQwt}.
 
 \section{Source installation on \POSIX{} \label{posix-source-install}}
 
@@ -430,14 +431,22 @@ Recent versions of the following software should be installed on your system:
     Earlier versions of Python are not supported.
   \item
     \ulink{Qt}{http://www.trolltech.com}.
-    I am using Qt-3.1.x, Qt-3.0.x, Qt-2.3.1 and Qt-2.3.0.
+    I am using Qt-3.2.0, Qt-3.1.x, Qt-3.0.x, Qt-2.3.1 and Qt-2.3.0.
     Earlier versions of Qt are not supported.
   \item
-    \SipGpl{}, sip-x11-gpl-3.6.tar.gz, sip-x11-gpl-3.5.tar.gz,
-    sip-x11-3.4.tar.gz or at your own risk a \snapshot.
+    \SipGpl{},
+    sip-x11-gpl-3.7.tar.gz,
+    sip-x11-gpl-3.6.tar.gz,
+    sip-x11-gpl-3.5.tar.gz,
+    sip-x11-3.4.tar.gz
+    or at your own risk a \snapshot.
   \item
-    \PyQtGpl{}, PyQt-x11-gpl-3.6.tar.gz, PyQt-x11-gpl-3.5.tar.gz,
-    PyQt-x11-3.4.tar.gz or at your own risk a \snapshot.
+    \PyQtGpl{},
+    PyQt-x11-gpl-3.7.tar.gz,
+    PyQt-x11-gpl-3.6.tar.gz,
+    PyQt-x11-gpl-3.5.tar.gz
+    PyQt-x11-3.4.tar.gz
+    or at your own risk a \snapshot.
 \end{enumerate}
 
 To exploit the full power of PyQwt's plot widget, you should install at
@@ -445,9 +454,10 @@ least one the Numerical Python extensions:
 \ulink{Numeric}{http://www.numpy.org}
 or its successor
 \ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
-I am using \NumericTarGz{} and Numeric-22.0, but Numeric-21.x should also
-work. Earlier versions Numeric are not supported.
-
+I am using \NumericTarGz{} and \numarrayTarGz{}. 
+Numeric-22.0, and Numeric-21.x should also work, but earlier versions Numeric
+are not supported.
+If you want to try Numarray, get the latest!
 
 The source packages \PyQwtTarGz{} or \PyQwtShot{} contain a CVS version of
 the \Qwt{} library.
@@ -463,7 +473,7 @@ for snapshots).
 \item
   Unpack \PyQwtTarGz{} or \PyQwtShot{} and run
   \begin{verbatim}
-cd PyQwt-3.7
+cd PyQwt-3.8
   \end{verbatim}
   {}
 \item
@@ -554,7 +564,7 @@ python setup.py command --options
   \end{verbatim}
   For example, the command:
   \begin{verbatim}
-python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.7/sip build
+python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.8/sip build
   \end{verbatim}
   tries to build the extension, overruling any initialization of
   \var{sip_file_dirs} in the configuration file.
@@ -590,13 +600,13 @@ You have to make sure that your installation of sip and PyQt allows you to
 build PyQwt:
 \begin{enumerate}
   \item
-    If you are going to use PyQt-win-nc-3.7 (tested) or PyQt-win-edu-3.7
+    If you are going to use PyQt-win-nc-3.8 (tested) or PyQt-win-edu-3.8
     (untested), remove \emph{all} files belonging to other releases of sip
     and PyQt and do a custom install to select the SIP tools.
     In this case you can skip rebuilding of sip and PyQt.
 
   \item
-    If you have installed PyQt\&sip-3.7-Commercial and did not delete the
+    If you have installed PyQt\&sip-3.8-Commercial and did not delete the
     build trees, you can \emph{probably} skip rebuilding of sip and PyQt.
 
   \item
@@ -659,7 +669,7 @@ nmake install
 
 \begin{notice}[warning]
   You may need to complete the file \file{win-pyqt.bat} to add Python wrapper
-  files that are not part of PyQt-win-nc-3.7.
+  files that are not part of PyQt-win-nc-3.8.
 \end{notice}
 
 \begin{notice}[note]
@@ -679,7 +689,7 @@ nmake install
   Unpack \PyQwtTarGz{} or \PyQwtShot{} into for instance \file{C:/MyStuff} and
   run
   \begin{verbatim}
-cd PyQwt-3.7
+cd PyQwt-3.8
   \end{verbatim}
   {}
 \item
@@ -883,6 +893,10 @@ curve.setData(x, y)
 \emph{is fully implemented}.
 \end{classdesc}
 
+\begin{classdesc}{QwtPlainText}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
 \begin{classdesc}{QwtPlot}{*args}
 
   \begin{itemize}
@@ -1013,8 +1027,11 @@ x, y = plot.markerPos(key)
 \emph{is fully implemented}.
 \end{classdesc}
 
+\begin{classdesc}{QwtRichText}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
 \begin{classdesc}{QwtScale}{*args}
-{is fully implemented}.
 
   \begin{itemize}
 
@@ -1100,6 +1117,10 @@ void copyValues(int enable = 1);
 \end{classdesc}
  
 \begin{classdesc}{QwtSymbol}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtText}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
