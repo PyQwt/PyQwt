@@ -1,5 +1,5 @@
-REM Batch file to build PyQt-win-nc-3.5 or PyQt-win-nc-3.6.
-REM Put this file in PyQt-win-nc-3.5 or PyQt-win-nc-3.6 and run it.
+REM Batch file to build PyQt-win-nc-3.5, -3.6 or 3.7.
+REM Put this file in PyQt-win-nc-3.5, -3.6 or 3.7 and run it.
 REM You may have to adapt it for your Python installation.
 
 python build.py

@@ -12,10 +12,10 @@
 # If you cannot find those files on your system, see the
 # documentation: 'Prerequisites for Windows'.
 #
-# Running PyQt-win-*-3.6.exe and selecting the SIP tools
+# Running PyQt-win-*-3.7.exe and selecting the SIP tools
 # puts PyQt's sip files in *:\Python22\PyQt\sip
 sip_file_dirs=C:\Python22\PyQt\sip
 # If you have rebuilt PyQt from source, uncomment and edit:
-#sip_file_dirs=C:\MyStuff\PyQt-win-nc-3.6\sip
+#sip_file_dirs=C:\MyStuff\PyQt-win-nc-3.7\sip
 #
 # End of 'setup_cfg_nt'.

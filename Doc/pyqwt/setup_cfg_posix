@@ -29,11 +29,13 @@
 #
 # I install PyQt's sip files in /usr/share/sip/qt. 
 sip_file_dirs=/usr/share/sip/qt
-# To use the PyQt*-3.6 sources next to PyQwt-3.6, uncomment:
+# To use the PyQt*-3.7 sources next to PyQwt-3.7, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.7/sip
+# To use the PyQt*-3.6 sources next to PyQwt-3.7, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.6/sip
-# To use the PyQt*-3.5 sources next to PyQwt-3.6, uncomment:
+# To use the PyQt*-3.5 sources next to PyQwt-3.7, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.5/sip
-# To use the PyQt*-3.4 sources next to PyQwt-3.6, uncomment:
+# To use the PyQt*-3.4 sources next to PyQwt-3.7, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.4/sip
 #
 # To speed up compilation, concatenate the *.cpp files made by sip.
@@ -66,8 +68,8 @@ use_rpm_opt_flags=0
 [install]
 # The option 'install-data' indicates the command 'install'
 # where to install the documentation and examples.
-# I want it in /usr/share/doc/PyQwt-3.6
-install_data=/usr/share/doc/PyQwt-3.6
+# I want it in /usr/share/doc/PyQwt-3.7
+install_data=/usr/share/doc/PyQwt-3.7
 # If you prefer another directory, uncomment and edit: 
 #install_data=/2000/light/years/from/home
 #

@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '3.6'
+version = '3.7'
 
 #
 # CHECK FOR A RECENT PYTHON
@@ -226,7 +226,7 @@ Python scripts that are part of PyQwt.
 
 setup(
     name              = "PyQwt",
-    version           = snapshot,
+    version           = version,
     description       = "Python bindings for the Qwt library",
     url               = "http://gerard.vermeulen.free.fr",
     author            = "Gerard Vermeulen",
