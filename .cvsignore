@@ -4,5 +4,6 @@ LOG.*
 MANIFEST
 build
 dist
+qwt-4.2.0
 qwt-sources
 tmp
