@@ -40,19 +40,9 @@ from distutils.sysconfig import get_config_vars, get_python_inc
 def customize_qt_compiler(compiler, make_info, type, ccache=None):
     """Customize the compiler for extension modules using Qt.
     """
-    compiler.macros.append(('NDEBUG', None))
-    compiler.macros.append(('QT_NODEBUG', None))
-
-    compiler.include_dirs.append(make_info['INCDIR_QT'])
-
-    compiler.library_dirs.append(make_info['LIBDIR_QT'])
 
     if compiler.compiler_type == "unix":
-        llibraries = [] # libraries are prefixed by '-l'
         if 'thread' in type:
-            llibraries.append(make_info['LIBS_QT_THREAD'])
-            llibraries.append(make_info['LIBS_THREAD'])
-            compiler.macros.append(('QT_THREAD_SUPPORT', None))
             preprocessor = (
                 '%(CXX)s -E '
                 '%(CXXFLAGS_THREAD)s '
@@ -73,7 +63,6 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                 '%(LFLAGS_PLUGIN)s '
                 ) % make_info
         else:
-            compiler.libraries.append(make_info['LIBS_QT'])
             preprocessor = (
                 '%(CXX)s -E '
                 ) % make_info
@@ -92,16 +81,8 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                                  compiler_so=compiler_so,
                                  linker_so=linker_so)
         compiler.shared_lib_extension = get_config_vars('SO')
-        llibraries = ' '.join(llibraries).split()
-        for llibrary in llibraries:
-            library = llibrary[2:]
-            if not library in compiler.libraries:
-                compiler.libraries.append(library)
 
     if compiler.compiler_type == "msvc":
-        compiler.macros.append(('QT_DLL', None))
-        compiler.macros.append(('QT_THREAD_SUPPORT', None))
-        compiler.libraries.append(make_info['LIBS_QT_THREAD'])
         compile_options = (
             '%(CXXFLAGS)s '
             '%(CXXFLAGS_RELEASE)s '
@@ -114,17 +95,9 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
             '%(LFLAGS_WINDOWS_DLL)s '
             ) % make_info
         compiler.ldflags_shared = ldflags_shared.split()
-##         compiler.compile_options = [
-##             '-nologo', '-O1', '-MD', '-W3',
-##             ]
-##         compiler.compile_options_debug = [
-##             '-nologo', '-Zi', '-MDd', '-W3', '-U_DEBUG',
-##             ]
-##         compiler.ldflags_shared = [
-##             '/NOLOGO', '/SUBSYSTEM:windows', '/DLL',
-##             ]
-##         compiler.ldflags_shared_debug = [
-##             '/NOLOGO', '/DEBUG', '/SUBSYSTEM:windows', '/DLL',
-##             ]
 
 # customize_qt_compiler()
+
+# Local Variables: ***
+# mode: python ***
+# End: ***

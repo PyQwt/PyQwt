@@ -359,6 +359,7 @@ class NumarrayInfo(ConfigInfo):
 
 
 class CCacheInfo(ConfigInfo):
+    env_var = 'CCACHE_BINDIR'
 
     def __init__(self):
         ConfigInfo.__init__(self)
@@ -367,7 +368,7 @@ class CCacheInfo(ConfigInfo):
     
     def calc_info(self):
         path = os.pathsep.join(self.get_program_dirs())
-        ccache_program = find_executable('ccache', path)
+        ccache_program = find_executable('ccache', path) or ''
 
         self.set_info(**{
             'ccache_program': ccache_program,
@@ -594,6 +595,14 @@ class QtInfo(ConfigInfo):
         qt_version_str = get_qt_version_str(qtincdir)
         sip_t_options = get_sip_t_options(qt_version_str, os.name)
         tag = qt_version_str.replace('.', '')
+
+        define_macros = [
+            ('NDEBUG', None),
+            ('QT_NODEBUG', None),
+            ]
+        include_dirs = []
+        library_dirs = []
+        libraries = []
         
         if qt_version_str[0] == '2':
             tmakepath = os.environ.get('TMAKEPATH') or ''
@@ -620,6 +629,23 @@ class QtInfo(ConfigInfo):
             make = get_qmake_conf_info(qmakeconf, qtdir)
             type = more_qmake_conf_info(make, qtlibdir, tag)
 
+        include_dirs.append(make['INCDIR_QT'])
+        library_dirs.append(make['LIBDIR_QT'])
+        if os.name == 'nt':
+            define_macros.append(('QT_DLL', None))
+            define_macros.append(('QT_THREAD_SUPPORT', None))
+            libraries.append(make['LIBS_QT_THREAD'])
+        elif os.name == 'posix':
+            if 'thread' in type:
+                libraries.append(make['LIBS_QT_THREAD'])
+                libraries.append(make['LIBS_THREAD'])
+                define_macros.append(('QT_THREAD_SUPPORT', None))
+            else:
+                libraries.append(make_info['LIBS_QT'])
+            # normalize, chop of the leading '-l'
+            libraries = [ lib[2:] for lib in ' '.join(libraries).split()]
+            
+        
         self.set_info(**{
             'qt_version_str': "%s" % qt_version_str,
             'sip_t_options': sip_t_options,
@@ -629,6 +655,10 @@ class QtInfo(ConfigInfo):
             'qtbindir': qtbindir,
             'qtincdir': qtincdir,
             'qtlibdir': qtlibdir,
+            'define_macros': define_macros,
+            'include_dirs': include_dirs,
+            'library_dirs': library_dirs,
+            'libraries': libraries,
             })
 
     # calc_info()
