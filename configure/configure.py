@@ -376,7 +376,7 @@ def generate_code(
     sipfiles = []
 
     for file in glob.glob(os.path.join(os.pardir, "sip", "*.sip")):
-        sipfiles.append(file)
+        sipfiles.append(os.path.join(os.pardir, file))
 
     installs.append([sipfiles, os.path.join(opt_pyqtsipdir, mod_name)])
 
