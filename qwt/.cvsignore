@@ -1,4 +1,4 @@
 *.cpp
 *.h
 *.pyc
-__init__.py
+_qwt.py
