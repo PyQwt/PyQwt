@@ -1,0 +1,46 @@
+PyQwt-3.7 = FAST and EASY data plotting for Python and Qt. 
+
+PyQwt has moved to http://pyqwt.sourceforge.net
+
+PyQwt is a set of Python bindings for the Qwt C++ class library.
+The Qwt library extends the Qt framework with widgets for
+Scientific and Engineering applications.
+
+PyQwt really shines with Numeric and/or numarray.  Numeric and
+numarray extend Python with new data types that make Python an
+ideal language for numerical computing and experimentation.    
+
+PyQwt requires and extends PyQt, a set of Python bindings for Qt.
+
+PyQwt runs on Windows and Unix/Linux.
+
+
+New features in PyQwt-3.7:
+
+1. PyQwt will work with either Numeric, or numarray or both (depending
+   on the presence of Numeric and numarray during PyQwt's build).
+
+2. PyQwt will work without Numeric and numarray (is not recommended).
+
+3. PyQwt is compatible with the Python Command Line Interpreter
+   or IPython, provided that the readline module is installed:
+   Qt's event processing is scheduled by the readline library
+   through (int)(*PyOS_InputHook)(void).
+
+4. PyQwt is always rlcompleter-friendly, even though PyQt-3.6 and
+   earlier are not (the dir() has been enhanced in PyQt-3.7).
+
+5. The module qwt.qplt is enhanced: qwt.qplt is sugar coating for
+   the QwtPlot widget to facilitate plotting from an interpreter.
+
+6. QwtImagePlot maps a 2-dimensional array of z-values on a QImage
+   using a color scale.
+
+7. New Qwt widgets: QwtDial and QwtCompass.
+ 
+8. Works with PyQt-3.7, PyQt-3.6, PyQt-3.5 and PyQt-3.4.
+
+9. Works with Qt-2.3.x, Qt-3.0.x and Qt-3.1.x.
+
+
+Gerard Vermeulen
