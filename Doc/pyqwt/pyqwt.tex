@@ -13,16 +13,16 @@
   {http://pyqwt.sourceforge.net/download.html}}
 \newcommand{\Snapshot}{\ulink{snapshot}
   {http://pyqwt.sourceforge.net/snapshot}}
-\newcommand{\NewSip}{\ulink{sip-4.1.tar.gz}
-  {http://pyqwt.sourceforge.net/support/sip-4.1.tar.gz}}
-\newcommand{\OldSip}{\ulink{sip-3.11.tar.gz}
-  {http://pyqwt.sourceforge.net/support/sip-3.11.tar.gz}}
+\newcommand{\NewSip}{\ulink{sip-4.1.1.tar.gz}
+  {http://pyqwt.sourceforge.net/support/sip-4.1.1.tar.gz}}
+\newcommand{\OldSip}{\ulink{sip-3.11.1.tar.gz}
+  {http://pyqwt.sourceforge.net/support/sip-3.11.1.tar.gz}}
 \newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}
   {http://pyqwt.sourceforge.net/support/sip-win-nc-3.8.zip}}
-\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.12.tar.gz}
-  {http://pyqwt.sourceforge.net/support/PyQt-x11-gpl-3.12.tar.gz}}
-\newcommand{\PyQtMac}{\ulink{PyQt-mac-gpl-3.12.tar.gz}
-  {http://pyqwt.sourceforge.net/support/PyQt-mac-gpl-3.12.tar.gz}}
+\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.13.tar.gz}
+  {http://pyqwt.sourceforge.net/support/PyQt-x11-gpl-3.13.tar.gz}}
+\newcommand{\PyQtMac}{\ulink{PyQt-mac-gpl-3.13.tar.gz}
+  {http://pyqwt.sourceforge.net/support/PyQt-mac-gpl-3.13.tar.gz}}
 \newcommand{\PyQtCom}{\ulink{Buy PyQt}
   {http://www.riverbankcomputing.co.uk/pyqt/buy.php}}
 \newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}
@@ -66,6 +66,7 @@
 
   The source package \PyQwtTarGz{} contains a 20040605 CVS snapshot
   of the \Qwt{} library with a few patches.
+
 }
 
 \newcommand{\Future}{
@@ -557,13 +558,13 @@ Build prerequisites for \PyQwtTarGz{} on \POSIX{} are:
     Qt-2.3.1 and Qt-2.3.0.
   \item
     \NewSip{} (requires at least Python-2.3.0) or \OldSip{}.\\
-    Supported versions: sip-4.1, -4.0.1, -4.0, -3.11, -3.10.2, -3.10.1, 
-    and -3.10,
+    Supported versions: sip-4.1.1, -4.1, -4.0.1, -4.0,
+    -3.11, -3.10.2, -3.10.1,  and -3.10,
     but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtGpl{}.\\
-    Supported versions: PyQt-3.12, -3.11, and -3.10,
+    Supported versions: PyQt-3.13, -3.12, -3.11, and -3.10,
     but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
@@ -591,11 +592,11 @@ Build prerequisites for \PyQwtTarGz{} on MacOS/X are:
     Supported versions: Qt-3.3.x, Qt-3.2.x, Qt-3.1.x, and Qt-3.0.x.
   \item
     \NewSip{}.\\
-    Supported versions: sip-4.1, -4.0.1, and -4.0.
+    Supported versions: sip-4.1.1, -4.1, -4.0.1, and -4.0.
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtMac{}.\\
-    Supported versions: PyQt-3.12, -3.11, and -3.10,
+    Supported versions: PyQt-3.13, -3.12, -3.11, and -3.10,
     but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
@@ -626,14 +627,14 @@ Build prerequisites for \PyQwtTarGz{} on Windows are:
     Qt-2.3.1 and Qt-2.3.0.
   \item
     \NewSip{} (requires at least Python-2.3.0) or \OldSip{}.\\
-    Supported versions: sip-4.1, -4.0.1, -4.0, -3.11, -3.10.2, -3.10.1,
-    and -3.10,
+    Supported versions: sip-4.1.1, sip-4.1, -4.0.1, -4.0,
+    -3.11, -3.10.2, -3.10.1, and -3.10,
     but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtCom{}.\\
-    Supported versions: PyQt-3.12, -3.11, and -3.10, but the most recent
-    version gets most testing.
+    Supported versions: PyQt-3.13, -3.12, -3.11, and -3.10
+    but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
     \ReadMePatches{} for bug fixes and upgrades.
@@ -798,7 +799,7 @@ python setup.py command --options
 \end{verbatim}
   For example, the command:
 \begin{verbatim}
-python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.12/sip build
+python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.13/sip build
 \end{verbatim}
   tries to build the extension, overruling any initialization of
   \var{sip_file_dirs} in the configuration file.
