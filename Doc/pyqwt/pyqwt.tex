@@ -5,21 +5,22 @@
 \newcommand{\Qwt}{\ulink{Qwt}{http://qwt.sourceforge.net}}
 
 % Source code
-\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.7.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/sip-x11-gpl-3.7.tar.gz}}
-\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.7.zip}{http://www.river-bank.demon.co.uk/download/PyQt/sip-win-nc-3.7.zip}}
+\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.7.tar.gz}{http://www.river-bank.demon.co.uk/download/sip/sip-x11-gpl-3.7.tar.gz}}
+\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.7.zip}{http://www.river-bank.demon.co.uk/download/sip/sip-win-nc-3.7.zip}}
 \newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.7.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.7.tar.gz}}
-\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.7.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.7.zip.gz}}
+\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.7.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.7.zip}}
 \newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
-\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.7.tar.gz}{http://sourceforge.net/projects/pyqwt/PyQwt-3.7.tar.gz}}
+\newcommand{\NumericTarGz}{\ulink{Numeric-23.0.tar.gz}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.tar.gz?download}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.7.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.7.tar.gz?download}}
 \newcommand{\PyQwtShot}{\ulink{PyQwt-snapshot}{http://gerard.vermeulen.free.fr/index.html\#snapshot}}
 
 % Installers for MS-Windows
-\newcommand{\PythonExe}{\ulink{Python-2.2.3.exe}{http://www.python.org/ftp/python/2.2.2/Python-2.2.3.exe}}
-\newcommand{\NumericExe}{\ulink{Numeric-23.0.win32-py2.2.exe}{http://gerard.vermeulen.free.fr/support/Numeric-23.0.win32-py2.2.exe}}
+\newcommand{\PythonExe}{\ulink{Python-2.2.3.exe}{http://www.python.org/ftp/python/2.2.3/Python-2.2.3.exe}}
+\newcommand{\NumericExe}{\ulink{Numeric-23.0.win32-py2.2.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.win32-py2.2.exe?download}}
 \newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}{ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
 \newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.7.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.7.exe}}
 \newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.7.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.7.exe}}
-\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.7.win32-py2.2.exe}{http://sourceforge.net/projects/pyqwt/PyQwt\_Qt230-3.7.win32-py2.2.exe}}
+\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.7.win32-py2.2.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.7.win32-py2.2.exe?download}}
 
 \title{PyQwt Manual}
 
@@ -442,7 +443,7 @@ least one the Numerical Python extensions:
 \ulink{Numeric}{http://www.numpy.org}
 or its successor
 \ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
-I am using Numeric-23.0 and Numeric-22.0, but Numeric-21.x should also
+I am using \NumericTarGz{} and Numeric-22.0, but Numeric-21.x should also
 work. Earlier versions Numeric are not supported.
 
 
@@ -721,7 +722,7 @@ python setup.py build --force >log.txt
 \chapter{PyQwt Module Reference \label{reference}}
 
 The reference should be used in conjunction with the
-\ulink{Qwt manual}{qwt/index.html}.
+\ulink{Qwt manual}{qwt/index.html} on your hard disk or \Qwt{} on the web.
 Only the differences specific to the Python bindings are documented here.
 
 In this chapter, \emph{is not yet implemented} implies that the feature can
