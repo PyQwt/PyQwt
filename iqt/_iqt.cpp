@@ -88,7 +88,7 @@ static struct PyMethodDef IQtPyModuleMethods[] = {
     {"disable_hook", (PyCFunction)iqt_disable_hook, METH_NOARGS, 0},
     {"enable_hook",  (PyCFunction)iqt_enable_hook,  METH_NOARGS, 0},
     {"interacting",  (PyCFunction)iqt_interacting,  METH_NOARGS, 0},
-    {0, 0},
+    {0, 0, 0, 0},
 };
 
 extern "C" DL_EXPORT(void)
