@@ -40,11 +40,11 @@ class QwtPlotCanvas: QFrame
 %End
 
 public:
-    enum FocusStyle
+    enum FocusIndicator
     {
-        NoFocus,
-        CanvasFocus,
-        ItemFocus
+        NoFocusIndicator,
+        CanvasFocusIndicator,
+        ItemFocusIndicator,
     };
 
 %If (SIP_DUMB_DIR)
@@ -56,11 +56,17 @@ public:
 %End
 %End
 
-    void setFocusStyle(FocusStyle);
-    FocusStyle focusStyle() const;
+    void setFocusIndicator(FocusIndicator);
+    FocusIndicator focusIndicator() const;
+
+    void setCacheMode(bool);
+    bool cacheMode() const;
+    // dead code: const QPixmap *cache() const;
 
 protected:
     QwtPlotCanvas(QwtPlot * /TransferThis/);
+
+    QPixmap *cache();
 
     virtual void frameChanged();
     virtual void drawContents(QPainter *);

@@ -93,12 +93,15 @@ public:
 		      double, QPalette::ColorGroup = QPalette::Active) const;
 
     static void drawArrowNeedle(QPainter *, const QPoint &,
-				int, double, bool,
+				int, int, double, bool,
 				const QColor &, const QColor &);
     
     static void drawRayNeedle(QPainter *, const QPoint &,
-			      int, double, bool,
+			      int, int, double, bool,
 			      const QColor &, const QColor &);
+
+    void setWidth(int);
+    int width() const;
 
 protected:
     static void drawKnob(QPainter *, const QPoint &, int, const QColor &);
