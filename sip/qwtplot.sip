@@ -133,7 +133,7 @@ public:
     QwtPlotCurve *curve(long);
     // dead code: const QwtPlotCurve *curve(long) const;
 
-    QwtArray<long> curveKeys() const;
+    QwtArrayLong curveKeys() const;
     long closestCurve(int, int, int & /Out/,
                       double & /Out/, double & /Out/, int & /Out/) const;
 
@@ -295,7 +295,7 @@ public:
     // dead code: const QwtPlotMarker *marker(long) const;
 
     long closestMarker(int, int, int & /Out/) const;
-    QwtArray<long> markerKeys() const;
+    QwtArrayLong markerKeys() const;
 
     bool setMarkerXAxis(long, int);
     int markerXAxis(long) const;

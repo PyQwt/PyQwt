@@ -1,11 +1,10 @@
 // The SIP interface definition file for mapped QwtArray types, implemented:
-//      QwtArray<long>
 //      QwtArray<QwtDiMap>,
 //      QwtArray<QwtDoublePoint>,
 //      QwtArray<QwtEventPattern::KeyPattern>,
 //      QwtArray<QwtEventPattern::MousePattern>.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -37,61 +36,6 @@
 // for a non-free program.
 //
 // -- LICENSE --
-
-
-%MappedType QwtArray<long>
-{
-%TypeHeaderCode
-#include <qwt_array.h>
-%End
-
-%ConvertFromTypeCode
-     if (!sipCpp)
-         return PyList_New(0);
-
-    PyObject *l = PyList_New(sipCpp->size());
-
-    if (0 == l)
-        return 0;
-
-    for (uint i = 0; i < sipCpp->size(); ++i)
-        if (PyList_SetItem(l, i, PyInt_FromLong(long(sipCpp->at(i)))) < 0) {
-            Py_DECREF(l);            
-            return 0;
-        }
-            
-    return l;
-%End // ConvertFromTypCode
-
-%ConvertToTypeCode
-     if (0 == sipIsErr)
-         return PyList_Check(sipPy);
-
-    if (sipPy == Py_None) {
-        *sipCppPtr = 0;
-        return 0;
-    }
-
-    QwtArray<long> *a = new QwtArray<long>(PyList_GET_SIZE(sipPy));
-
-    PyErr_Clear();
-
-    for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
-        (*a)[i] = PyInt_AsLong(PyList_GET_ITEM(sipPy,i));
-
-        if (PyErr_Occurred() != NULL) {
-            delete a;
-            *sipIsErr = 1;
-
-            return 0;
-        }
-    }
-
-    *sipCppPtr = a;
-
-    return 1;
-%End // ConvertToTypeCode
-}; // QwtArray<long>
 
 
 %MappedType QwtArray<QwtDiMap>
