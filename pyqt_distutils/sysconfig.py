@@ -14,7 +14,7 @@ Provides customize_qt_compiler.
 #
 # PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
@@ -44,8 +44,6 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                 '%(CXX)s -E '
                 '%(CXXFLAGS_THREAD)s '
                 ) % make_info
-            if ccache and -1 == preprocessor.find('ccache'):
-                preprocessor = '%s %s' % (ccache, preprocessor)
             compiler_so = (
                 '%(CXX)s '
                 '%(CXXFLAGS)s '
@@ -53,12 +51,6 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                 '%(CXXFLAGS_RELEASE)s '
                 '%(CXXFLAGS_SHLIB)s '
                 '%(CXXFLAGS_WARN_ON)s '
-                ) % make_info
-            if ccache and -1 == compiler_so.find('ccache'):
-                compiler_so = '%s %s' % (ccache, compiler_so)
-            linker_so = (
-                '%(CXX)s '
-                '%(LFLAGS_PLUGIN)s '
                 ) % make_info
         else:
             preprocessor = (
@@ -71,14 +63,36 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                 '%(CXXFLAGS_SHLIB)s '
                 '%(CXXFLAGS_WARN_ON)s '
                 ) % make_info
-            linker_so = (
-                '%(CXX)s '
-                '%(LFLAGS_PLUGIN)s '
-                ) % make_info
+
+        linker_so = (
+            '%(CXX)s '
+##             '%(RPATH)s%(LIBDIR_QT)s '
+            '%(LFLAGS_PLUGIN)s '
+            ) % make_info
+
+        # Flag Python-2.3 to use a C++-linker, do not use ccache. 
+        compiler_cxx = (
+            '%(CXX)s'
+            ) % make_info
         
-        compiler.set_executables(preprocessor=preprocessor,
-                                 compiler_so=compiler_so,
-                                 linker_so=linker_so)
+        if ccache and -1 == preprocessor.find('ccache'):
+            preprocessor = '%s %s' % (ccache, preprocessor)
+
+        if ccache and -1 == compiler_so.find('ccache'):
+            compiler_so = '%s %s' % (ccache, compiler_so)
+
+        if  hasattr(compiler, 'compiler_cxx'):
+            # Python-2.3.x
+            compiler.set_executables(preprocessor=preprocessor,
+                                     compiler_so=compiler_so,
+                                     linker_so=linker_so,
+                                     compiler_cxx=compiler_cxx)
+        else:
+            # Python-2.2.x, Python-2.1.x, Python-2.0.x
+            compiler.set_executables(preprocessor=preprocessor,
+                                     compiler_so=compiler_so,
+                                     linker_so=linker_so)
+
         compiler.shared_lib_extension = get_config_vars('SO')
 
     if compiler.compiler_type == "msvc":
