@@ -63,8 +63,19 @@ public:
 
 protected:
     bool hasUserScale();
+
+%If (QWT_4_2_0 - QWT_4_3_0)
     virtual void scaleChange() = 0;
+%End // (QWT_4_2_0 - QWT_4_3_0)
+%If (QWT_4_3_0 -)
+    virtual void scaleChange();
+%End // (QWT_4_3_0 -)
+
     QwtScaleDraw *scaleDraw();
+
+%If (QWT_4_3_0 -)
+    void updateScaleDraw();
+%End // (QWT_4_3_0 -)
 };
 
 
