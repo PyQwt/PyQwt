@@ -1,7 +1,7 @@
 PWD := $(shell pwd)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "14 Jul 2003 23:59:59 GMT"
+CVS-DATE := "26 Jul 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -9,7 +9,7 @@ QWT-SOURCES := $(shell echo qwt-sources/include/*.h)
 QWT-SOURCES += $(shell echo qwt-sources/src/*.{cpp,dox})
 
 DIFFERS := -d 'qwt-sources/include qwt-sources/src'
-#DIFFERS += -s '.canvas .rich .warning'
+#DIFFERS += -s '.canvas .rich'
 DIFFERS += -s '.canvas'
 
 FREE := $(HOME)/Free
@@ -80,6 +80,8 @@ qwt-sources-ssh:
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
 	python PATCHER
+	(cd qwt-sources; QTDIR=/usr/lib/qt3 qmake qwt.pro)
+	(cd qwt-sources/examples; QTDIR=/usr/lib/qt3 qmake examples.pro)
 
 free:
 	find . -name '*~' | xargs rm -f
