@@ -142,8 +142,6 @@ class Plot(QwtPlot):
         (4) tuples of 2 integer -- sets the size.
         """
 
-        if QFontInfo(QFont('verdana')).family() == 'verdana':
-            self.setFont('verdana')
         self.size = (600, 400)
         # get an optional parent widget
         parent = None
@@ -152,6 +150,9 @@ class Plot(QwtPlot):
                 parent = arg
                 self.size = None
         QwtPlot.__init__(self, parent)
+        font = QFont('verdana')
+        if font.exactMatch():
+            self.setFont(font)
 
         # user interface
         self.setCanvasBackground(Qt.white)
