@@ -45,17 +45,18 @@ public:
     QwtKnob(QWidget * /TransferThis/ = 0, const char * = 0);
 
     void setKnobWidth(int);
-    int knobWidth() const;
     void setTotalAngle(double);
+    void setBorderWidth(int);
+
+    int knobWidth() const;
     double totalAngle() const;
     int borderWidth() const;
-    void setBorderWidth(int);
+
     void setSymbol(Symbol);
     Symbol symbol() const;
 
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
-    virtual QSizePolicy sizePolicy() const;
 
 protected:
     virtual void paintEvent(QPaintEvent *);
