@@ -1,6 +1,7 @@
 *.patch
 *.pyc
 LOG.*
+MANIFEST
 setup.cfg
 .configure
 build

@@ -2,7 +2,7 @@ PWD := $(shell pwd)
 CVS-QWT := :pserver:anonymous@cvs.qwt.sourceforge.net:/cvsroot/qwt
 CVS-DATE := "14 Jun 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
-CVS-QWT-SSH := :ext:gvermeul@cvs.qwt.sourceforge.net:/cvsroot/qwt
+CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
 
 all:
