@@ -283,7 +283,7 @@ class CpuPlot(QwtPlot):
         self.cpuStat = CpuStat()
 
         self.plotLayout().setCanvasMargin(0)
-        self.plotLayout().setAlignCanvasToTicks(1)
+        self.plotLayout().setAlignCanvasToScales(1)
         self.setCanvasBackground(Qt.darkGray)
         
         self.setAutoLegend(1)

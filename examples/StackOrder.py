@@ -76,7 +76,7 @@ class QwtBarPlotDemo(QMainWindow):
                             'right-click to unzoom',
                             self)
         self.plot.plotLayout().setCanvasMargin(0)
-        self.plot.plotLayout().setAlignCanvasToTicks(True)
+        self.plot.plotLayout().setAlignCanvasToScales(True)
         self.setCentralWidget(self.plot)
 
         self.__initToolBar()

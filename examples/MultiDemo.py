@@ -30,7 +30,7 @@ class MultiDemo(QWidget):
             # import does_not_exist
             numeric_plot = QwtPlot('Plot -- Numeric arrays', self)
             numeric_plot.plotLayout().setCanvasMargin(0)
-            numeric_plot.plotLayout().setAlignCanvasToTicks(1)
+            numeric_plot.plotLayout().setAlignCanvasToScales(1)
             numeric_x = Numeric.arange(0.0, 10.0, 0.01)
             numeric_y = lorentzian(numeric_x)
             # insert a curve, make it red and copy the arrays
@@ -46,7 +46,7 @@ class MultiDemo(QWidget):
         # create a plot widget for lists of Python floats
         list_plot = QwtPlot('Plot -- List of Python floats', self)
         list_plot.plotLayout().setCanvasMargin(0)
-        list_plot.plotLayout().setAlignCanvasToTicks(1)
+        list_plot.plotLayout().setAlignCanvasToScales(1)
         list_x = drange(0.0, 10.0, 0.01)
         list_y = map(lorentzian, list_x)
         # insert a curve, make it blue and copy the lists
@@ -59,7 +59,7 @@ class MultiDemo(QWidget):
         # create a plot widget for tuples of Python floats
         tuple_plot = QwtPlot('Plot -- Tuple of Python floats', self)
         tuple_plot.plotLayout().setCanvasMargin(0)
-        tuple_plot.plotLayout().setAlignCanvasToTicks(1)
+        tuple_plot.plotLayout().setAlignCanvasToScales(1)
         tuple_x = tuple(list_x)
         tuple_y = tuple(list_y)
         # insert a curve, make it blue and copy the lists
@@ -75,7 +75,7 @@ class MultiDemo(QWidget):
             # import does_not_exist
             numarray_plot = QwtPlot('Plot -- numarray arrays', self)
             numarray_plot.plotLayout().setCanvasMargin(0)
-            numarray_plot.plotLayout().setAlignCanvasToTicks(1)
+            numarray_plot.plotLayout().setAlignCanvasToScales(1)
             numarray_x = numarray.arange(0.0, 10.0, 0.01)
             numarray_y = lorentzian(numarray_x)
             # insert a curve, make it red and copy the arrays

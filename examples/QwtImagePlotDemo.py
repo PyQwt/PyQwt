@@ -111,7 +111,7 @@ class QwtImagePlot(QwtPlot):
 	# make a QwtPlot widget
         self.plotLayout().setMargin(0)
         self.plotLayout().setCanvasMargin(0)
-        self.plotLayout().setAlignCanvasToTicks(1)
+        self.plotLayout().setAlignCanvasToScales(1)
 	self.setTitle('QwtImagePlot: (un)zoom & (un)hide')
         self.setAutoLegend(1)
         self.setLegendPos(Qwt.Right)
