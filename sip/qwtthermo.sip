@@ -55,8 +55,14 @@ public:
     void setBorderWidth(int);
     int borderWidth() const;
 
+    void setFillBrush(const QBrush &);
+    const QBrush &fillBrush() const;
+
     void setFillColor(const QColor &);
     const QColor &fillColor() const;
+
+    void setAlarmBrush(const QBrush &);
+    const QBrush &alarmBrush() const;
 
     void setAlarmColor(const QColor &);
     const QColor &alarmColor() const;
