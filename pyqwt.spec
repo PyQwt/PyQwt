@@ -1,6 +1,11 @@
+# Make sure that you have installed the development packages for PyQt and sip
+
+%{expand:%define buildForMandrake %(if [ -e /etc/mandrake-release ]; then echo 1; else echo 0; fi)}
+%{expand:%define buildForSuSE %(if [ -e /etc/SuSE-release ]; then echo 1; else echo 0; fi)}
+
 %{expand: %%define pyver %(python -c 'import sys; print sys.version[:3]')}
+%{expand: %%define qtver %(python -c 'import qt; print qt.QT_VERSION_STR')}
 %{expand: %%define sipver %(rpm -q sip --qf "%{VERSION}")}
-%{expand: %%define qtver %(rpm -q libqt3 --qf "%{VERSION}")}
 
 %define name	PyQwt
 %define version	4.0
@@ -18,10 +23,16 @@ URL:		http://pyqwt.sourceforge.net
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:  python >= %{pyver}
 BuildRequires:	sip = %{sipver}
-BuildRequires:  libqt3-devel = %{qtver}
 Requires:	python >= %{pyver}
 Requires:       sip = %{sipver}
+%if %buildForMandrake 
+BuildRequires:  libqt3-devel = %{qtver}
 Requires:       libqt3 = %{qtver}
+%endif
+%if %buildForSuSE
+BuildRequires:  qt3-devel = %{qtver}
+Requires:       qt3 = %{qtver}
+%endif
 
 %description
 PyQwt is a set of Python bindings for the Qwt C++ class library which extends
