@@ -38,7 +38,7 @@
 %MappedType QwtArray<long>
 {
 %TypeHeaderCode
-#include <qmemarray.h>
+#include <qwt_array.h>
 %End
 
 %ConvertFromTypeCode
