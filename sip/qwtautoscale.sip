@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtAutoScale.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -33,6 +33,8 @@
 //
 // -- LICENSE --
 
+
+%If (QWT_4_2_0 - QWT_4_3_0)
 
 class QwtAutoScale
 {
@@ -99,6 +101,83 @@ protected:
     void buildLogScale();
     void setRange(double, double);
 };
+
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+
+class QwtAutoScaler
+{
+%TypeHeaderCode
+#include <qwt_autoscl.h>
+%End
+
+public:
+    enum {
+	None = 0,
+	IncludeRef = 1,
+	Symmetric = 2,
+        Floating = 4,
+        Inverted = 8,
+    };
+
+    QwtAutoScaler();
+    virtual ~QwtAutoScaler();
+
+    virtual void autoScale(int, double &, double &, double &) const = 0;
+
+    virtual QwtScaleDiv divide(double, double, int, double) const = 0;
+
+    virtual double stepSize(double, double, int) const = 0;
+
+    void changeOptions(int, bool);
+    void setOptions(int);
+    bool option(int) const;
+    int options() const;
+
+    void setReference(double);
+    double reference() const;
+
+    void setMargins(double, double);
+    double loMargin() const;
+    double hiMargin() const;
+
+protected:
+    bool almostZero(double, double) const;
+};
+
+
+class QwtLinearAutoScaler: QwtAutoScaler
+{
+%TypeHeaderCode
+#include <qwt_autoscl.h>
+%End
+
+public:
+    virtual void autoScale(int, double &, double &, double &) const;
+
+    virtual QwtScaleDiv divide(double, double, int, double) const;
+
+    virtual double stepSize(double, double, int) const;
+};
+
+
+class QwtLog10AutoScaler: QwtAutoScaler
+{
+%TypeHeaderCode
+#include <qwt_autoscl.h>
+%End
+
+public:
+    virtual void autoScale(int, double &, double &, double &) const;
+
+    virtual QwtScaleDiv divide(double, double, int, double) const;
+
+    virtual double stepSize(double, double, int) const;
+};
+
+%End // (QWT_4_3_0 -)
+
 
 // Local Variables:
 // mode: C++
