@@ -73,4 +73,6 @@ install_data=/usr/share/doc/PyQwt-3.7
 # If you prefer another directory, uncomment and edit: 
 #install_data=/2000/light/years/from/home
 #
-# End of 'setup_cfg_posix'.
+# Local Variables: ***
+# mode: sh ***
+# End: ***

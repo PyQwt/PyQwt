@@ -17,7 +17,7 @@ all:
 	python setup.py build 2>&1 | tee LOG.all
 
 doc: qwt-user-docs
-	cp setup_cfg_nt setup_cfg_posix Doc/pyqwt/
+	cp -pu setup_cfg_nt setup_cfg_posix Doc/pyqwt/
 	(cd Doc; make doc)
 	(cd examples; make html)
 

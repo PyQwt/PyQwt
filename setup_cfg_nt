@@ -18,4 +18,6 @@ sip_file_dirs=C:\Python22\PyQt\sip
 # If you have rebuilt PyQt from source, uncomment and edit:
 #sip_file_dirs=C:\MyStuff\PyQt-win-nc-3.7\sip
 #
-# End of 'setup_cfg_nt'.
+# Local Variables: ***
+# mode: sh ***
+# End: ***
