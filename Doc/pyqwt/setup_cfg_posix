@@ -31,12 +31,14 @@
 #
 # to extract all files from the RPM package, including the sources for PyQt.
 #
-# To use the PyQt*-3.10 sources next to PyQwt-4.0, uncomment:
+# To use the PyQt*-3.10 sources next to PyQwt-4.1, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.10/sip
-# To use the PyQt*-3.11 sources next to PyQwt-4.0, uncomment:
+# To use the PyQt*-3.11 sources next to PyQwt-4.1, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.11/sip
-# To use the PyQt*-3.12 sources next to PyQwt-4.0, uncomment:
+# To use the PyQt*-3.12 sources next to PyQwt-4.1, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.12/sip
+# To use the PyQt*-3.13 sources next to PyQwt-4.1, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.13/sip
 #
 #
 # Some %ConvertToSubClassCode handwritten code uses 'dynamic_cast<>()' which is
@@ -75,10 +77,16 @@ use_rpm_opt_flags=0
 #
 [install]
 # The option 'install-data' indicates the command 'install' where to install
-# the documentation and examples. I want it in /usr/share/doc/PyQwt-4.0
-install_data=/usr/share/doc/PyQwt-4.0
+# the documentation and examples. I want it in /usr/share/doc/PyQwt-4.1
+install_data=/usr/share/doc/PyQwt-4.1
 # If you prefer another directory, uncomment and edit: 
 #install_data=/2000/light/years/from/home
+#
+#
+[sdist]
+# The option 'force-manifest' indicates the 'sdist' command whether to force
+# regeneration of the MANIFEST
+force-manifest=1
 #
 #
 # Local Variables: ***
