@@ -62,7 +62,7 @@ python configure.py -c -j $(getconf _NPROCESSORS_ONLN) \
 python configure.py -c -j $(getconf _NPROCESSORS_ONLN)
 %endif
 
-make CXX='ccache g++' -j $(getconf _NPROCESSORS_ONLN)
+make CXX="$(which ccache) g++" -j $(getconf _NPROCESSORS_ONLN)
 
 %install
 cd configure
