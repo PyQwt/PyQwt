@@ -1,6 +1,6 @@
 // The SIP interface definition file for QwtScaleIf.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -43,8 +43,14 @@ class QwtScaleIf
 public:
     QwtScaleIf();
 	
+%If (QWT_4_2_0 - QWT_4_3_0)
     void setScale(double, double, int = 0);
     void setScale(double, double, double, int = 0);
+%End // (QWT_4_2_0 - QWT_4_3_0)
+%If (QWT_4_3_0 -)
+    void setScale(double, double, bool = 0);
+    void setScale(double, double, double, bool = 0);
+%End // (QWT_4_3_0 -)
     void setScale(const QwtScaleDiv &);
     void setScaleMaxMajor(int);
     void setScaleMaxMinor(int);
@@ -60,6 +66,7 @@ protected:
     virtual void scaleChange() = 0;
     QwtScaleDraw *scaleDraw();
 };
+
 
 // Local Variables:
 // mode: C++
