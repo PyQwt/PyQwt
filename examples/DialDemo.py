@@ -16,7 +16,7 @@ def enumColorGroups():
     except AttributeError:
         return range(QPalette.NColorGroups)
 
-# enumColorRoles()
+# enumColorGroups()
 
 def enumColorRoles():
     """Masks the change in enum/int type checking new in SIP-4.2.x
