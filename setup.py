@@ -96,8 +96,6 @@ data_files = []
 #
 # documentation
 #
-data_files.append((os.path.join(infix, 'icons'),
-                   glob.glob(os.path.join('Doc', 'html', 'icons', '*.png'))))
 data_files.append((os.path.join(infix, 'html'),
                    glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.css'))))
 data_files.append((os.path.join(infix, 'html'),
