@@ -115,6 +115,63 @@ if os.name == 'nt':
 elif os.name == 'posix':
     infix = ''
 
+data_files = []
+
+#
+# documentation
+#
+data_files.append((os.path.join(infix, 'html'),
+                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.css'))))
+data_files.append((os.path.join(infix, 'html'),
+                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.html'))))
+data_files.append((os.path.join(infix, 'html'),
+                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.png'))))
+data_files.append((os.path.join(infix, 'html'),
+                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.txt'))))
+data_files.append((os.path.join(infix, 'html', 'qwt'),
+                   glob.glob(os.path.join(qwtdir, 'doc', 'html', '*'))))
+
+#
+# examples
+#
+data_files.append((os.path.join(infix, 'examples'), ['examples/README']))
+if os.name == 'nt':
+    for filename in [
+        'BodeDemo.py',
+        'CPUplot.py',
+        'CompassDemo.py',
+        'CurveDemo1.py',
+        'CurveDemo2.py',
+        'CurveDemo3.py',
+        'DataDemo.py',
+        'MapDemo.py',
+        'MinPackDemo.py',
+        'MultiDemo.py',
+        'PyCute.py',
+        'QwtImagePlotDemo.py',
+        'RadioDemo.py',
+        'SimpleDemo.py',
+        'SliderDemo.py',
+        'StackOrder.py',
+        'histtool.py',
+        ]:
+        copy_file('examples/%s' % filename, 'examples/%sw' % filename)
+    data_files.append((os.path.join(infix, 'examples'),
+                       glob.glob('examples/*.pyw')))
+elif os.name == 'posix':
+    data_files.append((os.path.join(infix, 'examples'),
+                       glob.glob('examples/*.py')))
+
+#
+# scripts
+#
+if os.name == 'nt':
+    copy_file('examples/PyCute.py', 'examples/PyCute.pyw')
+    scripts = ['examples/PyCute.pyw', 'examples/PyCute.bat']
+elif os.name == 'posix':
+    copy_file('examples/PyCute.py', 'examples/PyCute')
+    scripts = ['examples/PyCute']
+
 #
 # description
 #
@@ -192,6 +249,8 @@ setup(
     long_description  = long_description,
     platforms         = "Unix, Windows (MSVC)",
     ext_modules       = ext_modules,
+    data_files        = data_files,
+    scripts           = scripts,
     )
 
 # For in place testing on Posix:
