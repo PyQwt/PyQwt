@@ -74,8 +74,7 @@ python \
     %{buildroot}/%{_libdir}/python%{pyver}/site-packages/
 
 cd ..
-# clean up links for testing
-rm examples/{iqt,qwt}
+
 # add Qwt documentation
 mkdir -p Doc/html/pyqwt/qwt
 cp -p qwt-sources/doc/html/* Doc/html/pyqwt/qwt
