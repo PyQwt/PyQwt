@@ -11,7 +11,7 @@ QWT-SOURCES := $(shell echo qwt-sources/include/*.h)
 QWT-SOURCES += $(shell echo qwt-sources/src/*.{cpp,dox})
 
 DIFFERS := -d 'qwt-sources qwt-sources/include qwt-sources/src'
-DIFFERS += -s '.debug'
+DIFFERS += -s '.debug .autoscale'
 
 FREE := $(HOME)/Free
 
