@@ -1,0 +1,35 @@
+PyQwt-3.8 = FAST and EASY data plotting for Python and (Py)Qt. 
+
+PyQwt is a set of Python bindings for the Qwt C++ class library which
+extends the Qt framework with widgets for scientific and engineering
+applications.
+
+It supports the use of PyQt, Qt, Qwt, the Numerical Python extensions
+(either Numeric, or numarray or both) and optionally SciPy in a GUI
+Python application or in an interactive Python session.
+
+The home page of PyQwt is http://pyqwt.sourceforge.net.
+
+Main changes in PyQwt-3.8:
+
+1. New classes QwtDial, QwtCompass and QwtAnalogClock.
+
+2. New classes QwtPicker, QwtPlotPicker and QwtPlotZoomer.  QwtPicker allows
+   to make any widget interact with events.  QwtPlotZoomer implements infinite
+   deep recursive zooming.
+
+3. Support for Qt's rich text format in QwtPlot to display equations like
+   E=mc<sup>2</sup>. Caveat: a truetype font with full unicode support is
+   better to typeset of equations.
+
+4. Bug fixes to support event filtering code (see EventFilterDemo.py). 
+
+5. Conversion of a QImage to a Numeric array or numarray array and vice versa.
+
+6. The command line interpreter friendly plot classes contain better support
+   for cloning a plot into Grace ( http://plasma-gate.weizmann.ac.il/Grace ).
+
+7. PyQwt-3.8 works with PyQt-3.8.1 downto -3.6 and Qt-3.2.3 downto -2.3.0.
+
+
+Gerard Vermeulen
