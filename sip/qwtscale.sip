@@ -1,6 +1,7 @@
 // The SIP interface definition file for QwtScale.
 //
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -40,7 +41,7 @@ public:
 	Left,
 	Right,
 	Top,
-	Bottom
+	Bottom,
     };
 
 %If (SIP_DUMB_DIR)
@@ -53,7 +54,7 @@ public:
 %End
 
     QwtScale(Position, QWidget * /TransferThis/, const char * = 0);
-    
+
     void setTitle(const QString &);
     const QString title() const;
 
@@ -89,6 +90,9 @@ public:
     void setBaselineDist(int);
     int baseLineDist() const;
 
+    void setTitleDist(int);
+    int titleDist() const;
+
     void setScaleDiv(const QwtScaleDiv &);
     void setScaleDraw(QwtScaleDraw *);
     const QwtScaleDraw *scaleDraw() const;
@@ -120,11 +124,8 @@ public:
     virtual QSizePolicy sizePolicy() const;
 
     int titleHeightForWidth(int) const;
-//    int dimForLength(int, const QFontMetrics &, const QFontMetrics &) const;
     int dimForLength(int, const QFontMetrics &) const;
 
-//    static void drawTitle(QPainter *, QwtScaleDraw::Orientation,
-//			  const QRect &, int, const QString &);
     void drawTitle(QPainter *, QwtScaleDraw::Orientation, const QRect &);
 
     void setPosition(Position);
