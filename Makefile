@@ -5,73 +5,90 @@ INCDIR := /usr/lib/qt3/include/qwt
 LIBDIR := /usr/lib/qt3/lib
 
 # To compile and link the Qwt-4.2.0 sources statically into PyQwt.
-QWTDIR := /home/packer/RPM/BUILD/qwt-4.2.0
+QWTDIR := ../qwt-4.2.0
 
 # Do not edit below this line, unless you know what you are doing.
 CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
 CVS-DATE := "22 Jan 2005 23:59:59 GMT"
-CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
-QWT-SOURCES := $(shell echo qwt-sources/include/*.h)
-QWT-SOURCES += $(shell echo qwt-sources/src/*.{cpp,dox})
+QWT420-SOURCES := $(shell echo qwt-4.2.0/include/*.h)
+QWT420-SOURCES += $(shell echo qwt-4.2.0/src/*.{cpp,dox})
+QWTCVS-SOURCES := $(shell echo qwt-cvs/include/*.h)
+QWTCVS-SOURCES += $(shell echo qwt-cvs/src/*.{cpp,dox})
 
-DIFFERS := -d 'qwt-sources qwt-sources/include qwt-sources/src'
+#DIFFERS := -d 'qwt-sources qwt-sources/include qwt-sources/src'
 #DIFFERS += -s '.debug .autoscale'
 
 FREE := $(HOME)/Free
 
+
+# Build and link PyQwt against a shared Qwt library.
 all: symlinks
 	(cd configure; \
 	python configure.py -I $(INCDIR) -L $(LIBDIR) \
 	&& $(MAKE) CXX="$(CXX)")
 
+# Build and link PyQwt against a shared Qwt library
+# and write a LOG.all.
 all-log: distclean symlinks
 	(cd configure; \
 	python configure.py -I $(INCDIR) -L $(LIBDIR) 2>&1 > ../LOG.all \
 	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.all)
 
-420-static: symlinks
+# Build and link PyQwt including the source tree of Qwt-4.2.0.
+all-static: symlinks
 	(cd configure; \
 	python configure.py -Q $(QWTDIR) \
 	&& $(MAKE) CXX="$(CXX)")
 
-420-static-log: symlinks
+# Build and link PyQwt including the source tree of Qwt-4.2.0
+# and write LOG.all-static.
+all-static-log: symlinks
 	(cd configure; \
-	python configure.py -Q $(QWTDIR) 2>&1 > ../LOG.420-static \
-	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.420-static)
+	python configure.py -Q $(QWTDIR) 2>&1 > ../LOG.all-static \
+	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.all-static)
 
+# Build and link PyQwt including the CVS tree of Qwt-4.2.0.
 cvs-static: symlinks
 	(cd configure; \
-	python configure.py -Q ../qwt-sources \
+	python configure.py -Q ../qwt-cvs \
 	&& $(MAKE) CXX="$(CXX)")
 
+# build and link PyQwt including the CVS tree of Qwt-4.2.0
+# and write LOG.cvs-static
 cvs-static-log: symlinks
 	(cd configure; \
-	python configure.py -Q ../qwt-sources  > ../LOG.cvs-static \
+	python configure.py -Q ../qwt-cvs  > ../LOG.cvs-static \
 	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.cvs-static)
 
+# The symlinks work only for SIP >= 4.0.
 symlinks:
 	(cd iqt; ln -sf ../configure/iqt/_iqt.so)
 	(cd qwt; ln -sf ../configure/qwt/_qwt.so)
 	(cd examples; ln -sf ../configure/iqt; ln -sf ../configure/qwt)
 
+# Documentation
 doc: qwt-docs
 	cp -pu setup_cfg_nt setup_cfg_posix Doc/pyqwt/
 	(cd Doc; make doc)
 	(cd examples; make html)
 
-qwt-docs: qwt-sources/doc/html/index.html
+qwt-docs: qwt-4.2.0/doc/html/index.html qwt-cvs/doc/html/index.html
 
-qwt-sources/doc/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile
-	(cd qwt-sources; doxygen Doxyfile)
+qwt-4.2.0/doc/html/index.html: $(QWT420-SOURCES) qwt-4.2.0/Doxyfile
+	(cd qwt-cvs; doxygen Doxyfile)
 
+qwt-cvs/doc/html/index.html: $(QWTCVS-SOURCES) qwt-cvs/Doxyfile
+	(cd qwt-cvs; doxygen Doxyfile)
+
+# Installation
 install:
 	(cd configure; make install)
 
-.PHONY: dist qwt-sources
+.PHONY: dist qwt-cvs
 
 # build a tarball that 'mirrors' CVS
 cvs: clean
@@ -79,44 +96,43 @@ cvs: clean
 	python setup.py sdist -t MANIFEST.cvs 2>&1 | tee LOG.cvs
 
 # build a distribution tarball
-dist: 420-static clean doc
+dist: 420-static doc clean
 	python DIFFER $(DIFFERS)
-	unix2dos qwt-sources/msvc-qmake.bat 
-	unix2dos qwt-sources/msvc-tmake.bat 
 	python setup.py sdist --formats=gztar 2>&1 | tee LOG.dist
 
-# create a Qwt source tree compatible with PyQwt 
-qwt-sources:
-	rm -rf qwt-sources
+# get a (patched?) Qwt tree from CVS
+qwt-cvs:
+	rm -rf qwt-cvs
 	mkdir -p tmp
 	if [ -e tmp/qwt ]; then \
 	    (cd tmp; cvs -q -d $(CVS-QWT) update -D $(CVS-DATE) -dP qwt); \
 	else \
 	    (cd tmp; cvs -q -d $(CVS-QWT) checkout -D $(CVS-DATE) qwt); \
 	fi
-	cp -vpur tmp/qwt qwt-sources
-	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
+	cp -vpur tmp/qwt qwt-cvs
+	python untabify.py -t 4 qwt-cvs .cpp .h .pro
 	python PATCHER
 
-qwt-sources-ssh:
-	rm -rf qwt-sources
+# get a (patched?) Qwt tree from CVS
+qwt-cvs-ssh:
+	rm -rf qwt-cvs
 	mkdir -p tmp
 	if [ -e tmp/qwt ]; then \
 	    (cd tmp; cvs -q -d $(CVS-QWT-SSH) update -dP qwt); \
 	else \
 	    (cd tmp; cvs -q -d $(CVS-QWT-SSH) checkout qwt); \
 	fi
-	cp -vpur tmp/qwt qwt-sources
-	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
+	cp -vpur tmp/qwt qwt-cvs
+	python untabify.py -t 4 qwt-cvs .cpp .h .pro
 	python PATCHER
 
 makefiles:
-	(cd qwt-sources; qmake qwt.pro)
-	(cd qwt-sources/examples; qmake examples.pro)
+	(cd qwt-4.2.0; qmake qwt.pro)
+	(cd qwt-4.2.0/examples; qmake examples.pro)
 
 build-qwt: makefiles
-	(cd qwt-sources; make CXX="$(CXX)")
-	(cd qwt-sources/examples; make CXX="$(CXX)")
+	(cd qwt-4.2.0; make CXX="$(CXX)")
+	(cd qwt-4.2.0/examples; make CXX="$(CXX)")
 
 free:
 	find . -name '*~' | xargs rm -f
@@ -131,10 +147,13 @@ diff:
 clean: makefiles
 	find . -name '*~' -o -name '.mappedfiles' | xargs rm -f
 	rm -f *.pyc qwt/*.{cpp,h} qwt/_qwt.py
+	rm -f iqt/_iqt.so qwt/_qwt.so  
 
 distclean: clean makefiles
-	(cd qwt-sources; make distclean)
-	(cd qwt-sources/examples; make distclean)
-	(cd qwt-sources; qmake qwt.pro)
-	(cd qwt-sources/examples; qmake examples)
+	(cd qwt-4.2.0; make distclean)
+	(cd qwt-4.2.0/examples; make distclean)
+	(cd qwt-4.2.0; qmake qwt.pro)
+	(cd qwt-4.2.0/examples; qmake examples)
 	rm -rf configure/iqt configure/qwt
+
+# EOF
