@@ -57,6 +57,7 @@ def get_config(name):
     """
 
     return {
+        'ccache': CCacheInfo,
         'numarray': NumarrayInfo,
         'numeric': NumericInfo,
         'pyqt': PyQtInfo,
@@ -246,9 +247,6 @@ class ConfigInfo:
     
     def __init__(
         self,
-        #include_dirs=default_include_dirs,
-        #library_dirs=default_library_dirs,
-        #program_dirs=default_program_dirs,
         include_dirs=[],
         library_dirs=[],
         program_dirs=os.environ['PATH'].split(os.pathsep)
@@ -355,6 +353,26 @@ class NumarrayInfo(ConfigInfo):
         except ImportError:
             self.set_info(**{})
 
+    # calc_info()
+
+# class NumericInfo
+
+
+class CCacheInfo(ConfigInfo):
+
+    def __init__(self):
+        ConfigInfo.__init__(self)
+
+    # __init__()
+    
+    def calc_info(self):
+        path = os.pathsep.join(self.get_program_dirs())
+        ccache_program = find_executable('ccache', path)
+
+        self.set_info(**{
+            'ccache_program': ccache_program,
+            })
+        
     # calc_info()
 
 # class NumericInfo

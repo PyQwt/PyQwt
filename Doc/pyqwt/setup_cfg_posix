@@ -42,7 +42,18 @@ sip_file_dirs=/usr/share/sip/qt
 concatenate=0
 #concatenate=1
 #
-# IMHO, using http://ccache.samba.org is better than concatenating.
+# For development, using the ccache program (http://ccache.samba.org)
+# is better than concatenating.
+#
+#
+[build_ext]
+# The option 'ccache' indicates the command 'build_ext' to use
+# the compiler cache program, if found.
+# Purist may want to set 'ccache=0', if the Gnu C/C++-compilers
+# are symbolic links to ccache (man ccache), but invokations like
+# 'ccache ccache g++' are working fine.
+#ccache=0
+ccache=1
 #
 #
 [install]

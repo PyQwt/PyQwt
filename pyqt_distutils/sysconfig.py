@@ -37,7 +37,7 @@ Provides customize_qt_compiler.
 
 from distutils.sysconfig import get_config_vars, get_python_inc
 
-def customize_qt_compiler(compiler, make_info, type):
+def customize_qt_compiler(compiler, make_info, type, ccache=None):
     """Customize the compiler for extension modules using Qt.
     """
     compiler.macros.append(('NDEBUG', None))
@@ -58,6 +58,8 @@ def customize_qt_compiler(compiler, make_info, type):
                 '%(CXX)s -E '
                 '%(CXXFLAGS_THREAD)s '
                 ) % make_info
+            if ccache and -1 == preprocessor.find('ccache'):
+                preprocessor = '%s %s' % (ccache, preprocessor)
             compiler_so = (
                 '%(CXX)s '
                 '%(CXXFLAGS_THREAD)s '
@@ -65,6 +67,8 @@ def customize_qt_compiler(compiler, make_info, type):
                 '%(CXXFLAGS_SHLIB)s '
                 '%(CXXFLAGS_WARN_ON)s '
                 ) % make_info
+            if ccache and -1 == compiler_so.find('ccache'):
+                compiler_so = '%s %s' % (ccache, compiler_so)
             linker_so = (
                 '%(CXX)s '
                 '%(LFLAGS_PLUGIN)s '

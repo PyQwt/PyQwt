@@ -42,6 +42,17 @@ from pyqt_distutils.sysconfig import customize_qt_compiler
 
 class build_ext(old_build_ext):
 
+    user_options = old_build_ext.user_options + [
+        ('ccache', None,
+         "enable ccache (http://ccache.samba.org)"
+         )]
+
+    boolean_options = old_build_ext.boolean_options + ['ccache']
+
+    def initialize_options(self):
+        old_build_ext.initialize_options(self)
+        self.ccache = 0
+        
     def build_extensions(self):
 
         # First, sanity-check the 'extensions' list
@@ -53,7 +64,8 @@ class build_ext(old_build_ext):
         
         customize_qt_compiler(self.qt_compiler,
                               get_config('qt').get('make'),
-                              get_config('qt').get('type'))
+                              get_config('qt').get('type'),
+                              get_config('ccache').get('ccache_program'))
 
         for ext in self.extensions:
             if 'qt' in ext.config_jobs:
