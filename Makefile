@@ -50,7 +50,8 @@ cvs: clean
 # build a distribution tarball
 dist: all clean doc
 	python DIFFER $(DIFFERS)
-	unix2dos qwt-sources/win-tmake.bat 
+	unix2dos qwt-sources/msvc-qmake.bat 
+	unix2dos qwt-sources/msvc-tmake.bat 
 	python setup.py sdist --formats=gztar 2>&1 | tee LOG.dist
 
 # create a Qwt source tree compatible with PyQwt 
