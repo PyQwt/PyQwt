@@ -22,9 +22,6 @@ recursive-exclude examples log *.html *.png *.ps *.pyc
 recursive-exclude examples/iqt *
 recursive-exclude examples/qwt *
 
-# Junk
-recursive-include junk *.py
-
 # Numerical Python interface
 graft numpy
 

@@ -40,6 +40,12 @@ sip_file_dirs=/usr/share/sip/qt
 # To use the PyQt*-3.4 sources next to PyQwt-3.8, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.4/sip
 #
+# Some %ConvertToSubClassCode handwritten code uses 'dynamic_cast<>()'
+# which is not supported by all compilers and/or compiler options. 
+# The option 'sip_x_features' indicates the 'run_sip' command whether
+# to disable a list of features.
+#sip_x_features=CXX_DYNAMIC_CAST
+#
 # To speed up compilation, concatenate the *.cpp files made by sip.
 # The option 'concatenate' indicates the 'run_sip' command whether
 # to concatenate or not.

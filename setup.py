@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '3.8'
+version = '3.8rc0'
 
 #
 # CHECK FOR A RECENT PYTHON
@@ -69,9 +69,6 @@ pyqwt = Extension(
     sip_post_hook  = pyqwt_sip_output_patch,
     moc_sources    = moc_sources,
     config_jobs    = ['qt', 'sip', 'qt_module', 'numarray', 'numeric',],
-    #config_jobs    = ['qt', 'sip', 'qt_module', 'numarray',],
-    #config_jobs    = ['qt', 'sip', 'qt_module', 'numeric',],
-    #config_jobs    = ['qt', 'sip', 'qt_module',],
     include_dirs   = ['qwt', 'numpy', '%s/include' % qwtdir],
     )
 
@@ -120,11 +117,12 @@ if os.name == 'nt':
     for filename in [
         'BodeDemo.py',
         'CPUplot.py',
-        'CompassDemo.py',
         'CurveDemo1.py',
         'CurveDemo2.py',
         'CurveDemo3.py',
         'DataDemo.py',
+        'DialDemo.py',
+        'EventFilterDemo.py',
         'MapDemo.py',
         'MinPackDemo.py',
 	'MultiDemo.py',
@@ -226,11 +224,11 @@ plug-in for a non-free program.
 
 setup(
     name              = "PyQwt",
-    version           = snapshot,
+    version           = version,
     description       = "Python bindings for the Qwt library",
     url               = "http://pyqwt.sourceforge.net",
     author            = "Gerard Vermeulen",
-    author_email      = "gvermeul@grenoble.cnrs.fr",
+    author_email      = "pyqwt-users@lists.sourceforge.net",
     license           = "GPL",
     long_description  = long_description,
     platforms         = "Unix, Windows (MSVC)",
