@@ -132,6 +132,8 @@ class QwtBarPlotDemo(QMainWindow):
         # x is an int on 'activated(int)'
         if type(x) == type(0):
             x = int(self.counter.value())
+        else:
+            self.clearZoomStack()
             
         for i in range(x):
             curve = QwtBarCurve(self.plot, penColor, brushColor)
@@ -150,6 +152,13 @@ class QwtBarPlotDemo(QMainWindow):
                self.plot.invTransform(QwtPlot.yLeft, e.pos().y())))
 
     # onMouseMoved()
+    
+    def clearZoomStack(self):
+        for i in (QwtPlot.xBottom, QwtPlot.yLeft):
+            self.plot.setAxisAutoScale(i)
+        self.zoomStack = []
+
+    # clearZoomStack()
     
     def onMousePressed(self, e):
         if Qt.LeftButton == e.button():
