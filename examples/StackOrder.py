@@ -50,6 +50,7 @@ class QwtBarCurve(QwtPlotCurve):
 
 # class QwtBarCurve
 
+
 class QwtBarPlotDemo(QMainWindow):
 
     table = {
@@ -68,20 +69,74 @@ class QwtBarPlotDemo(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
 
-        self.plot = QwtPlot("last bar on top: "
-                            "left-click&drag to zoom, "
-                            "right-click to unzoom.", self)
+        # Initialize a QwPlot central widget
+        self.plot = QwtPlot('left-click & drag to zoom'
+                            ' -- '
+                            'right-click to unzoom',
+                            self)
         self.plot.plotLayout().setCanvasMargin(0)
         self.plot.plotLayout().setAlignCanvasToTicks(True)
         self.setCentralWidget(self.plot)
 
-        # Initialize zooming
-        self.plot.canvas().setMouseTracking(True)
-        self.statusBar().message("Move the cursor with the plot"
-                                 " to show the cursor position")
-        self.zoomStack = []
+        self.__initToolBar()
+        self.__initTracking()
+        self.__initZooming()
+        
+        # Finalize
+        self.counter.setValue(10)
+        self.go(self.counter.value())
 
-        # Connect the mouse SIGNALs from self.plot to the onMouseXx SLOTs
+    # __init__()
+
+    def __initToolBar(self):
+        """Initialize the toolbar
+        """
+        
+        self.toolBar = QToolBar(self)
+
+        QLabel("Pen:", self.toolBar)
+
+        self.penComboBox = QComboBox(self.toolBar)
+        for name in self.table.keys():
+            self.penComboBox.insertItem(name)
+        self.penComboBox.setCurrentText('black')
+
+        QLabel("Brush:", self.toolBar)
+
+        self.brushComboBox = QComboBox(self.toolBar)
+        for name in self.table.keys():
+            self.brushComboBox.insertItem(name)
+        self.brushComboBox.setCurrentText('red')
+
+        self.toolBar.setStretchableWidget(QWidget(self.toolBar))
+
+        QLabel("Bars:", self.toolBar)
+
+        self.counter = QwtCounter(self.toolBar)
+        self.counter.setRange(0, 10000, 1)
+        self.counter.setNumButtons(3)
+
+        self.connect(self.counter, SIGNAL('valueChanged(double)'), self.go)
+        self.connect(self.penComboBox, SIGNAL('activated(int)'), self.go)
+        self.connect(self.brushComboBox, SIGNAL('activated(int)'), self.go)
+
+    # __initToolBar()
+
+    def __initTracking(self):
+        """Initialize tracking
+        """
+        
+        self.plot.canvas().setMouseTracking(True)
+        self.statusBar().message(
+            "Plot cursor movements are tracked in the status bar")
+
+    # __initTracking()
+
+    def __initZooming(self):
+        """Initialize zooming
+        """
+
+        self.zoomStack = []
         self.connect(self.plot,
                      SIGNAL('plotMouseMoved(const QMouseEvent&)'),
                      self.onMouseMoved)
@@ -92,49 +147,24 @@ class QwtBarPlotDemo(QMainWindow):
                      SIGNAL('plotMouseReleased(const QMouseEvent&)'),
                      self.onMouseReleased)
 
-        # Initialize the toolbar
-        self.toolBar = QToolBar(self)
-        QLabel("Pen:", self.toolBar)
-        self.penComboBox = QComboBox(self.toolBar)
-        for name in self.table.keys():
-            self.penComboBox.insertItem(name)
-        self.penComboBox.setCurrentText('black')
-        QLabel("Brush:", self.toolBar)
-        self.brushComboBox = QComboBox(self.toolBar)
-        for name in self.table.keys():
-            self.brushComboBox.insertItem(name)
-        self.brushComboBox.setCurrentText('red')
-        self.toolBar.setStretchableWidget(QWidget(self.toolBar))
-        QLabel("Bars:", self.toolBar)
-        self.counter = QwtCounter(self.toolBar)
-        self.counter.setRange(0, 10000, 1)
-        self.counter.setNumButtons(3)
-
-        # Connect SIGNALs from the toolbar widgets to the self.go SLOT
-        self.connect(self.counter, SIGNAL('valueChanged(double)'), self.go)
-        self.connect(self.penComboBox, SIGNAL('activated(int)'), self.go)
-        self.connect(self.brushComboBox, SIGNAL('activated(int)'), self.go)
-
-        # Finalize
-        self.counter.setValue(10)
-        self.go(self.counter.value())
-
-    # __init__()
-
+    # __initZooming()
+       
     def go(self, x):
-        """Create and plot a sequence bars taking into account the controls"""
-        self.plot.removeCurves()
+        """Create and plot a sequence bars taking into account the controls
+        """
+
+        if type(x) == type(0):
+            # activated(int)
+            x = int(self.counter.value())
+        else:
+            # valueChanged(double)
+            self.clearZoomStack()
 
         penColor = self.table[str(self.penComboBox.currentText())]
         brushColor = self.table[str(self.brushComboBox.currentText())]
-
-        # x is a float on 'valueChanged(double)'
-        # x is an int on 'activated(int)'
-        if type(x) == type(0):
-            x = int(self.counter.value())
-        else:
-            self.clearZoomStack()
             
+        self.plot.removeCurves()
+
         for i in range(x):
             curve = QwtBarCurve(self.plot, penColor, brushColor)
             key = self.plot.insertCurve(curve)
@@ -143,7 +173,7 @@ class QwtBarPlotDemo(QMainWindow):
 
         self.plot.replot()
 
-    # draw()
+    # go()
 
     def onMouseMoved(self, e):
         self.statusBar().message(
@@ -213,6 +243,7 @@ class QwtBarPlotDemo(QMainWindow):
 
 # class StackOrderDemo
 
+
 def main(args):
     app = QApplication(args)
     demo = make()
@@ -223,7 +254,7 @@ def main(args):
 
 def make():
     demo = QwtBarPlotDemo()
-    demo.resize(512, 512)
+    demo.resize(400, 400)
     demo.show()
     return demo
 
