@@ -93,16 +93,13 @@ free:
 diff:
 	python DIFFER $(DIFFERS)
 
-patch:
-	cd qwt-sources; patch -p1 -b -z .canvas <$(PWD)/qwt.canvas.patch
-	cd qwt-sources; patch -p1 -b -z .rich <$(PWD)/qwt.rich.patch
 
 clean:
 	(cd qwt-sources; make distclean)
 	(cd qwt-sources/examples; make distclean)
 	rm -f MANIFEST
 	find . -name '*~' -o -name '.mappedfiles' | xargs rm -f
-	rm -f *.pyc qwt/*.{cpp,h} qwt/__init__.py
+	rm -f *.pyc qwt/*.{cpp,h} qwt/_qwt.py
 
 distclean: clean
 	(cd qwt-sources; qmake qwt.pro)

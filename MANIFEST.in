@@ -1,7 +1,7 @@
 # MANIFEST template file to make a distribution tarball
 
 # Package stuff
-include ANNOUNCEMENT-3.8.TXT
+include ANNOUNCEMENT-3.9.TXT
 include AUTHORS COPYING COPYING.PyQwt
 include INSTALL MANIFEST.in README* REGISTRATION.SF THANKS
 include DIFFER PATCHER patches.py
@@ -29,7 +29,7 @@ graft sip
 
 # qwt package
 graft qwt
-recursive-exclude qwt __init__.py *.pyc *cvsignore*
+recursive-exclude qwt _qwt.py *.pyc *cvsignore*
 
 # iqt package
 graft iqt
@@ -43,7 +43,6 @@ prune qwt-sources/lib
 prune qwt-sources/src/moc
 prune qwt-sources/src/obj
 recursive-exclude qwt-sources Makefile .qmake.internal.cache *.LOG *cvsignore*
-
 
 # Documentation
 graft Doc

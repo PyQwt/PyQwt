@@ -27,8 +27,8 @@
 # to extract all files from the RPM package, including the
 # sources for PyQt.
 #
-# I install PyQt's sip files in /usr/share/sip/qt. 
-sip_file_dirs=/usr/share/sip/qt
+# I install PyQt's sip files in /usr/share/sip. 
+sip_file_dirs=/usr/share/sip
 # To use the PyQt*-3.8.1 sources next to PyQwt-3.8, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.8.1/sip
 # To use the PyQt*-3.8 sources next to PyQwt-3.8, uncomment:
