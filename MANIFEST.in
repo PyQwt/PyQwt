@@ -21,6 +21,7 @@ recursive-exclude Doc *cvsignore*
 graft configure
 prune configure/iqt
 prune configure/qwt
+prune configure/tmp
 recursive-exclude configure Makefile *.cpp *.pyc *cvsignore*
 
 # examples
