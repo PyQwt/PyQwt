@@ -18,7 +18,7 @@ Main changes in PyQwt-4.0:
 
 3. supports Qt-3.3.2 downto -2.3.0.
 
-4. supports Mac OS X.
+4. supports MacOS/X.
 
 5. based on Qwt-20040605 (a snapshot later than Qwt-4.2.0rc1). 
 

@@ -248,7 +248,7 @@ setup(
     author_email      = "gerard.vermeulen@grenoble.cnrs.fr",
     license           = "GPL",
     long_description  = long_description,
-    platforms         = "Unix, Windows (MSVC)",
+    platforms         = "Unix, Windows (MSVC), MacOS/X",
     ext_modules       = ext_modules,
     data_files        = data_files,
     scripts           = scripts,
