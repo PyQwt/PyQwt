@@ -71,8 +71,8 @@ public:
     int bsearch(const %(ITEM)s &) const;
     // see __getitem__: type & operator[](int) const;
     %(ITEM)s & at(uint) const;
-    bool operator==(const %(ARRAY)s &) const;
-    bool operator!=(const %(ARRAY)s &) const;
+    // pulls in unwanted operators: bool operator==(const %(ARRAY)s &) const;
+    // pulls in unwanted operators: bool operator!=(const %(ARRAY)s &) const;
     // FIXME: Iterator begin();
     // FIXME: Iterator end();
     // FIXME: ConstIterator begin() const;

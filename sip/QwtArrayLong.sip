@@ -82,8 +82,8 @@ public:
     int bsearch(const long &) const;
     // see __getitem__: type & operator[](int) const;
     long /* & */ at(uint) const;
-    bool operator==(const QwtArrayLong &) const;
-    bool operator!=(const QwtArrayLong &) const;
+    // pulls in unwanted operators: bool operator==(const QwtArrayLong &) const;
+    // pulls in unwanted operators: bool operator!=(const QwtArrayLong &) const;
     // FIXME: Iterator begin();
     // FIXME: Iterator end();
     // FIXME: ConstIterator begin() const;

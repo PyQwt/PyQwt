@@ -74,8 +74,8 @@ public:
     int bsearch(const QwtEventPattern::MousePattern &) const;
     // see __getitem__: type & operator[](int) const;
     QwtEventPattern::MousePattern & at(uint) const;
-    bool operator==(const QwtArrayQwtMousePattern &) const;
-    bool operator!=(const QwtArrayQwtMousePattern &) const;
+    // pulls in unwanted operators: bool operator==(const QwtArrayQwtMousePattern &) const;
+    // pulls in unwanted operators: bool operator!=(const QwtArrayQwtMousePattern &) const;
     // FIXME: Iterator begin();
     // FIXME: Iterator end();
     // FIXME: ConstIterator begin() const;

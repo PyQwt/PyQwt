@@ -74,8 +74,8 @@ public:
     int bsearch(const QwtEventPattern::KeyPattern &) const;
     // see __getitem__: type & operator[](int) const;
     QwtEventPattern::KeyPattern & at(uint) const;
-    bool operator==(const QwtArrayQwtKeyPattern &) const;
-    bool operator!=(const QwtArrayQwtKeyPattern &) const;
+    // pulls in unwanted operators: bool operator==(const QwtArrayQwtKeyPattern &) const;
+    // pulls in unwanted operators: bool operator!=(const QwtArrayQwtKeyPattern &) const;
     // FIXME: Iterator begin();
     // FIXME: Iterator end();
     // FIXME: ConstIterator begin() const;

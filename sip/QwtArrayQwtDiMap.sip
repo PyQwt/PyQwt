@@ -74,8 +74,8 @@ public:
     int bsearch(const QwtDiMap &) const;
     // see __getitem__: type & operator[](int) const;
     QwtDiMap & at(uint) const;
-    bool operator==(const QwtArrayQwtDiMap &) const;
-    bool operator!=(const QwtArrayQwtDiMap &) const;
+    // pulls in unwanted operators: bool operator==(const QwtArrayQwtDiMap &) const;
+    // pulls in unwanted operators: bool operator!=(const QwtArrayQwtDiMap &) const;
     // FIXME: Iterator begin();
     // FIXME: Iterator end();
     // FIXME: ConstIterator begin() const;

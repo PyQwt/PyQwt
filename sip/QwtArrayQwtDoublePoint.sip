@@ -74,8 +74,8 @@ public:
     int bsearch(const QwtDoublePoint &) const;
     // see __getitem__: type & operator[](int) const;
     QwtDoublePoint & at(uint) const;
-    bool operator==(const QwtArrayQwtDoublePoint &) const;
-    bool operator!=(const QwtArrayQwtDoublePoint &) const;
+    // pulls in unwanted operators: bool operator==(const QwtArrayQwtDoublePoint &) const;
+    // pulls in unwanted operators: bool operator!=(const QwtArrayQwtDoublePoint &) const;
     // FIXME: Iterator begin();
     // FIXME: Iterator end();
     // FIXME: ConstIterator begin() const;
