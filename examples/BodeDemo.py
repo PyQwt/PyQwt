@@ -156,9 +156,12 @@ class BodePlot(QwtPlot):
         self.setAxisTitle(QwtPlot.yLeft, 'Amplitude [dB]')
         self.setAxisTitle(QwtPlot.yRight, u'Phase [\u00b0]')
 
-        self.setAxisOptions(QwtPlot.xBottom, QwtAutoScale.Logarithmic)
+        if QWT_VERSION == 0x040200:
+            self.setAxisOptions(QwtPlot.xBottom, QwtAutoScale.Logarithmic)
         self.setAxisMaxMajor(QwtPlot.xBottom, 6)
         self.setAxisMaxMinor(QwtPlot.xBottom, 10)
+        if QWT_VERSION >= 0x040300:
+            self.setAutoScaler(QwtPlot.xBottom, QwtLog10AutoScaler())
 
         # curves
         self.curve1 = self.insertCurve('Amplitude')
