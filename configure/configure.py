@@ -46,15 +46,6 @@ pyqwt_version_str = "4.0"
 
 pyqwt_packages = ["qwt"]
 pyqwt_defines = []
-pyqwt_extra_cpp_files = (
-    glob.glob(os.path.join(os.pardir, 'numpy', '*.cpp'))
-    + glob.glob(os.path.join(os.pardir, 'qwt-sources', 'src', '*.cpp'))
-    )
-pyqwt_extra_moc_headers = []
-for filename in glob.glob(
-    os.path.join(os.pardir, 'qwt-sources', 'include', '*.h')):
-    if -1 != open(filename).read().find('Q_OBJECT'):
-        pyqwt_extra_moc_headers.append(filename)
 pyqwt_extra_python_files = glob.glob(os.path.join(os.pardir, 'qwt', '*.py'))
 qwt_sip_flags = []
 
@@ -78,6 +69,9 @@ opt_split = 1
 opt_releasegil = 0
 opt_tracing = 0
 
+opt_qwtincdir = None
+opt_qwtlibdir = None
+
 def usage(rcode = 2):
     """Display a usage message and exit.
 
@@ -88,19 +82,21 @@ def usage(rcode = 2):
     else:
         add_opt = ""
     print "Usage:"
-    print "    python configure.py [-h] [-c] [-d dir] [-g] [-j #] [-r] [-u] [-v dir] [-x dir]", add_opt
+    print "    python configure.py [-h] [-c] [-d dir] [-g] [-i dir] [-j #] [-l dir] [-r] [-u] [-v dir] [-x dir]", add_opt
     print "where:"
     print "    -h      display this help message"
-    print "    -c      concatenate each module's C/C++ source files"
+    print "    -c      concatenate C/C++ source files for each module"
     print "    -d dir  install directory for the PyQwt packages [default %s]" % opt_pyqwtpkgdir
     print "    -g      always release the GIL (SIP v3.x behaviour)"
+    print "    -i dir  directory containing the Qwt include files [default %s]" % opt_qwtincdir
     print "    -j #    split the concatenated C++ source files into # pieces [default 1]"
-    if pyqtcfg.sip_version < 0x040000:
-        print "    -p dir  directory containing the PyQt libraries [default %s]" % opt_pyqtmoddir
+    print "    -l dir  directory containing the Qwt library [default %s]" % opt_qwtlibdir
     print "    -r      generate code with tracing enabled [default disabled]"
     print "    -u      build with debugging symbols"
     print "    -v dir  install directory for the PyQwt .sip files [default %s]" % opt_pyqwtsipdir
     print "    -x dir  directory containing the PyQt sip files [default %s]" % opt_pyqtsipdir
+    if pyqtcfg.sip_version < 0x040000:
+        print "    -p dir  directory containing the PyQt libraries [default %s]" % opt_pyqtmoddir
 
     sys.exit(rcode)
 
@@ -508,9 +504,9 @@ def main(argv):
     argv is the list of command line arguments.
     """
     if pyqtcfg.sip_version < 0x040000:
-        flags = "hcd:gj:kruv:p:x:y:"
+        flags = "hcd:gi:j:l:ruv:p:x:y:"
     else:
-        flags = "hcd:gj:kruv:x:y:"
+        flags = "hcd:gi:j:l:ruv:x:y:"
     try:
         optlist, args = getopt.getopt(argv[1:], flags)
     except getopt.GetoptError:
@@ -520,6 +516,7 @@ def main(argv):
     global opt_pyqtmoddir, opt_pyqtsipdir
     global opt_debug, opt_concat, opt_releasegil
     global opt_split, opt_tracing
+    global opt_qwtincdir, opt_qwtlibdir
 
     for opt, arg in optlist:
         if opt == "-h":
@@ -530,11 +527,15 @@ def main(argv):
             opt_pyqwtpkgdir = arg
         elif opt == "-g":
             opt_releasegil = 1
+        elif opt == "-i":
+            opt_qwtincdir = arg
         elif opt == "-j":
             try:
                 opt_split = int(arg)
             except:
                 usage()
+        elif opt == "-l":
+            opt_qwtlibdir = arg
         elif opt == "-p":
             if pyqtcfg.sip_version < 0x040000:
                 opt_pyqtmoddir = arg
@@ -591,6 +592,34 @@ def main(argv):
     inform_user()
 
     # Generate the code.
+    if opt_qwtincdir:
+        extra_include_dirs = [
+            os.path.join(opt_qwtincdir),
+            os.path.join(os.pardir, os.pardir, 'numpy')
+            ]
+    else:
+        extra_include_dirs = [
+            os.path.join(os.pardir, os.pardir, 'qwt-sources', 'include'),
+            os.path.join(os.pardir, os.pardir, 'numpy')
+            ]
+    pyqwt_extra_cpp_files = glob.glob(
+        os.path.join(os.pardir, 'numpy', '*.cpp'))
+
+    if opt_qwtlibdir:
+        extra_lib_dirs = [opt_qwtlibdir]
+        extra_libs = ['qwt']
+        pyqwt_extra_moc_headers = []
+    else:
+        extra_lib_dirs=[]
+        extra_libs=[]
+        pyqwt_extra_moc_headers = []
+        for filename in glob.glob(
+            os.path.join(os.pardir, 'qwt-sources', 'include', '*.h')):
+            if -1 != open(filename).read().find('Q_OBJECT'):
+                pyqwt_extra_moc_headers.append(filename)
+        pyqwt_extra_cpp_files += glob.glob(
+            os.path.join(os.pardir, 'qwt-sources', 'src', '*.cpp'))
+
     generate_code(
         'qwt',
         'qwt',
@@ -598,13 +627,9 @@ def main(argv):
         imports = ['qt'],
         sip_flags = qwt_sip_flags,
         extra_defines =  pyqwt_defines,
-        extra_include_dirs = [os.path.join(os.pardir,
-                                           os.pardir,
-                                           'qwt-sources',
-                                           'include'),
-                              os.path.join(os.pardir,
-                                           os.pardir,
-                                           'numpy')],
+        extra_include_dirs = extra_include_dirs,
+        extra_lib_dirs = extra_lib_dirs,
+        extra_libs = extra_libs,
         extra_cpp_files = pyqwt_extra_cpp_files,
         extra_moc_headers = pyqwt_extra_moc_headers,
         extra_python_files = pyqwt_extra_python_files,
