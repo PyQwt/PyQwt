@@ -107,7 +107,6 @@ public:
 
     bool isActive() const;
 
-    virtual bool event(QEvent *);
     virtual bool eventFilter(QObject *, QEvent *);
 
     QWidget *parentWidget();
@@ -115,6 +114,8 @@ public:
 
     virtual QRect pickRect() const;
     const QPointArray &selection() const;
+
+    virtual bool event(QEvent *);
 
 signals:
     void selected(const QPointArray &);
