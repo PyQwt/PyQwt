@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '3.10'
+version = '3.9'
 
 #
 # SIP VERSION
@@ -152,7 +152,7 @@ for numerical computing and experimentation like MatLab and IDL.
 long_description = long_description + """
 -----------------------------------------------------------------
                                                                 
-Copyright (C) 2001-2003 Gerard Vermeulen
+Copyright (C) 2001-2004 Gerard Vermeulen
 Copyright (C) 2000 Mark Colclough
 
 PyQwt is free software; you can redistribute it and/or modify it
@@ -195,9 +195,10 @@ setup(
     )
 
 # For in place testing on Posix:
-verbose = 0
 if os.name == 'posix':
-    for dir in ['examples']:
+    for dir in ['examples', 'junk']:
+        if not os.path.exists(dir):
+            continue
         os.chdir(dir)
         for lib in glob.glob('../build/lib*-%s.%s/*' % sys.version_info[:2]):
             link = lib.split(os.sep)[-1]
@@ -207,7 +208,6 @@ if os.name == 'posix':
         os.chdir('..')
 else:
     print "FIXME"
-
 
 # Local Variables: ***
 # compile-command: "python setup.py build" ***
