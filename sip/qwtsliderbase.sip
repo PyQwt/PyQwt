@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtSliderBase.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -69,9 +69,9 @@ public:
     void setValid(bool);
 
 public slots:
-    void setValue(double);
-    void fitValue(double);
-    void incValue(int);
+    virtual void setValue(double);
+    virtual void fitValue(double);
+    virtual void incValue(int);
 
     virtual void setReadOnly(bool);
 	
