@@ -3,7 +3,7 @@ PWD := $(shell pwd)
 CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "19 Oct 2003 23:59:59 GMT"
+CVS-DATE := "31 Oct 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -50,6 +50,7 @@ cvs: clean
 # build a distribution tarball
 dist: clean doc
 	python DIFFER $(DIFFERS)
+	unix2dos qwt-sources/win-tmake.bat 
 	python setup.py sdist --formats=gztar 2>&1 | tee LOG.dist
 
 # create a Qwt source tree compatible with PyQwt 
