@@ -141,53 +141,13 @@ All this in C, for a manifold speedup with respect to pure Python.
 
 The PyQwt widgets can be used in Graphical User Interface (GUI)
 programs as well as from the Command Line Interpreter (CLI).
-This section addresses the CLI facilities.
+This section addresses the CLI facilities and functions to convert 
+\class{QImage} instances to Numeric and numarray arrays and vice versa.
 
 The documentation for writing GUI programs consists of the
 \ulink{Qwt manual}{qwt/index.html} on your hard disk or the \Qwt{} manual on
 the web, supplemented by chapter \ref{reference} to document the differences
 between PyQwt and Qwt.
-
-\subsection{PyCute \label{pycute-intro}}
-
-\program{PyCute} embeds a Python shell in a \class{QMultiLineEdit} widget
-(Qt-2.x) or a \class{QTextEdit} widget (Qt-3.x) that works nicely with
-\module{qwt.qplt}, see \ref{qwt-qplt}.
-
-Possible invokations of the \program{PyCute} are:
-\begin{verbatim}
-PyCute --demo
-\end{verbatim}
-or:
-\begin{verbatim}
-PyCute
-\end{verbatim}
-or from the examples directory:
-\begin{verbatim}
-PyCute ICompass.py
-\end{verbatim}
-
-The first command creates a PyCute shell and executes eight Python statements
-to create a \class{Plot} and an \class{IPlot} widget.
-
-Both widgets allow you to select a new zoom region by pressing the left button,
-dragging the mouse and releasing the left button.
-The previous zoom region is placed on an infinite stack, so that you can
-unzoom to previous zoom regions by clicking the right button.
-
-Both widgets allow you to hide/unhide curves by clicking on a legend item.
-
-In addition, the \class{IPlot} widgets displays the plot coordinates in the
-status bar and has a toolbar buttons to print and to clone the plot into
-\ulink{Grace}{http://plasma-gate.weizmann.ac.il/Grace/}.
-Grace is a WYSIWYG plot program that produces output very well adapted to
-scientific journals.
-
-The second command gives you a plain PyCute shell and the third command 
-interpretes the ICompass.py program.
-
-Type \kbd{Control-D} to exit the shell.
- 
 
 \subsection{iqt \label{iqt-intro}}
 
@@ -244,6 +204,47 @@ ipython ICompass.py
   it has no \module{readline} module.
 \end{notice}
 
+
+\subsection{PyCute \label{pycute-intro}}
+
+\program{PyCute} embeds a Python shell in a \class{QMultiLineEdit} widget
+(Qt-2.x) or a \class{QTextEdit} widget (Qt-3.x) that works nicely with
+\module{qwt.qplt}, see \ref{qwt-qplt}.
+
+Possible invokations of the \program{PyCute} are:
+\begin{verbatim}
+PyCute --demo
+\end{verbatim}
+or:
+\begin{verbatim}
+PyCute
+\end{verbatim}
+or from the examples directory:
+\begin{verbatim}
+PyCute ICompass.py
+\end{verbatim}
+
+The first command creates a PyCute shell and executes eight Python statements
+to create a \class{Plot} and an \class{IPlot} widget.
+
+Both widgets allow you to select a new zoom region by pressing the left button,
+dragging the mouse and releasing the left button.
+The previous zoom region is placed on an infinite stack, so that you can
+unzoom to previous zoom regions by clicking the right button.
+
+Both widgets allow you to hide/unhide curves by clicking on a legend item.
+
+In addition, the \class{IPlot} widgets displays the plot coordinates in the
+status bar and has a toolbar buttons to print and to clone the plot into
+\ulink{Grace}{http://plasma-gate.weizmann.ac.il/Grace/}.
+Grace is a WYSIWYG plot program that produces output very well adapted to
+scientific journals.
+
+The second command gives you a plain PyCute shell and the third command 
+interpretes the ICompass.py program.
+
+Type \kbd{Control-D} to exit the shell.
+ 
 
 \subsection{qwt.qplt \label{qwt-qplt}}
 
@@ -410,6 +411,30 @@ Toggle a curve between hidden and shown.
   \end{itemize}
 \end{classdesc}
 
+\subsection{QImage and Numeric/numarray arrays \label{qwt-qimage}}
+
+\begin{funcdesc}{toImage}{array}
+  Convert \var{array} to a QImage, where \var{array} must be a two-dimensional
+  Numeric array of type UnsignedInt8, UnsignedInt16 or UnsignedInt32 or a
+  two-dimensional numarray array of type UInt8, UInt16 or UInt32.
+\end{funcdesc}
+
+\begin{funcdesc}{to_na_array}{image}
+  Convert \var{image} of type \class{QImage} to a numarray array. This function
+  is only present if numarray has been detected when building PyQwt.
+\end{funcdesc}
+
+\begin{funcdesc}{to_np_array}{image}
+  Convert \var{image} of type \class{QImage} to a Numeric array. This function
+  is only present if Numeric has been detected when building PyQwt.
+\end{funcdesc}
+
+\begin{notice}[warning]
+Those functions ignore endianness and are untested on 64-bit platforms.
+Feedback, please.
+\end{notice}
+
+
 \chapter{Installation \label{installation}}
 
 You can install PyQwt on \POSIX{} and Microsoft Windows operating systems:
@@ -474,11 +499,11 @@ Recent versions of the following software should be installed on your system:
     Earlier versions of Qt are not supported.
   \item
     \SipGpl{}.
-    I support sip downto version 3.5, but the most recent version
+    I support sip-3.8, -3.7 and -3.6, but the most recent version
     gets most testing. You may also try a \snapshot{} at your own risk.
   \item
     \PyQtGpl{}.
-    I support PyQt downto version 3.5, but the most recent version
+    I support PyQt-3.8.1, -3.8, -3.7 and -3.6, but the most recent version
     gets most testing. You may also try a \snapshot{} at your own risk.
   \item
     Read \ReadMePatches{} to check out bug fixes and upgrades.
@@ -493,7 +518,8 @@ I am using \NumericTarGz{} and \numarrayTarGz{}.
 Versions of Numeric later than 21.0 are supported.
 Numarray is newer and therefore less stable than Numeric, so get the latest!
 
-The source package \PyQwtTarGz{} contains a CVS version of the \Qwt{} library.
+The source package \PyQwtTarGz{} contains version 4.2.0rc1 of the \Qwt{}
+library.
 
 \begin{notice}[warning]
 Always try to install sip and PyQt with matching version numbers: only
