@@ -254,7 +254,7 @@ def main(args):
 
 def make():
     demo = QwtBarPlotDemo()
-    demo.resize(400, 400)
+    demo.resize(500, 500)
     demo.show()
     return demo
 
