@@ -240,7 +240,8 @@ setup(
 # For in place testing on Posix:
 verbose = 0
 if os.name == 'posix':
-    for dir in ['examples', 'junk']:
+    dirs = ['examples', 'junk']
+    for dir in filter(os.path.exists, dirs):
         os.chdir(dir)
         for lib in glob.glob('../build/lib*/*'):
             link = lib.split(os.sep)[-1]
