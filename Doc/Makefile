@@ -17,16 +17,13 @@ doc: $(SOURCES)
 	    --up-link http://pyqwt.sourceforge.net --up-title "PyQwt Home" \
 	    pyqwt/pyqwt.tex
 	(cd html/pyqwt; rm -f *.dat *.idx *.old *.pl *.gif)
+	python tools/nospam.py html/pyqwt/*.html
 	date -u "+%Y-%m-%d %T" > doc
 
-htdoc: $(SOURCES)
+htdoc: doc $(SOURCES)
 	(cd html/htdoc; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
-	cp -pu html/icons/*.png html/htdoc
-	python tools/mkhowto --html --dir html/htdoc \
-	    --image-type png --favicon pyfav.png \
-	    --up-link ../index.html --up-title "PyQwt Home" \
-	    pyqwt/pyqwt.tex
-	(cd html/htdoc; rm -f *.dat *.idx *.old *.pl *.gif)
+	cp -pu html/pyqwt/* html/htdoc
+	python tools/sourceforge.py html/htdoc/*.html
 	date -u "+%Y-%m-%d %T" > htdoc
 
 free:
