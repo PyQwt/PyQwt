@@ -14,7 +14,7 @@ Finds, caches and provides configuration information.
 #
 # PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
@@ -329,6 +329,27 @@ class ConfigInfo:
 # class ConfigInfo
 
 
+class CCacheInfo(ConfigInfo):
+    env_var = 'CCACHE_BINDIR'
+
+    def __init__(self):
+        ConfigInfo.__init__(self)
+
+    # __init__()
+    
+    def calc_info(self):
+        path = os.pathsep.join(self.get_program_dirs())
+        ccache_program = find_executable('ccache', path) or ''
+
+        self.set_info(**{
+            'ccache_program': ccache_program,
+            })
+        
+    # calc_info()
+
+# class CCacheInfo
+
+
 class NumarrayInfo(ConfigInfo):
 
     def __init__(self):
@@ -352,28 +373,7 @@ class NumarrayInfo(ConfigInfo):
 
     # calc_info()
 
-# class NumericInfo
-
-
-class CCacheInfo(ConfigInfo):
-    env_var = 'CCACHE_BINDIR'
-
-    def __init__(self):
-        ConfigInfo.__init__(self)
-
-    # __init__()
-    
-    def calc_info(self):
-        path = os.pathsep.join(self.get_program_dirs())
-        ccache_program = find_executable('ccache', path) or ''
-
-        self.set_info(**{
-            'ccache_program': ccache_program,
-            })
-        
-    # calc_info()
-
-# class NumericInfo
+# class NumarrayInfo
 
 
 class NumericInfo(ConfigInfo):
@@ -631,6 +631,8 @@ class QtInfo(ConfigInfo):
         if os.name == 'nt':
             define_macros.append(('QT_DLL', None))
             define_macros.append(('QT_THREAD_SUPPORT', None))
+            # disable STL support, because we cannot get it working for Qt-NC
+            define_macros.append(('QWT_NO_STL', None))
             libraries.append(make['LIBS_QT_THREAD'])
         elif os.name == 'posix':
             if 'thread' in type:
@@ -692,7 +694,7 @@ class SipInfo(ConfigInfo):
         sip_x_features = []
         from qt import QObject
         if 'className' in dir(QObject):
-            sip_x_features.extend(['-x', 'SIP_DUMB_DIR'])
+            sip_x_features.extend(['SIP_DUMB_DIR'])
 
         self.set_info(**{
             'sip_version': sip_version,
@@ -740,7 +742,7 @@ def get_sip_t_options(qt_version_str, os_name):
     if not ws:
         raise OSError(os_name)
 
-    return ['-t', qt, '-t', ws]
+    return [qt, ws]
 
 # get_sip_qt_ws_options()
 
@@ -771,6 +773,8 @@ def get_qmake_conf_info(qmakeconf, qtdir):
             split = line.find('=')
             key = line[:split].strip()[6:]
             value = line[split+1:].strip()
+            value = value.replace('$${LITERAL_WHITESPACE}', '')
+            value = value.replace('$$LITERAL_WHITESPACE', '')
             if value[:2] == "$$":
                 macro = value.split()[0]
                 value = value.replace(macro, info[macro[8:]])
@@ -827,15 +831,18 @@ def more_tmake_conf_info(info, qtlibdir, tag='', platform=None):
     if not platform:
         platform = os.name
     if platform == 'nt':
-        # tmake.conf in Qt-2.3.0-NC is impaired
+        # tmake.conf in Qt-NC is impaired
         globs = glob.glob(os.path.join(qtlibdir, 'qt-mt%s*.lib' % tag))
         if globs:
             type = ['thread']
         else:
             raise DistutilsFileError, "Failed to find the Qt library"
         library_dir, library = os.path.split(os.path.splitext(globs[0])[0])
+        # make the output of tmake.conf look like that of qmake.conf
         info['LIBS_QT_THREAD'] = library
-        info['LIBDIR_QT'] = library_dir                
+        info['LIBDIR_QT'] = library_dir
+        info['CFLAGS_RTTI_ON'] = '-GR'
+        info['CXXFLAGS_RTTI_ON'] = '-GR'
     elif platform == 'posix':
         if glob.glob(os.path.join(qtlibdir, "libqt-mt.so*")):
             type = ['thread']
