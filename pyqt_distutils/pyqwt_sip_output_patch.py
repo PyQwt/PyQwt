@@ -45,16 +45,26 @@ def pyqwt_sip_output_patch(directory, name):
     file = open(cpp_module, 'r')
     text = file.read()
     file.close()
-    text = text.replace('\tPy_InitModule("lib%sc",methods);'
-                        % name,
-                        '\tPy_InitModule("lib%sc",methods);'
-                        '\n#ifdef HAS_NUMERIC'
-                        '\n\timport_NumericArray();'
-                        '\n#endif'
-                        '\n#ifdef HAS_NUMARRAY'
-                        '\n\timport_NumarrayArray();'
-                        '\n#endif'
-                        % name)
+    text = text.replace(
+        '\tif (sipRegisterClasses(&sipModule,-1) < 0)'
+        '\n\t\treturn NULL;',
+        '\tif (sipRegisterClasses(&sipModule,-1) < 0)'
+        '\n\t\treturn NULL;'
+        '\n\n\tsipRegisterSubClassConvertor(sipClass_QObject,'
+        '(PyObject *(*)(const void*))sipSubClass_QObject);'
+        )
+    text = text.replace(
+        '\tPy_InitModule("lib%sc",methods);'
+        % name,
+        '\tPy_InitModule("lib%sc",methods);'
+        '\n#ifdef HAS_NUMERIC'
+        '\n\timport_NumericArray();'
+        '\n#endif'
+        '\n#ifdef HAS_NUMARRAY'
+        '\n\timport_NumarrayArray();'
+        '\n#endif'
+        % name
+        )
     backup(cpp_module, '.numpy')
     file = open(cpp_module, 'w')
     file.write(text)
