@@ -150,7 +150,7 @@ class Plot(QwtPlot):
             size = event.size()
             if object.position() == QwtScale.Left:
                 margin = 2
-                x = size.width() - scale.baseLineDist() + margin
+                x = size.width() - object.baseLineDist() + margin
                 w = object.baseLineDist() - 2 * margin;
                 y = object.startBorderDist()
                 h = (size.height()
