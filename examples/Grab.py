@@ -16,6 +16,8 @@
 jobs = [
     'BodeDemo',
     'CPUplot',
+    'CliDemo1',
+    'CliDemo2',
     'CompassDemo',
     'CurveDemo1',
     'CurveDemo2',
