@@ -75,7 +75,7 @@ public:
 			 const QString &, int = -1);
 
     static void drawSimpleRichText(QPainter *, const QRect &,
-        int, QSimpleRichText &);
+                                   int, QSimpleRichText &);
 
     static void drawRect(QPainter *, int, int, int, int);
     static void drawRect(QPainter *, const QRect &);
@@ -94,6 +94,8 @@ public:
 
     static void drawRoundFrame(QPainter *, const QRect &, int,
                                const QColorGroup &, bool);
+
+    static QPointArray clip(const QPointArray &);
 };
 
 // Local Variables:

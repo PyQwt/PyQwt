@@ -56,6 +56,8 @@ public:
     QRect cutLeft(int, int = 0, int = 0);
     QRect cutRight(int, int = 0, int = 0);
     const QwtRect &cutMargin(int, int, int, int);
+
+    QPointArray clip(const QPointArray &) const;
 };
 
 // Local Variables:
