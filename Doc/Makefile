@@ -1,6 +1,15 @@
 FREE := $(HOME)/Free
 
-doc: pyqwt/pyqwt.tex
+SOURCES := \
+	pyqwt/copyright.tex \
+	pyqwt/numeric.example \
+	pyqwt/pyqwt.tex \
+	pyqwt/qplt.example \
+	pyqwt/setup_cfg_nt \
+	pyqwt/setup_cfg_posix
+
+
+doc: $(SOURCES)
 	(cd html/pyqwt; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
 	cp -pu html/icons/*.png html/pyqwt
 	python tools/mkhowto --html --dir html/pyqwt \
@@ -10,7 +19,7 @@ doc: pyqwt/pyqwt.tex
 	(cd html/pyqwt; rm -f *.dat *.idx *.old *.pl *.gif)
 	date -u "+%Y-%m-%d %T" > doc
 
-htdoc: pyqwt/pyqwt.tex
+htdoc: $(SOURCES)
 	(cd html/htdoc; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
 	cp -pu html/icons/*.png html/htdoc
 	python tools/mkhowto --html --dir html/htdoc \
