@@ -40,9 +40,11 @@ graft iqt
 
 # Qwt stuff
 graft qwt-sources
+prune qwt-sources/doc/devel
 
 # Documentation
 graft Doc
+prune Doc/html/htdoc
 
 # Local Variables: ***
 # mode: sh ***
