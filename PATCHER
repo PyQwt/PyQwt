@@ -5,9 +5,13 @@ import os
 
 execfile('patches.py')
 
-for suffix, patch in patches:
-    stdin, stdout = os.popen2('patch -p0 -b -z %s' % (suffix,))
+for suffix, patch in patches.items():
+    stdin, stdout, stderr = os.popen3('patch -p0 -b -z %s' % (suffix,))
     stdin.write(patch)
+    print 
+##     error = stderr.read()
+##     if error:
+##         print error
 
 # Local Variables: ***
 # mode: python ***

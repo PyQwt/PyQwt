@@ -6,27 +6,68 @@ import os
 import sys
 
 
-def differ(suffixes, directories):
-    patches = []
+def diff(suffixes, directories):
+    patches = {}
     for suffix in suffixes:
         patch = ''
         for directory in directories:
             backups = glob.glob(os.path.join(directory, '*' + suffix))
+            backups.sort()
             for backup in backups:
                 file = backup[:-len(suffix)]
                 if os.path.exists(file):
-                    stdin, stdout = os.popen2('diff -au %s %s'
-                                              % (backup, file))
+                    command = 'diff -au %s %s'% (backup, file)
+                    stdin, stdout, stderr = os.popen3(command)
                     patch += stdout.read()
-        patches.append((suffix, patch))
+                    error = stderr.read()
+                    print command
+                    if error:
+                        print error
+        patches[suffix] = patch
     return patches
 
-# differ()
+# diff()
 
+
+def really_differ(new_patches, old_patches):
+    """Checks if two dictionaries {suffix: patch} really differ.
+
+    This function focuses on the content by skipping the patch header.
+    """
+    
+    if type(new_patches) != type(old_patches):
+        return 1
+    if len(new_patches) != len(old_patches):
+        return 1
+    for key, new_value in new_patches.items():
+        if not old_patches.has_key(key):
+            return 1
+        old_value = old_patches[key]
+        new_lines = new_value.split('\n')
+        old_lines = old_value.split('\n')
+        if len(new_lines) != len(old_lines):
+            return 1
+        for new_line, old_line in zip(new_lines, old_lines):
+            if new_line[:3] == '---' and old_line[:3] == '---':
+                if new_line.split()[1] != old_line.split()[1]:
+                    return 1
+                continue
+            if new_line[:3] == '+++' and old_line[:3] == '+++':
+                if new_line.split()[1] != old_line.split()[1]:
+                    return 1
+                continue
+            if new_line != old_line:
+                return 1
+    return 0
+
+# really_differ()
+    
+    
 def usage():
     print "DIFFER [-h] [-d 'dir1 dir2 ..'] [-s 'suf1 suf2 ..']" 
 
 # usage()
+
 
 def main():
     try:
@@ -51,18 +92,19 @@ def main():
         execfile('patches.py', globals(), local)
         old_patches = local['patches']
     else:
-        old_patches = []
+        old_patches = {}
 
-    patches = differ(suffixes, directories)
-    
-    if patches != old_patches:
+    patches = diff(suffixes, directories)
+
+    if really_differ(patches, old_patches):
         output = open('patches.py', 'w')
         print >> output, 'patches =', patches
-        for suffix, patch in patches:
+        for suffix, patch in patches.items:
             output = open('qwt%s.patch' % suffix, 'w')
             print >> output, patch,
 
 # main()
+
 
 if __name__ == '__main__':
     main()
