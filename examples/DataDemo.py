@@ -36,7 +36,7 @@ class DataPlot(QwtPlot):
         self.setAxisTitle(QwtPlot.xBottom, "Time (seconds)")
         self.setAxisTitle(QwtPlot.yLeft, "Values")
     
-        self.startTimer(50);
+        self.startTimer(50)
         self.phase = 0.0
 
     # __init__()

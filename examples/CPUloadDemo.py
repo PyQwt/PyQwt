@@ -24,7 +24,7 @@ class LowPass:
         self.recalc()
 
     def reset(self, v):
-        self.val = v;
+        self.val = v
         
     def input(self, v):
         self.val = self.c2*v + self.c1*self.val
@@ -104,7 +104,7 @@ class CPUloadDemo(QWidget):
 
         self.menu = QMenuBar(self)
         self.menu.insertItem("Program", puProg)                  
-        self.menu.insertItem("Options", puConf);
+        self.menu.insertItem("Options", puConf)
     
         self.cfg = ConfigDiag()
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# The Python version of qwt-*/examples/bode/bode.cpp
+# The Python version of qwt-*/examples/bode
 
 # To get an impression of the expressive power of Numeric,
 # compare the Python and C++ versions of recalc()
@@ -115,18 +115,18 @@ class BodePlot(QwtPlot):
 
         # grid 
         self.enableGridXMin()
-        self.setGridMajPen(QPen(Qt.white, 0, Qt.DotLine));
-        self.setGridMinPen(QPen(Qt.gray, 0 , Qt.DotLine));
+        self.setGridMajPen(QPen(Qt.white, 0, Qt.DotLine))
+        self.setGridMinPen(QPen(Qt.gray, 0 , Qt.DotLine))
 
         # axes
-        self.enableAxis(QwtPlot.yRight);
+        self.enableAxis(QwtPlot.yRight)
         self.setAxisTitle(QwtPlot.xBottom, u'\u03c9/\u03c9<sub>0</sub>')
         self.setAxisTitle(QwtPlot.yLeft, 'Amplitude [dB]')
         self.setAxisTitle(QwtPlot.yRight, u'Phase [\u00b0]')
 
-        self.setAxisOptions(QwtPlot.xBottom, QwtAutoScale.Logarithmic);
-        self.setAxisMaxMajor(QwtPlot.xBottom, 6);
-        self.setAxisMaxMinor(QwtPlot.xBottom, 10);
+        self.setAxisOptions(QwtPlot.xBottom, QwtAutoScale.Logarithmic)
+        self.setAxisMaxMajor(QwtPlot.xBottom, 6)
+        self.setAxisMaxMinor(QwtPlot.xBottom, 10)
 
         # curves
         self.curve1 = self.insertCurve('Amplitude')
@@ -187,7 +187,7 @@ class BodePlot(QwtPlot):
         self.setMarkerPos(self.mrk1, f3, 0.0)
         self.setMarkerLabelText(self.mrk1, '-3 dB at f = %4g' % f3)
         imax = argmax(a)
-        self.setMarkerPos(self.mrk2, f[imax], a[imax]);
+        self.setMarkerPos(self.mrk2, f[imax], a[imax])
         self.setMarkerLabelText(self.mrk2, 'Peak: %4g dB' % a[imax])
 
         self.replot()

@@ -22,7 +22,7 @@ class MultiDemo(QWidget):
     def __init__(self, *args):
         apply(QWidget.__init__, (self,) + args)
 
-        grid = QGridLayout(self, 2, 2);
+        grid = QGridLayout(self, 2, 2)
         
         # try to create a plot widget for Numeric arrays
         try:

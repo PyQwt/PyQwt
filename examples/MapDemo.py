@@ -26,6 +26,8 @@ def standard_map(x, y, kappa):
 
     return x_new, y_new
 
+# standard_map
+
 
 class MapDemo(QMainWindow):
 
@@ -99,15 +101,21 @@ class MapDemo(QMainWindow):
         self.killTimer(self.tid)
         self.tid = self.startTimer(self.ticks)
 
+    # setCount()
+
     def setTicks(self, ticks):
         self.i = self.count
         self.ticks = int(ticks)
         self.killTimer(self.tid)
         self.tid = self.startTimer(ticks)
+
+    # setTicks()
         
     def resizeEvent(self, event):
         self.plot.resize(event.size())
         self.plot.move(0, 0)
+
+    # resizeEvent()
 
     def moreData(self):
         if self.i == self.count:
@@ -135,20 +143,17 @@ class MapDemo(QMainWindow):
             self.xs[self.i] = self.x
             self.ys[self.i] = self.y
             self.i += 1
+
+    # moreData()
         
     def timerEvent(self, e):
         self.moreData()
         self.plot.setCurveData(self.curve, self.xs[:self.i], self.ys[:self.i])
         self.plot.replot()
-         
 
-def main(args):
-    app = QApplication(args)
-    demo = MapDemo()
-    demo.resize(600, 600)
-    app.setMainWidget(demo)
-    demo.show()
-    app.exec_loop()
+    # timerEvent()
+
+# class MapDemo
 
 
 def make():
@@ -156,6 +161,16 @@ def make():
     demo.resize(600, 600)
     demo.show()
     return demo
+
+# make()
+
+def main(args):
+    app = QApplication(args)
+    demo = make()
+    app.setMainWidget(demo)
+    app.exec_loop()
+
+# main()
 
 # Admire! 
 if __name__ == '__main__':

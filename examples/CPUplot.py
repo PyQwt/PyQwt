@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# The Python version of qwt-*/examples/linux/cpuplot/cpuplot.cpp
+# The Python version of qwt-*/examples/cpuplot
 
 import os, sys
 from qt import *
@@ -161,6 +161,8 @@ class CpuStat:
     
     def __init__(self):
         self.procValues = self.__lookup()
+
+    # __init__()
   
     def statistic(self):
         values = self.__lookup()
@@ -173,12 +175,16 @@ class CpuStat:
             totalDelta += (values[i] - self.procValues[i])
         self.procValues = values
         return 100.0*userDelta/totalDelta, 100.0*systemDelta/totalDelta
-        
+
+    # statistics()
+    
     def upTime(self):
         result = QTime()
         for item in self.procValues:
             result = result.addSecs(item/100)
         return result
+
+    # upTime()
 
     def average(self):
         if os.path.exists("/proc/loadavg"):
@@ -190,6 +196,8 @@ class CpuStat:
         else:
             return 30.0
 
+    # average()
+    
     def __lookup(self):
         if os.path.exists("/proc/stat"):
             file = open("/proc/stat")
@@ -204,24 +212,37 @@ class CpuStat:
             CpuStat.counter += 1
             CpuStat.counter %= len(CpuStat.dummyValues)
             return result
-    
+
+    # __lookup
+
+# class CpuStat
+
 
 class TimeScaleDraw(QwtScaleDraw):
+
     def __init__(self, baseTime, *args):
         apply(QwtScaleDraw.__init__, (self,) + args)
         self.baseTime = baseTime
         #self.setLabelRotation(-50.0)
         #self.setLabelAlignment(Qt.AlignLeft | Qt.AlignBottom)
 
+    # __init__()
+
     def label(self, value):
         upTime = self.baseTime.addSecs(int(value))
         return upTime.toString()
+
+    # label()
+
+# class TimeScaleDraw
 
 
 class CpuAverageCurve(QwtPlotCurve):
 
     def __init__(self, *args):
         apply(QwtPlotCurve.__init__, (self,) + args)
+
+    # __init__()
 
     def drawCurve(self, painter, style, xMap, yMap, first, last):
         polyline = QPointArray(2*(last-first+1))
@@ -245,6 +266,8 @@ class CpuPieMarker(QwtPlotMarker):
     def __init__(self, *args):
         apply(QwtPlotMarker.__init__, (self,) + args)
 
+    # __init__()
+
     def draw(self, painter, x, y, rect):
         plot = self.parentPlot()
         yMap = plot.canvasMap(QwtPlot.yLeft)
@@ -267,6 +290,9 @@ class CpuPieMarker(QwtPlotMarker):
                 painter.restore()
                 angle += value
 
+    # draw()
+
+# class CpuPieMarker
                         
     
 HISTORY = 60
@@ -338,22 +364,28 @@ class CpuPlot(QwtPlot):
 
         self.connect(self, SIGNAL("legendClicked(long)"), self.toggleCurve)
 
+    # __init__()
+    
     def cpuPlotCurve(self, key):
         return self.curve(self.keys[key])
-        
+
+    # cpuPlotCurve()
+    
     def drawCanvas(self, p):
-        yMap = self.canvasMap(QwtPlot.yLeft);
+        yMap = self.canvasMap(QwtPlot.yLeft)
 
-        r = p.window();
-        r.setHeight(yMap.transform(80.0) - r.top());
-        p.fillRect(r, QBrush(Qt.white));
+        r = p.window()
+        r.setHeight(yMap.transform(80.0) - r.top())
+        p.fillRect(r, QBrush(Qt.white))
 
-        r.setTop(yMap.transform(80.0));
-        r.setHeight(yMap.transform(40.0) - yMap.transform(80.0));
-        p.fillRect(r, QBrush(Qt.gray));
+        r.setTop(yMap.transform(80.0))
+        r.setHeight(yMap.transform(40.0) - yMap.transform(80.0))
+        p.fillRect(r, QBrush(Qt.gray))
 
-        QwtPlot.drawCanvas(self, p);
+        QwtPlot.drawCanvas(self, p)
 
+    # drawCanvas()
+    
     def timerEvent(self, e):
         for key in self.data.keys():
             self.data[key][1:-1] = self.data[key][0:-2]
@@ -369,13 +401,19 @@ class CpuPlot(QwtPlot):
             self.setCurveData(self.keys[key], self.timeData, self.data[key])
 
         self.replot()
-        
+
+    # timerEvent()
+    
     def toggleCurve(self, key):
         curve = self.curve(key)
         if curve:
             curve.setEnabled(not curve.enabled())
             self.replot()
-        
+
+    # toggleCurve()
+
+# class CpuPlot
+
 
 def main(args):
     app = QApplication(args)
@@ -383,17 +421,20 @@ def main(args):
     app.setMainWidget(box)
     app.exec_loop()
 
+# main()
 
 def make():
     box = QVBox()
     plot = CpuPlot(box)
-    plot.setTitle("History");
+    plot.setTitle("History")
     plot.setMargin(5)
     info = QString("Press the legend to en/disable a curve")
-    label = QLabel(info, box)
+    QLabel(info, box)
     box.resize(500, 300)
     box.show()
     return box
+
+# make()
 
 # Admire!
 if __name__ == '__main__':

@@ -7,6 +7,7 @@ Working examples:
 	CurveDemo2.py
 	CurveDemo3.py
 	DataDemo.py
+        EventFilterDemo.py
         Grab.py (eventually in combination with PyCute)
         ICompass.py (with iqt, maining a readline module)
         LenaDemo.py

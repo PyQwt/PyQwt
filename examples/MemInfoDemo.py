@@ -16,11 +16,11 @@ class MemInfoDemo(QWidget):
     
     def __init__(self, *args):
         apply(QWidget.__init__, (self,) + args)
-        fnThermo = QFont("Helvetica", 8);
-        fnLabel = QFont("Helvetica", 10);
-        cFill = QColor("DarkMagenta");
+        fnThermo = QFont("Helvetica", 8)
+        fnLabel = QFont("Helvetica", 10)
+        cFill = QColor("DarkMagenta")
 
-        self.timer = 0;
+        self.timer = 0
         
         self.therms = therms = []
         self.labels = labels = []
@@ -32,7 +32,7 @@ class MemInfoDemo(QWidget):
             labels[i].setAlignment(Qt.AlignCenter)
             therms[i].setGeometry(0, 20 + i * 65 , 130, 45)
             therms[i].setOrientation(Qt.Horizontal, QwtThermo.Bottom)
-            therms[i].setRange(0.0, 100.0);
+            therms[i].setRange(0.0, 100.0)
             therms[i].setValue(0.0)
             therms[i].setFont(fnThermo)
             therms[i].setPipeWidth(6)
@@ -41,8 +41,8 @@ class MemInfoDemo(QWidget):
             therms[i].setMargin(10)
             therms[i].setFillColor(cFill)
 
-        self.setCaption("Memory Usage");
-        self.setFixedSize(130, 325);
+        self.setCaption("Memory Usage")
+        self.setFixedSize(130, 325)
 
     def update(self):
         file = open("/proc/meminfo", 'r')
@@ -65,7 +65,7 @@ class MemInfoDemo(QWidget):
         self.timer = self.startTimer(2000)
 
     def timerEvent(self, e):
-        self.update();
+        self.update()
 
 
 app = QApplication(sys.argv)
