@@ -1,6 +1,6 @@
 // The SIP interface definition for the Qwt module of PyQwt.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -37,6 +37,7 @@
 %Module _qwt 0
 
 %Include features.sip
+%Include timelines.sip
 %Include types.sip
 
 %Import qt/qtmod.sip
@@ -53,6 +54,14 @@
     qwt_import_array();
 #endif
 %End
+
+// Automagically generated files
+%Include QwtArrayDouble.sip
+%Include QwtArrayLong.sip
+%Include QwtArrayQwtDiMap.sip
+%Include QwtArrayQwtDoublePoint.sip
+%Include QwtArrayQwtKeyPattern.sip
+%Include QwtArrayQwtMousePattern.sip
 
 // Provide "static PyObject *sipSubClass___QwtObject__(const QObject *sipCpp)".
 %Include qwtobject.sip
@@ -71,6 +80,7 @@
 // FIXME: subclassing from QwtData in Python is dangerous
 // %Include qwtdata.sip
 %Include qwtdblrange.sip
+%Include qwtdoubleinterval.sip
 %Include qwtdial.sip
 %Include qwtdialneedle.sip
 %Include qwtdimap.sip
