@@ -237,7 +237,7 @@ class CanvasPicker(QObject):
                                event.rect().y(),
                                event.rect().width(),
                                event.rect().height(),
-                               event.erased())
+                               False)
                 self.__inPaint = False
                 self.__showCursor(True)
                 return True
