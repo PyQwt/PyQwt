@@ -19,10 +19,10 @@
   {http://pyqwt.sourceforge.net/support/sip-3.10.2.tar.gz}}
 \newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}
   {http://pyqwt.sourceforge.net/support/sip-win-nc-3.8.zip}}
-\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.11.tar.gz}
-  {http://pyqwt.sourceforge.net/support/PyQt-x11-gpl-3.11.tar.gz}}
-\newcommand{\PyQtMac}{\ulink{PyQt-mac-gpl-3.11.tar.gz}
-  {http://pyqwt.sourceforge.net/support/PyQt-mac-gpl-3.11.tar.gz}}
+\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.12.tar.gz}
+  {http://pyqwt.sourceforge.net/support/PyQt-x11-gpl-3.12.tar.gz}}
+\newcommand{\PyQtMac}{\ulink{PyQt-mac-gpl-3.12.tar.gz}
+  {http://pyqwt.sourceforge.net/support/PyQt-mac-gpl-3.12.tar.gz}}
 \newcommand{\PyQtCom}{\ulink{Buy PyQt}
   {http://www.riverbankcomputing.co.uk/pyqt/buy.php}}
 \newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}
@@ -47,10 +47,10 @@
   {http://prdownloads.sourceforge.net/numpy/numarray-0.9.win32-py2.3.exe?download}}
 \newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}
   {ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
-\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.8.exe}
-  {http://pyqwt.sourceforge.net/download/PyQt-win-nc-3.8.exe}}
-\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.8.win32-py2.3.exe}
-  {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8.win32-py2.3.exe?download}}
+\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-msvc-3.12.exe}
+  {http://pyqwt.sourceforge.net/download/PyQt-win-nc-msvc-3.12.exe}}
+\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-4.0.win32-py2.3.exe}
+  {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-4.0.win32-py2.3.exe?download}}
 
 \newcommand{\Future}{
 \begin{notice}[warning]
@@ -70,6 +70,7 @@ of Qt and PyQt on Windows}, but the installation instructions for Windows may
 be inaccurate or obsolete.  
 \end{notice}
 }
+\renewcommand{\NonCommercial}{}
 %\renewcommand{\Future}{}
 
 \title{PyQwt Manual}
@@ -563,7 +564,7 @@ Build prerequisites for \PyQwtTarGz{} on \POSIX{} are:
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtGpl{}.\\
-    Supported versions: PyQt-3.11, and -3.10, but the most recent
+    Supported versions: PyQt-3.12, -3.11, and -3.10, but the most recent
     version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
@@ -605,7 +606,7 @@ Build prerequisites for \PyQwtTarGz{} on Mac OS X are:
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtMac{}.\\
-    Supported versions: PyQt-3.11, and -3.10, but the most recent
+    Supported versions: PyQt-3.12, -3.11, and -3.10, but the most recent
     version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
@@ -638,7 +639,7 @@ on version 4.2.0rc2.
 Build prerequisites for \PyQwtTarGz{} on Mac OS X are:
 \begin{enumerate}
   \item
-    \PythonExe{}
+    \PythonExe{}.\\
     Supported versions: Python-2.3.x, Python-2.2.x, and probably
     also Python-2.1.x.
   \item
@@ -652,7 +653,7 @@ Build prerequisites for \PyQwtTarGz{} on Mac OS X are:
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtCom{}.\\
-    Supported versions: PyQt-3.11, and -3.10, but the most recent
+    Supported versions: PyQt-3.12, -3.11, and -3.10, but the most recent
     version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
@@ -874,7 +875,16 @@ python setup.py build --force >log.txt
 
 \section{Binary Installation on Windows \label{win-binary-install}}
 
+\Future{}
+
 \NonCommercial{}
+
+\begin{notice}[warning]
+Use any version of Windows later than Windows-98.  Windows-98 can only
+allocate a finite number of pixmaps and \QtNcExe{} fails to work
+around this limitation.  Get PyQwt-3.8 from the \Download{} page,
+if you must stick to Windows-98.
+\end{notice}
 
 First, you have to install Python, Numeric, Qt-Non-Commercial and
 PyQt-Non-Commercial by executing the following installation programs:
