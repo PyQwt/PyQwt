@@ -1,6 +1,6 @@
 // qwt_numarray.cpp: encapsulates all of PyQwt's calls to the numarray C-API.
 // 
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt
@@ -49,7 +49,6 @@ int try_NumarrayArray_to_QwtArray(PyObject *in, QwtArray<double> &out)
     if (!PyArray_Check(in))
         return 0;
 
-    // FIXME: how costly is PyArray_ContiguousFromObject?
     PyArrayObject *array = (PyArrayObject *)PyArray_ContiguousFromObject(
 	in, PyArray_DOUBLE, 1, 0);
     
@@ -60,6 +59,26 @@ int try_NumarrayArray_to_QwtArray(PyObject *in, QwtArray<double> &out)
     }
 
     out.duplicate((double *)(array->data), array->dimensions[0]);
+    Py_DECREF(array);
+
+    return 1;
+}
+
+int try_NumarrayArray_to_QwtArray(PyObject *in, QwtArray<long> &out)
+{
+    if (!PyArray_Check(in))
+        return 0;
+
+    PyArrayObject *array = (PyArrayObject *)PyArray_ContiguousFromObject(
+	in, PyArray_DOUBLE, 1, 0);
+    
+    if (!array) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "Failed to make a contiguous array of PyArray_DOUBLE");
+        return -1;
+    }
+
+    out.duplicate((long *)(array->data), array->dimensions[0]);
     Py_DECREF(array);
 
     return 1;

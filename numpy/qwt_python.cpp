@@ -1,6 +1,6 @@
 // qwt_python.cpp: to convert Python objects to QwtArray<double>.
 // 
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt
@@ -48,12 +48,12 @@ static int try_PySequence_to_QwtArray(PyObject *in, QwtArray<double> &out)
         } else if (PyInt_Check(element)) {
             out[i] = double(PyInt_AsLong(element));    
         } else if (PyLong_Check(element)) {
-            out[i] = double(PyInt_AsLong(element));
-        } else if (PyComplex_Check(element)) {
-            out[i] = PyComplex_RealAsDouble(element);
+            out[i] = PyLong_AsDouble(element);
         } else {
-            PyErr_SetString(PyExc_TypeError,
-                            "The sequence may only contain python numbers.");
+            PyErr_SetString(
+		PyExc_TypeError,
+		"The sequence may only contain float, int, or long types.");
+
             return -1;
         }
     }
@@ -81,12 +81,73 @@ int try_PyObject_to_QwtArray(PyObject *in, QwtArray<double> &out)
     PyErr_SetString(PyExc_TypeError, "expected is\n"
                     "(*) a list or tuple of Python numbers.\n"
 #ifdef HAS_NUMERIC
-                    "(*) a Numeric array of PyArray_DOUBLE.\n"
+                    "(*) a Numeric array coercible to PyArray_DOUBLE.\n"
 #else
                     "(!) rebuild PyQwt to support Numeric arrays.\n" 
 #endif
 #ifdef HAS_NUMARRAY
-                    "(*) a numarray array of PyArray_DOUBLE.\n"
+                    "(*) a numarray array coercible to PyArray_DOUBLE.\n"
+#else
+                    "(!) rebuild PyQwt to support numarray arrays.\n"
+#endif
+        );
+            
+    return -1;
+}
+
+static int try_PySequence_to_QwtArray(PyObject *in, QwtArray<long> &out)
+{
+    if (!PyList_Check(in) && !PyTuple_Check(in))
+        return 0;
+    
+    // MSVC-6.0 chokes on passing an uint in QwtArray<double>::operator[](int)
+    int size = PySequence_Size(in);
+    out.resize(size);
+
+    for (int i=0; i<size; i++) {
+        PyObject *element = PySequence_Fast_GET_ITEM(in, i);
+        if (PyInt_Check(element)) {
+            out[i] = PyInt_AsLong(element);
+        } else if (PyLong_Check(element)) {
+            out[i] = PyLong_AsLong(element);
+        } else {
+            PyErr_SetString(
+		PyExc_TypeError,
+		"The sequence may only contain int and long types.");
+
+            return -1;
+        }
+    }
+
+    return 1;
+}
+
+int try_PyObject_to_QwtArray(PyObject *in, QwtArray<long> &out)
+{
+    int result;
+
+#ifdef HAS_NUMERIC
+    if ((result = try_NumericArray_to_QwtArray(in, out)))
+        return result;
+#endif
+    
+#ifdef HAS_NUMARRAY
+    if ((result = try_NumarrayArray_to_QwtArray(in, out)))
+        return result;
+#endif
+
+    if ((result = try_PySequence_to_QwtArray(in, out)))
+        return result;
+
+    PyErr_SetString(PyExc_TypeError, "expected is\n"
+                    "(*) a list or tuple of Python numbers.\n"
+#ifdef HAS_NUMERIC
+                    "(*) a Numeric array coercible to PyArray_LONG.\n"
+#else
+                    "(!) rebuild PyQwt to support Numeric arrays.\n" 
+#endif
+#ifdef HAS_NUMARRAY
+                    "(*) a numarray array coercible to PyArray_LONG.\n"
 #else
                     "(!) rebuild PyQwt to support numarray arrays.\n"
 #endif
@@ -111,12 +172,12 @@ int try_PyObject_to_QImage(PyObject *in, QImage &out)
 
     PyErr_SetString(PyExc_TypeError, "expected is\n"
 #ifdef HAS_NUMERIC
-                    "(*) a Numeric array of PyArray_DOUBLE.\n"
+                    "(*) a Numeric array.\n"
 #else
                     "(!) rebuild PyQwt to support Numeric arrays.\n" 
 #endif
 #ifdef HAS_NUMARRAY
-                    "(*) a numarray array of PyArray_DOUBLE.\n"
+                    "(*) a numarray array.\n"
 #else
                     "(!) rebuild PyQwt to support numarray arrays.\n"
 #endif

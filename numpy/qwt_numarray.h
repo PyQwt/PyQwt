@@ -1,6 +1,6 @@
 // qwt_numarray.h: encapsulates all of PyQwt's calls to the numarray C-API.
 // 
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt
@@ -44,6 +44,7 @@ extern void **PyQwt_Numarray_PyArray_API;
 void qwt_import_libnumarray();
 // returns 1, 0, -1 in case of success, wrong PyObject type, failure
 int try_NumarrayArray_to_QwtArray(PyObject *in, QwtArray<double> &out);
+int try_NumarrayArray_to_QwtArray(PyObject *in, QwtArray<long> &out);
 int try_NumarrayArray_to_QImage(PyObject *in, QImage &out);
 PyObject *to_np_array(const QImage &image);
 #endif // HAS_NUMARRAY

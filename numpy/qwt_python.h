@@ -1,8 +1,9 @@
 // qwt_python.h:
 // - conversion from Python objects to QwtArray<double>.
+// - conversion from Python objects to QwtArray<long>.
 // - conversion between Python objects and QImage.
 // 
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt
@@ -40,6 +41,7 @@
 
 // returns 1, 0, -1 in case of success, wrong object type, failure
 int try_PyObject_to_QwtArray(PyObject *object, QwtArray<double> &array);
+int try_PyObject_to_QwtArray(PyObject *object, QwtArray<long> &array);
 int try_PyObject_to_QImage(PyObject *object, QImage &image);
 PyObject *to_na_array(const QImage &image);
 PyObject *to_np_array(const QImage &image); 
