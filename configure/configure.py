@@ -486,6 +486,8 @@ def setup_iqt_build():
         warnings = 1,
         debug = opt_debug
         )
+
+    makefile._target = '_iqt'
     makefile.generate()
 
 # setup_iqt_build()
