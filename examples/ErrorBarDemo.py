@@ -102,7 +102,7 @@ class ErrorBarPlotCurve(QwtPlotCurve):
         else:
             self.__dy = asarray(dy, Float)
         if len(self.__dy.shape) not in [0, 1, 2]:
-            raise RuntimeError, 'len(asarray(dy).shape) not in [1, 2]'
+            raise RuntimeError, 'len(asarray(dy).shape) not in [0, 1, 2]'
         
         QwtPlotCurve.setData(self, self.__x, self.__y)
 
