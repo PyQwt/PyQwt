@@ -3,7 +3,7 @@ PWD := $(shell pwd)
 CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "10 Oct 2004 23:59:59 GMT"
+CVS-DATE := "12 Oct 2004 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -98,7 +98,6 @@ diff:
 
 
 clean: makefiles
-	rm -f MANIFEST
 	find . -name '*~' -o -name '.mappedfiles' | xargs rm -f
 	rm -f *.pyc qwt/*.{cpp,h} qwt/_qwt.py
 
