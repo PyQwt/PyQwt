@@ -773,7 +773,8 @@ def get_qmake_conf_info(qmakeconf, qtdir):
             key = line[:split].strip()[6:]
             value = line[split+1:].strip()
             if value[:2] == "$$":
-                value = info[value[8:]]
+                macro = value.split()[0]
+                value = value.replace(macro, info[macro[8:]])
             info[key] = value.replace('$(QTDIR)', qtdir)
     return info
 

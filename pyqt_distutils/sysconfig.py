@@ -51,6 +51,7 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                 preprocessor = '%s %s' % (ccache, preprocessor)
             compiler_so = (
                 '%(CXX)s '
+                '%(CXXFLAGS)s '
                 '%(CXXFLAGS_THREAD)s '
                 '%(CXXFLAGS_RELEASE)s '
                 '%(CXXFLAGS_SHLIB)s '
@@ -68,6 +69,7 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                 ) % make_info
             compiler_so = (
                 '%(CXX)s '
+                '%(CXXFLAGS)s '
                 '%(CXXFLAGS_RELEASE)s '
                 '%(CXXFLAGS_SHLIB)s '
                 '%(CXXFLAGS_WARN_ON)s '
