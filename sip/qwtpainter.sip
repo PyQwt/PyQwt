@@ -74,6 +74,8 @@ public:
     static void drawText(QPainter *, const QRect &, int,
 			 const QString &, int = -1);
 
+    static void drawQwtText(QPainter *, int, int, int, int, QwtText *);
+
     static void drawRect(QPainter *, int, int, int, int);
     static void drawRect(QPainter *, const QRect &);
     static void fillRect(QPainter *, const QRect &, const QBrush &); 

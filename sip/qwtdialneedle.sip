@@ -48,25 +48,7 @@ public:
     void getLazyNames();
 %MemberCode
     if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-	int i, n;
-
-	Py_BEGIN_ALLOW_THREADS
-	n = sipClassAttrTab_$C.la_nrmethods;
-	Py_END_ALLOW_THREADS
-	
-	PyObject *result = PyList_New(n);
-	if (!(result))
-	    return 0;
-
-	for (i=0; i<n; i++)
-	    PyList_SetItem(
-		result,
-		i,
-		PyString_FromString(sipClassAttrTab_$C.la_methods[i].ml_name)
-		);
-
-	return result;
+        return getLazyNames(sipClassAttrTab_$C);
     }
 %End
 %End
@@ -139,24 +121,7 @@ public:
     void getLazyNames();
 %MemberCode
     if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	int i, n;
-
-	Py_BEGIN_ALLOW_THREADS
-	n = sipClassAttrTab_$C.la_nrmethods;
-	Py_END_ALLOW_THREADS
-	
-	PyObject *result = PyList_New(n);
-	if (!(result))
-	    return 0;
-
-	for (i=0; i<n; i++)
-	    PyList_SetItem(
-		result,
-		i,
-		PyString_FromString(sipClassAttrTab_$C.la_methods[i].ml_name)
-		);
-
-	return result;
+        return getLazyNames(sipClassAttrTab_$C);
     }
 %End
 %End
@@ -199,24 +164,7 @@ public:
     void getLazyNames();
 %MemberCode
     if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	int i, n;
-
-	Py_BEGIN_ALLOW_THREADS
-	n = sipClassAttrTab_$C.la_nrmethods;
-	Py_END_ALLOW_THREADS
-	
-	PyObject *result = PyList_New(n);
-	if (!(result))
-	    return 0;
-
-	for (i=0; i<n; i++)
-	    PyList_SetItem(
-		result,
-		i,
-		PyString_FromString(sipClassAttrTab_$C.la_methods[i].ml_name)
-		);
-
-	return result;
+        return getLazyNames(sipClassAttrTab_$C);
     }
 %End
 %End

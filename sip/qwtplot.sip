@@ -364,7 +364,7 @@ public:
     void setAxisLabelRotation(int, double);
 
     void setAxisTitle(int, const QString &);
-    const QString& axisTitle(int) const;
+    const QString axisTitle(int) const;
     void setAxisTitleFont(int, const QFont &);
     QFont axisTitleFont(int) const;
     void setAxisTitleAlignment(int, int);

@@ -88,6 +88,7 @@
 %Include qwtslider.sip
 %Include qwtspline.sip
 %Include qwtsymbol.sip
+%Include qwttext.sip
 %Include qwtthermo.sip
 %Include qwtwheel.sip
 

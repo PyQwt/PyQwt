@@ -59,13 +59,13 @@ public:
     QwtScale(Position, QWidget * /TransferThis/, const char * = 0);
     
     void setTitle(const QString &);
-    const QString& title() const;
+    const QString title() const;
 
     void setTitleColor(const QColor &);
-    const QColor &titleColor() const;
+    const QColor titleColor() const;
 
     void setTitleFont(const QFont &);
-    const QFont &titleFont() const;
+    const QFont titleFont() const;
 
     void setTitleAlignment(int);
     int titleAlignment() const;
@@ -123,10 +123,16 @@ public:
     virtual QSize minimumSizeHint() const;
     virtual QSizePolicy sizePolicy() const;
 
-    int dimForLength(int, const QFontMetrics &, const QFontMetrics &) const;
+    int titleHeightForWidth(int) const;
+//    int dimForLength(int, const QFontMetrics &, const QFontMetrics &) const;
+    int dimForLength(int, const QFontMetrics &) const;
 
-    static void drawTitle(QPainter *, QwtScaleDraw::Orientation,
-			  const QRect &, int, const QString &);
+//    static void drawTitle(QPainter *, QwtScaleDraw::Orientation,
+//			  const QRect &, int, const QString &);
+    void drawTitle(QPainter *, QwtScaleDraw::Orientation, const QRect &);
+
+    void setPosition(Position);
+    Position position() const;
 
 protected:
     void draw(QPainter *) const;
