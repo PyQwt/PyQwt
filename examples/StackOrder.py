@@ -73,15 +73,15 @@ class QwtBarPlotDemo(QMainWindow):
         # Initialize a QwPlot central widget
         self.plot = QwtPlot('left-click & drag to zoom'
                             ' -- '
-                            'right-click to unzoom',
+                            'use the ?-pointer for help',
                             self)
         self.plot.plotLayout().setCanvasMargin(0)
         self.plot.plotLayout().setAlignCanvasToScales(True)
         self.setCentralWidget(self.plot)
 
-        self.__initToolBar()
         self.__initTracking()
         self.__initZooming()
+        self.__initToolBar()
         
         # Finalize
         self.counter.setValue(10)
@@ -89,161 +89,201 @@ class QwtBarPlotDemo(QMainWindow):
 
     # __init__()
 
+    def __initTracking(self):
+        """Initialize tracking
+        """        
+        self.connect(self.plot,
+                     SIGNAL('plotMouseMoved(const QMouseEvent&)'),
+                     self.onMouseMoved)
+        self.plot.canvas().setMouseTracking(True)
+        self.statusBar().message(
+            'Plot cursor movements are tracked in the status bar')
+
+    # __initTracking()
+
+    def onMouseMoved(self, e):
+        self.statusBar().message(
+            'x = %+.6g, y = %.6g'
+            % (self.plot.invTransform(QwtPlot.xBottom, e.pos().x()),
+               self.plot.invTransform(QwtPlot.yLeft, e.pos().y())))
+
+    # onMouseMoved()
+    
+    def __initZooming(self):
+        """Initialize zooming
+        """
+        self.zoomer = QwtPlotZoomer(QwtPlot.xBottom,
+                                    QwtPlot.yLeft,
+                                    QwtPicker.DragSelection,
+                                    QwtPicker.AlwaysOff,
+                                    self.plot.canvas())
+        self.zoomer.setRubberBandPen(QPen(Qt.black))
+
+    # __initZooming()
+       
+    def setZoomerMousePattern(self, index):
+        """Set the mouse zoomer pattern.
+        """
+        if index == 0:
+            pattern = [
+                QwtEventPattern.MousePattern(Qt.LeftButton, Qt.NoButton),
+                QwtEventPattern.MousePattern(Qt.MidButton, Qt.NoButton),
+                QwtEventPattern.MousePattern(Qt.RightButton, Qt.NoButton),
+                QwtEventPattern.MousePattern(Qt.LeftButton, Qt.ShiftButton),
+                QwtEventPattern.MousePattern(Qt.MidButton, Qt.ShiftButton),
+                QwtEventPattern.MousePattern(Qt.RightButton, Qt.ShiftButton),
+                ]
+            self.zoomer.setMousePattern(pattern)
+        elif index in (1, 2, 3):
+            self.zoomer.initMousePattern(index)
+        else:
+            raise ValueError, 'index must be in (0, 1, 2, 3)'
+
+    # setZoomerMousePattern()
+
     def __initToolBar(self):
         """Initialize the toolbar
         """
         
         self.toolBar = QToolBar(self)
 
-        QLabel("Pen:", self.toolBar)
-
+        QLabel('Pen', self.toolBar)
         self.penComboBox = QComboBox(self.toolBar)
         for name in self.table.keys():
             self.penComboBox.insertItem(name)
         self.penComboBox.setCurrentItem(
             random.randint(0, self.penComboBox.count()-1))
+        self.penComboBox.setMaximumWidth(75)
+        self.toolBar.addSeparator()
 
-        QLabel("Brush:", self.toolBar)
-
+        QLabel('Brush', self.toolBar)
         self.brushComboBox = QComboBox(self.toolBar)
         for name in self.table.keys():
             self.brushComboBox.insertItem(name)
         self.brushComboBox.setCurrentItem(
             random.randint(0, self.brushComboBox.count()-1))
+        self.brushComboBox.setMaximumWidth(75)
+        self.toolBar.addSeparator()
 
-        self.toolBar.setStretchableWidget(QWidget(self.toolBar))
-
-        QLabel("Bars:", self.toolBar)
-
+        QLabel('Bars', self.toolBar)
         self.counter = QwtCounter(self.toolBar)
         self.counter.setRange(0, 10000, 1)
         self.counter.setNumButtons(3)
+        self.toolBar.addSeparator()
+
+        QLabel('Mouse', self.toolBar)
+        mouseComboBox = QComboBox(self.toolBar)
+        for name in ('3 buttons (PyQwt)',
+                     '1 button',
+                     '2 buttons',
+                     '3 buttons (Qwt)'):
+            mouseComboBox.insertItem(name)
+        mouseComboBox.setCurrentItem(0)
+        self.toolBar.addSeparator()
+        self.setZoomerMousePattern(0)
+
+        QWhatsThis.whatsThisButton(self.toolBar)
+
+        QWhatsThis.add(
+            self.plot.canvas(),
+            'A QwtPlotZoomer lets you zoom infinitely deep\n'
+            'by saving the zoom states on a stack.\n\n'
+            'You can:\n'
+            '- select a zoom region\n'
+            '- unzoom all\n'
+            '- walk down the stack\n'
+            '- walk up the stack.\n\n'
+            'One of the combo boxes in the toolbar lets you attach\n'
+            'different sets of mouse events to those actions.'
+            )
+        
+        QWhatsThis.add(
+            self.penComboBox,
+            'Select the pen color of the bars.'
+            )
+        
+        QWhatsThis.add(
+            self.brushComboBox,
+            'Select the brush color of the bars'
+            )
+        
+        QWhatsThis.add(
+            self.counter,
+            'Select the number of bars'
+            )
+        
+        QWhatsThis.add(
+            mouseComboBox,
+            'Configure the zoomer mouse buttons.\n\n'
+            '3 buttons (PyQwt style):\n'
+            '- left-click & drag to zoom\n'
+            '- middle-click to unzoom all\n'
+            '- right-click to walk down the stack\n'
+            '- shift-right-click to walk up the stack.\n'
+            '1 button:\n'
+            '- click & drag to zoom\n'
+            '- control-click to unzoom all\n'
+            '- alt-click to walk down the stack\n'
+            '- shift-alt-click to walk up the stack.\n'
+            '2 buttons:\n'
+            '- left-click & drag to zoom\n'
+            '- right-click to unzoom all\n'
+            '- alt-left-click to walk down the stack\n'
+            '- alt-shift-left-click to walk up the stack.\n'
+            '3 buttons (Qwt style):\n'
+            '- left-click & drag to zoom\n'
+            '- right-click to unzoom all\n'
+            '- middle-click to walk down the stack\n'
+            '- shift-middle-click to walk up the stack.\n\n'
+            'If some of those key combinations interfere with\n'
+            'your Window manager, press the:\n'
+            '- escape-key to unzoom all\n'
+            '- minus-key to walk down the stack\n'
+            '- plus-key to walk up the stack.'
+            )
 
         self.connect(self.counter, SIGNAL('valueChanged(double)'), self.go)
         self.connect(self.penComboBox, SIGNAL('activated(int)'), self.go)
         self.connect(self.brushComboBox, SIGNAL('activated(int)'), self.go)
+        self.connect(mouseComboBox, SIGNAL('activated(int)'),
+                     self.setZoomerMousePattern)
 
     # __initToolBar()
 
-    def __initTracking(self):
-        """Initialize tracking
-        """
-        
-        self.plot.canvas().setMouseTracking(True)
-        self.statusBar().message(
-            "Plot cursor movements are tracked in the status bar")
-
-    # __initTracking()
-
-    def __initZooming(self):
-        """Initialize zooming
-        """
-
-        self.zoomStack = []
-        self.connect(self.plot,
-                     SIGNAL('plotMouseMoved(const QMouseEvent&)'),
-                     self.onMouseMoved)
-        self.connect(self.plot,
-                     SIGNAL('plotMousePressed(const QMouseEvent&)'),
-                     self.onMousePressed)
-        self.connect(self.plot,
-                     SIGNAL('plotMouseReleased(const QMouseEvent&)'),
-                     self.onMouseReleased)
-
-    # __initZooming()
-       
     def go(self, x):
-        """Create and plot a sequence bars taking into account the controls
+        """Create and plot a sequence of bars taking into account the controls
         """
 
-        if type(x) == type(0):
-            # activated(int)
-            x = int(self.counter.value())
-        else:
-            # valueChanged(double)
-            self.clearZoomStack()
-
+        n = int(self.counter.value())
         penColor = self.table[str(self.penComboBox.currentText())]
         brushColor = self.table[str(self.brushComboBox.currentText())]
             
         self.plot.removeCurves()
 
-        for i in range(x):
+        for i in range(n):
             curve = QwtBarCurve(self.plot, penColor, brushColor)
             key = self.plot.insertCurve(curve)
             self.plot.setCurveStyle(key, QwtCurve.UserCurve)
             self.plot.setCurveData(key, [i, i+1.4], [0.3*i, 5.0+0.3*i])
 
-        self.plot.replot()
+        if type(x) == type(0.0):
+            # SIGNAL("valueChanged(double)")
+            self.clearZoomStack()
+        else:
+            self.plot.replot()
 
     # go()
 
-    def onMouseMoved(self, e):
-        self.statusBar().message(
-            "x = %+.6g, y = %.6g"
-            % (self.plot.invTransform(QwtPlot.xBottom, e.pos().x()),
-               self.plot.invTransform(QwtPlot.yLeft, e.pos().y())))
-
-    # onMouseMoved()
-    
     def clearZoomStack(self):
-        for i in (QwtPlot.xBottom, QwtPlot.yLeft):
-            self.plot.setAxisAutoScale(i)
-        self.zoomStack = []
+        """Auto scale and clear the zoom stack
+        """
+        self.plot.setAxisAutoScale(QwtPlot.xBottom)
+        self.plot.setAxisAutoScale(QwtPlot.yLeft)
+        self.plot.replot()
+        self.zoomer.setZoomBase()
 
     # clearZoomStack()
     
-    def onMousePressed(self, e):
-        if Qt.LeftButton == e.button():
-            # Python semantics: self.pos = e.pos() does not work; force a copy
-            self.xpos = e.pos().x()
-            self.ypos = e.pos().y()
-            self.plot.enableOutline(1)
-            self.plot.setOutlinePen(QPen(Qt.black))
-            self.plot.setOutlineStyle(Qwt.Rect)
-            self.zooming = 1
-            if self.zoomStack == []:
-                self.zoomState = (
-                    self.plot.axisScale(QwtPlot.xBottom).lBound(),
-                    self.plot.axisScale(QwtPlot.xBottom).hBound(),
-                    self.plot.axisScale(QwtPlot.yLeft).lBound(),
-                    self.plot.axisScale(QwtPlot.yLeft).hBound(),
-                    )
-        elif Qt.RightButton == e.button():
-            self.zooming = 0
-        # fake a mouse move to show the cursor position
-        self.onMouseMoved(e)
-
-    # onMousePressed()
-
-    def onMouseReleased(self, e):
-        if Qt.LeftButton == e.button():
-            xmin = min(self.xpos, e.pos().x())
-            xmax = max(self.xpos, e.pos().x())
-            ymin = min(self.ypos, e.pos().y())
-            ymax = max(self.ypos, e.pos().y())
-            self.plot.setOutlineStyle(Qwt.Cross)
-            xmin = self.plot.invTransform(QwtPlot.xBottom, xmin)
-            xmax = self.plot.invTransform(QwtPlot.xBottom, xmax)
-            ymin = self.plot.invTransform(QwtPlot.yLeft, ymin)
-            ymax = self.plot.invTransform(QwtPlot.yLeft, ymax)
-            if xmin == xmax or ymin == ymax:
-                return
-            self.zoomStack.append(self.zoomState)
-            self.zoomState = (xmin, xmax, ymin, ymax)
-            self.plot.enableOutline(0)
-        elif Qt.RightButton == e.button():
-            if len(self.zoomStack):
-                xmin, xmax, ymin, ymax = self.zoomStack.pop()
-            else:
-                return
-
-        self.plot.setAxisScale(QwtPlot.xBottom, xmin, xmax)
-        self.plot.setAxisScale(QwtPlot.yLeft, ymin, ymax)
-        self.plot.replot()
-
-    # onMouseReleased()
-
 # class StackOrderDemo
 
 
@@ -257,7 +297,7 @@ def main(args):
 
 def make():
     demo = QwtBarPlotDemo()
-    demo.resize(500, 500)
+    demo.resize(600, 600)
     demo.show()
     return demo
 
