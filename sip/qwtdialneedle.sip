@@ -98,9 +98,6 @@ public:
 
     void setWidth(int);
     int width() const;
-
-protected:
-    static void drawKnob(QPainter *, const QPoint &, int, const QColor &);
 };
 
 class QwtCompassMagnetNeedle: QwtDialNeedle
