@@ -83,6 +83,8 @@ public:
     double x(int) const;
     double y(int) const;
     
+    virtual QwtDoubleRect boundingRect() const;
+
     double minXValue() const;
     double maxXValue() const;
     double minYValue() const;
