@@ -369,7 +369,7 @@ class NumarrayInfo(ConfigInfo):
             else:
                 raise NumarrayConfigError(array)
         except ImportError:
-            self.set_info(**{})
+            self.set_info(**{'sip_x_feature': 'HAS_NUMARRAY'})
 
     # calc_info()
 
@@ -395,7 +395,7 @@ class NumericInfo(ConfigInfo):
             else:
                 raise NumericConfigError(array)
         except ImportError:
-            self.set_info(**{})
+            self.set_info(**{'sip_x_feature': 'HAS_NUMERIC'})
 
     # calc_info()
 
@@ -692,9 +692,15 @@ class SipInfo(ConfigInfo):
             define_macros.append(('SIP_MAKE_MODULE_DLL', None))
         
         sip_x_features = []
+        for package in ('numarray', 'numeric'):
+            sip_x_feature = get_config(package).get('sip_x_feature')
+            if sip_x_feature:
+                sip_x_features.append(sip_x_feature)
+        if sip_version <= '3.7':
+            sip_x_features.append('SIP_ALL_OPERATORS')
         from qt import QObject
         if 'className' in dir(QObject):
-            sip_x_features.extend(['SIP_DUMB_DIR'])
+            sip_x_features.append('SIP_DUMB_DIR')
 
         self.set_info(**{
             'sip_version': sip_version,
