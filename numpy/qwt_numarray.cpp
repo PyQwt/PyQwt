@@ -38,10 +38,10 @@
 #include <qwt_array.h>
 #undef NO_IMPORT // to force: void **PyQwt_Numarray_PyArray_API;
 #define PY_ARRAY_UNIQUE_SYMBOL PyQwt_Numarray_PyArray_API
-#include <numarray/libnumarray.h>
+#include <numarray/arrayobject.h>
 
 void qwt_import_libnumarray() {
-    import_libnumarray();
+    import_array();
 }
 
 int try_NumarrayArray_to_QwtArray(PyObject *in, QwtArray<double> &out)
