@@ -15,7 +15,7 @@ Main changes in PyQwt-3.8:
 1. PyQwt inherits from Qwt the new classes QwtPicker, QwtPlotPicker and
    QwtPlotZoomer.
    QwtPicker can make any widget react to events by event filtering.
-   QwtPlotZoomer is a QwtPicker taylored to the plot canvas.
+   QwtPlotPicker is a QwtPicker taylored to the plot canvas.
    QwtPlotZoomer implements infinite deep zooming on the plot canvas.
 
 2. PyQwt inherits from Qwt the support for Qt's rich text format in QwtPlot
