@@ -265,10 +265,12 @@ def check_compiler(configuration, options):
         options.extra_cxxflags.extend(['-GR'])
 
     program = (
-        "#include <stddef.h>\n"
-        "class a { public: void f(size_t); };\n"
-        "void a::f(%s) {};\n"
-        "int main() { return 0; }\n"
+        '#warning Provoke errors to test your compiler.\n'
+        '#include <stddef.h>\n'
+        'class a { public: void f(size_t); };\n'
+        'void a::f(%s) {};\n'
+        'int main() { return 0; }\n'
+        '#warning Previous errors are harmless.\n'
         )
     name = "size_t_check.cpp"
     new = [
