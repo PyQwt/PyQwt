@@ -340,7 +340,8 @@ def check_qwt(configuration, options):
     if options.qwt_sources:
         extra_include_dirs.append(os.path.join(options.qwt_sources, 'include'))
     if options.extra_include_dirs:
-        extra_include_dirs.append(options.extra_include_dirs)
+        extra_include_dirs.extend(options.extra_include_dirs)
+
     exe = compile_qt_program('qwt_version_info.cpp', configuration,
                              extra_include_dirs = extra_include_dirs)
     if not exe:
