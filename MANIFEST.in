@@ -29,11 +29,11 @@ graft sip
 
 # qwt package
 graft qwt
-recursive-exclude qwt __init__.py *cvsignore*
+recursive-exclude qwt __init__.py *.pyc *cvsignore*
 
 # iqt package
 graft iqt
-recursive-exclude iqt *cvsignore*
+recursive-exclude iqt *.pyc *cvsignore*
 
 # Qwt stuff
 graft qwt-sources
