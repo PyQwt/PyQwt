@@ -111,13 +111,13 @@
     if (!sipCpp)
         return PyList_New(0);
 
-    PyObject *l = PyList_New(sipCpp -> count());
+    PyObject *l = PyList_New(sipCpp->count());
 
     // Create the list.
     if (0 == l)
         return 0;
 
-    for (int i = 0; i < sipCpp->count(); ++i)
+    for (int i = 0; i < int(sipCpp->count()); ++i)
         if (PyList_SetItem(l, i, PyInt_FromLong((long)(*sipCpp)[i])) < 0) {
             Py_DECREF(l);
             
