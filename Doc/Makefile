@@ -1,3 +1,5 @@
+FREE := $(HOME)/Free
+
 doc: pyqwt/pyqwt.tex
 	(cd html/pyqwt; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
 	cp -pu html/icons/*.png html/pyqwt
@@ -19,7 +21,6 @@ htdoc: pyqwt/pyqwt.tex
 	date -u "+%Y-%m-%d %T" > htdoc
 
 free:
-	rm -rf ../../Free/html
-	mkdir -p ../../Free/html
-	cp html/pyqwt/* ../../Free/html
+	mkdir -p $(FREE)/html
+	cp -vpur html/pyqwt/* $(FREE)/html
 

@@ -8,6 +8,8 @@ CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 DIFFERS := -d 'qwt-sources/include qwt-sources/src'
 DIFFERS += -s '.array .canvas .version'
 
+FREE := $(HOME)/Free
+
 all:
 	python setup.py build 2>&1 | tee LOG.all
 
@@ -69,7 +71,7 @@ free:
 	find . -name '*~' | xargs rm -f
 	(cd Doc; make free)
 	(cd examples; make free)
-	cp dist/*.tar.gz ../Free 
+	cp dist/*.tar.gz $(FREE) 
 
 diff:
 	python DIFFER $(DIFFERS)

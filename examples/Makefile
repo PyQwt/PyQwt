@@ -1,11 +1,13 @@
+FREE := $(HOME)/Free
+
 html:
 	python py2html.py *.py iqt/*.py qwt/*.py
 	./PyCute --grab
 
 free: html
-	rm -rf ../../Free/examples/*
-	mkdir -p ../../Free/examples/iqt
-	mkdir -p ../../Free/examples/qwt
-	cp *.py.html *.png ../../Free/examples
-	cp iqt/*.py.html ../../Free/examples/iqt
-	cp qwt/*.py.html ../../Free/examples/qwt
+	rm -rf $(FREE)/examples/*
+	mkdir -p $(FREE)/examples/iqt
+	mkdir -p $(FREE)/examples/qwt
+	cp *.py.html *.png $(FREE)/examples
+	cp iqt/*.py.html $(FREE)/examples/iqt
+	cp qwt/*.py.html $(FREE)/examples/qwt
