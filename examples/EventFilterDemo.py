@@ -43,11 +43,11 @@ class ColorBar(QWidget):
 
     def mousePressEvent(self, event):
         if event.button() ==  Qt.LeftButton:
-            pm = QPixmap.grabWidget(self);
+            pm = QPixmap.grabWidget(self)
             color = QColor()
             color.setRgb(pm.convertToImage().pixel(event.x(), event.y()))
             self.emit(PYSIGNAL("colorSelected"), (color,))
-        if qVersion >= '3.0.0':
+        if qVersion() >= '3.0.0':
             event.accept()
 
     def paintEvent(self, _):
@@ -140,7 +140,7 @@ class Plot(QwtPlot):
     def sliderMoved(self):
         pos = self.__slider.sliderRect().center().x()
         range = self.__slider.width()
-        base = 50.0 - 100.0 * pos / range;
+        base = 50.0 - 100.0 * pos / range
         self.setAxisScale(QwtPlot.xBottom, base, base + 100)
         self.replot()
 
@@ -151,7 +151,7 @@ class Plot(QwtPlot):
             if object.position() == QwtScale.Left:
                 margin = 2
                 x = size.width() - object.baseLineDist() + margin
-                w = object.baseLineDist() - 2 * margin;
+                w = object.baseLineDist() - 2 * margin
                 y = object.startBorderDist()
                 h = (size.height()
                      - object.startBorderDist() - object.endBorderDist())
@@ -170,9 +170,9 @@ class Plot(QwtPlot):
         if axis == QwtPlot.yLeft or axis == QwtPlot.yRight:
             o = Qt.Horizontal
         else:
-            o = Qt.Vertical;
+            o = Qt.Vertical
             
-        self.__insertCurve(o, QColor(Qt.red), base);
+        self.__insertCurve(o, QColor(Qt.red), base)
         self.replot()
         
 
@@ -356,7 +356,7 @@ class CanvasPicker(QObject):
             return
 
         painter= QPainter(self.__plot.canvas())
-        painter.setClipping(True);
+        painter.setClipping(True)
         painter.setClipRect(self.__plot.canvas().contentsRect())
         if enable:
             painter.setRasterOp(Qt.NotROP)
@@ -365,7 +365,7 @@ class CanvasPicker(QObject):
             painter,
             self.__plot.canvasMap(curve.xAxis()),
             self.__plot.canvasMap(curve.yAxis()),
-            self.__selectedPoint, self.__selectedPoint);
+            self.__selectedPoint, self.__selectedPoint)
 
     # __showCursor()
     
@@ -382,7 +382,7 @@ class CanvasPicker(QObject):
         index = (index + curve.dataSize()) % curve.dataSize()
         if index != self.__selectedPoint:
             self.__showCursor(False)
-            self.__selectedPoint = index;
+            self.__selectedPoint = index
             self.__showCursor(True)
 
     # __shiftPointCursor()
@@ -404,7 +404,7 @@ class CanvasPicker(QObject):
         if self.__selectedCurve != key:
             self.__showCursor(False)
             self.__selectedPoint = 0
-            self.__selectedCurve = key;
+            self.__selectedCurve = key
             self.__showCursor(True)
 
     # __shiftCurveCursor()
@@ -438,13 +438,13 @@ class ScalePicker(QObject):
             value = 0.0
             axis = -1
 
-        sd = scale.scaleDraw();
+        sd = scale.scaleDraw()
         if scale.position() == QwtScale.Left:
             value = sd.invTransform(pos.y())
             axis = QwtPlot.yLeft
         elif scale.position() == QwtScale.Right:
             value = sd.invTransform(pos.y())
-            axis = QwtPlot.yRight;
+            axis = QwtPlot.yRight
         elif scale.position() == QwtScale.Bottom:
             value = sd.invTransform(pos.x())
             axis = QwtPlot.xBottom
@@ -476,9 +476,11 @@ class ScalePicker(QObject):
             return QRect()
 
     # __scaleRect
-        
-def main(args):
-    app = QApplication(args)
+
+# class ScalePicker
+
+
+def make():
     demo = QMainWindow()
 
     toolBar = QToolBar(demo)
@@ -495,13 +497,21 @@ def main(args):
 
     CanvasPicker(plot)
     scalePicker = ScalePicker(plot)
-    app.connect(scalePicker, PYSIGNAL("clicked"), plot.insertCurve)
-
-    app.setMainWidget(demo)
+    QObject.connect(scalePicker, PYSIGNAL("clicked"), plot.insertCurve)
 
     demo.resize(540, 400)
     demo.show()
+    return demo
+
+# make()
+
+def main(args):
+    app = QApplication(args)
+    demo = make()
+    app.setMainWidget(demo)
     app.exec_loop()
+
+# main()
 
 # Admire!
 if __name__ == '__main__':
