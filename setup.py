@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '3.7'
+version = '3.8'
 
 #
 # CHECK FOR A RECENT PYTHON
@@ -213,20 +213,15 @@ along with PyQwt; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 In addition, as a special exception, Gerard Vermeulen gives
-permission to link PyQwt with commercial, non-commercial and
-educational versions of Qt, PyQt and sip, and distribute PyQwt in
-this form, provided that equally powerful versions of Qt, PyQt
+permission to link PyQwt dynamically with commercial, non-commercial
+or educational versions of Qt, PyQt and sip, and distribute PyQwt
+in this form, provided that equally powerful versions of Qt, PyQt
 and sip have been released under the terms of the GNU General
 Public License.
 
-If PyQwt is linked with commercial, non-commercial and educational
-versions of Qt, PyQt and sip, Python scripts using PyQwt do not
-have to be released under the terms of the GNU General Public
-License. 
-
-You must obey the GNU General Public License in all respects for
-all of the code used other than Qt, PyQt and sip, including the
-Python scripts that are part of PyQwt.
+If PyQwt is dynamically linked with commercial, non-commercial or
+educational versions of Qt, PyQt and sip, PyQwt becomes a free
+plug-in for a non-free program.
 """
 
 setup(
