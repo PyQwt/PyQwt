@@ -36,15 +36,30 @@
 #
 # to extract all files from the RPM package, including the sources for PyQt.
 #
-# To use the PyQt*-3.9 sources next to PyQwt-3.9, uncomment:
+# To use the PyQt*-3.9 sources next to PyQwt-4.0, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.9/sip
+# To use the PyQt*-3.10 sources next to PyQwt-4.0, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.10/sip
+# To use the PyQt*-3.11 sources next to PyQwt-4.0, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.11/sip
 #
 #
 # Some %ConvertToSubClassCode handwritten code uses 'dynamic_cast<>()' which is
-# not supported by all compilers and/or compiler options.  The option
-# 'sip_x_features' indicates the 'run_sip' command whether to disable a list of
-# features (separated by ',').
-#sip_x_features=CXX_DYNAMIC_CAST
+# not supported by all compilers and/or compiler options.
+# If this is not the case, exclude the feature 'CXX_DYNAMIC_CAST'
+# 
+# Possible typedefs for size_t are int, long, unsigned int, or unsigned long
+# indicated by the excluding features:
+# SIZE_T_IS_INT if size_t is no 'int'
+# SIZE_T_IS_LONG if size_t is no 'long'
+# SIZE_T_IS_UNSIGNED_INT if size_t is no 'unsigned int'
+# SIZE_T_IS_UNSIGNED_LONG if size_t is no 'unsigned long'
+#
+# The option 'sip_x_features' indicates the 'run_sip' command whether to
+# disable a list of features (separated by ',').
+#sip_x_features=CXX_DYNAMIC_CAST,SIZE_T_IS_INT,SIZE_T_IS_LONG,SIZE_T_IS_UNSIGNED_INT,SIZE_T_IS_UNSIGNED_LONG
+# On my Linux system dynamic_cast<>() works and size_t is 'unsigned int' so:
+sip_x_features=SIZE_T_IS_INT,SIZE_T_IS_LONG,SIZE_T_IS_UNSIGNED_LONG
 #
 # To speed up compilation, concatenate the *.cpp files made by sip.  The option
 # 'concatenate' indicates the 'run_sip' command whether to concatenate or not.
@@ -73,8 +88,8 @@ use_rpm_opt_flags=0
 #
 [install]
 # The option 'install-data' indicates the command 'install' where to install
-# the documentation and examples. I want it in /usr/share/doc/PyQwt-3.10
-install_data=/usr/share/doc/PyQwt-3.10
+# the documentation and examples. I want it in /usr/share/doc/PyQwt-4.0
+install_data=/usr/share/doc/PyQwt-4.0
 # If you prefer another directory, uncomment and edit: 
 #install_data=/2000/light/years/from/home
 #
