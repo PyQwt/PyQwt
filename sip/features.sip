@@ -1,6 +1,6 @@
 // The features that PyQwt knows about.
 //
-// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2001-2004 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -29,8 +29,11 @@
 // educational versions of Qt, PyQt and sip, PyQwt becomes a free plug-in
 // for a non-free program.
 
-
 %Feature CXX_DYNAMIC_CAST
+%Feature SIZE_T_IS_INT
+%Feature SIZE_T_IS_LONG
+%Feature SIZE_T_IS_UNSIGNED_INT
+%Feature SIZE_T_IS_UNSIGNED_LONG
 %Feature Qwt_COMPAT
 %Feature HAS_NUMARRAY
 %Feature HAS_NUMERIC

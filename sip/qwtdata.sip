@@ -2,7 +2,7 @@
 //      QwtData,
 //      QwtArrayData.
 //
-// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2001-2004 Gerard Vermeulen
 //
 // This file is part of PyQwt.
 //
@@ -30,52 +30,33 @@
 // educational versions of Qt, PyQt and sip, PyQwt becomes a free plug-in
 // for a non-free program.
 
-
 class QwtData
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_data.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtData();
     virtual QwtData *copy() const = 0;
-    virtual /* size_t */ uint size() const = 0;
-    virtual double x(/* size_t */ uint) const = 0;
-    virtual double y(/* size_t */ uint) const = 0;
+    virtual size_t size() const = 0;
+    virtual double x(size_t) const = 0;
+    virtual double y(size_t) const = 0;
     virtual QwtDoubleRect boundingRect() const;
 };
 
 class QwtDoublePointData
 {
-%HeaderCode
+%TypeHeaderCode
 #include <qwt_data.h>
 %End
 
 public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
     QwtDoublePointData(const QwtArray<QwtDoublePoint> &);
     virtual QwtData *copy() const;
-    virtual /* size_t */ uint size() const;
-    virtual double x(/* size_t */ uint) const;
-    virtual double y(/* size_t */ uint) const;
+    virtual size_t size() const;
+    virtual double x(size_t) const;
+    virtual double y(size_t) const;
     virtual QwtDoubleRect boundingRect() const;
 };
 

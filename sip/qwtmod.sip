@@ -63,7 +63,7 @@
 %Include qwtcounter.sip
 %Include qwtcurve.sip
 %Include qwtcurvedict.sip
-//%Include qwtdata.sip
+%Include qwtdata.sip
 %Include qwtdblrange.sip
 %Include qwtdial.sip
 %Include qwtdialneedle.sip
