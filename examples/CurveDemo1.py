@@ -35,26 +35,35 @@ class CurveDemo(QFrame):
         # make curves with different styles
         self.curves = []
         # curve 0
-        self.curves.append(QwtCurve(
-            setPen = QPen(Qt.darkGreen), setStyle = QwtCurve.Spline,
-            setSymbol = QwtSymbol(QwtSymbol.Cross, QBrush(),
-                                  QPen(Qt.black), QSize(5, 5))))
+        curve = QwtCurve()
+        curve.setPen(QPen(Qt.darkGreen))
+        curve.setStyle(QwtCurve.Spline)
+        curve.setSymbol(QwtSymbol(QwtSymbol.Cross, QBrush(),
+                                  QPen(Qt.black), QSize(5, 5)))
+        self.curves.append(curve)
         # curve 1
-        self.curves.append(QwtCurve(
-            setPen = QPen(Qt.red), setStyle = QwtCurve.Sticks,
-            setSymbol = QwtSymbol(QwtSymbol.Ellipse, QBrush(Qt.yellow),
-                                  QPen(Qt.blue), QSize(5, 5))))
+        curve = QwtCurve()
+        curve.setPen(QPen(Qt.red))
+        curve.setStyle(QwtCurve.Sticks)
+        curve.setSymbol(QwtSymbol(QwtSymbol.Ellipse, QBrush(Qt.yellow),
+                                  QPen(Qt.blue), QSize(5, 5)))
+        self.curves.append(curve)
         # curve 2
-        self.curves.append(QwtCurve(
-            setPen = QPen(Qt.darkBlue), setStyle = QwtCurve.Lines))
+        curve = QwtCurve()
+        curve.setPen(QPen(Qt.darkBlue))
+        curve.setStyle(QwtCurve.Lines)
+        self.curves.append(curve)
         # curve 3
-        self.curves.append(
-            QwtCurve(setPen = QPen(Qt.darkCyan), setStyle = QwtCurve.Steps))
+        curve = QwtCurve()
+        curve.setPen(QPen(Qt.darkCyan))
+        curve.setStyle(QwtCurve.Steps)
+        self.curves.append(curve)
         # curve 4
-        self.curves.append(QwtCurve(
-            setStyle = QwtCurve.NoCurve,
-            setSymbol = QwtSymbol(QwtSymbol.XCross, QBrush(),
-                                  QPen(Qt.darkMagenta), QSize(5, 5))))
+        curve = QwtCurve()
+        curve.setStyle(QwtCurve.NoCurve)
+        curve.setSymbol(QwtSymbol(QwtSymbol.XCross, QBrush(),
+                                  QPen(Qt.darkMagenta), QSize(5, 5)))
+        self.curves.append(curve)
 
         # attach data, using Numeric
         self.x = arrayrange(0, 10.0, 10.0/SIZE)

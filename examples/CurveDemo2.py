@@ -1,23 +1,8 @@
 #!/usr/bin/env python
 
 # The Python version of qwt-*/examples/curvdemo2/curvdemo2.cpp,
-# using curveData() instead of setRawData().
-# In Python, setRawData() looks a very bad idea (even in C++ it is a hack).
+# using curveData() instead of the un-Pythonic setRawData().
 
-# This examples demonstrate the use of keyword arguments in constructors, like:
-#
-# instance = ClassName(keyword1 = value1, keyword2 = value2, ..)
-#
-# Any method name can be used as a keyword. The value is a Python object,
-# whose type depend on the method name (the object can be a tuple, if the
-# method takes more than one argument).
-#
-# The keyword arguments feature is enabled by
-# post-processing sip-generated *.py files.
-#
-# Warning: this feature is a HACK, only working in constructors!
-# Qt's Designer and pyuic don't know about keyword arguments.
-# If you code by hand, keyword arguments allow for shorter code.
 
 import sys
 from qt import *
@@ -42,34 +27,39 @@ class CurveDemo(QFrame):
         # make curves and maps
         self.tuples = []
         # curve 1
-        self.tuples.append((
-            QwtCurve(setPen = QPen(QColor(150, 150, 200), 2),
-                     setStyle = (QwtCurve.Spline, QwtCurve.Xfy),
-                     setSymbol = QwtSymbol(QwtSymbol.Cross, QBrush(),
-                                           QPen(Qt.yellow, 2), QSize(7, 7))),
-            QwtDiMap(setDblRange = (-1.5, 1.5, 0.0)),
-            QwtDiMap(setDblRange = (0.0, 2*pi, 0.0))))
+        curve = QwtCurve()
+        curve.setPen(QPen(QColor(150, 150, 200), 2))
+        curve.setStyle(QwtCurve.Spline, QwtCurve.Xfy),
+        curve.setSymbol(QwtSymbol(
+            QwtSymbol.Cross, QBrush(), QPen(Qt.yellow, 2), QSize(7, 7)))
+        self.tuples.append((curve,
+                            QwtDiMap(0, 100, -1.5, 1.5, False),
+                            QwtDiMap(0, 100, 0.0, 2*pi, False)))
         # curve 2
-        self.tuples.append((
-            QwtCurve(setPen = QPen(QColor(200, 150, 50), 1, Qt.DashDotDotLine),
-                     setStyle = QwtCurve.Sticks,
-                     setSymbol = QwtSymbol(QwtSymbol.Ellipse, QBrush(Qt.blue),
-                                           QPen(Qt.yellow), QSize(5, 5))),
-            QwtDiMap(setDblRange = (0.0, 2*pi, 0.0)),
-            QwtDiMap(setDblRange = (-3.0, 1.1, 0.0))))
+        curve = QwtCurve()
+        curve.setPen(QPen(QColor(200, 150, 50), 1, Qt.DashDotDotLine))
+        curve.setStyle(QwtCurve.Sticks)
+        curve.setSymbol(QwtSymbol(
+            QwtSymbol.Ellipse, QBrush(Qt.blue), QPen(Qt.yellow), QSize(5, 5)))
+        self.tuples.append((curve,
+                            QwtDiMap(0, 100, 0.0, 2*pi, False),
+                            QwtDiMap(0, 100, -3.0, 1.1, False)))
         # curve 3
-        self.tuples.append((
-            QwtCurve(setPen = QPen(QColor(100, 200, 150)),
-                     setStyle = (QwtCurve.Spline,
-                                 QwtCurve.Periodic | QwtCurve.Parametric)),
-            QwtDiMap(setDblRange = (-1.1, 3.0, 0.0)),
-            QwtDiMap(setDblRange = (-1.1, 3.0, 0.0))))
+        curve = QwtCurve()
+        curve.setPen(QPen(QColor(100, 200, 150)))
+        curve.setStyle(
+            QwtCurve.Spline, QwtCurve.Periodic | QwtCurve.Parametric)
+        self.tuples.append((curve,
+                            QwtDiMap(0, 100, -1.1, 3.0, False),
+                            QwtDiMap(0, 100, -1.1, 3.0, False)))
         # curve 4
-        self.tuples.append((
-            QwtCurve(setPen = QPen(Qt.red),
-                     setStyle = QwtCurve.Spline, setSplineSize = 200),
-            QwtDiMap(setDblRange = (-5.0, 1.1, 0.0)),
-            QwtDiMap(setDblRange = (-1.1, 5.0, 0.0))))
+        curve = QwtCurve()
+        curve.setPen(QPen(Qt.red))
+        curve.setStyle(QwtCurve.Spline)
+        curve.setSplineSize(200)
+        self.tuples.append((curve,
+                            QwtDiMap(0, 100, -5.0, 1.1, False),
+                            QwtDiMap(0, 100, -1.1, 5.0, False)))
         # data
         self.phase = 0.0
         self.base = arrayrange(0.0, 2.01*pi, 2*pi/(USize-1))

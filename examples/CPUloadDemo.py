@@ -24,7 +24,7 @@ class LowPass:
         self.recalc()
 
     def reset(self, v):
-        self.val = v
+        self.val = v;
         
     def input(self, v):
         self.val = self.c2*v + self.c1*self.val
@@ -104,7 +104,7 @@ class CPUloadDemo(QWidget):
 
         self.menu = QMenuBar(self)
         self.menu.insertItem("Program", puProg)                  
-        self.menu.insertItem("Options", puConf)
+        self.menu.insertItem("Options", puConf);
     
         self.cfg = ConfigDiag()
 
@@ -119,19 +119,26 @@ class CPUloadDemo(QWidget):
         info = ["% User", "% Nice", "% System", " % Idle"]
         for i in range(ThermoCnt):
             self.lpFilters.append(LowPass())
-            self.thermometers.append(QwtThermo(
-                self, setGeometry = (10 + i*60, 30, 50, 100),
-                setOrientation = (QwtThermo.Vertical, QwtThermo.Left),
-                setRange = (0.0, 100.0), setValue = 0.0, setBorderWidth = 1,
-                setPipeWidth = 4, setFont = QFont("Helvetica", 10),
-                setScaleMaxMajor = 6, setScaleMaxMinor = 5,
-                setFillColor = QColor("MidnightBlue")))
-            # a QLabel does not accept keyword arguments (yet)
+            
+            thermo = QwtThermo(self)
+            thermo.setGeometry(10 + i*60, 30, 50, 100)
+            thermo.setOrientation(QwtThermo.Vertical, QwtThermo.Left)
+            thermo.setRange(0.0, 100.0)
+            thermo.setValue(0.0)
+            thermo.setBorderWidth(1)
+            thermo.setPipeWidth(4)
+            thermo.setFont(QFont("Helvetica", 10))
+            thermo.setScaleMaxMajor(6)
+            thermo.setScaleMaxMinor(5)
+            thermo.setFillColor(QColor("MidnightBlue"))
+            self.thermometers.append(thermo)
+
             l = QLabel(self, "")
-            self.labels.append(l)
             l.setText(info[i])
             l.setGeometry(10 + i*60, 130, 50, 20)
             l.setAlignment(Qt.AlignRight | Qt.AlignTop)
+            self.labels.append(l)
+
             self.currval.append(0)
             self.oldval.append(0)
 
