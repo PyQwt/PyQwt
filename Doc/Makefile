@@ -1,8 +1,24 @@
-doc:
+doc: pyqwt/pyqwt.tex
+	rm -f htdoc
 	(cd html/pyqwt; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
 	cp -pu html/icons/*.png html/pyqwt
-	python tools/mkhowto --html --dir html/pyqwt --image-type png pyqwt/pyqwt.tex
+	python tools/mkhowto --html --dir html/pyqwt \
+	    --image-type png --favicon pyfav.png \
+	    --up-link http://pyqwt.sourceforge.net --up-title "PyQwt Home" \
+	    pyqwt/pyqwt.tex
 	(cd html/pyqwt; rm -f *.dat *.idx *.old *.pl *.gif)
+	date -u "+%Y-%m-%d %T" > doc
+
+htdoc: pyqwt/pyqwt.tex
+	rm -f doc
+	(cd html/pyqwt; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
+	cp -pu html/icons/*.png html/pyqwt
+	python tools/mkhowto --html --dir html/pyqwt \
+	    --image-type png --favicon pyfav.png \
+	    --up-link ../index.html --up-title "PyQwt Home" \
+	    pyqwt/pyqwt.tex
+	(cd html/pyqwt; rm -f *.dat *.idx *.old *.pl *.gif)
+	date -u "+%Y-%m-%d %T" > htdoc
 
 free:
 	rm -rf ../../Free/html
