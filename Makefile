@@ -72,7 +72,7 @@ qwt-sources-ssh:
 	if [ -e tmp/qwt ]; then \
 	    (cd tmp; cvs -q -d $(CVS-QWT-SSH) update -P -d qwt); \
 	else \
-	    (cd tmp; cvs -q -d $(CVS-QWT-SSH) checkout -P -d qwt); \
+	    (cd tmp; cvs -q -d $(CVS-QWT-SSH) checkout qwt); \
 	fi
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
