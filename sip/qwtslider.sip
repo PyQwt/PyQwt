@@ -50,7 +50,7 @@ public:
 
     QwtSlider(QWidget * /TransferThis/, const char * = 0, 
 	      Qt::Orientation = Qt::Horizontal, ScalePos = None,
-	      int = BgTrough);
+	      BGSTYLE = BgTrough);
 	
     virtual void setOrientation(Qt::Orientation);
 
@@ -59,6 +59,9 @@ public:
 
     void setScalePos(ScalePos);
     ScalePos scalePos() const;
+
+    void setScalePosition(ScalePos);
+    ScalePos scalePosition() const;
 
     int thumbLength() const;
     int thumbWidth() const;
