@@ -13,8 +13,8 @@
   {http://pyqwt.sourceforge.net/download.html}}
 \newcommand{\Snapshot}{\ulink{snapshot}
   {http://pyqwt.sourceforge.net/snapshot}}
-\newcommand{\NewSip}{\ulink{sip-4.0.tar.gz}
-  {http://pyqwt.sourceforge.net/support/sip-4.0.tar.gz}}
+\newcommand{\NewSip}{\ulink{sip-4.0.1.tar.gz}
+  {http://pyqwt.sourceforge.net/support/sip-4.0.1.tar.gz}}
 \newcommand{\OldSip}{\ulink{sip-3.10.2.tar.gz}
   {http://pyqwt.sourceforge.net/support/sip-3.10.2.tar.gz}}
 \newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}
@@ -35,8 +35,8 @@
   {http://prdownloads.sourceforge.net/numpy/Numeric-23.1.tar.gz?download}}
 \newcommand{\numarray}{\ulink{numarray}
   {http://www.stsci.edu/resources/software_hardware/numarray}}
-\newcommand{\numarrayTarGz}{\ulink{numarray-0.9.tar.gz}
-  {http://prdownloads.sourceforge.net/numpy/numarray-0.9.tar.gz?download}}
+\newcommand{\numarrayTarGz}{\ulink{numarray-1.0.tar.gz}
+  {http://prdownloads.sourceforge.net/numpy/numarray-1.0.tar.gz?download}}
 \newcommand{\PyQwtTarGz}{\ulink{PyQwt-4.0rc0.tar.gz}
   {http://prdownloads.sourceforge.net/pyqwt/PyQwt-4.0rc0.tar.gz?download}}
 \newcommand{\ReadMePatches}{\ulink{README}
@@ -47,8 +47,8 @@
   {http://www.python.org/ftp/python/2.3.4/Python-2.3.4.exe}}
 \newcommand{\NumericExe}{\ulink{Numeric-23.1.win32-py2.3.exe}
   {http://prdownloads.sourceforge.net/numpy/Numeric-23.1.win32-py2.3.exe?download}}
-\newcommand{\numarrayExe}{\ulink{numarray-0.9.win32-py2.3.exe}
-  {http://prdownloads.sourceforge.net/numpy/numarray-0.9.win32-py2.3.exe?download}}
+\newcommand{\numarrayExe}{\ulink{numarray-1.0.win32-py2.3.exe}
+  {http://prdownloads.sourceforge.net/numpy/numarray-1.0.win32-py2.3.exe?download}}
 \newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}
   {ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
 \newcommand{\PyQtExe}{\ulink{PyQt-win-nc-msvc-3.12.exe}
@@ -57,35 +57,24 @@
   {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-4.0rc0.win32-py2.3.exe?download}}
 
 \newcommand{\PrerequisitesEnd}{
-To exploit the full power of the QwtPlot widget, you should install at
-least one the Numerical Python extensions:
-\Numeric{} or its successor \numarray{}.
-I am using \NumericTarGz{} and \numarrayTarGz{}. 
-Versions of Numeric later than 21.0 are supported.
-Numarray is newer and therefore less stable than Numeric, so get the latest!
+  To exploit the full power of the QwtPlot widget, you should install at
+  least one the Numerical Python extensions:
+  \Numeric{} or its successor \numarray{}.
+  I am using \NumericTarGz{} and \numarrayTarGz{}. 
+  Versions of Numeric later than 21.0 are supported.
+  Numarray is newer and therefore less stable than Numeric, so get the latest!
 
-The source package \PyQwtTarGz{} contains a 20040605 CVS snapshot
-of the \Qwt{} library with a few patches.
+  The source package \PyQwtTarGz{} contains a 20040605 CVS snapshot
+  of the \Qwt{} library with a few patches.
 }
+
 \newcommand{\Future}{
-\begin{notice}[warning]
-This documentation is for the future PyQwt-4.0 which is only available from
-CVS. The \Download{} page has links for the latest releases.
-\end{notice}
+  \begin{notice}[warning]
+    This documentation is for the future PyQwt-4.0 which is only available from
+    CVS. The \Download{} page has links for the latest releases.
+  \end{notice}
 }
-\newcommand{\NonCommercial}{
-\begin{notice}[note]
-\PyQwtExe{} is the latest ``non-commercial'' version of PyQwt on Windows for
-\QtNcExe{} and \PyQtExe{}, because Trolltech and Riverbank Computing have
-discontinued their non-commercial software.  Hopefully, this situation will
-change with the availability of a new book on Qt programming including a
-non-commercial version of Qt-3.2.
-\strong{I will try to keep \PyQwtTarGz{} working with the commercial releases
-of Qt and PyQt on Windows}, but the installation instructions for Windows may
-be inaccurate or obsolete.  
-\end{notice}
-}
-\renewcommand{\NonCommercial}{}
+
 \renewcommand{\Future}{}
 
 \title{PyQwt Manual}
@@ -115,8 +104,8 @@ be inaccurate or obsolete.
 
 \noindent
 PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
-plotting of Python lists and tuples and the powerful array types provided
-by the Python extension modules \module{Numeric} and/or \module{numarray}.
+plotting of Python lists and tuples and the powerful array types provided by
+the Python extension modules \module{Numeric} and/or \module{numarray}.
 
 \end{abstract}
 
@@ -130,7 +119,6 @@ by the Python extension modules \module{Numeric} and/or \module{numarray}.
 
 
  
-
 \section{Qwt \label{qwt-intro}}
 
 Qwt is a C++ library based on the Qt GUI framework from Troll Tech AS.
@@ -519,8 +507,6 @@ Feedback, please.
 
 \Future{}
 
-\NonCommercial{}
-
 You can install PyQwt on the \POSIX{} (Unix, Linux), MacOS/X,
 and Microsoft Windows operating systems:
 \begin{enumerate}
@@ -546,15 +532,9 @@ and Microsoft Windows operating systems:
 Contact the \mailinglist{}, if you run into problems.
 
 \begin{notice}[note]
-The \mailinglist{} is a subscribers-only list to reduce spam.  I appreciate
-if you subscribe before posting to the list, since it saves me the work of
-accepting or rejecting mail from non-subscribers.  You can always unsubscribe.
-\end{notice}
-
-\begin{notice}[note]
-The compatibility of PyQwt's build scripts with the commercial packages of Qt
-and PyQt on Windows depends on \strong{your} feedback, because I do not have
-access to those versions of Qt and PyQt.
+  The compatibility of PyQwt's build scripts with the commercial packages of Qt
+  and PyQt on Windows depends on \strong{your} feedback, because I do not have
+  access to those versions of Qt and PyQt.
 \end{notice}
 
 \section{Build prerequisites \label{prerequisites}}
@@ -567,7 +547,7 @@ Build prerequisites for \PyQwtTarGz{} on \POSIX{} are:
 \begin{enumerate}
   \item
     \ulink{Python}{http://www.python.org}.\\
-    Supported versions: Python-2.3.x, Python-2.2.x, and probably
+    Supported versions: Python-2.4.x, Python-2.3.x, Python-2.2.x, and probably
     also Python-2.1.x.
   \item
     \ulink{Qt}{http://www.trolltech.com}.\\
@@ -575,13 +555,13 @@ Build prerequisites for \PyQwtTarGz{} on \POSIX{} are:
     Qt-2.3.1 and Qt-2.3.0.
   \item
     \NewSip{} (requires at least Python-2.3.0) or \OldSip{}.\\
-    Supported versions: sip-4.0, -3.10.2, -3.10.1, and -3.10, but the most
-    recent version gets most testing.
+    Supported versions: sip-4.0.1, -4.0, -3.10.2, -3.10.1, and -3.10,
+    but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtGpl{}.\\
-    Supported versions: PyQt-3.12, -3.11, and -3.10, but the most recent
-    version gets most testing.
+    Supported versions: PyQt-3.12, -3.11, and -3.10,
+    but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
     \ReadMePatches{} for bug fixes and upgrades.
@@ -602,13 +582,13 @@ Build prerequisites for \PyQwtTarGz{} on MacOS/X are:
 \begin{enumerate}
   \item
     \ulink{Python}{http://www.python.org}.\\
-    Supported versions: Python-2.3.x.
+    Supported versions: Python-2.4.x and Python-2.3.x.
   \item
     \ulink{Qt}{http://www.trolltech.com}.\\
     Supported versions: Qt-3.3.x, Qt-3.2.x, Qt-3.1.x, and Qt-3.0.x.
   \item
     \NewSip{}.\\
-    Supported versions: sip-4.0.
+    Supported versions: sip-4.0.1, and -4.0.
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtMac{}.\\
@@ -631,13 +611,11 @@ Build prerequisites for \PyQwtTarGz{} on MacOS/X are:
 
 \Future{}
 
-\NonCommercial{}
-
 Build prerequisites for \PyQwtTarGz{} on Windows are:
 \begin{enumerate}
   \item
     \PythonExe{}.\\
-    Supported versions: Python-2.3.x, Python-2.2.x, and probably
+    Supported versions: Python-2.4.x, Python-2.3.x, Python-2.2.x, and probably
     also Python-2.1.x.
   \item
     \ulink{Qt}{http://www.trolltech.com}.\\
@@ -645,8 +623,8 @@ Build prerequisites for \PyQwtTarGz{} on Windows are:
     Qt-2.3.1 and Qt-2.3.0.
   \item
     \NewSip{} (requires at least Python-2.3.0) or \OldSip{}.\\
-    Supported versions: sip-4.0, -3.10.2, -3.10.1, and -3.10, but the most
-    recent version gets most testing.
+    Supported versions: sip-4.0.1, -4.0, -3.10.2, -3.10.1, and -3.10,
+    but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
     \PyQtCom{}.\\
@@ -683,25 +661,25 @@ Build prerequisites for \PyQwtTarGz{} on Windows are:
   Unpack \PyQwtTarGz{} and read this \ReadMePatches{} to check for patches.
 \item
   Configure PyQt by running the following commands:
-  \begin{verbatim}
+\begin{verbatim}
 cd PyQwt-4.0
 cd configure
 python configure.py
-  \end{verbatim}
+\end{verbatim}
   This assumes that the correct Python interpreter is on your path.
   The configure.py script takes many options.
   Use the "-h" command line option to display a full list of the available
   options.
 \item
   The next step is to build PyQt using your platform's make command.
-  \begin{verbatim}
+\begin{verbatim}
 make
-  \end{verbatim}
+\end{verbatim}
 \item
   The final step is to install PyQt by running the following command.
-  \begin{verbatim}
+\begin{verbatim}
 make install
-  \end{verbatim}
+\end{verbatim}
 \end{enumerate}
 
 \begin{notice}[warning]
@@ -734,9 +712,9 @@ python configure.py -c -j 2 -i /usr/lib/qt3/include/qwt -l /usr/lib/qt3/lib
   Unpack \PyQwtTarGz{} and read \ReadMePatches{} to check for minor bug fixes
   and upgrades.
 \item
-  \begin{verbatim}
+\begin{verbatim}
 cd PyQwt-4.0
-  \end{verbatim}
+\end{verbatim}
   {}
 \item
   Edit the file \file{setup_cfg_posix} as explained in its comments.
@@ -754,9 +732,9 @@ cd PyQwt-4.0
   \envvar{QMAKESPEC}.
 \item
   Run
-  \begin{verbatim}
+\begin{verbatim}
 python setup.py build
-  \end{verbatim}
+\end{verbatim}
   to build the PyQwt extension.
 \item
   Play with the \file{*.py} files in the examples directory.
@@ -764,9 +742,9 @@ python setup.py build
 \item
   After the removal of \emph{all} files of previous installations of PyQwt
   in your Python library tree, you have the choice between installing:
-  \begin{verbatim}
+\begin{verbatim}
 python setup.py install
-  \end{verbatim}
+\end{verbatim}
   or anticipating future removal of your new PyQwt installation:
   \begin{itemize}
   \item
@@ -776,19 +754,19 @@ python setup.py bdist_rpm
 \end{verbatim}
     makes RPM packages in the sub-directory \file{dist}.
     Uninstall an obsolete RPM package of PyQwt by running
-    \begin{verbatim}
+\begin{verbatim}
 rpm -e PyQwt
-    \end{verbatim}
+\end{verbatim}
     before installing a new RPM package with a command like
-    \begin{verbatim}
+\begin{verbatim}
 rpm -Uvh dist/PyQwt*.i586.rpm
-    \end{verbatim}
+\end{verbatim}
     {}
   \item
     in other cases, running
-    \begin{verbatim}
+\begin{verbatim}
 python setup.py bdist_dumb
-    \end{verbatim}
+\end{verbatim}
     makes a "dumb" distribution: an archive to be unpacked under /.
     If you keep the archive, you you have a trace of the installed files.
     Debian users may be able to convert the archive to a Debian package
@@ -803,21 +781,21 @@ python setup.py bdist_dumb
 
 \begin{notice}[note]
   If you are desperate, run:
-  \begin{verbatim}
+\begin{verbatim}
 make force
-  \end{verbatim}
+\end{verbatim}
   and mail the file \file{LOG.force} to the \mailinglist{}.
 \end{notice}
 
 \begin{notice}[note]
   Look at the Makefile for examples how to use
-  \begin{verbatim}
+\begin{verbatim}
 python setup.py command --options
-  \end{verbatim}
+\end{verbatim}
   For example, the command:
-  \begin{verbatim}
+\begin{verbatim}
 python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.9/sip build
-  \end{verbatim}
+\end{verbatim}
   tries to build the extension, overruling any initialization of
   \var{sip_file_dirs} in the configuration file.
 \end{notice}
@@ -826,8 +804,6 @@ python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.9/sip build
 \subsection{Build on Windows with \file{setup.py} \label{win-setup}}
 
 \Future{}
-
-\NonCommercial{}
 
 \begin{enumerate}
 \item
@@ -876,8 +852,6 @@ python setup.py build --force >log.txt
 \section{Binary Installation on Windows \label{win-binary-install}}
 
 \Future{}
-
-\NonCommercial{}
 
 \begin{notice}[warning]
 Use any version of Windows later than Windows-98.  Windows-98 can only
@@ -1406,3 +1380,7 @@ void copyValues(int enable = 1);
 \input{\jobname.ind}
 
 \end{document}
+
+%% Local Variables:
+%% fill-column: 79
+%% End:
