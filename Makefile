@@ -3,7 +3,7 @@ PWD := $(shell pwd)
 CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "25 Nov 2003 23:59:59 GMT"
+CVS-DATE := "4 Mar 2004 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -58,9 +58,9 @@ qwt-sources:
 	rm -rf qwt-sources
 	mkdir -p tmp
 	if [ -e tmp/qwt ]; then \
-	    (cd tmp; cvs -q -d $(CVS-QWT) update -D $(CVS-DATE) -P -d qwt); \
+	    (cd tmp; cvs -q -d $(CVS-QWT) update -D $(CVS-DATE) -dP qwt); \
 	else \
-	    (cd tmp; cvs -q -d $(CVS-QWT) checkout -D $(CVS-DATE) -P -d qwt); \
+	    (cd tmp; cvs -q -d $(CVS-QWT) checkout -D $(CVS-DATE) qwt); \
 	fi
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
@@ -70,7 +70,7 @@ qwt-sources-ssh:
 	rm -rf qwt-sources
 	mkdir -p tmp
 	if [ -e tmp/qwt ]; then \
-	    (cd tmp; cvs -q -d $(CVS-QWT-SSH) update -P -d qwt); \
+	    (cd tmp; cvs -q -d $(CVS-QWT-SSH) update -dP qwt); \
 	else \
 	    (cd tmp; cvs -q -d $(CVS-QWT-SSH) checkout qwt); \
 	fi

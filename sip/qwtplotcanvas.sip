@@ -52,6 +52,7 @@ public:
 
 protected:
     QwtPlotCanvas(QwtPlot * /TransferThis/);
+    ~QwtPlotCanvas();
 
     QPixmap *cache();
 
