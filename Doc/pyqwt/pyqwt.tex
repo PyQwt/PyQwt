@@ -1,14 +1,14 @@
 \documentclass{manual}
 
 % Links
-\newcommand{\me}{\ulink{me}{mailto:gvermeul@grenoble.cnrs.fr}}
+\newcommand{\me}{\ulink{me}{mailto:pyqwt-users@lists.sourceforge.net}}
 \newcommand{\Qwt}{\ulink{Qwt}{http://qwt.sourceforge.net}}
 
 % Source code
 \newcommand{\Download}{\ulink{download}{http://pyqwt.sourceforge.net/download.html}}
 \newcommand{\Future}{
 \begin{notice}[warning]
-This documentation is for the future PyQwt-3.8. Check the \Download{}
+This documentation is for the future PyQwt-3.8rc0. Check the \Download{}
 page for the latest releases.
 \end{notice}
 }
@@ -19,7 +19,7 @@ page for the latest releases.
 \newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
 \newcommand{\NumericTarGz}{\ulink{Numeric-23.1.tar.gz}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.tar.gz?download}}
 \newcommand{\numarrayTarGz}{\ulink{numarray-0.7.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.tar.gz?download}}
-\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.8.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.8.tar.gz?download}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.8rc0.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.8.tar.gz?download}}
 \newcommand{\PyQwtTarGzOld}{\ulink{PyQwt-3.7.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.7.tar.gz?download}}
 \newcommand{\ReadMePatches}{\ulink{README}{http://pyqwt.sourceforge.net/patches/README}}
 
@@ -35,7 +35,7 @@ page for the latest releases.
 \newcommand{\PyQtExeBC}{\ulink{PyQt-win-nc-3.8.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.8.exe}}
 \newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.8.1.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.8.1.exe}}
 \newcommand{\PyQwtExeBB}{\ulink{PyQwt\_Qt230-3.7.win32-py2.2.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.7.win32-py2.2.exe?download}}
-\newcommand{\PyQwtExeBC}{\ulink{PyQwt\_Qt230-3.8.win32-py2.3.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8.win32-py2.3.exe?download}}
+\newcommand{\PyQwtExeBC}{\ulink{PyQwt\_Qt230-3.8rc0.win32-py2.3.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8rc0.win32-py2.3.exe?download}}
 
 \title{PyQwt Manual}
 
@@ -43,8 +43,8 @@ page for the latest releases.
 \author{Gerard Vermeulen}
 
 \date{\today}
-\release{3.8}
-\setshortversion{3.8}
+\release{3.8rc0}
+\setshortversion{3.8rc0}
 
 \makeindex
 
@@ -64,8 +64,8 @@ page for the latest releases.
 
 \noindent
 PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
-plotting of lists, tuples and arrays provided by the Python extensions
-\module{Numeric} and \module{numarray}.
+plotting of lists, tuples and powerful array types provided by the Python
+extensions \module{Numeric} and \module{numarray}.
 
 \end{abstract}
 
@@ -74,7 +74,7 @@ plotting of lists, tuples and arrays provided by the Python extensions
 \chapter{Introduction \label{introduction}}
 
 PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
-plotting of lists, tuples and arrays which are provided by the Python
+plotting of lists, tuples and powerful array types provided by the Python
 extensions \module{Numeric} and \module{numarray}.
 
 \section{Qwt \label{qwt-intro}}
@@ -114,14 +114,18 @@ The widgets are documented in the
 on your hard disk or \Qwt{} on the web.
 
 
-\section{Numeric \label{numeric-intro}}
+\section{The Python Extension modules \label{numeric-intro}}
 
-The \ulink{Numerical Python Extensions}{http://www.numpy.org}
-(also known as Numeric or NumPy) turn Python in an ideal language for
-experimental numerical and scientific computing (MatLab- or IDL-like,
-but Python offers a superior programming language).
-NumPy defines a new data type "array" and a very complete of operators and
-functions to manipulate NumPy arrays.
+The \ulink{Numeric}{http://www.numpy.org/index.html}
+and \ulink{numarray}{http://stsdas.stsci.edu/numarray/index.html}
+modules extend Python with multi-dimensional array types and a complete
+set of 'standard' functions and operators to manipulate the arrays.
+
+Python together with at least one of those modules is an ideal language
+experimental numerical and scientific computing (as powerful as APL, MatLab,
+IDL and others, but much more elegant).
+
+
 Look at the following simple example:
 
 \verbatiminput{numeric.example}
@@ -461,12 +465,12 @@ Recent versions of the following software should be installed on your system:
     Earlier versions of Qt are not supported.
   \item
     \SipGpl{}.
-    I support sip downto version 3.4, but the most recent version
+    I support sip downto version 3.5, but the most recent version
     gets most testing. You may also try a \snapshot{} at your own risk.
   \item
     \PyQtGpl{}.
-    I support PyQt downto version 3.4, but the most recent version
-    gets most testing. You may also try a \snapshot at your own risk.
+    I support PyQt downto version 3.5, but the most recent version
+    gets most testing. You may also try a \snapshot{} at your own risk.
   \item
     Read \ReadMePatches{} to check out bug fixes and upgrades.
 \end{enumerate}
@@ -788,6 +792,14 @@ They are not yet available in Python (as far as I know, sip wraps
 protected member function, but not protected attributes).
 I may try to implement protected attributes on demand.
 
+\begin{classdesc}{Qwt}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtAnalogClock}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
 \begin{classdesc}{QwtArrowButton}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
@@ -825,15 +837,11 @@ autoScale.adjust(x, reset = 0)
 \emph{is fully implemented}.
 \end{classdesc}
 
-\begin{classdesc}{QwtCompassScaleDraw}{*args}
-\emph{is fully implemented}. This class is experimental.
-\end{classdesc}
-
-\begin{classdesc}{QwtCompassSimpleRose}{*args}
+\begin{classdesc}{QwtCompassWindArrow}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
-\begin{classdesc}{QwtCompassWindArrow}{*args}
+\begin{classdesc}{QwtCounter}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
@@ -872,19 +880,15 @@ curve.setData(x, y)
   \end{itemize}
 \end{classdesc}
 
-\begin{classdesc}{QwtDial}{*args}
-\emph{is fully implemented}.
+\begin{classdesc}{QwtCurveDict}{*args}
+\emph{FIXME}.
 \end{classdesc}
 
-\begin{classdesc}{QwtDialScaleDraw}{*args}
-\emph{is fully implemented}.
+\begin{classdesc}{QwtData}{*args}
+\emph{FIXME}.
 \end{classdesc}
 
-\begin{classdesc}{QwtDialNeedle}{*args}
-\emph{is fully implemented}.
-\end{classdesc}
-
-\begin{classdesc}{QwtDialSimpleNeedle}{*args}
+\begin{classdesc}{QwtDblRange}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
@@ -892,11 +896,43 @@ curve.setData(x, y)
 \emph{is fully implemented}.
 \end{classdesc}
 
-\begin{classdesc}{QwtDblRange}{*args}
+\begin{classdesc}{QwtDial}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
-\begin{classdesc}{Qwt}{*args}
+\begin{classdesc}{QwtDialNeedle}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDialScaleDraw}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDialSimpleNeedle}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDoublePoint}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDoublePointData}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDoubleRect}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDoubleSize}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDynGridLayout}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtEventPattern}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
@@ -908,7 +944,15 @@ curve.setData(x, y)
 \emph{is fully implemented}. See QwtSliderBase.
 \end{classdesc}
 
+\begin{classdesc}{QwtLayoutMetrics}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
 \begin{classdesc}{QwtLegend}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtLegendButton}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
@@ -916,8 +960,24 @@ curve.setData(x, y)
 \emph{is fully implemented}.
 \end{classdesc}
 
+\begin{classdesc}{QwtLegendLabel}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
 \begin{classdesc}{QwtMarker}{*args}
 \emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotPicker}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtMarkerDict}{*args}
+\emph{FIXME}.
+\end{classdesc}
+
+\begin{classdesc}{QwtMetricsMap}{*args}
+\emph{FIXME}.
 \end{classdesc}
 
 \begin{classdesc}{QwtPaintBuffer}{*args}
@@ -925,6 +985,30 @@ curve.setData(x, y)
 \end{classdesc}
 
 \begin{classdesc}{QwtPainter}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPicker}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPickerClickPointMachine}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPickerClickRectMachine}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPickerDragPointMachine}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPickerDragRectMachine}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPickerPolygonMachine}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
@@ -1054,7 +1138,19 @@ x, y = plot.markerPos(key)
 \emph{is fully implemented}.
 \end{classdesc}
 
+\begin{classdesc}{QwtPlotMarker}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
 \begin{classdesc}{QwtPlotPrintFilter}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotZoomer}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPushButton}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
@@ -1100,6 +1196,10 @@ start, end = scale.minBorderDist()
 \end{classdesc}
 
 \begin{classdesc}{QwtScaleIf}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtSimpleCompassRose}{*args}
 \emph{is fully implemented}.
 \end{classdesc}
 
