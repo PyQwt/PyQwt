@@ -157,7 +157,7 @@ public:
     int margin() const;
 
     // Title
-    void setTitle(const char *);
+    void setTitle(const QString &);
     QString title() const;
     void setTitleFont (const QFont &);
     QFont titleFont() const;
@@ -450,7 +450,7 @@ public:
     QFont markerFont(long) const;
     bool setMarkerPen(long, const QPen &);
 
-    bool setMarkerLabel(long, const char *);
+    bool setMarkerLabel(long, const QString &);
     const QString markerLabel(long) const;
     bool setMarkerLabelAlign(long, int);
     int markerLabelAlign(long) const;
