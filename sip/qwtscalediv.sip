@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtScaleDiv.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt
@@ -34,6 +34,8 @@
 // -- LICENSE --
 
 
+%If (QWT_4_2_0 - QWT_4_3_0)
+
 class QwtScaleDiv
 {
 %TypeHeaderCode
@@ -43,8 +45,8 @@ class QwtScaleDiv
 public:
     QwtScaleDiv();
 
-//    int operator== (const QwtScaleDiv &s) const;
-//    int operator!= (const QwtScaleDiv &s) const;
+    int operator== (const QwtScaleDiv &) const;
+    int operator!= (const QwtScaleDiv &) const;
     
     double lBound() const;
     double hBound() const;
@@ -58,6 +60,70 @@ public:
 
     bool rebuild(double, double, int, int, bool, double = 0.0, bool = TRUE);
 };
+
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+
+class QwtScaleDiv
+{
+%TypeHeaderCode
+#include <qwt_scldiv.h>
+%End
+
+public:
+    enum TickType
+    {
+        NoTick,
+        MinorTick,
+        MediumTick,
+        MajorTick,
+        NTickTypes
+    };
+
+    QwtScaleDiv();
+    QwtScaleDiv(bool, const QwtDoubleInterval &,
+		QwtArrayDouble, QwtArrayDouble, QwtArrayDouble); // FIXME??
+%MethodCode
+        // minor, medium, major instead of QwtArray<double> ticks[NTickTypes]
+
+	QwtArray<double> ticks[QwtScaleDiv::NTickTypes];
+	ticks[QwtScaleDiv::MinorTick] = *a2;
+	ticks[QwtScaleDiv::MediumTick] = *a3;
+	ticks[QwtScaleDiv::MajorTick] = *a4;
+
+	sipCpp = new QwtScaleDiv(a0, *a1, ticks);
+%End
+
+    QwtScaleDiv(bool, double, double, 
+		QwtArrayDouble, QwtArrayDouble, QwtArrayDouble); // FIXME??
+%MethodCode
+        // minor, medium, major instead of QwtArray<double> ticks[NTickTypes]
+
+	QwtArray<double> ticks[QwtScaleDiv::NTickTypes];
+	ticks[QwtScaleDiv::MinorTick] = *a3;
+	ticks[QwtScaleDiv::MediumTick] = *a4;
+	ticks[QwtScaleDiv::MajorTick] = *a5;
+
+	sipCpp = new QwtScaleDiv(a0, a1, a2, ticks);
+%End
+
+    int operator==(const QwtScaleDiv &) const;
+    int operator!=(const QwtScaleDiv &) const;
+
+    bool logScale() const;
+    double lBound() const;
+    double hBound() const;
+
+    const QwtArrayDouble &ticks(int) const;
+
+    void invalidate();
+    bool isValid() const;
+
+    void invert();
+};
+
+%End // (QWT_4_3_0 - )
 
 // Local Variables:
 // mode: C++
