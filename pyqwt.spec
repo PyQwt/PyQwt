@@ -12,7 +12,7 @@
 %{expand: %%define sipver %(rpm -q sip --qf "%{VERSION}")}
 
 %define name	PyQwt
-%define version	4.0
+%define version	4.1
 %define release	1
 %define qtdir   /usr/lib/qt3
 

@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '4.0'
+version = '4.1'
 
 #
 # SIP VERSION
@@ -177,14 +177,18 @@ elif os.name == 'posix':
 # description
 #
 long_description = """
-PyQwt is FAST and EASY data plotting for Python, Numeric and Qt!
-                                                                
-The GNU General Public License applies to PyQwt with exceptions
-for non-GPL'ed releases of Qt, PyQt and sip (see below).
+PyQwt is a set of Python bindings for the Qwt C++ class library.
+The Qwt library extends the Qt framework with widgets for
+Scientific and Engineering applications.   It provides a widget
+to plot data points in two dimensions and various widgets to
+display and control bounded or unbounded floating point values.
 """
 
 if os.name == 'nt':
     long_description = long_description + """
+The GNU General Public License applies to PyQwt with exceptions
+for non-GPL'ed releases of Qt, PyQt and sip (see below).
+
 HTML documentation and example scripts can be found in
 C:/Python*/PyQwt.
 
@@ -193,12 +197,6 @@ C:/Python*/Scripts.
 """
 
 long_description = long_description + """
-PyQwt is a set of Python bindings for the Qwt C++ class library.
-The Qwt library extends the Qt framework with widgets for
-Scientific and Engineering applications.   It provides a widget
-to plot data points in two dimensions and various widgets to
-display and control bounded or unbounded floating point values.
-
 PyQwt requires and extends PyQt, a set of Python bindings for Qt.
 
 It is highly recommended to use PyQwt with either Numeric,
