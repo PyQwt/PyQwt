@@ -1,19 +1,21 @@
 NOTES FOR QWT
 
-- TMAKE
+* TMAKE
 
 To make a Makefile for nmake on Windows:
 	tmake -t lib qwt.pro -o Makefile
 
-- DESIGN
+* DESIGN
 
 Splitting the current QwtPlotCanvas into a QwtCanvas and a QwtPlotCanvas
 has the advantage of making the mouse event handling available to other
 widgets than a QwtPlot.
 
+-------------------------------------------------------------------------------
+
 NOTES FOR SIP
 
-- DO NOT RETURN CONSTANT REFERENCES TO OBJECTS
+* DO NOT RETURN CONSTANT REFERENCES TO OBJECTS
 
 Changing a sip function definitions to return an object instead of a
 constant reference to an object suppresses g++'s "returning a reference
@@ -28,4 +30,58 @@ may become
 
         QPen pen() const;
 
-in some cases.
+in some cases. Check for those warnings using:
+
+        grep -C 3 temporary LOG.force
+
+
+* IDENTIFYING sip.h by new or changed functions in:
+
+- 3.4:
+extern SIP_EXTERN int sipAddLicense
+        Py_PROTO((PyObject *,sipLicenseDef *));
+
+- 3.5:
+extern SIP_EXTERN int sipConvertFromSequenceIndex
+        Py_PROTO((PyObject *,int,int,int *,int *));
+
+- 3.6:
+extern SIP_EXTERN int sipConvertFromSequenceIndex
+        Py_PROTO((int,int));
+extern SIP_EXTERN int sipConvertFromSliceObject
+        Py_PROTO((PyObject *,int,int *,int *,int *,int *));
+extern SIP_EXTERN void sipRaiseClassException
+        Py_PROTO((PyObject *,const void *));
+extern SIP_EXTERN void sipRaiseSubClassException
+        Py_PROTO((PyObject *,const void *));
+extern SIP_EXTERN void sipRaiseUnknownException
+        Py_PROTO((void));
+
+- 3.7:
+extern SIP_EXTERN void sipBadLengthForSlice
+        Py_PROTO((int,int));
+
+
+* SUMMARY check for
+
+- 3.4: sipAddLicense
+- 3.5: sipConvertFromSequenceIndex
+- 3.6: sipConvertFromSliceObject
+- 3.7: sipBadLengthForSlice 
+
+
+* IDENTIFYING sipQt.h by new or changed functions in:
+
+- 3.4:
+UNCHANGED
+
+- 3.5:
+NONE
+
+- 3.6:
+extern SIP_EXTERN const void *sipGetSender Py_PROTO((void));
+
+- 3.7:
+UNCHANGED
+
+-------------------------------------------------------------------------------

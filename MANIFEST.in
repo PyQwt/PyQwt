@@ -23,6 +23,8 @@ recursive-exclude examples/qwt *
 
 # Junk
 recursive-include junk *.py
+recursive-exclude junk/iqt *
+recursive-exclude junk/qwt *
 
 # Numerical Python interface
 graft numpy
@@ -42,7 +44,11 @@ recursive-exclude iqt *cvsignore*
 graft qwt-sources
 prune qwt-sources/admin
 prune qwt-sources/doc/devel
-recursive-exclude qwt-sources *.LOG *cvsignore*
+prune qwt-sources/lib
+prune qwt-sources/src/moc
+prune qwt-sources/src/obj
+recursive-exclude qwt-sources Makefile .qmake.internal.cache *.LOG *cvsignore*
+
 
 # Documentation
 graft Doc

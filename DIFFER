@@ -99,7 +99,7 @@ def main():
     if really_differ(patches, old_patches):
         output = open('patches.py', 'w')
         print >> output, 'patches =', patches
-        for suffix, patch in patches.items:
+        for suffix, patch in patches.items():
             output = open('qwt%s.patch' % suffix, 'w')
             print >> output, patch,
 

@@ -226,7 +226,7 @@ Python scripts that are part of PyQwt.
 
 setup(
     name              = "PyQwt",
-    version           = version,
+    version           = snapshot,
     description       = "Python bindings for the Qwt library",
     url               = "http://pyqwt.sourceforge.net",
     author            = "Gerard Vermeulen",
@@ -242,7 +242,7 @@ setup(
 # For in place testing on Posix:
 verbose = 0
 if os.name == 'posix':
-    for dir in ['examples']:
+    for dir in ['examples', 'junk']:
         os.chdir(dir)
         for lib in glob.glob('../build/lib*/*'):
             link = lib.split(os.sep)[-1]

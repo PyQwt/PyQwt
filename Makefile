@@ -1,7 +1,7 @@
 PWD := $(shell pwd)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "2 Jul 2003 23:59:59 GMT"
+CVS-DATE := "14 Jul 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -9,6 +9,7 @@ QWT-SOURCES := $(shell echo qwt-sources/include/*.h)
 QWT-SOURCES += $(shell echo qwt-sources/src/*.{cpp,dox})
 
 DIFFERS := -d 'qwt-sources/include qwt-sources/src'
+#DIFFERS += -s '.canvas .rich .warning'
 DIFFERS += -s '.canvas'
 
 FREE := $(HOME)/Free
@@ -90,11 +91,11 @@ diff:
 	python DIFFER $(DIFFERS)
 
 patch:
-	cd qwt-sources; patch -p1 -b -z .array <$(PWD)/qwt.array.patch
 	cd qwt-sources; patch -p1 -b -z .canvas <$(PWD)/qwt.canvas.patch
-	cd qwt-sources; patch -p1 -b -z .version <$(PWD)/qwt.version.patch
+	cd qwt-sources; patch -p1 -b -z .rich <$(PWD)/qwt.rich.patch
 
 clean:
+	(cd qwt-sources/examples; make distclean)
 	rm -f MANIFEST
 	find . -name '*~' -o -name '.mappedfiles' | xargs rm -f
 	rm -f *.pyc qwt/*.{cpp,h}
