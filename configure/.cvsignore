@@ -1,10 +1,10 @@
 iqt
 qwt
 tmp*
+*.pyc
 Makefile
 pyqwtconfig.py
-test*
-*.pyc
+size_t_check*
 qwt_version_info
 qwt_version_info.exe
 qwt_version_info.py
