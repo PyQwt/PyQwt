@@ -43,30 +43,6 @@ class __QwtObject__: public QObject
 %ConvertToSubClassCode
     // The table of Python class objects indexed by their names.
     // The table must be sorted by name.
-#ifdef OLD_SIP_NAMES
-    static sipStringTypeClassMap map[] = {
-        { sipName_qwt_QwtAnalogClock, &sipClass_QwtAnalogClock },
-        { sipName_qwt_QwtArrowButton, &sipClass_QwtArrowButton },
-        { sipName_qwt_QwtCompass, &sipClass_QwtCompass },
-        { sipName_qwt_QwtCounter, &sipClass_QwtCounter },
-        { sipName_qwt_QwtDial, &sipClass_QwtDial },
-        { sipName_qwt_QwtDynGridLayout, &sipClass_QwtDynGridLayout },
-        { sipName_qwt_QwtKnob, &sipClass_QwtKnob },
-        { sipName_qwt_QwtLegend, &sipClass_QwtLegend },
-        { sipName_qwt_QwtLegendButton, &sipClass_QwtLegendButton },
-        { sipName_qwt_QwtLegendLabel, &sipClass_QwtLegendLabel },
-        { sipName_qwt_QwtPicker, &sipClass_QwtPicker },
-        { sipName_qwt_QwtPlot, &sipClass_QwtPlot },
-        { sipName_qwt_QwtPlotCanvas, &sipClass_QwtPlotCanvas },
-        { sipName_qwt_QwtPlotPicker, &sipClass_QwtPlotPicker },
-        { sipName_qwt_QwtPushButton, &sipClass_QwtPushButton },
-        { sipName_qwt_QwtScale, &sipClass_QwtScale },
-        { sipName_qwt_QwtSlider, &sipClass_QwtSlider },
-        { sipName_qwt_QwtSliderBase, &sipClass_QwtSliderBase },
-        { sipName_qwt_QwtThermo, &sipClass_QwtThermo },
-        { sipName_qwt_QwtWheel, &sipClass_QwtWheel },
-    };
-#else
     static sipStringTypeClassMap map[] = {
         { sipName_QwtAnalogClock, &sipClass_QwtAnalogClock },
         { sipName_QwtArrowButton, &sipClass_QwtArrowButton },
@@ -89,7 +65,6 @@ class __QwtObject__: public QObject
         { sipName_QwtThermo, &sipClass_QwtThermo },
         { sipName_QwtWheel, &sipClass_QwtWheel },
     };
-#endif
 
     sipClass = sipMapStringToClass(
         sipCpp->className(), map, sizeof(map)/sizeof(map[0]));
