@@ -70,9 +70,9 @@ public:
 %If (SIP_DUMB_DIR)
         void getLazyNames();
 %MemberCode
-        if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	    return getLazyNames(sipClassAttrTab_$C);
-        }
+    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
+        return getLazyNames(sipClassAttrTab_$C);
+    }
 %End
 %End
 
@@ -85,16 +85,16 @@ public:
 %If (SIP_DUMB_DIR)
         void getLazyNames();
 %MemberCode
-        if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	    return getLazyNames(sipClassAttrTab_$C);
-        }
+    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
+        return getLazyNames(sipClassAttrTab_$C);
+    }
 %End
 %End
 
     KeyPattern(int = 0, int = Qt::NoButton);
 };
 
-public:
+public: // recalled, because sip seems to have lost its memory
 %If (SIP_DUMB_DIR)
     void getLazyNames();
 %MemberCode
@@ -113,14 +113,14 @@ public:
     void setMousePattern(uint, int, int = Qt::NoButton);
     void setKeyPattern(uint, int, int = Qt::NoButton);
 
-    // FIXME: void setMousePattern(const QwtArray<MousePattern> &);
-    // FIXME: void setKeyPattern(const QwtArray<KeyPattern> &);
+    void setMousePattern(const QwtArray<QwtEventPattern::MousePattern> &);
+    void setKeyPattern(const QwtArray<QwtEventPattern::KeyPattern> &);
 
     // dead code: const QwtArray<MousePattern> &mousePattern() const;
     // dead code: const QwtArray<KeyPattern> &keyPattern() const;
 
-    // FIXME: QwtArray<MousePattern> &mousePattern();
-    // FIXME: QwtArray<KeyPattern> &keyPattern();
+    QwtArray<QwtEventPattern::MousePattern> &mousePattern();
+    QwtArray<QwtEventPattern::KeyPattern> &keyPattern();
 
     bool mouseMatch(uint, const QMouseEvent *) const;
     bool keyMatch(uint, const QKeyEvent *) const;

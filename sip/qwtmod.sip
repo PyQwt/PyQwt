@@ -98,6 +98,8 @@
 %Include qwtsymbol.sip
 %Include qwttext.sip
 %Include qwtthermo.sip
+%Include qwtvaluelist.sip
+%Include qwtvaluestack.sip
 %Include qwtwheel.sip
 
 // Image support

@@ -1,4 +1,8 @@
-// The SIP interface definition file for mapped QwtArray types.
+// The SIP interface definition file for mapped QwtArray types, implemented:
+//      QwtArray<QwtDiMap>,
+//      QwtArray<QwtDoublePoint>,
+//      QwtArray<QwtEventPattern::KeyPattern>,
+//      QwtArray<QwtEventPattern::MousePattern>.
 //
 // Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
@@ -41,7 +45,7 @@
     if (!sipCpp)
         return PyList_New(0);
 
-    PyObject *l = PyList_New(sipCpp->count());;
+    PyObject *l = PyList_New(sipCpp->count());
 
     if (0 == l)
         return 0;
@@ -51,8 +55,7 @@
         if ((0 == (o = sipNewCppToSelf(new QwtDiMap((*sipCpp)[i]),
                                        sipClass_QwtDiMap,
                                        SIP_SIMPLE | SIP_PY_OWNED)))
-            || (-1 == PyList_SetItem(l, i, o)))
-        {
+            || (-1 == PyList_SetItem(l, i, o))) {
             Py_DECREF(l);
             return 0;
         }             
@@ -65,8 +68,7 @@
     if (0 == sipIsErr)
         return PyList_Check(sipPy);
 
-    QwtArray<QwtDiMap> *a = new QwtArray<QwtDiMap>(
-        PyList_GET_SIZE(sipPy));
+    QwtArray<QwtDiMap> *a = new QwtArray<QwtDiMap>(PyList_GET_SIZE(sipPy));
     int iserr = 0;
 
     for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
@@ -98,7 +100,7 @@
     if (!sipCpp)
         return PyList_New(0);
 
-    PyObject *l = PyList_New(sipCpp->count());;
+    PyObject *l = PyList_New(sipCpp->count());
 
     if (0 == l)
         return 0;
@@ -108,8 +110,7 @@
         if ((0 == (o = sipNewCppToSelf(new QwtDoublePoint((*sipCpp)[i]),
                                        sipClass_QwtDoublePoint,
                                        SIP_SIMPLE | SIP_PY_OWNED)))
-            || (-1 == PyList_SetItem(l, i, o)))
-        {
+            || (-1 == PyList_SetItem(l, i, o))) {
             Py_DECREF(l);
             return 0;
         }             
@@ -122,8 +123,8 @@
     if (0 == sipIsErr)
         return PyList_Check(sipPy);
 
-    QwtArray<QwtDoublePoint> *a = new QwtArray<QwtDoublePoint>(
-        PyList_GET_SIZE(sipPy));
+    QwtArray<QwtDoublePoint> *a =
+        new QwtArray<QwtDoublePoint>(PyList_GET_SIZE(sipPy));
     int iserr = 0;
 
     for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
@@ -144,6 +145,119 @@
 %End
 };
 
+%MappedType QwtArray<QwtEventPattern::KeyPattern>
+{
+%HeaderCode
+#include <qwt_array.h>
+#include <qwt_event_pattern.h>
+%End
+
+%ConvertFromTypeCode
+    if (!sipCpp)
+        return PyList_New(0);
+
+    PyObject *l = PyList_New(sipCpp->count());
+
+    if (0 == l)
+        return 0;
+
+    for (int i = 0; i < int(sipCpp->count()); i++) {
+        PyObject *o;
+        if ((0 == (o = sipNewCppToSelf(
+                       new QwtEventPattern::KeyPattern((*sipCpp)[i]),
+                       sipClass_QwtEventPattern_KeyPattern,
+                       SIP_SIMPLE | SIP_PY_OWNED)))
+            || (-1 == PyList_SetItem(l, i, o))) {
+            Py_DECREF(l);
+            return 0;
+        }             
+    }
+    
+    return l;
+%End
+
+%ConvertToTypeCode
+    if (0 == sipIsErr)
+        return PyList_Check(sipPy);
+
+    QwtArray<QwtEventPattern::KeyPattern> *a =
+        new QwtArray<QwtEventPattern::KeyPattern>(PyList_GET_SIZE(sipPy));
+    int iserr = 0;
+
+    for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
+        (*a)[i] = *sipForceConvertTo_QwtEventPattern_KeyPattern(
+            PyList_GET_ITEM(sipPy, i), &iserr);
+        
+        if (iserr) {
+            delete a;
+            *sipIsErr = 1;
+            
+            return 0;
+        }
+    }
+
+    *sipCppPtr = a;
+
+    return 1;
+%End
+};
+
+%MappedType QwtArray<QwtEventPattern::MousePattern>
+{
+%HeaderCode
+#include <qwt_array.h>
+#include <qwt_event_pattern.h>
+%End
+
+%ConvertFromTypeCode
+    if (!sipCpp)
+        return PyList_New(0);
+
+    PyObject *l = PyList_New(sipCpp->count());
+
+    if (0 == l)
+        return 0;
+
+    for (int i = 0; i < int(sipCpp->count()); i++) {
+        PyObject *o;
+        if ((0 == (o = sipNewCppToSelf(
+                       new QwtEventPattern::MousePattern((*sipCpp)[i]),
+                       sipClass_QwtEventPattern_MousePattern,
+                       SIP_SIMPLE | SIP_PY_OWNED)))
+            || (-1 == PyList_SetItem(l, i, o))) {
+            Py_DECREF(l);
+            return 0;
+        }             
+    }
+    
+    return l;
+%End
+
+%ConvertToTypeCode
+    if (0 == sipIsErr)
+        return PyList_Check(sipPy);
+
+    QwtArray<QwtEventPattern::MousePattern> *a =
+        new QwtArray<QwtEventPattern::MousePattern>(PyList_GET_SIZE(sipPy));
+    int iserr = 0;
+
+    for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
+        (*a)[i] = *sipForceConvertTo_QwtEventPattern_MousePattern(
+            PyList_GET_ITEM(sipPy, i), &iserr);
+        
+        if (iserr) {
+            delete a;
+            *sipIsErr = 1;
+            
+            return 0;
+        }
+    }
+
+    *sipCppPtr = a;
+
+    return 1;
+%End
+};
 
 // Local Variables:
 // mode: C++
