@@ -704,6 +704,24 @@ make install
   \end{verbatim}
 \end{enumerate}
 
+\begin{notice}[warning]
+  If the make command produces a lot of errors on Linux, check if all
+  development packages have been installed.  Try the \file{setup.py}
+  script in \ref{build-setup}, because does a better job of detecting
+  missing files than \file{configure.py}. 
+\end{notice}
+
+\begin{notice}[note]
+  The official PyQwt-4.0 release will allow you to build and link
+  PyQwt using system a Qwt-4.2.0 library (does not work with PyQwt and
+  Qwt release candidates). Run for instance
+\begin{verbatim}
+python configure.py -c -j 2 -i /usr/lib/qt3/include/qwt -l /usr/lib/qt3/lib
+\end{verbatim}
+  to use the Qwt include files in \file{/usr/lib/qt3/include/qwt} and
+  the Qwt library in \file{/usr/lib/qt3/lib}.
+\end{notice}
+
 
 \section{Build with \file{setup.py}\label{build-setup}}
 
