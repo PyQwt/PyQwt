@@ -1,7 +1,7 @@
 // The SIP interface definition for QwtAnalogClock.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -52,10 +52,10 @@ public:
 %End
 %End
 
-    QwtAnalogClock(QWidget* = 0, const char* = 0);
+    QwtAnalogClock(QWidget * /TransferThis/ = 0, const char* = 0);
     virtual ~QwtAnalogClock();
 
-    virtual void setHand(Hand, QwtDialNeedle *);
+    virtual void setHand(Hand, QwtDialNeedle * /Transfer/);
     // dead code: const QwtDialNeedle *hand(Hand) const;
     QwtDialNeedle *hand(Hand);
 

@@ -1,6 +1,7 @@
 // The SIP interface definition for some mathematical functions in Qwt.
 //
-// Copyright (C) 2003 Gerard Vermeulen
+// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -36,6 +37,9 @@
 // Those functions have no equivalent in Python or Numeric
 double qwtCeil125(double);
 double qwtFloor125(double);
+QPoint qwtPolar2Pos(const QPoint &, double, double);
+QPoint qwtDegree2Pos(const QPoint &, double, double);
+
 
 // Local Variables:
 // mode: C++

@@ -1,6 +1,7 @@
 // The features that PyQwt knows about.
 //
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -11,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -29,8 +30,9 @@
 // for a non-free program.
 
 
+%Feature CXX_DYNAMIC_CAST
+%Feature QWT_COMPAT
 %Feature SIP_DUMB_DIR
-%Feature Qwt_COMPAT
 
 // Local Variables:
 // mode: C++

@@ -41,8 +41,10 @@
 %End
 
 %C++Code
+
 // Hack: more than 1 sipSubClass_QObject() is not supported by sip.
-// So we do it, with a little bit of help by pyqwt_sip_output_patch.py
+// So we do it, with a little bit of help from pyqwt_sip_output_patch.py
+
 static PyObject *sipSubClass_QObject(const QObject *sipCpp)
 {
     // The table of Python class objects indexed by their names.

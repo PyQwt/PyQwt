@@ -6,8 +6,8 @@
 //      QwtPickerDragRectMachine,
 //      QwtPickerPolygonMachine.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -57,6 +57,23 @@ public:
     if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
 	return getLazyNames(sipClassAttrTab_$C);
     }
+%End
+%End
+
+%If (CXX_DYNAMIC_CAST)
+%ConvertToSubClassCode
+    if (dynamic_cast<const QwtPickerClickPointMachine *>(sipCpp))
+        sipClass = sipClass_QwtPickerClickPointMachine;
+    else if (dynamic_cast<const QwtPickerClickRectMachine *>(sipCpp))
+        sipClass = sipClass_QwtPickerClickRectMachine;
+    else if (dynamic_cast<const QwtPickerDragPointMachine *>(sipCpp))
+        sipClass = sipClass_QwtPickerDragPointMachine;
+    else if (dynamic_cast<const QwtPickerDragRectMachine *>(sipCpp))
+        sipClass = sipClass_QwtPickerDragRectMachine;
+    else if (dynamic_cast<const QwtPickerPolygonMachine *>(sipCpp))
+        sipClass = sipClass_QwtPickerPolygonMachine;
+    else
+        sipClass = 0;
 %End
 %End
 

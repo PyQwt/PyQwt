@@ -49,6 +49,17 @@ public:
 %End
 %End
 
+%If (CXX_DYNAMIC_CAST)
+%ConvertToSubClassCode
+    if (dynamic_cast<const QwtPlainText *>(sipCpp))
+        sipClass = sipClass_QwtPlainText;
+    else if (dynamic_cast<const QwtRichText *>(sipCpp))
+        sipClass = sipClass_QwtRichText;
+    else
+        sipClass = 0;
+%End
+%End
+
     static QwtText *makeText(const QString &, Qt::TextFormat, int, QFont &,
                              const QColor & = QColor(),
                              const QPen & = QPen(Qt::NoPen),

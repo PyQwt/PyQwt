@@ -1,7 +1,7 @@
 // The SIP interface definition file for QwtPlot.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
 //
@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -78,7 +78,7 @@ public:
 
     void clear();
 
-%If (Qwt_COMPAT)
+%If (QWT_COMPAT)
     // Outline
 
     void enableOutline(bool);
@@ -448,7 +448,7 @@ public slots:
 protected slots:
     virtual void lgdClicked();
 
-%If (Qwt_COMPAT)
+%If (QWT_COMPAT)
 signals:
     void plotMousePressed(const QMouseEvent &);
     void plotMouseReleased(const QMouseEvent &);
