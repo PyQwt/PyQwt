@@ -58,6 +58,7 @@ public:
 %End
 
     QwtMarker();
+    QwtMarker(const QwtMarker &);
 
 //FIXME: const QwtMarker & operator=(const QwtMarker&);
     
@@ -67,14 +68,18 @@ public:
     void setSymbol(const QwtSymbol &);
     const QwtSymbol &symbol() const;
 
-    void setLabel(const char *);
+    void setLabel(const QString &);
     const QString label() const;
 
     void setLabelAlignment(int);
     int labelAlignment() const;
 
+    void setLabelColor(const QColor &);
+    const QColor labelColor() const;
+
     void setLabelPen(const QPen &);
     const QPen labelPen() const;
+
     void setLinePen(const QPen &);
     const QPen &linePen() const;
 
