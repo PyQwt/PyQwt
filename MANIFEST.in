@@ -1,7 +1,7 @@
 # MANIFEST template file to make a distribution tarball
 
 # Package stuff
-include ANNOUNCEMENT-4.0.TXT
+include ANNOUNCEMENT-4.1.TXT
 include AUTHORS COPYING COPYING.PyQwt
 include INSTALL MANIFEST.in README* REGISTRATION.SF THANKS
 include DIFFER PATCHER patches.py
