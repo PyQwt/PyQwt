@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '4.0'
+version = '4.0rc0'
 
 #
 # SIP VERSION
@@ -240,7 +240,7 @@ plug-in for a non-free program.
 
 setup(
     name              = name,
-    version           = snapshot,
+    version           = version,
     description       = "Python bindings for the Qwt library",
     url               = "http://pyqwt.sourceforge.net",
     author            = "Gerard Vermeulen",

@@ -14,7 +14,7 @@
 \newcommand{\Snapshot}{\ulink{snapshot}
   {http://pyqwt.sourceforge.net/snapshot}}
 \newcommand{\NewSip}{\ulink{sip-4.0rc4.tar.gz}
-  {http://pyqwt.sourceforge.net/support/sip-4.0.rc4.tar.gz}}
+  {http://pyqwt.sourceforge.net/support/sip-4.0rc4.tar.gz}}
 \newcommand{\OldSip}{\ulink{sip-3.10.2.tar.gz}
   {http://pyqwt.sourceforge.net/support/sip-3.10.2.tar.gz}}
 \newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}
@@ -33,14 +33,14 @@
   {http://prdownloads.sourceforge.net/numpy/Numeric-23.1.tar.gz?download}}
 \newcommand{\numarrayTarGz}{\ulink{numarray-0.9.tar.gz}
   {http://prdownloads.sourceforge.net/numpy/numarray-0.9.tar.gz?download}}
-\newcommand{\PyQwtTarGz}{\ulink{PyQwt-4.0.tar.gz}
-  {http://prdownloads.sourceforge.net/pyqwt/PyQwt-4.0.tar.gz?download}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-4.0rc0.tar.gz}
+  {http://prdownloads.sourceforge.net/pyqwt/PyQwt-4.0rc0.tar.gz?download}}
 \newcommand{\ReadMePatches}{\ulink{README}
   {http://pyqwt.sourceforge.net/patches/README}}
 
 % Installers for MS-Windows
-\newcommand{\PythonExe}{\ulink{Python-2.3.3.exe}
-  {http://www.python.org/ftp/python/2.3.3/Python-2.3.3.exe}}
+\newcommand{\PythonExe}{\ulink{Python-2.3.4.exe}
+  {http://www.python.org/ftp/python/2.3.4/Python-2.3.4.exe}}
 \newcommand{\NumericExe}{\ulink{Numeric-23.1.win32-py2.3.exe}
   {http://prdownloads.sourceforge.net/numpy/Numeric-23.1.win32-py2.3.exe?download}}
 \newcommand{\numarrayExe}{\ulink{numarray-0.9.win32-py2.3.exe}
@@ -48,9 +48,9 @@
 \newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}
   {ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
 \newcommand{\PyQtExe}{\ulink{PyQt-win-nc-msvc-3.12.exe}
-  {http://pyqwt.sourceforge.net/download/PyQt-win-nc-msvc-3.12.exe}}
-\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-4.0.win32-py2.3.exe}
-  {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-4.0.win32-py2.3.exe?download}}
+  {http://pyqwt.sourceforge.net/support/PyQt-win-nc-msvc-3.12.exe}}
+\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-4.0rc0.win32-py2.3.exe}
+  {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-4.0rc0.win32-py2.3.exe?download}}
 
 \newcommand{\Future}{
 \begin{notice}[warning]
@@ -511,20 +511,20 @@ You can install PyQwt on the \POSIX{} (Unix, Linux), Mac OS X,
 and Microsoft Windows operating systems:
 \begin{enumerate}
   \item
-    see \ref{prerequisites} for the required software packages needed 
-    to build  and install.
+    see \ref{prerequisites} for the software packages needed to build 
+    and install PyQwt.
   \item
     see \ref{build-configure} for build and installation instructions.
     Recommended unless you want to make an installer (.rpm on some
-    Linux  systems and .exe on Microsoft Windows).
+    Linux systems and .exe on Microsoft Windows).
   \item
     see \ref{build-setup} for build and installation instructions.
     Only recommended if you want to make an installer (.rpm on some
-    Linux  systems and .exe on Microsoft Windows).
+    Linux systems and .exe on Microsoft Windows).
   \item
     see \ref{win-binary-install} for instructions on the use of the binary
-    Windows installer, to be used with the old non-commercial releases of
-    Qt and PyQt.
+    Windows installer, to be used with the non-commercial packages
+    \QtNcExe{} and \PyQtExe{}.
 \end{enumerate}
 
 Contact the \mailinglist{}, if you run into problems.
@@ -586,7 +586,7 @@ Versions of Numeric later than 21.0 are supported.
 Numarray is newer and therefore less stable than Numeric, so get the latest!
 
 The source package \PyQwtTarGz{} contains a version the \Qwt{} library based
-on version 4.2.0rc2.
+on Qwt-4.2.0rc1.
 
 \subsection{Build prerequisites for PyQwt on Mac OS X}
 
@@ -636,7 +636,7 @@ on version 4.2.0rc2.
 
 \NonCommercial{}
 
-Build prerequisites for \PyQwtTarGz{} on Mac OS X are:
+Build prerequisites for \PyQwtTarGz{} on Windows are:
 \begin{enumerate}
   \item
     \PythonExe{}.\\
@@ -691,11 +691,6 @@ on version 4.2.0rc2.
 
 \Future{}
 
-\begin{notice}[warning]
-A bug in the configuration module of PyQt-3.9 makes it impossible to use 
-the \file{configure.py} script of PyQwt.
-\end{notice}
-
 \begin{enumerate}
 \item
   Unpack \PyQwtTarGz{} and read \ReadMePatches{} to check for patches.
@@ -748,7 +743,7 @@ cd PyQwt-4.0
   directory layout, if you set either \envvar{QTBINDIR} and/or
   \envvar{QTINCDIR} and/or \envvar{QTLIBDIR}.
 \item
-  If you use Qt-2.3.x, the environment variable \envvar{TMAKESPEC} must be set
+  If you use Qt-2.3.x, the environment variable \envvar{TMAKEPATH} must be set
   to the directory containing the file \file{tmake.conf} for your compiler.
   If you use Qt-3.x, you may have to set the environment variable
   \envvar{QMAKESPEC}.
@@ -861,7 +856,7 @@ python setup.py bdist_wininst
 
 \begin{notice}[note]
   The PyQtDistutils rely on the environment variables \envvar{QTDIR},
-  \envvar{TMAKESPEC} for Qt-2.x and \envvar{QMAKESPEC} for Qt-3.x.
+  \envvar{TMAKEPATH} for Qt-2.x and \envvar{QMAKESPEC} for Qt-3.x.
 \end{notice}
 
 \begin{notice}[note]
@@ -882,8 +877,8 @@ python setup.py build --force >log.txt
 \begin{notice}[warning]
 Use any version of Windows later than Windows-98.  Windows-98 can only
 allocate a finite number of pixmaps and \QtNcExe{} fails to work
-around this limitation.  Get PyQwt-3.8 from the \Download{} page,
-if you must stick to Windows-98.
+around this limitation.  If you must stick to Windows-98, try also
+PyQwt-3.8 from the \Download{} page.
 \end{notice}
 
 First, you have to install Python, Numeric, Qt-Non-Commercial and
