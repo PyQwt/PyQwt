@@ -53,21 +53,23 @@
   {ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
 \newcommand{\PyQtExe}{\ulink{PyQt-win-nc-msvc-3.13.exe}
   {http://pyqwt.sourceforge.net/support/PyQt-win-nc-msvc-3.13.exe}}
+\newcommand{\PyQtEdu}{\ulink{PyQt-win-edu-msvc-3.13.exe}
+  {http://pyqwt.sourceforge.net/support/PyQt-win-edu-msvc-3.13.exe}}
 \newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-4.1.win32-py2.3.exe}
   {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-4.1.win32-py2.3.exe?download}}
 
 \newcommand{\PrerequisitesEnd}{
+  The source package \PyQwtTarGz{} contains the \Qwt-4.2.0 library with a few
+  patches.
+  However, you can also build PyQwt against the official \Qwt-4.2.0 library
+  (not the 4.2.0rcX release candidates because of API enhancements).
+
   To exploit the full power of the QwtPlot widget, you should install at
   least one the Numerical Python extensions:
   \Numeric{} or its successor \numarray{}.
   I am using \NumericTarGz{} and \numarrayTarGz{}. 
   Versions of Numeric later than 21.0 are supported.
   Numarray is newer and therefore less stable than Numeric, so get the latest!
-
-  The source package \PyQwtTarGz{} contains the \Qwt-4.2.0 library with a few
-  patches.
-  However, you can also build PyQwt against the official \Qwt-4.2.0 library
-  (not the 4.2.0rcX release candidates because of API enhancements).
 }
 
 \newcommand{\Future}{
@@ -535,15 +537,29 @@ and Microsoft Windows operating systems:
   \item
     see \ref{build-configure} for build and installation instructions
     using \file{configure.py}.
-    This is the most portable method, recommended unless you want to make an
-    installer (.rpm on some Linux systems and .exe on Microsoft Windows).
+    \begin{itemize}
+    \item
+      This is the most portable method, recommended unless you want to make an
+      installer (.rpm on some Linux systems and .exe on Microsoft Windows).
+    \item
+      It allows you either to link an already installed \Qwt{}-4.2.0 library
+      with PyQwt or to compile and link the sources of a slightly patched
+      internal version of \Qwt{} statically into PyQwt.
+    \end{itemize}
   \item
     see \ref{build-setup} for build and installation instructions
     using \file{setup.py}.
-    This method does a better job at detecting missing dependencies and is
-    therefore recommended on Linux.
-    It also allows you to make an installer (.rpm on some Linux systems and
-    .exe on Microsoft Windows).
+    \begin{itemize}
+    \item
+      This method does a better job at detecting missing dependencies and is
+      therefore recommended on Linux.
+    \item
+      It only allows you to compile and link the sources of the slightly
+      patched internal version of \Qwt{} statically into PyQwt.
+    \item
+      However, \file{setup.py} offers the facilities to make an installer (.rpm
+      on some Linux systems and .exe on Microsoft Windows).
+    \end{itemize}
   \item
     see \ref{win-binary-install} for instructions on the use of the binary
     Windows installer, to be used with the non-commercial packages
@@ -650,7 +666,8 @@ Build prerequisites for \PyQwtTarGz{} on Windows are:
     but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
-    \PyQtCom{}.\\
+    \PyQtCom{} or \PyQtEdu{} (or the academic or evaluation releases of
+    PyQt). Install the SIP tools in case of a PyQt installer.\\
     Supported versions: PyQt-3.13, -3.12, -3.11, and -3.10
     but the most recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
@@ -694,33 +711,35 @@ python configure.py
   Use the "-h" command line option to display a full list of the available
   options.
 \item
-  The next step is to build PyQwt using your platform's make command.
+  The next step is to build PyQwt using your platform's make command (nmake
+  for MSVC): 
 \begin{verbatim}
 make
 \end{verbatim}
 \item
-  The final step is to install PyQwt by running the following command.
+  The final step is to install PyQwt by running the following command (nmake
+  for MSVC):
 \begin{verbatim}
 make install
 \end{verbatim}
 \end{enumerate}
+
+\begin{notice}[note]
+  New: PyQwt-4.1 can be linked against an external \Qwt{}-4.2.0 library (does
+  not work with PyQwt and \Qwt{}-4.2.0rcX release candidates).
+  Run for instance:
+\begin{verbatim}
+python configure.py -i /usr/lib/qt3/include/qwt -l /usr/lib/qt3/lib
+\end{verbatim}
+  to use the Qwt include files in \file{/usr/lib/qt3/include/qwt} and
+  the Qwt library in \file{/usr/lib/qt3/lib}.
+\end{notice}
 
 \begin{notice}[warning]
   If the make command produces a lot of errors on Linux, check if all
   development packages have been installed.  Try the \file{setup.py}
   script in \ref{build-setup}, because does a better job of detecting
   missing files than \file{configure.py}. 
-\end{notice}
-
-\begin{notice}[note]
-  The official PyQwt-4.1 release will allow you to build and link
-  PyQwt using system a Qwt-4.2.0 library (does not work with PyQwt and
-  Qwt release candidates). Run for instance
-\begin{verbatim}
-python configure.py -c -j 2 -i /usr/lib/qt3/include/qwt -l /usr/lib/qt3/lib
-\end{verbatim}
-  to use the Qwt include files in \file{/usr/lib/qt3/include/qwt} and
-  the Qwt library in \file{/usr/lib/qt3/lib}.
 \end{notice}
 
 
@@ -807,7 +826,11 @@ python setup.py bdist_dumb
 \begin{verbatim}
 make force
 \end{verbatim}
-  and mail the file \file{LOG.force} to the \mailinglist{}.
+  or if you do not have Gnu make:
+\begin{verbatim}
+python setup.py build --force >log.txt
+\end{verbatim}
+  and mail the file \file{LOG.force} or \file{log.txt} to the \mailinglist{}.
 \end{notice}
 
 \begin{notice}[note]
