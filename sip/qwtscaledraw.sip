@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtScaleDraw.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -58,7 +58,9 @@ public:
     virtual ~QwtScaleDraw();
     
     void setScale(const QwtScaleDiv &);
+%If (QWT_4_2_0 - QWT_4_3_0)
     void setScale(double, double, int, int, double = 0.0, int = 0);
+%End // (QWT_4_2_0 - QWT_4_3_0)
 
     void setOptions(int);
     int options() const;
@@ -74,6 +76,8 @@ public:
     void setLabelAlignment(int);
     void setLabelRotation(double);
     void setTickLength(unsigned int, unsigned int, unsigned int);
+
+    void setMargin(uint, uint);
 
     const QwtScaleDiv& scaleDiv() const;
     int maxWidth(const QPen &, const QFontMetrics &) const;
@@ -111,6 +115,7 @@ protected:
     QWMatrix labelWorldMatrix(const QFontMetrics &, const QPoint &,
 			      int, double, const QString &) const;
 };
+
 
 // Local Variables:
 // mode: C++
