@@ -5,10 +5,17 @@
 \newcommand{\Qwt}{\ulink{Qwt}{http://qwt.sourceforge.net}}
 
 % Source code
-\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.8.tar.gz}{http://www.river-bank.demon.co.uk/download/sip/sip-x11-gpl-3.8.tar.gz}}
-\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}{http://www.river-bank.demon.co.uk/download/sip/sip-win-nc-3.8.zip}}
-\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.8.1.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.8.1.tar.gz}}
-\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.8.zip}}
+\newcommand{\Download}{\ulink{download}{http://pyqwt.sourceforge.net/download.html}}
+\newcommand{\Future}{
+\begin{notice}[warning]
+This documentation is for the future PyQwt-3.8. Check the \Download{}
+page for the latest releases.
+\end{notice}
+}
+\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.8.tar.gz}{http://pyqwt.sourceforge.net/support/sip-x11-gpl-3.8.tar.gz}}
+\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}{http://pyqwt.sourceforge.net/support/sip-win-nc-3.8.zip}}
+\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.8.1.tar.gz}{http://pyqwt.sourceforge.net/support/PyQt-x11-gpl-3.8.1.tar.gz}}
+\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}{http://pyqwt.sourceforge.net/support/PyQt-win-nc-3.8.zip}}
 \newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
 \newcommand{\NumericTarGz}{\ulink{Numeric-23.1.tar.gz}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.tar.gz?download}}
 \newcommand{\numarrayTarGz}{\ulink{numarray-0.7.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.tar.gz?download}}
@@ -18,7 +25,7 @@
 
 % Installers for MS-Windows
 \newcommand{\PythonExeBB}{\ulink{Python-2.2.3.exe}{http://www.python.org/ftp/python/2.2.3/Python-2.2.3.exe}}
-\newcommand{\PythonExeBC}{\ulink{Python-2.3.exe}{http://www.python.org/ftp/python/2.3/Python-2.3.exe}}
+\newcommand{\PythonExeBC}{\ulink{Python-2.3.2.exe}{http://www.python.org/ftp/python/2.3.2/Python-2.3.2.exe}}
 \newcommand{\NumericExeBB}{\ulink{Numeric-23.0.win32-py2.2.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.win32-py2.2.exe?download}}
 \newcommand{\NumericExeBC}{\ulink{Numeric-23.1.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.1.win32-py2.3.exe?download}}
 \newcommand{\NumArrayExeBB}{\ulink{numarray-0.7.win32-py2.2.exe}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.win32-py2.2.exe?download}}
@@ -417,11 +424,7 @@ have access to those versions of Qt and PyQt.
 
 \section{Binary Installation on Windows \label{win-binary-install}}
 
-\begin{notice}[warning]
-This documentation is for the future PyQwt-3.8. If your only choice is
-\PyQwtExeBB, you will need to install \PythonExeBB{}, \NumericExeBB{},
-\QtNcExe{} and \PyQtExeBB{}.
-\end{notice}
+\Future{}
 
 First, you have to install Python, Numeric, Qt-Non-Commercial and
 PyQt-Non-Commercial by executing the following installation programs:
@@ -459,7 +462,7 @@ Recent versions of the following software should be installed on your system:
   \item
     \SipGpl{}.
     I support sip downto version 3.4, but the most recent version
-    gets most testing. You may also try a \snapshot at your own risk.
+    gets most testing. You may also try a \snapshot{} at your own risk.
   \item
     \PyQtGpl{}.
     I support PyQt downto version 3.4, but the most recent version
@@ -487,11 +490,7 @@ Always try to install sip and PyQt with matching version numbers: only
 
 \subsection{Build on \POSIX{} \label{posix-build}}
 
-\begin{notice}[warning]
-This documentation is for the future PyQwt-3.8. If \PyQwtTarGz{} does not
-exist, fall back on \PyQwtTarGzOld{} and read the \ReadMePatches{} to build
-PyQwt-3.7 for PyQt\&sip-3.8 or -3.8.1.
-\end{notice}
+\Future{}
 
 \begin{enumerate}
 \item
@@ -606,10 +605,7 @@ but I know from feedback that the procedure for Qt-3.x.x is similar.
 \subsection{Prerequisites for building PyQwt on Windows
   \label{win-source-prereq}}
 
-\begin{notice}[warning]
-This documentation is for the future PyQwt-3.8. If you are using \PyQwtExeBB,
-you will need \PythonExeBB{}, \NumericExeBB{}, \QtNcExe{}.
-\end{notice}
+\Future{}
 
 You have to install recent releases of Python, Numeric, and Qt-Non-Commercial,
 by running:
@@ -718,6 +714,8 @@ nmake install
 \end{notice}
 
 \subsection{Build on Windows \label{win-build}}
+
+\Future{}
 
 \begin{enumerate}
 \item
