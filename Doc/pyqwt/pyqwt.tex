@@ -37,8 +37,8 @@
   {http://www.stsci.edu/resources/software_hardware/numarray}}
 \newcommand{\numarrayTarGz}{\ulink{numarray-1.1.tar.gz}
   {http://prdownloads.sourceforge.net/numpy/numarray-1.1.tar.gz?download}}
-\newcommand{\PyQwtTarGz}{\ulink{PyQwt-4.0rc0.tar.gz}
-  {http://prdownloads.sourceforge.net/pyqwt/PyQwt-4.0rc0.tar.gz?download}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-4.1.tar.gz}
+  {http://prdownloads.sourceforge.net/pyqwt/PyQwt-4.1.tar.gz?download}}
 \newcommand{\ReadMePatches}{\ulink{README}
   {http://pyqwt.sourceforge.net/patches/README}}
 
@@ -64,19 +64,20 @@
   Versions of Numeric later than 21.0 are supported.
   Numarray is newer and therefore less stable than Numeric, so get the latest!
 
-  The source package \PyQwtTarGz{} contains a 20040605 CVS snapshot
-  of the \Qwt{} library with a few patches.
-
+  The source package \PyQwtTarGz{} contains the \Qwt-4.2.0 library with a few
+  patches.
+  However, you can also build PyQwt against the official \Qwt-4.2.0 library
+  (not the 4.2.0rcX release candidates because of API enhancements).
 }
 
 \newcommand{\Future}{
   \begin{notice}[warning]
-    This documentation is for the future PyQwt-4.0 which is only available from
+    The documentation is for the future PyQwt-4.1 which is only available from
     CVS. The \Download{} page has links for the latest releases.
   \end{notice}
 }
 
-\renewcommand{\Future}{}
+%\renewcommand{\Future}{}
 
 \title{PyQwt Manual}
 
@@ -122,6 +123,8 @@ by the Python extension modules \module{Numeric} and/or \module{numarray}.
  
 \section{Qwt \label{qwt-intro}}
 
+\Future{}
+
 Qwt is a C++ library based on the Qt GUI framework from Troll Tech AS.
 The Qwt library contains widgets and components useful to write technical
 and scientific programes.
@@ -157,9 +160,9 @@ The widgets are documented in the
 on your hard disk or \Qwt{} on the web.
 
 \begin{notice}[note]
-  The \Qwt{} library has a designer plug-in for Qt-3.x.x.  If you want to use
-  the plug-in, you must install the original \Qwt{} library or the slightly
-  modified version that is included in \PyQwtTarGz{}.
+  The designer plug-in for Qt-3.x.x of the \Qwt{} library works with PyQwt.
+  If you did built PyQwt against its slightly patched internal version of
+  \Qwt{}, you must install either the original or the internal \Qwt{} library.
 \end{notice}
 
 
@@ -682,7 +685,7 @@ Build prerequisites for \PyQwtTarGz{} on Windows are:
 \item
   Configure PyQt by running the following commands:
 \begin{verbatim}
-cd PyQwt-4.0
+cd PyQwt-4.1
 cd configure
 python configure.py
 \end{verbatim}
@@ -733,7 +736,7 @@ python configure.py -c -j 2 -i /usr/lib/qt3/include/qwt -l /usr/lib/qt3/lib
   and upgrades.
 \item
 \begin{verbatim}
-cd PyQwt-4.0
+cd PyQwt-4.1
 \end{verbatim}
   {}
 \item
@@ -832,7 +835,7 @@ python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.13/sip build
 \item
   Run
   \begin{verbatim}
-cd PyQwt-4.0
+cd PyQwt-4.1
   \end{verbatim}
   {}
 \item
