@@ -7,21 +7,28 @@
 % Source code
 \newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.8.tar.gz}{http://www.river-bank.demon.co.uk/download/sip/sip-x11-gpl-3.8.tar.gz}}
 \newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}{http://www.river-bank.demon.co.uk/download/sip/sip-win-nc-3.8.zip}}
-\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.8.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.8.tar.gz}}
+\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.8.1.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.8.1.tar.gz}}
 \newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.8.zip}}
 \newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
-\newcommand{\NumericTarGz}{\ulink{Numeric-23.0.tar.gz}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.tar.gz?download}}
-\newcommand{\numarrayTarGz}{\ulink{numarray-0.6.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.6.tar.gz?download}}
+\newcommand{\NumericTarGz}{\ulink{Numeric-23.1.tar.gz}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.tar.gz?download}}
+\newcommand{\numarrayTarGz}{\ulink{numarray-0.7.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.tar.gz?download}}
 \newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.8.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.8.tar.gz?download}}
-\newcommand{\PyQwtShot}{\ulink{PyQwt-snapshot}{http://gerard.vermeulen.free.fr/index.html\#snapshot}}
+\newcommand{\PyQwtTarGzOld}{\ulink{PyQwt-3.7.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-3.7.tar.gz?download}}
+\newcommand{\ReadMePatches}{\ulink{}{http://pyqwt.sourceforge.net/patches/README}}
 
 % Installers for MS-Windows
-\newcommand{\PythonExe}{\ulink{Python-2.3.exe}{http://www.python.org/ftp/python/2.3/Python-2.3.exe}}
-\newcommand{\NumericExe}{\ulink{Numeric-23.0.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.win32-py2.3.exe?download}}
+\newcommand{\PythonExeBB}{\ulink{Python-2.2.3.exe}{http://www.python.org/ftp/python/2.2.3/Python-2.2.3.exe}}
+\newcommand{\PythonExeBC}{\ulink{Python-2.3.exe}{http://www.python.org/ftp/python/2.3/Python-2.3.exe}}
+\newcommand{\NumericExeBB}{\ulink{Numeric-23.0.win32-py2.2.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.win32-py2.2.exe?download}}
+\newcommand{\NumericExeBC}{\ulink{Numeric-23.1.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.1.win32-py2.3.exe?download}}
+\newcommand{\NumArrayExeBB}{\ulink{numarray-0.7.win32-py2.2.exe}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.win32-py2.2.exe?download}}
+\newcommand{\NumArrayExeBC}{\ulink{numarray-0.7.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.win32-py2.3.exe?download}}
 \newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}{ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
-\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.8.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.8.exe}}
-\newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.8.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.8.exe}}
-\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.8.win32-py2.3.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8.win32-py2.3.exe?download}}
+\newcommand{\PyQtExeBB}{\ulink{PyQt-win-nc-3.7.exe}{http://pyqwt.sourceforge.net/support/PyQt-win-nc-3.7.exe}}
+\newcommand{\PyQtExeBC}{\ulink{PyQt-win-nc-3.8.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.8.exe}}
+\newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.8.1.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.8.1.exe}}
+\newcommand{\PyQwtExeBB}{\ulink{PyQwt\_Qt230-3.7.win32-py2.2.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.7.win32-py2.2.exe?download}}
+\newcommand{\PyQwtExeBC}{\ulink{PyQwt\_Qt230-3.8.win32-py2.3.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8.win32-py2.3.exe?download}}
 
 \title{PyQwt Manual}
 
@@ -60,11 +67,15 @@ plotting of lists, tuples and arrays provided by the Python extensions
 
 \chapter{Introduction \label{introduction}}
 
+PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
+plotting of lists, tuples and arrays which are provided by the Python
+extensions \module{Numeric} and \module{numarray}.
+
 \section{Qwt \label{qwt-intro}}
 
-Qwt is library based on the Qt GUI library from Troll Tech AS.
-The Qwt library contains widgets and components useful for technical and
-scientific purposes.
+Qwt is a C++ library based on the Qt GUI framework from Troll Tech AS.
+The Qwt library contains widgets and components useful to write technical
+and scientific programes.
 It includes the following widgets:
 \begin{itemize}
   \item
@@ -118,8 +129,14 @@ All this in C, for a manifold speedup with respect to pure Python.
 
 \section{PyQwt \label{pyqwt-intro}}
 
-FIXME: nice intro.
+The PyQwt widgets can be used in Graphical User Interface (GUI)
+programs as well as from the Command Line Interpreter (CLI).
+This section addresses the CLI facilities.
 
+The documentation for writing GUI programs consists of the
+\ulink{Qwt manual}{qwt/index.html} on your hard disk or the \Qwt{} manual on
+the web, supplemented by chapter \ref{reference} to document the differences
+between PyQwt and Qwt.
 
 \subsection{PyCute \label{pycute-intro}}
 
@@ -405,17 +422,24 @@ First, you have to install Python, Numeric, Qt-Non-Commercial and
 PyQt-Non-Commercial by executing the following installation programs:
 \begin{enumerate}
   \item
-    \PythonExe
+    \PythonExeBC{}
   \item
-    \NumericExe
+    \NumericExeBC{}
   \item
-    \QtNcExe
+    \QtNcExe{}
   \item
-    \PyQtExe
+    \PyQtExeBC{}
 \end{enumerate}
-Then, run \PyQwtExe{} or a \PyQwtShot{} and you are set.
+Then, run \PyQwtExeBC{} and you are set.
 Example programs and documentation for PyQwt and \Qwt{} are installed in the
 folder \file{C:/Python23/PyQwt}.
+
+\begin{notice}[warning]
+This documentation is for the future PyQwt-3.8. If your only choice is
+\PyQwtExeBB, you will need to install \PythonExeBB{}, \NumericExeBB{},
+\QtNcExe{} and \PyQtExeBB{}.
+\end{notice}
+
 
 \section{Source installation on \POSIX{} \label{posix-source-install}}
 
@@ -431,22 +455,18 @@ Recent versions of the following software should be installed on your system:
     Earlier versions of Python are not supported.
   \item
     \ulink{Qt}{http://www.trolltech.com}.
-    I am using Qt-3.2.0, Qt-3.1.x, Qt-3.0.x, Qt-2.3.1 and Qt-2.3.0.
+    I am using Qt-3.2.x, Qt-3.1.x, Qt-3.0.x, Qt-2.3.1 and Qt-2.3.0.
     Earlier versions of Qt are not supported.
   \item
-    \SipGpl{},
-    sip-x11-gpl-3.7.tar.gz,
-    sip-x11-gpl-3.6.tar.gz,
-    sip-x11-gpl-3.5.tar.gz,
-    sip-x11-3.4.tar.gz
-    or at your own risk a \snapshot.
+    \SipGpl{}.
+    I support sip downto version 3.4, but the most recent version
+    gets most testing. You may also try a \snapshot at your own risk.
   \item
-    \PyQtGpl{},
-    PyQt-x11-gpl-3.7.tar.gz,
-    PyQt-x11-gpl-3.6.tar.gz,
-    PyQt-x11-gpl-3.5.tar.gz
-    PyQt-x11-3.4.tar.gz
-    or at your own risk a \snapshot.
+    \PyQtGpl{}.
+    I support PyQt downto version 3.4, but the most recent version
+    gets most testing. You may also try a \snapshot at your own risk.
+  \item
+    Read \ReadMePatches{} to check out bug fixes and upgrades.
 \end{enumerate}
 
 To exploit the full power of PyQwt's plot widget, you should install at
@@ -455,23 +475,30 @@ least one the Numerical Python extensions:
 or its successor
 \ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
 I am using \NumericTarGz{} and \numarrayTarGz{}. 
-Numeric-22.0, and Numeric-21.x should also work, but earlier versions Numeric
-are not supported.
-If you want to try Numarray, get the latest!
+Versions of Numeric later than 21.0 are supported.
+Numarray is newer and therefore less stable than Numeric, so get the latest!
 
-The source packages \PyQwtTarGz{} or \PyQwtShot{} contain a CVS version of
-the \Qwt{} library.
+The source package \PyQwtTarGz{} contains a CVS version of the \Qwt{} library.
 
-\begin{notice}[note]
-In general, the version numbers of sip\&PyQt have to match (except
-for snapshots).
+\begin{notice}[warning]
+Always try to install sip and PyQt with matching version numbers: only
+\code{micro} may differ for version numbers of the form
+\code{major.minor.micro}.
 \end{notice}
 
 \subsection{Build on \POSIX{} \label{posix-build}}
 
+\begin{notice}[warning]
+This documentation is for the future PyQwt-3.8. If \PyQwtTarGz{} does not
+exist, fall back on \PyQwtTarGzOld{} and read the \ReadMePatches{} to build
+PyQwt-3.7 for PyQt\&sip-3.8 or -3.8.1.
+\end{notice}
+
 \begin{enumerate}
 \item
-  Unpack \PyQwtTarGz{} or \PyQwtShot{} and run
+  Unpack \PyQwtTarGz{} and read \ReadMePatches{} to check minor bug fixes and
+  upgrades.
+\item
   \begin{verbatim}
 cd PyQwt-3.8
   \end{verbatim}
@@ -580,16 +607,25 @@ but I know from feedback that the procedure for Qt-3.x.x is similar.
 \subsection{Prerequisites for building PyQwt on Windows
   \label{win-source-prereq}}
 
+\begin{notice}[warning]
+This documentation is for the future PyQwt-3.8. If you are using \PyQwtExeBB,
+you will need \PythonExeBB{}, \NumericExeBB{}, \QtNcExe{}.
+\end{notice}
+
 You have to install recent releases of Python, Numeric, and Qt-Non-Commercial,
 by running:
 \begin{enumerate}
   \item
-    \PythonExe
+    \PythonExeBC{}
   \item
-    \NumericExe
+    \NumericExeBC{}
   \item
     \QtNcExe{}.
 \end{enumerate}
+
+\begin{notice}[note]
+Read \ReadMePatches{} to check out bug fixes and upgrades.
+\end{notice}
 
 \begin{notice}[note]
 Presumably, there is also a Qt-Educational installer, but I have no
@@ -686,8 +722,10 @@ nmake install
 
 \begin{enumerate}
 \item
-  Unpack \PyQwtTarGz{} or \PyQwtShot{} into for instance \file{C:/MyStuff} and
-  run
+  Unpack \PyQwtTarGz{} into for instance \file{C:/MyStuff} and read
+  \ReadMePatches{} to check out bug fixes and upgrades.
+\item
+  Run
   \begin{verbatim}
 cd PyQwt-3.8
   \end{verbatim}
