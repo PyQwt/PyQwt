@@ -43,7 +43,7 @@ concatenate=0
 #concatenate=1
 #
 # For development, using the ccache program (http://ccache.samba.org)
-# is better than concatenating.
+# is better than concatenating. See the 'build_ext' command.
 #
 #
 [build_ext]
@@ -54,6 +54,13 @@ concatenate=0
 # 'ccache ccache g++' are working fine.
 #ccache=0
 ccache=1
+#
+#
+[bdist_rpm]
+# The 'use_rpm_opt_flags' option indicates the 'bdist_rpm' command
+# whether to use RPM_OPT_FLAGS or not. I prefer to use the same
+# compiler flags that has been used to build Qt.
+use_rpm_opt_flags=0
 #
 #
 [install]

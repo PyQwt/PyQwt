@@ -96,12 +96,14 @@ data_files = []
 #
 # documentation
 #
-data_files.append((os.path.join(infix, 'html'),
-                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.png'))))
+data_files.append((os.path.join(infix, 'icons'),
+                   glob.glob(os.path.join('Doc', 'html', 'icons', '*.png'))))
 data_files.append((os.path.join(infix, 'html'),
                    glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.css'))))
 data_files.append((os.path.join(infix, 'html'),
                    glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.html'))))
+data_files.append((os.path.join(infix, 'html'),
+                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.png'))))
 data_files.append((os.path.join(infix, 'html'),
                    glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.txt'))))
 data_files.append((os.path.join(infix, 'html', 'qwt'),
