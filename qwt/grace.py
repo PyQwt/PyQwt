@@ -46,6 +46,7 @@ class GracePlotter:
         if self.debug:
             print cmd
         self.p.tochild.write(cmd + '\n')
+        self.flush()
 
     def flush(self):
         self.p.tochild.flush()
@@ -84,7 +85,6 @@ if __name__ == '__main__':
         # Update the Grace display after every ten steps
         if i % 10 == 0:
             g('redraw')
-            g.flush()
             # Wait a second, just to simulate some time needed for
             # calculations. Your real application shouldn't wait.
             time.sleep(1)
