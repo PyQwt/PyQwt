@@ -3,7 +3,7 @@
 Implements the PyQtDistutils 'run_moc' command.
 """
 #
-# Copyright (C) 2003 Gerard Vermeulen
+# Copyright (C) 2003-2004 Gerard Vermeulen
 #
 # This file is part of PyQwt
 #
@@ -50,6 +50,7 @@ class run_moc(Command):
         ]
 
     def initialize_options(self):
+        self.extensions = None
         self.build_temp = None
         self.force = None
         self.moc_program = None
@@ -60,6 +61,7 @@ class run_moc(Command):
         self.set_undefined_options('build',
                                    ('build_temp', 'build_temp'),
                                    ('force', 'force'))
+        self.extensions = self.distribution.ext_modules
         if not self.moc_program:
             self.moc_program = get_config('qt').get('make').get('MOC')
         # FIXME
@@ -77,7 +79,7 @@ class run_moc(Command):
     def run(self):
         if not self.distribution.has_moc_sources():
 	    return
-        for ext in self.distribution.ext_modules:
+        for ext in self.extensions:
             if ext.moc_sources:
                 moc_temp = join(self.build_temp, 'moc', ext.path)
                 self.mkpath(moc_temp)

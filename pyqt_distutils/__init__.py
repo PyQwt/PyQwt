@@ -3,7 +3,7 @@
 Modified version of distutils to build PyQt extensions using sip and moc.
 """
 #
-# Copyright (C) 2003 Gerard Vermeulen
+# Copyright (C) 2003-2004 Gerard Vermeulen
 #
 # This file is part of PyQwt
 #

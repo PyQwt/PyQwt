@@ -3,7 +3,7 @@
 Provides a version number.
 """
 #
-# Copyright (C) 2003 Gerard Vermeulen
+# Copyright (C) 2003-2004 Gerard Vermeulen
 #
 # This file is part of PyQwt
 #
@@ -32,7 +32,7 @@ Provides a version number.
 # program.
 
 
-pyqt_distutils_version = '3.8'
+pyqt_distutils_version = '3.10'
 
 # Local Variables: ***
 # mode: python ***

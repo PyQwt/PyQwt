@@ -3,7 +3,7 @@
 Finds, caches and provides configuration information.
 """
 #
-# Copyright (C) 2003 Gerard Vermeulen
+# Copyright (C) 2003-2004 Gerard Vermeulen
 #
 # This file is part of PyQwt
 #
@@ -34,12 +34,12 @@ Finds, caches and provides configuration information.
 
 __all__ = ['get_config']
 
-import glob, os, sys
+import glob, pprint, os, sys
 
 from distutils.dir_util import mkpath
 from distutils.spawn import find_executable
 from distutils.errors import DistutilsFileError, DistutilsPlatformError
-from distutils.sysconfig import get_config_var, get_python_inc
+from distutils.sysconfig import get_config_var, get_python_inc, get_python_lib
 
 from sysconfig import *
 
@@ -72,7 +72,9 @@ def get_config(name):
 
 class ConfigError(Exception):
     """
-    Configuration error.
+    Failed to import sipconfig of pyqtconfig
+
+    You must install sip and PyQt with 'configure.py' instead of 'build.py'
     """
 
     def __init__(self):
@@ -294,8 +296,9 @@ class ConfigInfo:
                     print 'Config succeeded -- %s:' % self.__class__.__name__
         result = self.cache.get(self.__class__.__name__).copy()
         if self.verbose and announce:
-            for key, value in result.items():
-                print "%s = %s" % (key, value)
+            pprint.pprint(result)
+            #for key, value in result.items():
+            #    print "%s = %s" % (key, value)
             print
         return result
 
@@ -369,7 +372,7 @@ class NumarrayInfo(ConfigInfo):
             else:
                 raise NumarrayConfigError(array)
         except ImportError:
-            self.set_info(**{'sip_x_feature': 'HAS_NUMARRAY'})
+            self.set_info(**{'sip_x_features': ['HAS_NUMARRAY']})
 
     # calc_info()
 
@@ -395,7 +398,7 @@ class NumericInfo(ConfigInfo):
             else:
                 raise NumericConfigError(array)
         except ImportError:
-            self.set_info(**{'sip_x_feature': 'HAS_NUMERIC'})
+            self.set_info(**{'sip_x_features': ['HAS_NUMERIC']})
 
     # calc_info()
 
@@ -452,19 +455,26 @@ class QtModuleInfo(ConfigInfo):
     def calc_info(self):
         libraries = []
         library_dirs = []
-        runtime_library_dirs = []
-
-        if self.sip_version < 0x040000:
-            self.calc_link_info(libraries, library_dirs, runtime_library_dirs)
+        sip_file_dirs = []
+        sip_t_tags = []
+        sip_x_features = []
  
+        if self.sip_version < 0x040000:
+            self.calc_link_info(libraries, library_dirs)
+
+        self.calc_sip_options(sip_file_dirs, sip_t_tags, sip_x_features)
+        
         self.set_info(**{
             'libraries': libraries,
             'library_dirs': library_dirs,
+            'sip_file_dirs': sip_file_dirs,
+            'sip_t_tags': sip_t_tags,
+            'sip_x_features': sip_x_features
             })
 
     # calc_info()
 
-    def calc_link_info(self, libraries, library_dirs, runtime_library_dirs):
+    def calc_link_info(self, libraries, library_dirs):
         if os.name == 'nt':
             template = "%s -vc __import__('%s')"
             prefix = ''
@@ -489,10 +499,43 @@ class QtModuleInfo(ConfigInfo):
                     libraries.append(library)
                 if library_dir not in library_dirs:
                     library_dirs.append(library_dir)
-                if library_dir not in runtime_library_dirs:
-                    runtime_library_dirs.append(library_dir)
 
     # calc_link_info()
+
+    def calc_sip_options(self, sip_file_dirs, sip_t_tags, sip_x_features):
+        try:
+            from pyqtconfig import Configuration
+            config = Configuration()
+            sip_file_dirs.append(config.pyqt_sip_dir)
+            sip_flags = getattr(config, 'pyqt_%s_sip_flags' % self.module)
+        except ImportError:
+            raise ConfigError
+        except AttributeError:
+            # The pyqtconfig module in PyQt-3.9 is broken, try to parse it.
+            source = open(os.path.join(get_python_lib(), 'pyqtconfig.py'))
+            lines = source.readlines()
+            key = "'pyqt_%s_sip_flags':" % self.module
+            for line in lines:
+                if -1 != line.find(key):
+                    sip_flags = line.split(':')[-1].strip()[1:-2]
+                    break
+            else:
+                raise ConfigError
+            key = "'pyqt_sip_dir':"
+            for line in lines:
+                if -1 != line.find(key):
+                    sip_file_dirs.append(line.split(':')[-1].strip()[1:-2])
+                    break
+            else:
+                raise ConfigError
+        sip_flags = sip_flags.split()
+        for i in range(0, len(sip_flags), 2):
+            if sip_flags[i] == '-t':
+                sip_t_tags.append(sip_flags[i+1])
+            if sip_flags[i] == '-x':
+                sip_x_features.append(sip_flags[i+1])
+
+    # calc_sip_options
 
 # class QtModuleInfo
 
@@ -602,7 +645,6 @@ class QtInfo(ConfigInfo):
         qtlibdir = os.environ.get('QTLIBDIR') or os.path.join(qtdir, 'lib')
 
         qt_version_str = get_qt_version_str(qtincdir)
-        sip_t_options = get_sip_t_options(qt_version_str, os.name)
         tag = qt_version_str.replace('.', '')
 
         define_macros = [
@@ -657,7 +699,6 @@ class QtInfo(ConfigInfo):
         
         self.set_info(**{
             'qt_version_str': "%s" % qt_version_str,
-            'sip_t_options': sip_t_options,
             'make': make,
             'type': type,
             'qtdir': qtdir,
@@ -687,89 +728,27 @@ class SipInfo(ConfigInfo):
         try:
             # try if sip has been built with configure.py
             from sipconfig import Configuration
-            sip_config = Configuration()
-            sip_program = sip_config.sip_bin
-            sip_version = sip_config.sip_version
-            sip_version_str = sip_config.sip_version_str
+            config = Configuration()
+            sip_program = config.sip_bin
+            sip_version = config.sip_version
+            sip_version_str = config.sip_version_str
         except ImportError:
-            # no, sip has been built with build.py
-            path = os.pathsep.join(self.get_program_dirs())
-            sip_program = find_executable('sip', path)
-            if not sip_program:
-                raise MissingProgramError('sip', path, self.env_var)
-            sip_version_str = os.popen('%s -V' % sip_program).read().rstrip()
-            header = os.path.join(get_python_inc(), 'sip.h')
-            if not os.path.exists(header):
-                raise MissingFileError(header)
-            sip_version = 0
-            for line in file(header).readlines():
-                words = line.split()
-                if len(words) == 3 and words[0] == '#define':
-                    if words[1] == 'SIP_VERSION':
-                        sip_version = int(words[2], 16)
-                        break
+            raise ConfigError
             
         define_macros = []
         if os.name == 'nt':
             define_macros.append(('SIP_MAKE_MODULE_DLL', None))
         
-        sip_x_features = []
-        for package in ('numarray', 'numeric'):
-            sip_x_feature = get_config(package).get('sip_x_feature')
-            if sip_x_feature:
-                sip_x_features.append(sip_x_feature)
-
         self.set_info(**{
             'sip_program': sip_program,
             'sip_version': sip_version,
             'sip_version_str': sip_version_str,
             'define_macros': define_macros,
-            'sip_x_features': sip_x_features,
             })
         
     # calc_info()
 
 # class SipInfo
-
-
-def get_sip_t_options(qt_version_str, os_name):
-    """Return the Qt version and Window system related options for sip.
-    """
-    qt = {
-        '2.3.0': 'Qt_2_3_0',
-        '2.3.1': 'Qt_2_3_1',
-        '2.3.2': 'Qt_2_3_1',
-        '3.0.0': 'Qt_3_0_0',
-        '3.0.1': 'Qt_3_0_1',
-        '3.0.2': 'Qt_3_0_2',
-        '3.0.3': 'Qt_3_0_2',
-        '3.0.4': 'Qt_3_0_4',
-        '3.0.5': 'Qt_3_0_5',
-        '3.0.6': 'Qt_3_0_6',
-        '3.0.7': 'Qt_3_0_6',
-        '3.1.0': 'Qt_3_1_0',
-        '3.1.1': 'Qt_3_1_1',
-        '3.1.2': 'Qt_3_1_2',
-        '3.2.0': 'Qt_3_2_0',
-        '3.2.1': 'Qt_3_2_0',
-        '3.2.2': 'Qt_3_2_0',
-        '3.2.3': 'Qt_3_2_0',
-        }.get(qt_version_str)
-
-    if not qt:
-        raise SystemExit, ("Qt-%s is unsupported." % qt_version_str)
-
-    ws = {
-        'nt': 'WS_WIN',
-        'posix': 'WS_X11',
-        }.get(os_name)
-
-    if not ws:
-        raise OSError(os_name)
-
-    return [qt, ws]
-
-# get_sip_qt_ws_options()
 
 
 def get_qt_version_str(qtincdir):

@@ -8,7 +8,7 @@ really defined in pyqt_distutils.dist and pyqt_distutils.cmd.
 Hacked to support PyQt and sip.
 """
 #
-# Copyright (C) 2003 Gerard Vermeulen
+# Copyright (C) 2003-2004 Gerard Vermeulen
 #
 # This file is part of PyQwt
 #

@@ -3,7 +3,7 @@
 Implements the PyQtDistutils 'run_sip' command.
 """
 #
-# Copyright (C) 2003 Gerard Vermeulen
+# Copyright (C) 2003-2004 Gerard Vermeulen
 #
 # This file is part of PyQwt
 #
@@ -32,9 +32,7 @@ Implements the PyQtDistutils 'run_sip' command.
 # program.
 
 
-import glob
-import os
-import shutil
+import copy, glob, os, shutil
 from distutils.core import Command
 from distutils.dep_util import newer_group 
 from pyqt_distutils.configure import get_config
@@ -55,21 +53,22 @@ class run_sip(Command):
         ('sip-file-dirs=', 'I',
          "list of directories to search for *.sip files (separated by '%s')"
          % os.pathsep),
-        ('sip-t-options=', None,
-         "target code for this timeline and platform pair (separated by ',')"),
+        ('sip-t-tags=', None,
+         "enable this list of timeline and platform tags"),
         ('sip-x-features=', None,
-         "disable this list of features (separated by ',')"),
+         "disable this list of features"),
         ]
 
     boolean_options = ['concatenate', 'force']
 
     def initialize_options(self):
+        self.extensions = None
         self.build_temp = None
         self.concatenate = 0
         self.force = None
         self.sip_program = None
         self.sip_file_dirs = None
-        self.sip_t_options = None
+        self.sip_t_tags = None
         self.sip_x_features = None
 
     # initialize_options()
@@ -79,6 +78,8 @@ class run_sip(Command):
                                    ('build_temp', 'build_temp'),
                                    ('force', 'force'))
 
+        self.extensions = self.distribution.ext_modules
+        
         if not self.sip_program:
             self.sip_program = get_config('sip').get('sip_program')
         assert self.sip_program
@@ -90,16 +91,11 @@ class run_sip(Command):
         if self.sip_file_dirs:
             self.sip_file_dirs = self.sip_file_dirs.split(os.pathsep)
 
-        self.sip_t_options = self.sip_t_options or []
-        if self.sip_t_options:
-            self.sip_t_options = self.sip_t_options.split(',')
-        else:
-            self.sip_t_options = get_config('qt').get('sip_t_options')
-
+        self.sip_t_tags = self.ensure_string_list('sip_t_tags')
+        self.sip_t_tags = self.sip_t_tags or []
+ 
+        self.sip_x_features = self.ensure_string_list('sip_x_features')
         self.sip_x_features = self.sip_x_features or []
-        if self.sip_x_features:
-            self.sip_x_features = self.sip_x_features.split(',')
-        self.sip_x_features.extend(get_config('sip').get('sip_x_features'))
 
     # finalize_options()
 
@@ -119,19 +115,30 @@ class run_sip(Command):
         if os.path.isdir(sip_temp):
             shutil.rmtree(sip_temp, 1)
         self.mkpath(sip_temp)
-        # replace '\\' with '/' because MSVC chokes on Windows path separators.
-        sip_file_dirs = []
-        for sip_file_dir in ext.sip_file_dirs + self.sip_file_dirs:
-            sip_file_dirs.append(sip_file_dir.replace('\\', '/'))
-        sip_module = ext.sip_module.replace('\\', '/')
+
         # prepare and run sip
+        sip_file_dirs = copy.copy(self.sip_file_dirs)
+        sip_t_tags = copy.copy(self.sip_t_tags)
+        sip_x_features = copy.copy(self.sip_x_features)
+        for config in ext.config_jobs:
+            for file_dir in get_config(config).get('sip_file_dirs', []):
+                if file_dir not in sip_file_dirs:
+                    sip_file_dirs.append(file_dir)
+            for t_tag in get_config(config).get('sip_t_tags', []):
+                if t_tag not in sip_t_tags:
+                    sip_t_tags.append(t_tag)
+            for x_feature in get_config(config).get('sip_x_features', []):
+                if x_feature not in sip_x_features:
+                    sip_x_features.append(x_feature)
+        # replace '\\' with '/' because MSVC chokes on Windows path separators.
+        sip_file_dirs = [item.replace('\\', '/') for item in sip_file_dirs] 
         cmd = (
             [self.sip_program]
-            + self.__flag_list('-t', self.sip_t_options)
-            + self.__flag_list('-x', self.sip_x_features)
+            + self.__flag_list('-t', sip_t_tags)
+            + self.__flag_list('-x', sip_x_features)
             + ['-c', sip_temp]
             + self.__flag_list('-I', sip_file_dirs)
-            + [sip_module]
+            + [ext.sip_module]
             )
         self.spawn(cmd)
         # apply an eventual patch
@@ -154,7 +161,7 @@ class run_sip(Command):
         
         if not self.distribution.has_sip_sources():
             return
-        for ext in [m for m in self.distribution.ext_modules if m.sip_module]:
+        for ext in [item for item in self.extensions if item.sip_module]:
             # setup
             sip_temp = os.path.join(self.build_temp, 'sip', ext.path)
             if self.sip_version < 0x040000:
