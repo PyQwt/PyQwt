@@ -358,7 +358,7 @@ def generate_code(
     argv.append(buildfile)
 
     argv.append("-I")
-    argv.append("sip")
+    argv.append(os.path.join(os.pardir, "sip").replace("\\", "/"))
 
     # SIP assumes POSIX style path separators.
     argv.append("-I")
