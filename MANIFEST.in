@@ -5,11 +5,12 @@ include ANNOUNCEMENT-3.9.TXT
 include AUTHORS COPYING COPYING.PyQwt
 include INSTALL MANIFEST.in README* REGISTRATION.SF THANKS
 include DIFFER PATCHER patches.py
-include Makefile
+include Makefile 
 include setup_cfg_nt setup_cfg_posix
 include win-pyqt.bat win-sip.bat
+include configure.py pyqwtconfig.py.in
 
-exclude setup.cfg
+exclude setup.cfg CONFIGURE
 
 # PyQtDistutils
 graft pyqt_distutils
