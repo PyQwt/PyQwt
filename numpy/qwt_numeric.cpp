@@ -1,6 +1,6 @@
 // qwt_numeric.cpp: encapsulates all of PyQwt's calls to the Numeric C-API.
 // 
-// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2001-2004 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt
@@ -50,8 +50,8 @@ int try_NumericArray_to_QwtArray(PyObject *in, QwtArray<double> &out)
         return 0;
 
     // FIXME: how costly is PyArray_ContiguousFromObject?
-    PyArrayObject *array = (PyArrayObject *)
-    PyArray_ContiguousFromObject(in, PyArray_DOUBLE, 1, 0);
+    PyArrayObject *array = (PyArrayObject *)PyArray_ContiguousFromObject(
+	in, PyArray_DOUBLE, 1, 0);
     
     if (!array) {
         PyErr_SetString(PyExc_RuntimeError,
