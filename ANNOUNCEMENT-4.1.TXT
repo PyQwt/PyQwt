@@ -1,23 +1,25 @@
-I am proud to announce PyQwt-4.1. PyQwt
+I am proud to announce PyQwt-4.1.
 
-- is a set of Python bindings for the Qwt C++ class library which
+What is PyQwt?
+
+- it is a set of Python bindings for the Qwt C++ class library which
   extends the Qt framework with widgets for scientific, engineering
   and financial applications.   It provides a widget to plot
   2-dimensional data and various widgets to display and control
   bounded or unbounded floating point values.
 
-- requires and extends PyQt, a set of Python bindings for Qt.
+- it requires and extends PyQt, a set of Python bindings for Qt.
 
-- really shines with either Numeric, numarray or both. Numeric and/or
-  numarray extend the Python language with new data types which turn
-  Python into an ideal system for numerical computing and
+- it really shines with either Numeric, numarray or both. Numeric
+  and/or numarray extend the Python language with new data types which
+  turn Python into an ideal system for numerical computing and
   experimentation, better than MatLab and IDL.
 
-- supports the use of PyQt, Qt, Qwt, the Numerical Python extensions
+- it supports the use of PyQt, Qt, Qwt, the Numerical Python extensions
   (either Numeric, or numarray or both) and optionally SciPy in a GUI
   Python application or in an interactive Python session.
 
-- runs on POSIX, MacOS/X and Windows (any operating system supported
+- it runs on POSIX, MacOS/X and Windows (any operating system supported
   by Qt and Python).
  
 The home page of PyQwt is http://pyqwt.sourceforge.net.
