@@ -45,7 +45,6 @@ public:
     void setXValue(double);
     void setYValue(double);
 
-protected:
     virtual void markerChanged();
 };
 
