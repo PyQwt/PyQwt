@@ -3,6 +3,7 @@
 % Links
 \newcommand{\me}{\ulink{me}{mailto:pyqwt-users@lists.sourceforge.net}}
 \newcommand{\Qwt}{\ulink{Qwt}{http://qwt.sourceforge.net}}
+\newcommand{\Grace}{\ulink{Grace}{http://plasma-gate.weizmann.ac.il/Grace/}}
 
 % Source code
 \newcommand{\Download}{\ulink{download}{http://pyqwt.sourceforge.net/download.html}}
@@ -26,7 +27,7 @@ page for the latest releases.
 
 % Installers for MS-Windows
 \newcommand{\PythonExeBB}{\ulink{Python-2.2.3.exe}{http://www.python.org/ftp/python/2.2.3/Python-2.2.3.exe}}
-\newcommand{\PythonExeBC}{\ulink{Python-2.3.2.exe}{http://www.python.org/ftp/python/2.3.2/Python-2.3.2.exe}}
+\newcommand{\PythonExeBC}{\ulink{Python-2.3.2-1.exe}{http://www.python.org/ftp/python/2.3.2/Python-2.3.2-1.exe}}
 \newcommand{\NumericExeBB}{\ulink{Numeric-23.0.win32-py2.2.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.0.win32-py2.2.exe?download}}
 \newcommand{\NumericExeBC}{\ulink{Numeric-23.1.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.1.win32-py2.3.exe?download}}
 \newcommand{\NumArrayExeBB}{\ulink{numarray-0.7.win32-py2.2.exe}{http://prdownloads.sourceforge.net/numpy/numarray-0.7.win32-py2.2.exe?download}}
@@ -65,8 +66,8 @@ page for the latest releases.
 
 \noindent
 PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
-plotting of lists, tuples and powerful array types provided by the Python
-extensions \module{Numeric} and \module{numarray}.
+plotting of Python lists and tuples and the powerful array types provided
+by the Python extension modules \module{Numeric} and/or \module{numarray}.
 
 \end{abstract}
 
@@ -75,8 +76,9 @@ extensions \module{Numeric} and \module{numarray}.
 \chapter{Introduction \label{introduction}}
 
 PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
-plotting of lists, tuples and powerful array types provided by the Python
-extensions \module{Numeric} and \module{numarray}.
+plotting of Python lists and tuples and the powerful array types provided
+by the Python extension modules \module{Numeric} and/or \module{numarray}.
+ 
 
 \section{Qwt \label{qwt-intro}}
 
@@ -114,8 +116,14 @@ The widgets are documented in the
 \ulink{Qwt manual}{qwt/index.html}
 on your hard disk or \Qwt{} on the web.
 
+\begin{notice}[note]
+  The \Qwt{} has a designer plugin that works with Qt-3.x.x.  If you want
+  to use the plugin, you must install the original \Qwt{} library or the
+  slightly modified version that is included in \PyQwtTarGz{}.
+\end{notice}
 
-\section{The Python Extension modules \label{numeric-intro}}
+
+\section{The Python Numerical Extension modules \label{numeric-intro}}
 
 The \ulink{Numeric}{http://www.numpy.org/index.html}
 and \ulink{numarray}{http://stsdas.stsci.edu/numarray/index.html}
@@ -126,8 +134,9 @@ Python together with at least one of those modules is an ideal language
 experimental numerical and scientific computing (as powerful as APL, MatLab,
 IDL and others, but much more elegant).
 
-
-Look at the following simple example:
+If you do not have a mathematical background, you can think of those array
+types as columns in a spreadsheet.  The spreadsheet lets you do operations
+on whole columns at once.  Look at the following simple example:
 
 \verbatiminput{numeric.example}
 
@@ -142,8 +151,14 @@ All this in C, for a manifold speedup with respect to pure Python.
 
 The PyQwt widgets can be used in Graphical User Interface (GUI)
 programs as well as from the Command Line Interpreter (CLI).
-This section addresses the CLI facilities and functions to convert 
-\class{QImage} instances to Numeric and numarray arrays and vice versa.
+This section addresses:
+\begin{itemize}
+\item
+  the CLI facilities (iqt, PyCute, qwt.qplt),
+\item
+  the functions to convert \class{QImage} instances to Numeric and numarray
+  arrays and vice versa.
+\end{itemize}
 
 The documentation for writing GUI programs consists of the
 \ulink{Qwt manual}{qwt/index.html} on your hard disk or the \Qwt{} manual on
@@ -237,8 +252,8 @@ Both widgets allow you to hide/unhide curves by clicking on a legend item.
 
 In addition, the \class{IPlot} widgets displays the plot coordinates in the
 status bar and has a toolbar buttons to print and to clone the plot into
-\ulink{Grace}{http://plasma-gate.weizmann.ac.il/Grace/}.
-Grace is a WYSIWYG plot program that produces output very well adapted to
+\Grace{}.
+\Grace{} is a WYSIWYG plot program that produces output very well adapted to
 scientific journals.
 
 The second command gives you a plain PyCute shell and the third command 
@@ -286,8 +301,8 @@ Here follows a small example:
       walk up the stack.
   \end{itemize}
 
-  \class{Plot} uses \method{__getattr__()}, \function{hasattr()} and
-  \function{getattr()} to inherit all methods of \class{QwtPlot}.
+  \class{Plot} uses \method{__getattr__()} to inherit all methods of
+  \class{QwtPlot}.
 \end{classdesc}
 
 In addition, the class \class{Plot} defines the following methods:
@@ -306,7 +321,7 @@ actions.
 \end{methoddesc}
 
 \begin{methoddesc}[Plot]{gracePlot}{self}
-Clone the plot into Grace for very high quality hard copy output.
+Clone the plot into \Grace{} for very high quality hard copy output.
 \end{methoddesc}
 
 \begin{methoddesc}[Plot]{plot}{self, *curves}
@@ -335,13 +350,42 @@ Toggle a curve between hidden and shown.
   \class{IPlot} is a main window with a Plot widget as central widget.
 
   The data-directed interpretation of each optional argument is the
-  same as for \class{Plot}.
+  same as for \class{Plot}:
+  \begin{itemize}
+  \item
+    \class{Axis}, to enable and redefine an axis.
+  \item
+    \class{Curve}, to add a curve to the plot.
+  \item
+    \class{QString} or a \class{string}, to set the title of the plot.
+  \item
+    \class{int}, to attach a set of mouse events to the zoomer actions.
+  \item
+    (\class{int}, \class{int}), to set the size of the plot.
+  \end{itemize}
 
   The functionality of \class{Plot} is enhanced with a tool bar with
-  buttons for printing and cloning into grace and a combo box to attach
+  buttons for printing and cloning into \Grace{} and a combo box to attach
   the zoomer actions to a set of mouse events.
   In addition, the position of the cursor in the plot region is tracked
   and displayed in a status bar. 
+
+  \class{IPlot} uses \method{__getattr__()} to inherit all methods of
+  \class{QMainWindow} and \class{IPlot}.
+
+
+In addition, the class \class{IPlot} defines the following methods:
+
+\begin{methoddesc}[Plot]{onMouseMoved}{self, event}
+Translate the mouse coordinates to plot coordinates for display in the status
+bar.
+\end{methoddesc}
+
+\begin{methoddesc}[IPlot]{printPlot}{self}
+Initialize a high resolution printer (if possible) for color output to file and
+print the plot.
+\end{methoddesc}
+
 \end{classdesc}
 
 \subsubsection{qwt.qplt.Curve \label{intro-qplt-curve}}
@@ -730,7 +774,7 @@ nmake install
 \end{notice}
 
 \begin{notice}[warning]
-  Most bug reports are related to he presence of
+  Most bug reports are related to the presence of
   old executables (\file{sip.exe}),
   old libraries (\file{libqt*.exp}, \file{libqt*.lib}, \file{lib.qt*.pyd},
   \file{libsip.exp}, \file{libsip.lib}, \file{libsip.pyd}),
