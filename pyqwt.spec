@@ -12,7 +12,7 @@
 %{expand: %%define sipver %(rpm -q sip --qf "%{VERSION}")}
 
 %define name	PyQwt
-%define version	4.1
+%define version	4.2
 %define release	1
 %define qtdir   /usr/lib/qt3
 
@@ -51,15 +51,16 @@ and control bounded or unbounded floating point values.
 cd configure
 %if %use_system_qwt
 %if %buildForMandrake
-python configure.py -c -j $(getconf _NPROCESSORS_ONLN) \
-	-i %qtdir/include/qwt -l %qtdir/lib
+python configure.py -j $(getconf _NPROCESSORS_ONLN) \
+	-I %qtdir/include/qwt -L %qtdir/lib
 %endif
 %if %buildForSuSE
-python configure.py -c -j $(getconf _NPROCESSORS_ONLN) \
-	-i %qtdir/include/qwt -l %{_libdir}
+python configure.py -j $(getconf _NPROCESSORS_ONLN) \
+	-I %qtdir/include/qwt -L %{_libdir}
 %endif
 %else
-python configure.py -c -j $(getconf _NPROCESSORS_ONLN)
+python configure.py -j $(getconf _NPROCESSORS_ONLN) \
+	-Q ../qwt-sources
 %endif
 
 make CXX="$(which ccache) g++" -j $(getconf _NPROCESSORS_ONLN)
