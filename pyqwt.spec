@@ -1,5 +1,9 @@
 # Make sure that you have installed the development packages for PyQt and sip
 
+#define use_system_qwt  0, if you do not want to use the Qwt system library
+%define use_system_qwt  1
+
+
 %{expand:%define buildForMandrake %(if [ -e /etc/mandrake-release ]; then echo 1; else echo 0; fi)}
 %{expand:%define buildForSuSE %(if [ -e /etc/SuSE-release ]; then echo 1; else echo 0; fi)}
 
@@ -45,7 +49,19 @@ and control bounded or unbounded floating point values.
 
 %build
 cd configure
+%if %use_system_qwt
+%if %buildForMandrake
+python configure.py -c -j $(getconf _NPROCESSORS_ONLN) \
+	-i %qtdir/include/qwt -l %qtdir/lib
+%endif
+%if %buildForSuSE
+python configure.py -c -j $(getconf _NPROCESSORS_ONLN) \
+	-i %qtdir/include/qwt
+%endif
+%else
 python configure.py -c -j $(getconf _NPROCESSORS_ONLN)
+%endif
+
 make CXX='ccache g++' -j $(getconf _NPROCESSORS_ONLN)
 
 %install
@@ -75,10 +91,5 @@ rm -rf %{buildroot}
 %dir %{_libdir}/python%{pyver}/site-packages/qwt/
 %{_libdir}/python%{pyver}/site-packages/iqt/*
 %{_libdir}/python%{pyver}/site-packages/qwt/*
-
-
-%changelog
-* Sun Jun 27 2004 Gerard Vermeulen <gerard.vermeulen@grenoble.cnrs.fr> 4.0-1
-- 4.0
 
 # EOF
