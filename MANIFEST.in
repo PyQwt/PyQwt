@@ -8,7 +8,7 @@ include DIFFER PATCHER patches.py
 include Makefile 
 include setup_cfg_nt setup_cfg_posix
 include win-pyqt.bat win-sip.bat
-include configure.py pyqwtconfig.py.in
+include pyqwt.spec
 
 exclude setup.cfg
 
