@@ -53,12 +53,25 @@ public:
 %End
 %End
 
-    static QwtText *makeText(const QString &, const QFont &, int,
+    static QwtText *makeText(const QString &, Qt::TextFormat, int, QFont &,
                              const QColor & = QColor(),
-                             Qt::TextFormat = Qt::AutoText);
+                             const QPen & = QPen(Qt::NoPen),
+                             const QBrush & = QBrush(Qt::NoBrush));
+
+    static QwtText *makeText(const QString &, int, QFont &,
+                             const QColor & = QColor(),
+                             const QPen & = QPen(Qt::NoPen),
+                             const QBrush & = QBrush(Qt::NoBrush));
+
+    static void setDefaultFormat(Qt::TextFormat);
+    static Qt::TextFormat defaultFormat();
 
     virtual void setText(const QString &);
     QString text() const;
+
+    bool isNull() const;
+    bool isEmpty() const;
+    // bool operator!() const { return !text(); }
 
     virtual void setFont(const QFont &);
     QFont font() const;
@@ -70,10 +83,18 @@ public:
     virtual void setColor(const QColor &);
     QColor color() const;
 
+    virtual void setRectPen(const QPen &);
+    QPen rectPen() const;
+
+    virtual void setRectBrush(const QBrush &);
+    QBrush rectBrush() const;
+
     virtual int heightForWidth(int) const = 0;
     virtual QRect boundingRect(QPainter * = 0) const = 0;
 
     virtual void draw(QPainter *, const QRect &) const = 0;
+
+    virtual QwtText *clone() const = 0;
 
 protected:
     QwtText(QString &, const QFont &, int, const QColor &);
@@ -100,6 +121,8 @@ public:
                 const QColor & = QColor());
     //FIXME QwtPlainText(const QString &, const QFont &, const QColor & = QColor());
 
+    virtual QwtText *clone() const;
+
     virtual int heightForWidth(int) const;
     virtual QRect boundingRect(QPainter * = 0) const;
 
@@ -125,8 +148,12 @@ public:
 
     QwtRichText(const QString &, const QFont &,
                 int = Qt::AlignCenter | Qt::WordBreak | Qt::ExpandTabs,
-                const QColor & = QColor());
+                const QColor & = QColor(),
+                const QPen & = QPen(Qt::NoPen),
+                const QBrush & = QBrush(Qt::NoBrush));
     QwtRichText(const QString &, const QFont &, const QColor &);
+
+    virtual QwtText *clone() const;
 
     virtual void setText(const QString &);
     virtual void setFont(const QFont &);

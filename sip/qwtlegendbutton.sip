@@ -1,5 +1,6 @@
 // The SIP interface definition for QwtLegendButton.
 //
+// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
 //
 // This file is part of PyQwt.
@@ -33,22 +34,13 @@
 // part of PyQwt.
 
 
-class QwtLegendButton: QwtPushButton
+class QwtLegendButton: QwtPushButton, QwtLegendItem
 {
 %HeaderCode
 #include <qwt_legend.h>
 %End
 
 public:
-
-    enum IdentifierMode
-    {
-        NoIdentifier = 0,
-        ShowLine = 1,
-        ShowSymbol = 2,
-        ShowText = 4,
-    };
-
 %If (SIP_DUMB_DIR)
     void getLazyNames();
 %MemberCode
@@ -62,20 +54,13 @@ public:
     QwtLegendButton(const QwtSymbol &, const QPen &, const QString &,
 		    QWidget * = 0, const char * = 0);
 
-    int identifierMode() const;
-    const QwtSymbol& symbol() const;
-    const QPen& curvePen() const;
-
-    void setIdentifierMode(int);
-    void setSymbol(const QwtSymbol &);
-    void setCurvePen(const QPen &);
-
-    virtual void drawContents(QPainter *, const QRect &) const;
+    virtual void setTitle(const QString &) = 0;
+    virtual QString title() const = 0;
 
 protected:
+    virtual QwtText *titleText() const = 0;
+    virtual void updateItem();
     virtual void updateIconset();
-    virtual void drawButtonLabel(QPainter *);
-    virtual void drawIdentifier(QPainter *, const QRect &) const;    
 };
 
 // Local Variables:

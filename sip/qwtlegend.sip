@@ -1,5 +1,6 @@
 // The SIP interface definition for QwtLegend.
 //
+// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
 //
 // This file is part of PyQwt.
@@ -58,24 +59,28 @@ public:
 
     QwtLegend(QWidget * /TransferThis/ = 0, const char * = 0);
 
-    void setDisplayPolicy(int, int = -1);
-    int displayPolicy() const;
+    void setReadOnly(bool);
+    bool isReadOnly() const;
+
+    void setDisplayPolicy(LegendDisplayPolicy, int = -1);
+    LegendDisplayPolicy displayPolicy() const;
+
     int identifierMode() const;
 
     QWidget *contentsWidget();    
     // dead code: const QWidget *contentsWidget() const;
 
     void insertItem(QWidget *, long);
-    
     QWidget *findItem(long);
     // dead code: const QWidget *findItem() const;
-
     QWidget *takeItem(long);
 
     // FIXME: virtual QIntDictIterator<QWidget> itemIterator() const;
 
     long key(const QWidget *) const;
+
     void clear();
+
     bool isEmpty() const;
     uint itemCount() const;
 

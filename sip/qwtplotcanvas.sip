@@ -33,13 +33,20 @@
 // part of PyQwt.
 
 
-class QwtCanvas: QFrame
+class QwtPlotCanvas: QFrame
 {
 %HeaderCode
 #include <qwt_plot_canvas.h>
 %End
 
 public:
+    enum FocusStyle
+    {
+        NoFocus,
+        CanvasFocus,
+        ItemFocus
+    };
+
 %If (SIP_DUMB_DIR)
     void getLazyNames();
 %MemberCode
@@ -48,6 +55,9 @@ public:
     }
 %End
 %End
+
+    void setFocusStyle(FocusStyle);
+    FocusStyle focusStyle() const;
 
     void enableOutline(bool);
     bool outlineEnabled() const;
@@ -64,39 +74,17 @@ signals:
     void mouseMoved(const QMouseEvent &);
 
 protected:
-    QwtCanvas(QWidget * /TransferThis/);
+    QwtPlotCanvas(QwtPlot * /TransferThis/);
 
-    //virtual void frameChanged();
+    virtual void frameChanged();
     virtual void drawContents(QPainter *);
     virtual void drawContentsCallback(QPainter *) = 0;
 
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseReleaseEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
-};
 
-class QwtPlotCanvas: QwtCanvas
-{
-%HeaderCode
-#include <qwt_plot_canvas.h>
-%End
-
-public:
-%If (SIP_DUMB_DIR)
-    void getLazyNames();
-%MemberCode
-    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
-	return getLazyNames(sipClassAttrTab_$C);
-    }
-%End
-%End
-
-protected:
-    QwtPlotCanvas(QwtPlot * /TransferThis/);
-
-    virtual void drawContents(QPainter *);
-    virtual void drawContentsCallback(QPainter *);
-
+    virtual void paintFocus(QPainter *, const QRect &);
 };
 
 // Local Variables:

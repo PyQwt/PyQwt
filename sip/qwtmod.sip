@@ -67,6 +67,8 @@
 %Include qwtlayoutmetrics.sip
 %Include qwtlegend.sip
 %Include qwtlegendbutton.sip
+%Include qwtlegenditem.sip
+%Include qwtlegendlabel.sip
 %Include qwtmarker.sip
 %Include qwtmarkerdict.sip
 %Include qwtmath.sip

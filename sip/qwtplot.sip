@@ -305,6 +305,9 @@ public:
     void setGridMinPen(const QPen &);
     const QPen& gridMinPen();
 
+    QwtPlotGrid &grid();
+    // dead code: const QwtPlotGrid &grid() const;
+
     // Axes
 
     void setAxisAutoScale(int);
@@ -386,7 +389,7 @@ public:
     long insertLineMarker(const QString, int);
 
     QwtPlotMarker *marker(long);
-    const QwtPlotMarker *marker(long) const;
+    // dead code: const QwtPlotMarker *marker(long) const;
 
     bool removeMarker(long);
     void removeMarkers();
@@ -450,7 +453,11 @@ public:
     QFont markerFont(long) const;
     bool setMarkerPen(long, const QPen &);
 
-    bool setMarkerLabel(long, const QString &);
+    bool setMarkerLabel(long, const QString &, const QFont & = QFont(),
+                        const QColor & = QColor(),
+                        const QPen & = QPen(Qt::NoPen),
+                        const QBrush & = QBrush(Qt::NoBrush));
+    bool setMarkerLabelText(long, const QString &);
     const QString markerLabel(long) const;
     bool setMarkerLabelAlign(long, int);
     int markerLabelAlign(long) const;
@@ -485,7 +492,7 @@ public:
     QwtLegend *legend();
     // dead code: const QwtLegend *legend() const;
 
-    void setLegendDisplayPolicy(int, int = -1);
+    void setLegendDisplayPolicy(QwtLegend::LegendDisplayPolicy, int = -1);
     
     // Misc
 
@@ -528,7 +535,7 @@ protected:
     virtual void insertLegendItem(long);
     virtual void updateLegendItem(long);
     virtual void printLegendItem(
-	QPainter *, const QWidget *, const QRect &) const;
+        QPainter *, const QWidget *, const QRect &) const;
 
     virtual void printTitle(QPainter *, const QRect &) const;
     virtual void printScale(

@@ -63,8 +63,8 @@ public:
     void setMargin(int);
     int margin() const;
 
-    void setCanvasMargin(int);
-    int canvasMargin() const;
+    void setCanvasMargin(int, int = -1);
+    int canvasMargin(int) const;
 
     void setAlignCanvasToScales(bool);
     bool alignCanvasToScales() const;
