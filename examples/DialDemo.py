@@ -9,36 +9,36 @@ from qwt import *
 def enumColorGroups():
     """Masks the change in enum/int type checking new in SIP-4.2.x
     """
-    if isinstance(int, QPalette.ColorGroup):
+    try:
+        return [
+            QPalette.ColorGroup(i) for i in range(QPalette.NColorGroups)
+            ]
+    except AttributeError:
         return range(QPalette.NColorGroups)
-    else:
-        return [QPalette.ColorGroup(i)
-                for i in range(QPalette.NColorGroups)
-                ]
 
 # enumColorRoles()
 
 def enumColorRoles():
     """Masks the change in enum/int type checking new in SIP-4.2.x
     """
-    if isinstance(int, QColorGroup.ColorRole):
+    try:
+        return [
+            QColorGroup.ColorRole(i) for i in range(QColorGroup.NColorRoles)
+            ]
+    except AttributeError:
         return range(QColorGroup.NColorRoles)
-    else:
-        return [QColorGroup.ColorRole(i)
-                for i in range(QColorGroup.NColorRoles)
-                ]
 
 # enumColorRoles()
 
 def enumHands():
     """Masks the change in enum/int type checking new in SIP-4.2.x
     """
-    if isinstance(int, QwtAnalogClock.Hand):
+    try:
+        return [
+            QwtAnalogClock.Hand(i) for i in range(QwtAnalogClock.NHands)
+            ]
+    except AttributeError:
         return range(QwtAnalogClock.NHands)
-    else:
-        return [QwtAnalogClock.Hand(i)
-                for i in range(QwtAnalogClock.NHands)
-                ]
 
 # enumHands()
 
