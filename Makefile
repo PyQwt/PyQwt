@@ -11,7 +11,7 @@ QWTDIR := ../qwt-4.2.0
 CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "22 Jan 2005 23:59:59 GMT"
+CVS-DATE := "29 Jan 2005 23:59:59 GMT"
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
 QWT420-SOURCES := $(shell echo qwt-4.2.0/include/*.h)
@@ -32,7 +32,7 @@ all: symlinks
 	&& $(MAKE) CXX="$(CXX)")
 
 # Build and link PyQwt against a shared Qwt library
-# and write a LOG.all.
+# and write LOG.all.
 all-log: distclean symlinks
 	(cd configure; \
 	python configure.py -I $(INCDIR) -L $(LIBDIR) 2>&1 > ../LOG.all \
@@ -61,7 +61,7 @@ cvs-static: symlinks
 # and write LOG.cvs-static
 cvs-static-log: symlinks
 	(cd configure; \
-	python configure.py -Q ../qwt-cvs  > ../LOG.cvs-static \
+	python configure.py -Q ../qwt-cvs 2>&1 > ../LOG.cvs-static \
 	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.cvs-static)
 
 # The symlinks work only for SIP >= 4.0.
