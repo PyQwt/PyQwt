@@ -49,7 +49,7 @@ qwt-sources:
 	else \
 	    (cd tmp; cvs -q -z3 -d $(CVS-QWT) checkout -D $(CVS-DATE) qwt); \
 	fi
-	cp -dpRu tmp/qwt qwt-sources
+	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
 	python PATCHER
 
@@ -61,7 +61,7 @@ qwt-sources-ssh:
 	else \
 	    (cd tmp; cvs -q -z3 -d $(CVS-QWT-SSH) checkout qwt); \
 	fi
-	cp -dpRu tmp/qwt qwt-sources
+	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
 	python PATCHER
 
