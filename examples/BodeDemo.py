@@ -99,6 +99,38 @@ zoom_xpm = ['32 32 8 1',
             '...########################..##.']
 
 
+
+class PrintFilter(QwtPlotPrintFilter):
+    def __init__(self):
+        QwtPlotPrintFilter.__init__(self)
+
+    # __init___()
+    
+    def color(self, c, item, i):
+        if not (self.options() & QwtPlotPrintFilter.PrintCanvasBackground):
+            if item == QwtPlotPrintFilter.MajorGrid:
+                return Qt.darkGray
+            elif item == QwtPlotPrintFilter.MinorGrid:
+                return Qt.gray
+        if item == QwtPlotPrintFilter.Title:
+            return Qt.red
+        elif item == QwtPlotPrintFilter.AxisScale:
+            return Qt.green
+        elif item == QwtPlotPrintFilter.AxisTitle:
+            return Qt.blue
+        return c
+
+    # color()
+
+    def font(self, f, item, i):
+        result = QFont(f)
+        result.setPointSize(int(f.pointSize()*1.25))
+        return result
+
+    # font()
+
+# class PrintFilter
+
 class BodePlot(QwtPlot):
 
     def __init__(self, *args):
@@ -280,7 +312,11 @@ class BodeDemo(QMainWindow):
         printer.setOutputToFile(True)
         printer.setOutputFileName('bode-example-%s.ps' % qVersion())
         if printer.setup():
-            self.plot.printPlot(printer)
+            filter = PrintFilter()
+            if (QPrinter.GrayScale == printer.colorMode()):
+                filter.setOptions(QwtPlotPrintFilter.PrintAll
+                                  & ~QwtPlotPrintFilter.PrintCanvasBackground)
+            self.plot.printPlot(printer, filter)
 
     # printPlot()
     
