@@ -431,25 +431,40 @@ class QtModuleInfo(ConfigInfo):
 
     def __init__(self):
         ConfigInfo.__init__(self)
-        self.check_sip_version()
+        self.sip_version = self.check_sip_version()
 
     # __init__()
 
     def check_sip_version(self):
-        source = __import__(self.module).__file__
-        if source[-1] == 'c' or source[-1] == 'o':
-            source = source[:-1]
-        assert source[-2:] == 'py'
-        sip_version = get_config('sip')['sip_version']
-        if -1 == open(source).read().find(sip_version):
-            raise MatchingSipError(source, sip_version)
+        sip_version = get_config('sip').get('sip_version')
+        if sip_version < 0x040000:
+            source = __import__(self.module).__file__
+            if source[-1] == 'c' or source[-1] == 'o':
+                source = source[:-1]
+            assert source[-2:] == 'py'
+            sip_version_str = get_config('sip')['sip_version_str']
+            if -1 == open(source).read().find(sip_version_str):
+                raise MatchingSipError(source, sip_version)
+        return sip_version
 
     # check_sip_version()
 
     def calc_info(self):
-        library_dirs = []
         libraries = []
+        library_dirs = []
+        runtime_library_dirs = []
 
+        if self.sip_version < 0x040000:
+            self.calc_link_info(libraries, library_dirs, runtime_library_dirs)
+ 
+        self.set_info(**{
+            'libraries': libraries,
+            'library_dirs': library_dirs,
+            })
+
+    # calc_info()
+
+    def calc_link_info(self, libraries, library_dirs, runtime_library_dirs):
         if os.name == 'nt':
             template = "%s -vc __import__('%s')"
             prefix = ''
@@ -470,17 +485,14 @@ class QtModuleInfo(ConfigInfo):
                 library, extension = os.path.splitext(library)
                 if prefix:
                     library = library.replace(prefix, '', 1)
-                if library_dir not in library_dirs:
-                    library_dirs.append(library_dir)
                 if library not in libraries:
                     libraries.append(library)
+                if library_dir not in library_dirs:
+                    library_dirs.append(library_dir)
+                if library_dir not in runtime_library_dirs:
+                    runtime_library_dirs.append(library_dir)
 
-        self.set_info(**{
-            'libraries': libraries,
-            'library_dirs': library_dirs,
-            })
-
-    # calc_info()
+    # calc_link_info()
 
 # class QtModuleInfo
 
@@ -631,8 +643,6 @@ class QtInfo(ConfigInfo):
         if os.name == 'nt':
             define_macros.append(('QT_DLL', None))
             define_macros.append(('QT_THREAD_SUPPORT', None))
-            # disable STL support, because we cannot get it working for Qt-NC
-            define_macros.append(('QWT_NO_STL', None))
             libraries.append(make['LIBS_QT_THREAD'])
         elif os.name == 'posix':
             if 'thread' in type:
@@ -674,20 +684,32 @@ class SipInfo(ConfigInfo):
     # __init__()
         
     def calc_info(self):
-        path = os.pathsep.join(self.get_program_dirs())
-        sip_program = find_executable('sip', path)
-        if not sip_program:
-            raise MissingProgramError('sip', path, self.env_var)
-        sip_version = os.popen('%s -V' % sip_program).read().rstrip()
-
+        try:
+            # try if sip has been built with configure.py
+            from sipconfig import Configuration
+            sip_config = Configuration()
+            sip_program = sip_config.sip_bin
+            sip_version = sip_config.sip_version
+            sip_version_str = sip_config.sip_version_str
+        except ImportError:
+            # no, sip has been built with build.py
+            path = os.pathsep.join(self.get_program_dirs())
+            sip_program = find_executable('sip', path)
+            if not sip_program:
+                raise MissingProgramError('sip', path, self.env_var)
+            sip_version_str = os.popen('%s -V' % sip_program).read().rstrip()
+            header = os.path.join(get_python_inc(), 'sip.h')
+            if not os.path.exists(header):
+                raise MissingFileError(header)
+            sip_version = 0
+            for line in file(header).readlines():
+                words = line.split()
+                if len(words) == 3 and words[0] == '#define':
+                    if words[1] == 'SIP_VERSION':
+                        sip_version = int(words[2], 16)
+                        break
+            
         define_macros = []
-
-        mkpath('.configure')
-        os.popen('%s -c .configure' % sip_program, 'w').write(
-            '%Module Module\n int Int;\n')
-        text = open(os.path.join('.configure', 'sipModuleDeclModule.h')).read()
-        if -1 != text.find('sipName_Module_Int'):
-            define_macros.append(('OLD_SIP_NAMES', None))
         if os.name == 'nt':
             define_macros.append(('SIP_MAKE_MODULE_DLL', None))
         
@@ -696,16 +718,12 @@ class SipInfo(ConfigInfo):
             sip_x_feature = get_config(package).get('sip_x_feature')
             if sip_x_feature:
                 sip_x_features.append(sip_x_feature)
-        if sip_version <= '3.7':
-            sip_x_features.append('SIP_ALL_OPERATORS')
-        from qt import QObject
-        if 'className' in dir(QObject):
-            sip_x_features.append('SIP_DUMB_DIR')
 
         self.set_info(**{
-            'sip_version': sip_version,
-            'define_macros': define_macros,
             'sip_program': sip_program,
+            'sip_version': sip_version,
+            'sip_version_str': sip_version_str,
+            'define_macros': define_macros,
             'sip_x_features': sip_x_features,
             })
         
@@ -780,8 +798,6 @@ def get_qmake_conf_info(qmakeconf, qtdir):
             split = line.find('=')
             key = line[:split].strip()[6:]
             value = line[split+1:].strip()
-            value = value.replace('$${LITERAL_WHITESPACE}', '')
-            value = value.replace('$$LITERAL_WHITESPACE', '')
             if value[:2] == "$$":
                 macro = value.split()[0]
                 value = value.replace(macro, info[macro[8:]])
@@ -838,18 +854,15 @@ def more_tmake_conf_info(info, qtlibdir, tag='', platform=None):
     if not platform:
         platform = os.name
     if platform == 'nt':
-        # tmake.conf in Qt-NC is impaired
+        # tmake.conf in Qt-2.3.0-NC is impaired
         globs = glob.glob(os.path.join(qtlibdir, 'qt-mt%s*.lib' % tag))
         if globs:
             type = ['thread']
         else:
             raise DistutilsFileError, "Failed to find the Qt library"
         library_dir, library = os.path.split(os.path.splitext(globs[0])[0])
-        # make the output of tmake.conf look like that of qmake.conf
         info['LIBS_QT_THREAD'] = library
-        info['LIBDIR_QT'] = library_dir
-        info['CFLAGS_RTTI_ON'] = '-GR'
-        info['CXXFLAGS_RTTI_ON'] = '-GR'
+        info['LIBDIR_QT'] = library_dir                
     elif platform == 'posix':
         if glob.glob(os.path.join(qtlibdir, "libqt-mt.so*")):
             type = ['thread']

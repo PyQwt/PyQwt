@@ -6,9 +6,9 @@ from distutils.errors import *
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
 
+from pyqt_distutils.configure import get_config
 from pyqt_distutils.core import setup
 from pyqt_distutils.extension import Extension
-from pyqt_distutils.pyqwt_sip_output_patch import pyqwt_sip_output_patch
 
 #
 # PLATFORM CHECK & SETUP.CFG INITIALIZATION
@@ -24,16 +24,33 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '3.8'
+version = '3.9'
+
+#
+# SIP VERSION
+#
+sip_version = get_config('sip').get('version')
+if sip_version and sip_version < 0x030900:
+    raise SystemExit, ("Building '%s' with requires sip-3.9 or sip-4.0" % name)
 
 #
 # CHECK FOR A RECENT PYTHON
 #
-if (not hasattr(sys, 'version_info')
-    or sys.version_info < (2,0,0, 'alpha', 0)
-    or sys.version_info > (2,3,9, 'final', 0)):
-    raise SystemExit, ("Building '%s' requires Python-2.3, 2.2, 2.1 or 2.0."
-                       % name)
+if sip_version < 0x040000:
+    if (not hasattr(sys, 'version_info')
+        or sys.version_info < (2,0,0, 'alpha', 0)
+        or sys.version_info > (2,3,9, 'final', 0)):
+        raise SystemExit, (
+            "Building '%s' with sip-%s requires Python-2.3, 2.2, 2.1 or 2.0."
+            % (sip_version, name))
+else:
+    if (not hasattr(sys, 'version_info')
+        or sys.version_info < (2,3,0, 'alpha', 0)
+        or sys.version_info > (2,3,9, 'final', 0)):
+        raise SystemExit, (
+            "Building '%s' with sip-%s requires Python-2.3."
+            % (sip_version, name))
+    
 
 #
 # EXTENSION MODULE INFO
@@ -62,18 +79,22 @@ moc_sources = [
     '%s/include/qwt_wheel.h' % qwtdir,
     ]
 
+
+if sip_version < 0x040000:
+    dotted_name = 'qwt.lib_qwtc'
+else:
+    dotted_name = 'qwt._qwt'
+    
 pyqwt = Extension(
-    'qwt.libqwtc',
+    dotted_name,
     sources,
     sip_module     = 'sip/qwtmod.sip',
-    sip_post_hook  = pyqwt_sip_output_patch,
     moc_sources    = moc_sources,
     config_jobs    = ['qt', 'sip', 'qt_module', 'numarray', 'numeric',],
     include_dirs   = ['qwt', 'numpy', '%s/include' % qwtdir],
     )
 
 ext_modules = [pyqwt]
-#ext_modules = []
 
 if os.name == 'posix':
     iqt = Extension(
@@ -92,69 +113,6 @@ if os.name == 'nt':
     infix = name
 elif os.name == 'posix':
     infix = ''
-
-data_files = []
-
-#
-# documentation
-#
-data_files.append((os.path.join(infix, 'html'),
-                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.css'))))
-data_files.append((os.path.join(infix, 'html'),
-                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.html'))))
-data_files.append((os.path.join(infix, 'html'),
-                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.png'))))
-data_files.append((os.path.join(infix, 'html'),
-                   glob.glob(os.path.join('Doc', 'html', 'pyqwt', '*.txt'))))
-data_files.append((os.path.join(infix, 'html', 'qwt'),
-                   glob.glob(os.path.join(qwtdir, 'doc', 'html', '*'))))
-
-#
-# examples
-#
-data_files.append((os.path.join(infix, 'examples'), ['examples/README']))
-if os.name == 'nt':
-    for filename in [
-        'BodeDemo.py',
-        'CPUplot.py',
-        'CurveDemo1.py',
-        'CurveDemo2.py',
-        'CurveDemo3.py',
-        'DataDemo.py',
-        'DialDemo.py',
-        'EventFilterDemo.py',
-        'MapDemo.py',
-        'MinPackDemo.py',
-	'MultiDemo.py',
-        'PyCute.py',
-        'QwtImagePlotDemo.py',
-        'RadioDemo.py',
-        'SimpleDemo.py',
-        'SliderDemo.py',
-        'StackOrder.py',
-        'histtool.py',
-        ]:
-        copy_file('examples/%s' % filename, 'examples/%sw' % filename)
-    data_files.append((os.path.join(infix, 'examples'),
-                       glob.glob('examples/*.pyw')))
-elif os.name == 'posix':
-    data_files.append((os.path.join(infix, 'examples'),
-                       glob.glob('examples/*.py')))
-
-#
-# FIXME: sip files?
-#
-
-#
-# scripts
-#
-if os.name == 'nt':
-    copy_file('examples/PyCute.py', 'examples/PyCute.pyw')
-    scripts = ['examples/PyCute.pyw', 'examples/PyCute.bat']
-elif os.name == 'posix':
-    copy_file('examples/PyCute.py', 'examples/PyCute')
-    scripts = ['examples/PyCute']
-
 
 #
 # description
@@ -204,7 +162,7 @@ the Free Software Foundation; either version 2 of the License, or
 PyQwt is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU  General Public License for more details.
+See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with PyQwt; if not, write to the Free Software Foundation,
@@ -223,25 +181,22 @@ plug-in for a non-free program.
 """
 
 setup(
-    name              = "PyQwt",
-    version           = version,
+    name              = name,
+    version           = snapshot,
     description       = "Python bindings for the Qwt library",
     url               = "http://pyqwt.sourceforge.net",
     author            = "Gerard Vermeulen",
-    author_email      = "pyqwt-users@lists.sourceforge.net",
+    author_email      = "gvermeul@grenoble.cnrs.fr",
     license           = "GPL",
     long_description  = long_description,
     platforms         = "Unix, Windows (MSVC)",
     ext_modules       = ext_modules,
-    data_files        = data_files,
-    scripts           = scripts,
     )
 
 # For in place testing on Posix:
 verbose = 0
 if os.name == 'posix':
-    dirs = ['examples', 'junk']
-    for dir in filter(os.path.exists, dirs):
+    for dir in ['examples']:
         os.chdir(dir)
         for lib in glob.glob('../build/lib*/*'):
             link = lib.split(os.sep)[-1]

@@ -14,7 +14,7 @@ Implements the PyQtDistutils 'run_moc' command.
 #
 # PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
@@ -72,12 +72,14 @@ class run_moc(Command):
         """
         self.spawn([self.moc_program, source, '-o', target])
 
+    # run_moc()
+
     def run(self):
         if not self.distribution.has_moc_sources():
 	    return
         for ext in self.distribution.ext_modules:
             if ext.moc_sources:
-                moc_temp = join(self.build_temp, 'moc_%s' % ext.who)
+                moc_temp = join(self.build_temp, 'moc', ext.path)
                 self.mkpath(moc_temp)
                 for source in ext.moc_sources:
                     root, _ = splitext(basename(source))
@@ -86,6 +88,10 @@ class run_moc(Command):
                         ext.sources.append(target)
                     self.make_file(
                         [source], target, self.run_moc, (source, target))
+
+    # run()
+
+# class run_moc
 
 # Local Variables: ***
 # mode: python ***

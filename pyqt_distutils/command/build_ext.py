@@ -14,7 +14,7 @@ Implements the PyQtDistutils 'build_ext' command.
 #
 # PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
@@ -77,7 +77,7 @@ class build_ext(old_build_ext):
             self.qt_compiler.set_include_dirs(self.include_dirs)
         if self.define is not None:
             # 'define' option is a list of (name,value) tuples
-            for (name,value) in self.define:
+            for (name, value) in self.define:
                 self.qt_compiler.define_macro(name, value)
         if self.undef is not None:
             for macro in self.undef:

@@ -17,7 +17,7 @@ Hacked to support PyQt and sip.
 #
 # PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
@@ -38,6 +38,7 @@ Hacked to support PyQt and sip.
 import os
 from glob import glob
 from os.path import join
+from pyqt_distutils.configure import get_config
 from distutils.core import Extension as OldExtension
 from distutils.errors import DistutilsInternalError, DistutilsFileError 
 
@@ -103,6 +104,15 @@ class Extension(OldExtension):
             sip_file_dir = os.path.dirname(self.sip_module)
             if sip_file_dir and not sip_file_dir in self.sip_file_dirs:
                 self.sip_file_dirs.insert(0, sip_file_dir)
+            # hack to make the old style sip modules work as libraries on Posix
+            if get_config('sip').get('sip_version') < 0x040000:
+                make_info = get_config('qt').get('make')
+                lflags_soname = make_info.get('LFLAGS_SONAME')
+                if lflags_soname:
+                    extension_shlib = make_info.get('EXTENSION_SHLIB', '.so')
+                    self.extra_link_args.append(lflags_soname
+                                                + self.name.split('.')[-1]
+                                                + extension_shlib)
         else:
             self.sip_sources = []
             
@@ -121,35 +131,28 @@ class Extension(OldExtension):
                     )
 
         # pyqt_distutils.core.setup plugs "package info" into Distribution 
-        modpath = self.name.split('.')
-        package = '.'.join(modpath[0:-1])
-        self.who = ''
+        self.path = self.name.split('.')
+        assert len(self.path) >= 2 # FIXME: accept only *real* packages
+        package = '.'.join(self.path[0:-1])
+        self.path = apply(os.path.join, self.path[0:-1])
         self.packages = [package]
+        self.package_dir = {package: package}
 
         # parse information from the sip module file
         # + find the sip module name
         # + find all sip sources: the sip module and files included by it
+        self.tag = ''
         if self.sip_module:
-            self.who = get_sip_module_name(self.sip_module)
+            self.tag = get_sip_module_tag(self.sip_module)
             self.sip_sources = get_sip_includes(
                 self.sip_module, self.sip_sources)
-            # package info: our setup stuffs this in our Distribution
-            if package:
-                # real package
-                self.pkg_wrapper = join(self.who, '__init__.py')
-            else:
-                # root package
-                self.pkg_wrapper = join(self.who, '%s.py' % self.who) 
-            self.package_dir = {package: self.who}
-        else:
-            self.package_dir = {package: package}
            
     # __init__()
 
 # class Extension
 
 
-def get_sip_module_name(sip_file):
+def get_sip_module_tag(sip_file):
     for line in file(sip_file, 'r').readlines():
         if line[:7] == '%Module':
             return line.split()[1]
@@ -172,6 +175,7 @@ def get_sip_includes(sip_file, includes=[]):
     return includes
 
 # get_sip_includes()
+
 
 # Local Variables: ***
 # mode: python ***

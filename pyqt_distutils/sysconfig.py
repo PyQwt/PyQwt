@@ -64,17 +64,13 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
                 '%(CXXFLAGS_WARN_ON)s '
                 ) % make_info
 
+        linker_so = (
+            '%(CXX)s '
+            '%(LFLAGS_PLUGIN)s '
+            ) % make_info
+        
         if make_info.get('RPATH'):
-            linker_so = (
-                '%(CXX)s '
-                '%(RPATH)s%(LIBDIR_QT)s '
-                '%(LFLAGS_PLUGIN)s '
-                ) % make_info
-        else:
-            linker_so = (
-                '%(CXX)s '
-                '%(LFLAGS_PLUGIN)s '
-                ) % make_info
+            linker_so = linker_so + '%(RPATH)s%(LIBDIR_QT)s ' % make_info
 
         # Flag Python-2.3 to use a C++-linker, do not use ccache. 
         compiler_cxx = (
@@ -106,7 +102,6 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
             '%(CXXFLAGS)s '
             '%(CXXFLAGS_RELEASE)s '
             '%(CXXFLAGS_MT_DLL)s '
-            '%(CXXFLAGS_RTTI_ON)s '
             '%(CXXFLAGS_WARN_ON)s '
             ) % make_info
         compiler.compile_options = compile_options.split()
