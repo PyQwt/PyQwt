@@ -12,14 +12,14 @@ The home page of PyQwt is http://pyqwt.sourceforge.net.
 
 Main changes in PyQwt-4.0:
 
-1. supports PyQt-3.11, PyQt-3.10, and PyQt-3.9.
+1. supports PyQt-3.12, PyQt-3.11, and PyQt-3.10.
 
-2. supports sip-4.0, sip-3.10.1, sip-3.10, and sip-3.9.
+2. supports sip-4.0, sip-3.10.2, sip-3.10.1, and sip-3.10.
 
-3. supports Qt-3.3.1 downto -2.3.0.
+3. supports Qt-3.3.2 downto -2.3.0.
 
 4. supports Mac OS X.
 
-5. based on Qwt-20040418 (a snapshot later than Qwt-4.2.0rc2). 
+5. based on Qwt-20040605 (a snapshot later than Qwt-4.2.0rc1). 
 
 Gerard Vermeulen
