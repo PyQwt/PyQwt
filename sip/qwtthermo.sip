@@ -84,7 +84,7 @@ public:
 
     double value() const;
 
-    void setRange(double, double);
+    void setRange(double, double, bool = 0);
     void setMargin(int);
 
     virtual QSize sizeHint() const;
