@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -78,20 +78,19 @@ int try_PyObject_to_QwtArray(PyObject *in, QwtArray<double> &out)
     if ((result = try_PySequence_to_QwtArray(in, out)))
         return result;
 
-    PyErr_SetString(
-    PyExc_TypeError, "expected is\n"
-    "(*) a list or tuple of Python numbers.\n"
+    PyErr_SetString(PyExc_TypeError, "expected is\n"
+                    "(*) a list or tuple of Python numbers.\n"
 #ifdef HAS_NUMERIC
-    "(*) a Numeric array of PyArray_DOUBLE.\n"
+                    "(*) a Numeric array of PyArray_DOUBLE.\n"
 #else
-    "(!) rebuild PyQwt to support Numeric arrays.\n" 
+                    "(!) rebuild PyQwt to support Numeric arrays.\n" 
 #endif
 #ifdef HAS_NUMARRAY
-    "(*) a numarray array of PyArray_DOUBLE.\n"
+                    "(*) a numarray array of PyArray_DOUBLE.\n"
 #else
-    "(!) rebuild PyQwt to support numarray arrays.\n"
+                    "(!) rebuild PyQwt to support numarray arrays.\n"
 #endif
-    );
+        );
             
     return -1;
 }
@@ -112,15 +111,16 @@ int try_PyObject_to_QImage(PyObject *in, QImage &out)
 
     PyErr_SetString(PyExc_TypeError, "expected is\n"
 #ifdef HAS_NUMERIC
-            "(*) a Numeric array of PyArray_DOUBLE.\n"
+                    "(*) a Numeric array of PyArray_DOUBLE.\n"
 #else
-            "(!) rebuild PyQwt to support Numeric arrays.\n" 
+                    "(!) rebuild PyQwt to support Numeric arrays.\n" 
 #endif
 #ifdef HAS_NUMARRAY
-            "(*) a numarray array of PyArray_DOUBLE.\n");
+                    "(*) a numarray array of PyArray_DOUBLE.\n"
 #else
-            "(!) rebuild PyQwt to support numarray arrays.\n");
+                    "(!) rebuild PyQwt to support numarray arrays.\n"
 #endif
+        );
             
     return -1;
 }

@@ -1,4 +1,7 @@
-// The SIP interface definition for toImage.
+// The SIP interface definition for:
+//      toImage,
+//      to_na_array,
+//      to_np_array.
 //
 // Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
@@ -12,7 +15,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -30,10 +33,6 @@
 // for a non-free program.
 
 
-//%HeaderCode
-//QImage &toQImage(PyObject *data);
-//%End // HeaderCode
-
 QImage &toQImage(void *);
 %MemberCode
     PyObject *object;
@@ -42,16 +41,36 @@ QImage &toQImage(void *);
 	QImage *image;
 	int code;
 	
-	//Py_BEGIN_ALLOW_THREADS
+	// Numeric is not thread-safe, no Py_BEGIN_ALLOW_THREADS
 	image = new QImage();
 	code = try_PyObject_to_QImage(object, *image);
-	//Py_END_ALLOW_THREADS
+	// Numeric is not thread-safe, no Py_END_ALLOW_THREADS
 
 	if (-1 == code)
 	    return 0;
 	    
         return sipNewCppToSelf(image, sipClass_QImage,
 			       SIP_SIMPLE | SIP_PY_OWNED);
+    }
+%End
+
+void /* PyObject */ to_na_array(const QImage &);
+%MemberCode
+    QImage *image;
+    if (sipParseArgs(&sipArgsParsed, sipArgs,
+                     "J1" , sipClass_QImage, &image)) {
+        // Numeric is not thread-safe, no Py_BEGIN/END_ALLOW_THREADS
+        return to_na_array(*image);
+    }
+%End
+
+void /* PyObject */ to_np_array(const QImage &);
+%MemberCode
+    QImage *image;
+    if (sipParseArgs(&sipArgsParsed, sipArgs,
+                     "J1" , sipClass_QImage, &image)) {
+        // Numeric is not thread-safe, no Py_BEGIN/END_ALLOW_THREADS
+        return to_np_array(*image);
     }
 %End
 

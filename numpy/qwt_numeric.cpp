@@ -12,7 +12,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -30,23 +30,24 @@
 // for a non-free program.
 
 
+#include <Python.h>
+
 #ifdef HAS_NUMERIC
 
-#include <Python.h>
 #include <qimage.h>
 #include <qwt_array.h>
 #undef NO_IMPORT // to force: void **PyQwt_Numeric_PyArray_API;
 #define PY_ARRAY_UNIQUE_SYMBOL PyQwt_Numeric_PyArray_API
 #include <Numeric/arrayobject.h>
 
-void import_NumericArray() {
+void qwt_import_array() {
     import_array();
 }
 
 int try_NumericArray_to_QwtArray(PyObject *in, QwtArray<double> &out)
 {
     if (!PyArray_Check(in))
-    return 0;
+        return 0;
 
     // FIXME: how costly is PyArray_ContiguousFromObject?
     PyArrayObject *array = (PyArrayObject *)
@@ -75,12 +76,12 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
         return -1;
     }
     
-    int nx = ((PyArrayObject *)in)->dimensions[0];
-    int ny = ((PyArrayObject *)in)->dimensions[1];
-    int xstride = ((PyArrayObject *)in)->strides[0];
-    int ystride = ((PyArrayObject *)in)->strides[1];
+    const int nx = ((PyArrayObject *)in)->dimensions[0];
+    const int ny = ((PyArrayObject *)in)->dimensions[1];
+    const int xstride = ((PyArrayObject *)in)->strides[0];
+    const int ystride = ((PyArrayObject *)in)->strides[1];
     
-    //  8 bit data - palette
+    //  8 bit data
     if (((PyArrayObject *)in)->descr->elsize == 1) {
         if (!out.create(nx, ny, 8, 256)) {
             PyErr_SetString(PyExc_RuntimeError,
@@ -95,9 +96,14 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
                 data += xstride;
             }
         }
+        // initialize the palette as all gray
+        for (int i = 0; i<out.numColors(); i++)
+            out.setColor(i, qRgb(i, i, i));
         return 1;
     }
+
     // 16 bit data
+    // FIXME: endianness
     if (((PyArrayObject *)in)->descr->elsize == 2) {
 #if QT_VERSION < 300
         PyErr_SetString(PyExc_RuntimeError,
@@ -121,7 +127,10 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
         return 1;
 #endif
     }
-    // 32 bit data
+
+    // 32 bit data.
+    // FIXME: what does it do on a 64 bit platform?
+    // FIXME: endianness
     if (((PyArrayObject *)in)->descr->elsize == 4) {
         if (!out.create(nx, ny, 32)) {
             PyErr_SetString(PyExc_RuntimeError,
@@ -147,7 +156,112 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
     return -1;
 }
 
+
 #endif // HAS_NUMERIC
+
+PyObject *to_np_array(const QImage &image)
+{
+#if HAS_NUMERIC
+    PyArrayObject *result = 0;
+    const int nx = image.width();
+    const int ny = image.height();
+
+    // 8 bit data
+    if (image.depth() == 8) {
+        int dimensions[2] = { nx, ny };
+
+        if (0 == (result = (PyArrayObject *)PyArray_FromDims(
+                      2, dimensions, PyArray_UBYTE))) {
+            PyErr_SetString(PyExc_MemoryError,
+                            "failed to allocate memory for array");
+            return 0;
+        }
+
+        const int xstride = result->strides[0];
+        const int ystride = result->strides[1];
+
+        for (int j=0; j<ny; j++) {
+            unsigned char *line = (unsigned char *)image.scanLine(j);
+            unsigned char *data = (unsigned char *)(result->data + j*ystride);
+            for (int i=0; i<nx; i++) {
+                data[0] = *line++;
+                data += xstride;
+            }
+        }
+        return PyArray_Return(result);
+    }
+
+    // 16 bit data
+    // FIXME: endianness
+    if (image.depth() == 16) {
+#if QT_VERSION < 300
+        PyErr_SetString(PyExc_RuntimeError,
+                        "Qt < 3.0.0 does not support 16 bit images");
+        return 0;
+#else
+        int dimensions[2] = { nx, ny };
+
+        if (0 == (result = (PyArrayObject *)PyArray_FromDims(
+                      2, dimensions, PyArray_USHORT))) {
+            PyErr_SetString(PyExc_MemoryError,
+                            "failed to allocate memory for array");
+            return 0;
+        }
+
+        const int xstride = result->strides[0];
+        const int ystride = result->strides[1];
+
+        for (int j=0; j<ny; j++) {
+            unsigned char *line = (unsigned char *)image.scanLine(j);
+            unsigned char *data = (unsigned char *)(result->data + j*ystride);
+            for (int i=0; i<nx; i++) {
+                data[0] = *line++;
+                data[1] = *line++;
+                data += xstride;
+            }
+        }
+        return PyArray_Return(result);
+#endif
+    }
+
+    // 32 bit data.
+    // FIXME: what does it do on a 64 bit platform?
+    // FIXME: endianness
+    if (image.depth() == 32) {
+        int dimensions[2] = { nx, ny };
+
+        if (0 == (result = (PyArrayObject *)PyArray_FromDims(
+                      2, dimensions, PyArray_UINT))) {
+            PyErr_SetString(PyExc_MemoryError,
+                            "failed to allocate memory for array");
+            return 0;
+        }
+
+        const int xstride = result->strides[0];
+        const int ystride = result->strides[1];
+
+        for (int j=0; j<ny; j++) {
+            unsigned char *line = (unsigned char *)image.scanLine(j);
+            unsigned char *data = (unsigned char *)(result->data + j*ystride);
+            for (int i=0; i<nx; i++) {
+                data[0] = *line++;
+                data[1] = *line++;
+                data[2] = *line++;
+                data[3] = *line++;
+                data += xstride;
+            }
+        }
+        return PyArray_Return(result);
+    }
+
+    return 0;
+#else
+    PyErr_SetString(
+        PyExc_RuntimeError,
+        "Trying to convert to a numarray array without support for numarray");
+    return 0;
+#endif
+}
 
 // Local Variables:
 // mode: C++

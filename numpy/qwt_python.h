@@ -1,4 +1,6 @@
-// qwt_python.h: to convert Python objects to QwtArray<double>.
+// qwt_python.h:
+// - conversion from Python objects to QwtArray<double>.
+// - conversion between Python objects and QImage.
 // 
 // Copyright (C) 2001-2003 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
@@ -12,7 +14,7 @@
 //
 // PyQwt is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU  General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 // details.
 //
 // You should have received a copy of the GNU General Public License along with
@@ -39,6 +41,9 @@
 // returns 1, 0, -1 in case of success, wrong object type, failure
 int try_PyObject_to_QwtArray(PyObject *object, QwtArray<double> &array);
 int try_PyObject_to_QImage(PyObject *object, QImage &image);
+PyObject *to_na_array(const QImage &image);
+PyObject *to_np_array(const QImage &image); 
+
 #endif // QWT_PYTHON_H
 
 // Local Variables:

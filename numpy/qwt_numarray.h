@@ -40,11 +40,12 @@
 #ifdef HAS_NUMARRAY
 // numarray's C-API pointer
 extern void **PyQwt_Numarray_PyArray_API;
-// hides numarray's import_array()
-void import_NumarrayArray();
+// to #ifdef import_libnumarray()
+void qwt_import_libnumarray();
 // returns 1, 0, -1 in case of success, wrong PyObject type, failure
 int try_NumarrayArray_to_QwtArray(PyObject *in, QwtArray<double> &out);
 int try_NumarrayArray_to_QImage(PyObject *in, QImage &out);
+PyObject *to_np_array(const QImage &image);
 #endif // HAS_NUMARRAY
 
 #endif // QWT_NUMARRAY

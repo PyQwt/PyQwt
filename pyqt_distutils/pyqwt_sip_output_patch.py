@@ -51,10 +51,10 @@ def pyqwt_sip_output_patch(directory, name):
         '\tPy_InitModule("lib%sc",methods);'
         '\n\n\t// pyqwt_sip_output_patch.py'
         '\n\n#ifdef HAS_NUMERIC'
-        '\n\timport_NumericArray();'
+        '\n\tqwt_import_array();'
         '\n#endif'
         '\n#ifdef HAS_NUMARRAY'
-        '\n\timport_NumarrayArray();'
+        '\n\tqwt_import_libnumarray();'
         '\n#endif'
         % name
         )

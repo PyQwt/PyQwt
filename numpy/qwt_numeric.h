@@ -40,11 +40,12 @@
 #ifdef HAS_NUMERIC
 // Numeric's C-API pointer
 extern void **PyQwt_Numeric_PyArray_API;
-// hides Numeric's import_array()
-void import_NumericArray();
+// to #ifdef import_array()
+void qwt_import_array();
 // returns 1, 0, -1 in case of success, wrong PyObject type, failure
 int try_NumericArray_to_QwtArray(PyObject *in, QwtArray<double> &out);
 int try_NumericArray_to_QImage(PyObject *in, QImage &out);
+PyObject *to_np_array(const QImage &image);
 #endif // HAS_NUMERIC
 
 #endif // QWT_NUMERIC
