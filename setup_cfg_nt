@@ -19,7 +19,7 @@ sip_x_features=CXX_DYNAMIC_CAST
 #
 [sdist]
 # The option 'force-manifest' indicates the 'sdist' command whether to force
-# regenaration of the MANIFEST
+# regeneration of the MANIFEST
 force-manifest=1
 #
 #

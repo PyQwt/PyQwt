@@ -85,7 +85,7 @@ install_data=/usr/share/doc/PyQwt-4.1
 #
 [sdist]
 # The option 'force-manifest' indicates the 'sdist' command whether to force
-# regenaration of the MANIFEST
+# regeneration of the MANIFEST
 force-manifest=1
 #
 #
