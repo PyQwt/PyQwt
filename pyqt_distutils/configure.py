@@ -454,10 +454,10 @@ class QtModuleInfo(ConfigInfo):
         libraries = []
 
         if os.name == 'nt':
-            template = "%s -vEc __import__('%s')"
+            template = "%s -vc __import__('%s')"
             prefix = ''
         elif os.name == 'posix':
-            template = "%s -vEc 'import %s'"
+            template = "%s -vc 'import %s'"
             prefix = 'lib'
 
         _, _, stderr = os.popen3(template % (sys.executable, self.module))
