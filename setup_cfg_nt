@@ -4,8 +4,6 @@
 # After installing sip & PyQt-Commercial >=3.10 with 'configure.py', almost all
 # configuration information can be obtained from sipconfig and pyqtconfig.
 #
-# FIXME: so, this file can be empty, if I have fixed this:
-#
 [run_sip]
 # Some %ConvertToSubClassCode handwritten code uses 'dynamic_cast<>()' which is
 # not supported by all compilers and/or compiler options.
@@ -17,6 +15,13 @@
 # disable a list of features (separated by ',').
 sip_x_features=CXX_DYNAMIC_CAST
 #sip_x_features=
+#
+#
+[sdist]
+# The option 'force-manifest' indicates the 'sdist' command whether to force
+# regenaration of the MANIFEST
+force-manifest=1
+#
 #
 # Local Variables: ***
 # mode: sh ***
