@@ -1,5 +1,7 @@
 *.patch
 *.pyc
+LOG.*
+setup.cfg
 .configure
 build
 dist
