@@ -49,7 +49,7 @@ public:
 	Center = 0x10
     };
 
-//#ifndef QWT_NO_COMPAT
+%If (Qwt_COMPAT)
     enum Shape {
         HLine,
         VLine,
@@ -62,7 +62,7 @@ public:
         LTriangle,
         RTriangle
     };
-//#endif
+%End
 
     enum Errors {
 	ErrNone,

@@ -59,6 +59,15 @@ public:
     void setFocusStyle(FocusStyle);
     FocusStyle focusStyle() const;
 
+protected:
+    QwtPlotCanvas(QwtPlot * /TransferThis/);
+
+    virtual void frameChanged();
+    virtual void drawContents(QPainter *);
+    virtual void paintFocus(QPainter *, const QRect &);
+
+%If (Qwt_COMPAT)
+public:
     void enableOutline(bool);
     bool outlineEnabled() const;
 
@@ -74,17 +83,10 @@ signals:
     void mouseMoved(const QMouseEvent &);
 
 protected:
-    QwtPlotCanvas(QwtPlot * /TransferThis/);
-
-    virtual void frameChanged();
-    virtual void drawContents(QPainter *);
-    virtual void drawContentsCallback(QPainter *) = 0;
-
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseReleaseEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
-
-    virtual void paintFocus(QPainter *, const QRect &);
+%End
 };
 
 // Local Variables:

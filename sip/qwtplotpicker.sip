@@ -41,14 +41,6 @@ class QwtPlotPicker: QwtPicker
 %End
 
 public:
-    enum Shape
-    {
-        HLine,
-        VLine,
-        Cross,
-        Rect,
-        Ellipse
-    };
 %If (SIP_DUMB_DIR)
     void getLazyNames();
 %MemberCode
@@ -60,22 +52,27 @@ public:
 
     QwtPlotPicker(QwtPlotCanvas *, const char * = 0);
 
+    QwtPlotPicker(int, int, QwtPlotCanvas *, const char * = 0);
+
+    QwtPlotPicker(int, int, int, RubberBand, DisplayMode,
+                  QwtPlotCanvas *, const char * = 0);
     virtual void setAxis(int, int);
 
     int xAxis() const;
     int yAxis() const;
 
-    virtual void setShape(Shape);
-    Shape shape() const;
-
     QwtPlot *plot();
     // dead code: const QwtPlot *plot() const;
     
+    QwtPlotCanvas *canvas();
+    // dead code: const QwtPlotCanvas *canvas() const;
+
 signals:
-    void moved(const QwtDoublePoint &);
     void selected(const QwtDoublePoint &);
     void selected(const QwtDoubleRect &);
-    // FIXME: void selected(const QwtArray<QwtDoublePoint> &);
+    void selected(const QwtArray<QwtDoublePoint> &);
+    void appended(const QwtDoublePoint &);
+    void moved(const QwtDoublePoint &);
 
 protected:
     QwtDoubleRect scaleRect() const;
@@ -89,11 +86,9 @@ protected:
     virtual QString cursorLabel(const QPoint &) const;
     virtual QString cursorLabel(const QwtDoublePoint &) const;
 
-    virtual void drawRubberBand(QPainter *, const QRect &,
-                                const QPointArray &) const;
-
     virtual void move(const QPoint &);
-    virtual void end(bool = TRUE);
+    virtual void append(const QPoint &);
+    virtual bool end(bool = TRUE);
 };
 
 // Local Variables:

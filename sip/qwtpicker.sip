@@ -42,18 +42,35 @@ class QwtPicker: QObject
 
 public:
     enum SelectionType {
-        None,
-        Point,
-        Rect,
-        Polygon,
+        NoSelection = 0,
+        PointSelection = 1,
+        RectSelection = 2,
+        PolygonSelection = 4,
+    };
+
+    enum RectSelectionType {
+        CornerToCorner = 64,
+        CenterToCorner = 128,
+        CenterToRadius = 256
     };
 
     enum SelectionMode {
-        Drag,
-        Click
+        ClickSelection = 1024,
+        DragSelection = 2048
     };
 
-    enum CursorLabel {
+    enum RubberBand {
+        NoRubberBand = 0,
+        HLineRubberBand,
+        VLineRubberBand,
+        CrossRubberBand,
+        RectRubberBand,
+        EllipseRubberBand,
+        PolygonRubberBand,
+        UserRubberBand = 100
+    };
+
+    enum DisplayMode {
         AlwaysOff,
         AlwaysOn,
         ActiveOnly
@@ -74,19 +91,17 @@ public:
 %End
 
     QwtPicker(QWidget * = 0, const char * = 0);
+    QwtPicker(int, RubberBand,DisplayMode, QWidget *, const char * = 0);
     virtual ~QwtPicker();
 
-    virtual void setSelectionType(SelectionType);
-    SelectionType selectionType() const;
+    virtual void setSelectionFlags(int);
+    int selectionFlags() const;
 
-    virtual void setSelectionMode(SelectionMode);
-    SelectionMode selectionMode() const;
-
-    virtual void setRubberBand(bool);
+    virtual void setRubberBand(RubberBand);
     bool rubberBand() const;
 
-    virtual void setCursorLabel(CursorLabel);
-    CursorLabel cursorLabel() const;
+    virtual void setCursorLabelMode(DisplayMode);
+    DisplayMode cursorLabelMode() const;
 
     virtual void setResizeMode(ResizeMode);
     ResizeMode resizeMode() const;
@@ -108,30 +123,33 @@ public:
     virtual bool event(QEvent *);
     virtual bool eventFilter(QObject *, QEvent *);
 
-    QWidget *canvas();
-    // dead code: const QWidget *canvas() const;
+    QWidget *parentWidget();
+    // dead code: const QWidget *parentWidget() const;
 
     virtual QRect pickRect() const;
-    // dead code: const QPointArray &selection() const;
+    const QPointArray &selection() const;
 
 signals:
     void selected(const QPointArray &);
+    void appended(const QPoint &);
+    void moved(const QPoint &);
+    void changed(const QPointArray &);
 
 protected:
-    QPointArray &selection();
+    virtual bool accept(QPointArray &) const;
+
     virtual void begin();
     virtual void append(const QPoint &);
     virtual void move(const QPoint &);
-    virtual void end(bool = TRUE);
+    virtual bool end(bool = TRUE);
 
-
-    virtual void canvasMousePressEvent(QMouseEvent *);
-    virtual void canvasMouseReleaseEvent(QMouseEvent *);
-    virtual void canvasMouseDoubleClickEvent(QMouseEvent *); 
-    virtual void canvasMouseMoveEvent(QMouseEvent *); 
-    virtual void canvasWheelEvent(QWheelEvent *);
-    virtual void canvasKeyPressEvent(QKeyEvent *); 
-    virtual void canvasKeyReleaseEvent(QKeyEvent *); 
+    virtual void widgetMousePressEvent(QMouseEvent *);
+    virtual void widgetMouseReleaseEvent(QMouseEvent *);
+    virtual void widgetMouseDoubleClickEvent(QMouseEvent *);
+    virtual void widgetMouseMoveEvent(QMouseEvent *);
+    virtual void widgetWheelEvent(QWheelEvent *);
+    virtual void widgetKeyPressEvent(QKeyEvent *);
+    virtual void widgetKeyReleaseEvent(QKeyEvent *);
 
     virtual void drawRubberBand(const QRect & = QRect()) const;
     virtual void drawRubberBand(QPainter *, 

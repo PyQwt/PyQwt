@@ -51,8 +51,12 @@ public:
 %End
 
     QwtPlotZoomer(QwtPlotCanvas *, const char * = 0);
+    QwtPlotZoomer(int, int, QwtPlotCanvas *, const char * = 0);
+    QwtPlotZoomer(int, int, int, DisplayMode,
+                  QwtPlotCanvas *, const char * = 0);
 
     virtual void setZoomBase();
+    virtual void setZoomBase(const QwtDoubleRect &);
 
     QwtDoubleRect zoomBase() const;
     QwtDoubleRect zoomRect() const;
@@ -63,37 +67,34 @@ public:
     int maxStackDepth() const;
 
     // dead code: const QValueStack<QwtDoubleRect> &zoomStack() const;
+    uint zoomRectIndex() const;
 
-    QwtPlot *plot();
-    // dead code: const QwtPlot *plot() const;
-    
+    virtual void setSelectionFlags(int);
+
 public slots:
     void moveBy(double, double);
     virtual void move(double, double);
 
-    virtual void setZoomBase(const QwtDoubleRect &);
     virtual void zoom(const QwtDoubleRect &);
-
-    virtual void unzoom(int = -1);
+    virtual void zoom(int);
 
 signals:
     void zoomed(const QwtDoubleRect &);
 
 protected:
-    // not implemented: QValueStack<QwtDoubleRect> &zoomStack();
+    // not implemented: 
+    QValueStack<QwtDoubleRect> &zoomStack();
 
     virtual void rescale();
 
-    virtual bool isValidSelection(QRect &) const;
     virtual QwtDoubleSize minZoomSize() const;
 
-    virtual void canvasMousePressEvent(QMouseEvent *);
-    virtual void canvasMouseReleaseEvent(QMouseEvent *);
-    virtual void canvasKeyPressEvent(QKeyEvent *);
+    virtual void widgetMouseReleaseEvent(QMouseEvent *);
+    virtual void widgetKeyPressEvent(QKeyEvent *);
 
-    QwtDoubleRect scaleRect() const;
-
-    virtual void end(bool = TRUE);
+    virtual void begin();
+    virtual bool end(bool = 1);
+    virtual bool accept(QPointArray &) const;
 };
 
 // Local Variables:

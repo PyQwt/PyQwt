@@ -32,7 +32,8 @@
 // code used other than Qt, PyQt and sip, including the Python scripts that are
 // part of PyQwt.
 
-%Feature	SIP_DUMB_DIR
+%Feature SIP_DUMB_DIR
+%Feature Qwt_COMPAT
 
 // Local Variables:
 // mode: C++

@@ -49,6 +49,7 @@
 
 // Normal include files
 %Include qwt.sip
+%Include qwtarray.sip
 %Include qwtarrowbutton.sip
 %Include qwtautoscale.sip
 %Include qwtcompass.sip

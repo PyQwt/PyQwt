@@ -34,63 +34,6 @@
 // part of PyQwt.
 
 
-%MappedType QwtArray<QwtDiMap>
-{
-%HeaderCode
-#include <qwt_array.h>
-#include <qwt_dimap.h>
-%End
-
-%ConvertFromTypeCode
-    if (!sipCpp)
-        return PyList_New(0);
-
-    PyObject *l = PyList_New(sipCpp->count());;
-
-    if (0 == l)
-        return 0;
-
-    for (int i = 0; i < int(sipCpp->count()); i++) {
-        PyObject *o;
-        if ((0 == (o = sipNewCppToSelf(new QwtDiMap((*sipCpp)[i]),
-                                       sipClass_QwtDiMap,
-                                       SIP_SIMPLE | SIP_PY_OWNED)))
-            || (-1 == PyList_SetItem(l, i, o)))
-        {
-            Py_DECREF(l);
-            return 0;
-        }             
-    }
-    
-    return l;
-%End
-
-%ConvertToTypeCode
-    if (0 == sipIsErr)
-        return PyList_Check(sipPy);
-
-    QwtArray<QwtDiMap> *a = new QwtArray<QwtDiMap>(PyList_GET_SIZE(sipPy));
-    int iserr = 0;
-
-    for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
-        (*a)[i] = *sipForceConvertTo_QwtDiMap(
-            PyList_GET_ITEM(sipPy, i), &iserr);
-
-        if (iserr) {
-            delete a;
-            *sipIsErr = 1;
-            
-            return 0;
-        }
-    }
-
-    *sipCppPtr = a;
-
-    return 1;
-%End
-};
-
-
 class QwtPlot: QFrame
 {
 %HeaderCode
@@ -139,6 +82,7 @@ public:
 
     void clear();
 
+%If (Qwt_COMPAT)
     // Outline
 
     void enableOutline(bool);
@@ -147,6 +91,7 @@ public:
     Qwt::Shape outlineStyle() const;
     void setOutlinePen(const QPen &);
     const QPen& outlinePen() const;
+%End
 
     // Layout
 
@@ -194,12 +139,12 @@ public:
     bool removeCurve(long);
     void removeCurves();
 
-    QArray<long> curveKeys() const;
+    QwtArray<long> curveKeys() const;
 %MemberCode
     QwtPlot *ptr;
     if (sipParseArgs(&sipArgsParsed, sipArgs, "m",
 		     sipThisObj, sipClass_QwtPlot, &ptr)) {
-	QArray<long> keys;
+	QwtArray<long> keys;
 	Py_BEGIN_ALLOW_THREADS
 	keys = ptr->curveKeys();
 	Py_END_ALLOW_THREADS
@@ -408,13 +353,12 @@ public:
 	return Py_BuildValue("(li)", key, distance);
     }
 %End
-    // FIXME: QArray is QwtArray
-    QArray<long> markerKeys() const;
+    QwtArray<long> markerKeys() const;
 %MemberCode
     QwtPlot *ptr;
     if (sipParseArgs(&sipArgsParsed, sipArgs, "m",
 		     sipThisObj, sipClass_QwtPlot, &ptr)) {
-	QArray<long> keys;
+	QwtArray<long> keys;
 	Py_BEGIN_ALLOW_THREADS
 	keys = ptr->markerKeys();
 	Py_END_ALLOW_THREADS
@@ -508,10 +452,13 @@ public slots:
 protected slots:
     virtual void lgdClicked();
 
+%If (Qwt_COMPAT)
 signals:
     void plotMousePressed(const QMouseEvent &);
     void plotMouseReleased(const QMouseEvent &);
     void plotMouseMoved(const QMouseEvent &);
+%End
+signals:
     void legendClicked(long);
 
 protected:
