@@ -59,9 +59,17 @@ public:
     void setSpacing(int);
     int spacing() const;
 
+    void setLegendPosition(QwtPlot::Position, double);
+    void setLegendPosition(QwtPlot::Position);
+    QwtPlot::Position legendPosition() const;
+
+    void setLegendRatio(double);
+    double legendRatio() const;
+
+%If (Qwt_COMPAT)
     void setLegendPos(int, double = 0.0);
     int legendPos() const;
-    double legendRatio() const;
+%End
 
     virtual QSize minimumSizeHint(const QwtPlot *) const;
     virtual void activate(const QwtPlot *, QRect &, int = 0);

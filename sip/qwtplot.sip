@@ -44,6 +44,12 @@ public:
 	xTop,
 	axisCnt,
     };
+    enum Position {
+	Left,
+	Right,
+	Bottom,
+	Top,
+    };
 
     QwtPlot(QWidget * /TransferThis/ = 0, const char * = 0);
     QwtPlot(const QString &, QWidget * /TransferThis/ = 0, const char * = 0);
@@ -296,8 +302,15 @@ public:
     void enableLegend(bool, long = -1);
     bool legendEnabled(long) const;
 
+    void setLegendPosition(Position, double);
+
+    void setLegendPosition(Position);
+    Position legendPosition() const;
+
+%If (Qwt_COMPAT)
     void setLegendPos(int, double = 0.0);
     int legendPos() const;
+%End
 
     void setLegendFont(const QFont &);
     const QFont legendFont() const;
