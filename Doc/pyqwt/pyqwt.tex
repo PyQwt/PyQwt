@@ -59,10 +59,13 @@
   {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-4.1.win32-py2.3.exe?download}}
 
 \newcommand{\PrerequisitesEnd}{
-  The source package \PyQwtTarGz{} contains the \Qwt-4.2.0 library with a few
-  patches.
-  However, you can also build PyQwt against the official \Qwt-4.2.0 library
-  (not the 4.2.0rcX release candidates because of API enhancements).
+  The source package \PyQwtTarGz{} contains the sources of the \Qwt-4.2.0
+  library with a few patches. You have the option to compile and link those
+  sources statically into PyQwt (easiest for most users). 
+
+  However, the \file{configure.py} script lets you build PyQwt against a
+  shared or static \Qwt-4.2.0 library (not the 4.2.0rcX release candidates
+  because of API enhancements).
 
   To exploit the full power of the QwtPlot widget, you should install at
   least one the Numerical Python extensions:
@@ -70,6 +73,11 @@
   I am using \NumericTarGz{} and \numarrayTarGz{}. 
   Versions of Numeric later than 21.0 are supported.
   Numarray is newer and therefore less stable than Numeric, so get the latest!
+
+  \begin{notice}[note]
+    You must install sip and PyQt with the 'configure.py' script instead of the
+    deprecated 'build.py' script.
+  \end{notice}
 }
 
 \newcommand{\Future}{
@@ -79,7 +87,8 @@
   \end{notice}
 }
 
-%\renewcommand{\Future}{}
+\renewcommand{\Future}{}
+
 
 \title{PyQwt Manual}
 
@@ -107,13 +116,37 @@
 \begin{abstract}
 
 \noindent
-PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
-plotting of Python lists and tuples and the powerful array types provided by
-the Python extension modules \module{Numeric} and/or \module{numarray}.
+PyQwt is a set of Python bindings for the \Qwt{} C++ class library which
+extends the Qt framework with widgets for scientific, engineering and financial
+applications.   It provides a widget to plot 2-dimensional data and various
+widgets to display and control bounded or unbounded floating point values.
+
+The main features of PyQwt are:
+\begin{itemize}
+\item
+  it really shines with either \module{Numeric}, \module{numarray} or both.
+  Numeric and/or numarray extend the Python language with new data types which
+  turn Python into an ideal system for numerical computing and experimentation,
+  better than MatLab and IDL.
+
+\item
+  it requires and extends PyQt, a set of Python bindings for Qt.
+
+\item
+  it supports the use of PyQt, Qt, Qwt, the Numerical Python extensions (either
+  Numeric, or numarray or both) and optionally SciPy in a GUI Python
+  application or in an interactive Python session.
+
+\item
+  it runs on POSIX, MacOS/X and Windows (any operating system supported by Qt
+  and Python).
+\end{itemize}
 
 \end{abstract}
 
+
 \tableofcontents
+
 
 \chapter{Introduction \label{introduction}}
 
@@ -121,15 +154,14 @@ PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
 plotting of Python lists and tuples and the powerful array types provided
 by the Python extension modules \module{Numeric} and/or \module{numarray}.
 
-
  
 \section{Qwt \label{qwt-intro}}
 
 \Future{}
 
 Qwt is a C++ library based on the Qt GUI framework from Troll Tech AS.
-The Qwt library contains widgets and components useful to write technical
-and scientific programes.
+The Qwt library contains widgets and components useful to write technical,
+scientific, and financial programs.
 It includes the following widgets:
 \begin{itemize}
   \item
@@ -208,6 +240,7 @@ The documentation for writing GUI programs consists of the
 \ulink{Qwt manual}{qwt/index.html} on your hard disk or the \Qwt{} manual on
 the web, supplemented by chapter \ref{reference} to document the differences
 between PyQwt and Qwt.
+
 
 \subsection{iqt \label{iqt-intro}}
 
@@ -576,7 +609,7 @@ Contact the \mailinglist{}, if you run into problems.
 
 \section{Build prerequisites \label{prerequisites}}
 
-\subsection{Build prerequisites for PyQwt on \POSIX{}}
+\subsection{Build prerequisites for PyQwt on \POSIX{} \label{posix-prereqs}}
 
 \Future{}
 
@@ -605,14 +638,10 @@ Build prerequisites for \PyQwtTarGz{} on \POSIX{} are:
     \ReadMePatches{} for bug fixes and upgrades.
 \end{enumerate}
 
-\begin{notice}[note]
-  You must install sip and PyQt with the 'configure.py' script instead
-  of the deprecated 'build.py' script.
-\end{notice}
-
 \PrerequisitesEnd{}
 
-\subsection{Build prerequisites for PyQwt on MacOS/X}
+
+\subsection{Build prerequisites for PyQwt on MacOS/X \label{macosx-prereqs}}
 
 \Future{}
 
@@ -637,15 +666,10 @@ Build prerequisites for \PyQwtTarGz{} on MacOS/X are:
     \ReadMePatches{} for bug fixes and upgrades.
 \end{enumerate}
 
-\begin{notice}[note]
-  You must install sip and PyQt with the 'configure.py' script instead of the
-  deprecated 'build.py' script.
-\end{notice}
-
 \PrerequisitesEnd{}
 
 
-\subsection{Build prerequisites for PyQwt on Windows}
+\subsection{Build prerequisites for PyQwt on Windows\label{win-prereqs}}
 
 \Future{}
 
@@ -674,11 +698,6 @@ Build prerequisites for \PyQwtTarGz{} on Windows are:
   \item
     \ReadMePatches{} for bug fixes and upgrades.
 \end{enumerate}
-
-\begin{notice}[note]
-  You must install sip and PyQt with the 'configure.py' script instead of the
-  deprecated 'build.py' script.
-\end{notice}
 
 \PrerequisitesEnd{}
 
