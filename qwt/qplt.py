@@ -33,6 +33,7 @@ Provides a Command Line Interpreter friendly interface to QwtPlot.
 
 
 import sys
+import time
 
 from Numeric import *
 from qt import *
@@ -41,59 +42,7 @@ from types import *
 
 from grace import GracePlotter
 
-"""
-__all__ = [
-    # classes
-    'Plot',
-    'Curve',
-    'Symbol',
-    'Axis',
-    'Brush',
-    'Pen',
-    # colors
-    'Black',
-    'Blue',
-    'Cyan',
-    'DarkBlue',
-    'DarkCyan',
-    'DarkGray',
-    'DarkGreen',
-    'DarkMagenta',
-    'DarkRed',
-    'DarkYellow',
-    'Gray',
-    'Green',
-    'LightGray',
-    'Magenta',
-    'Red',
-    'White',
-    'Yellow',
-    # axis orientation
-    'Left',
-    'Right',
-    'Bottom',
-    'Top',
-    # axis option
-    'PlainAxis',
-    'IncludeRef',
-    'Symmetric',
-    'Floating',
-    'Inverted',
-    'Logarithmic',
-    # symbol style
-    'NoSymbol',
-    'Circle',
-    'Square',
-    'Diamond',
-    # line style
-    'NoLine',
-    'SolidLine',
-    'DashLine',
-    'DotLine',
-    'DashDotLine',
-    'DashDotDotLine',
-    ]
-"""
+
 # colors
 Black       = Qt.black
 Blue        = Qt.blue
@@ -114,32 +63,25 @@ White       = Qt.white
 Yellow      = Qt.yellow
 
 
-
-## class PositonMarker(QwtPlotMarker):
-##     def __init__(self, *args):
-##         QwtPlotMarker.__init__(self, *args)
-
-##     def draw(self, painter, x, y, rect):
-##         pass
-        
-    
 class Plot(QwtPlot):
     """Sugar coating for QwtPlot.
     """
     def __init__(self, *args):
         """Constructor.
 
-        Usage: plot = Plot(*args)
+        Usage: plot = Plot([pattern,] *args)
         
         Plot takes any number of optional arguments. The interpretation
         of each optional argument depend on its data type:
         (1) Axis -- enables the axis.
         (2) Curve -- plots a curve.
-        (3) string or QString -- sets the title.
-        (4) tuples of 2 integer -- sets the size.
+        (3) QString or string -- sets the title.
+        (4) integer -- attaches a set of mouse events to the zoomer actions
+        (5) tuples of 2 integer -- sets the size.
         """
 
         self.size = (600, 400)
+
         # get an optional parent widget
         parent = None
         for arg in args:
@@ -147,6 +89,8 @@ class Plot(QwtPlot):
                 parent = arg
                 self.size = None
         QwtPlot.__init__(self, parent)
+
+        # font
         font = QFont('Verdana')
         if font.exactMatch():
             self.setFont(font)
@@ -157,37 +101,36 @@ class Plot(QwtPlot):
         self.setAutoLegend(1)
         self.setLegendPos(Qwt.Right)
 
+        # zooming
         self.zoomers = []
         zoomer = QwtPlotZoomer(QwtPlot.xBottom,
                                QwtPlot.yLeft,
                                QwtPicker.DragSelection,
                                QwtPicker.AlwaysOff,
                                self.canvas())
-        old = zoomer.mousePattern()
-        new = [old[0], old[2], old[1], old[3], old[5], old[4]]
-        zoomer.setMousePattern(new);
         zoomer.setRubberBandPen(QPen(Black))
         self.zoomers.append(zoomer)
-
         zoomer = QwtPlotZoomer(QwtPlot.xTop,
                                QwtPlot.yRight,
                                QwtPicker.DragSelection,
                                QwtPicker.AlwaysOff,
                                self.canvas())
-        zoomer.setMousePattern(new);
         zoomer.setRubberBand(QwtPicker.NoRubberBand)
         self.zoomers.append(zoomer)
-        
+        self.setZoomerMouseEventSet(0)
+
         # initialization
         for arg in args:
             if isinstance(arg, Axis):
                 self.plotAxis(arg.orientation, arg.options, arg.title)
             elif isinstance(arg, Curve):
                 self.plotCurve(arg)
-            elif (isinstance(arg, StringType) or isinstance(arg, QString)):
+            elif (isinstance(arg, QString) or isinstance(arg, StringType)):
                 self.setTitle(arg)
                 self.setTitleFont(
                     QFont(QFontInfo(self.font()).family(), 14, QFont.Bold))
+            elif isinstance(arg, int):
+                self.setZoomerMouseEventSet(arg)
             elif (isinstance(arg, tuple) and len(tuple) == 2
                   and isinstance(arg[0], int) and isinstance(arg[1], int)):
                 self.size = arg
@@ -199,15 +142,17 @@ class Plot(QwtPlot):
 
         if self.size:
             apply(self.resize, self.size)
-        self.replot()
 
+        # connections
         self.connect(self, SIGNAL("legendClicked(long)"), self.toggleCurve)
+
+        # finalize
         self.show()
 
     # __init__()
 
     def __getattr__(self, attr):
-        """Delegate to QwtPlot
+        """Inherit everything from QwtPlot.
         """
         if hasattr(QwtPlot, attr):
             return getattr(self.sipThis, attr)
@@ -223,9 +168,6 @@ class Plot(QwtPlot):
                 self.plotCurve(arg)
             else:
                 print "Plot.plot() fails to accept %s." % arg
-        for zoomer in self.zoomers:
-            zoomer.setZoomBase()
-        self.replot()
 
     # plot()
 
@@ -237,7 +179,7 @@ class Plot(QwtPlot):
             self.setAxisTitleFont(
                 orientation,
                 QFont(QFontInfo(self.font()).family(), 12, QFont.Bold))
-        self.replot()
+        self.clearZoomStack()
 
     # plotAxis()
 
@@ -250,10 +192,54 @@ class Plot(QwtPlot):
         if curve.symbol:
             self.setCurveSymbol(key, curve.symbol)
         self.setCurveData(key, curve.x, curve.y)
+        self.clearZoomStack()
 
     # plotCurve()
+    
+    def clearZoomStack(self):
+        """Force autoscaling and clear the zoom stack
+        """
+        self.setAxisAutoScale(QwtPlot.yLeft)
+        self.setAxisAutoScale(QwtPlot.yRight)
+        self.setAxisAutoScale(QwtPlot.xBottom)
+        self.setAxisAutoScale(QwtPlot.xTop)
+        self.replot()
+        for zoomer in self.zoomers:
+            zoomer.setZoomBase()
+
+    # clearZoomStack()
+
+    def setZoomerMouseEventSet(self, index):
+        """Attach the QwtPlotZoomer actions to a set of mouse events.
+        """
+        if index == 0:
+            pattern = [
+                QwtEventPattern.MousePattern(Qt.LeftButton, Qt.NoButton),
+                QwtEventPattern.MousePattern(Qt.MidButton, Qt.NoButton),
+                QwtEventPattern.MousePattern(Qt.RightButton, Qt.NoButton),
+                QwtEventPattern.MousePattern(Qt.LeftButton, Qt.ShiftButton),
+                QwtEventPattern.MousePattern(Qt.MidButton, Qt.ShiftButton),
+                QwtEventPattern.MousePattern(Qt.RightButton, Qt.ShiftButton),
+                ]
+            for zoomer in self.zoomers:
+                zoomer.setMousePattern(pattern)
+        elif index in (1, 2, 3):
+            for zoomer in self.zoomers:
+                zoomer.initMousePattern(index)
+        else:
+            raise ValueError, 'index must be in (0, 1, 2, 3)'
+        self.__mouseEventSet = index
+
+    # setZoomerMouseEventSet()
+
+    def getZoomerMouseEventSet(self):
+        return self.__mouseEventSet
+
+    # getZoomerMouseEventSet()
 
     def formatCoordinates(self, x, y):
+        """Format mouse coordinates as real world plot coordinates.
+        """
         result = []
         todo = ((QwtPlot.xBottom, "x0=%+.6g", x),
                 (QwtPlot.yLeft,   "y0=%+.6g", y),
@@ -268,6 +254,8 @@ class Plot(QwtPlot):
     # formatCoordinates()
 
     def toggleCurve(self, key):
+        """Toggle a curve between hidden and shown.
+        """
         curve = self.curve(key)
         if curve:
             curve.setEnabled(not curve.enabled())
@@ -275,54 +263,99 @@ class Plot(QwtPlot):
 
     # toggleCurve()
 
-    def gracePlot(self):
+    def gracePlot(self, pause=0.2):
+        """Clone the plot into Grace for very high quality hard copy output.
+
+        Know bug: Grace does not scale the data correctly when Grace cannot
+        cannot keep up with gracePlot.  This happens when it takes too long
+        to load Grace in memory (exit the Grace process and try again) or
+        when 'pause' is too short.
+        """
         g = GracePlotter(debug = 0)
         g('subtitle "%s"' % self.title())
-        g('g0 on; with g0')
-        if self.axisEnabled(QwtPlot.xBottom):
-            axisScale = self.axisScale(QwtPlot.xBottom)
+        for xAxis, yAxis, graph, xPlace, yPlace in [
+            (QwtPlot.xBottom, QwtPlot.yLeft, 'g0', 'normal', 'normal'),
+            (QwtPlot.xBottom, QwtPlot.yRight, 'g1', 'normal', 'opposite'),
+            (QwtPlot.xTop, QwtPlot.yLeft, 'g2', 'opposite', 'normal'),
+            (QwtPlot.xTop, QwtPlot.yRight, 'g3', 'opposite', 'opposite')
+            ]:
+            if not (self.axisEnabled(xAxis) and self.axisEnabled(yAxis)):
+                continue
+            g('%s on; with %s' % (graph, graph))
+
+            # x-axes
+            axisScale = self.axisScale(xAxis)
             min = axisScale.lBound()
             max = axisScale.hBound()
             majStep = minStep = axisScale.majStep()
             majStep *= 2
             g('world xmin %g; world xmax %g' % (min, max))
-            g('xaxis tick major %12.6f; xaxis tick minor %12.6f' %
-              (majStep, minStep))
             g('xaxis label "%s"; xaxis label char size 1.5' %
-              self.axisTitle(QwtPlot.xBottom))
-        if self.axisEnabled(QwtPlot.yLeft):
-            axisScale = self.axisScale(QwtPlot.yLeft)
+              self.axisTitle(xAxis))
+            g('xaxis label place %s' % xPlace)
+            g('xaxis tick place %s' % xPlace)
+            g('xaxis ticklabel place %s' % xPlace)
+            time.sleep(pause)
+            if self.axisOptions(xAxis) & QwtAutoScale.Logarithmic:
+                #print 'log x-axis from %s to %s.' % (min, max)
+                g('xaxes scale Logarithmic')
+                g('xaxis tick major 10')
+                g('xaxis tick minor ticks 9')
+            else:
+                #print 'lin x-axis from %s to %s.' % (min, max)
+                g('xaxes scale Normal')
+                g('xaxis tick major %12.6f; xaxis tick minor %12.6f'
+                  % (majStep, minStep))
+
+            # y-axes
+            axisScale = self.axisScale(yAxis)
             min = axisScale.lBound()
             max = axisScale.hBound()
             majStep = minStep = axisScale.majStep()
             majStep *= 2
             g('world ymin %g; world ymax %g' % (min, max))
-            g('yaxis tick major %12.6f; yaxis tick minor %12.6f' %
-              (majStep, minStep))
             g('yaxis label "%s"; yaxis label char size 1.5' %
-              self.axisTitle(QwtPlot.yLeft))
-        g.flush()
-        keys = self.curveKeys()
-        for key in keys:
-            index = keys.index(key)
-            curve = self.curve(key)
-            if not curve.enabled():
-                continue
-            g('s%s on' % index)
-            g('s%s legend "%s"' % (index, curve.title()))
-            if curve.symbol().style():
-                g('s%s symbol 1;s%s symbol size 0.4;s%s symbol fill pattern 1'
-                  % (index, index, index))
-            if curve.style():
-                g('s%s line linestyle 1' % index)
+              self.axisTitle(yAxis))
+            g('yaxis label place %s' % yPlace)
+            g('yaxis tick place %s' % yPlace)
+            g('yaxis ticklabel place %s' % yPlace)
+            time.sleep(pause)
+            if self.axisOptions(yAxis) & QwtAutoScale.Logarithmic:
+                #print 'log y-axis from %s to %s.' % (min, max)
+                g('yaxes scale Logarithmic')
+                g('yaxis tick major 10')
+                g('yaxis tick minor ticks 9')
             else:
-                g('s%s line linestyle 0' % index)
-            for i in range(curve.dataSize()):
-                g('g0.s%s point %g, %g'  % (index, curve.x(i), curve.y(i)))
-                g.flush()
+                #print 'lin y-axis from %s to %s.' % (min, max)
+                g('yaxes scale Normal')
+                g('yaxis tick major %12.6f; yaxis tick minor %12.6f' %
+                  (majStep, minStep))
+
+            # curves
+            keys = self.curveKeys()
+            for key in keys:
+                index = keys.index(key)
+                curve = self.curve(key)
+                if not curve.enabled():
+                    continue
+                if not (xAxis == curve.xAxis() and yAxis == curve.yAxis()):
+                    continue
+                g('s%s legend "%s"' % (index, curve.title()))
+                if curve.symbol().style():
+                    g('s%s symbol 1;'
+                      's%s symbol size 0.4;'
+                      's%s symbol fill pattern 1'
+                      % (index, index, index))
+                if curve.style():
+                    g('s%s line linestyle 1' % index)
+                else:
+                    g('s%s line linestyle 0' % index)
+                for i in range(curve.dataSize()):
+                    g('%s.s%s point %g, %g'
+                      % (graph, index, curve.x(i), curve.y(i)))
+
+        # finalize
         g('redraw')
-        g.flush()
-        #g.wait()
         
     # gracePlot()
         
@@ -633,13 +666,11 @@ class IPlot(QMainWindow):
 
     It provides:
     (1) a toolbar for printing and piping into Grace.
-    (2) legend control to (un)hide curves.
+    (2) a legend with control to toggle curves between hidden and shown.
     (3) mouse tracking to display the coordinates in the status bar.
-    (4) an infinite stack of zoom region. Dragging the mouse with the
-        left button pressed selects a new zoom region. Right clicking
-        pops the previous zoom level from the stack.
+    (4) an infinite stack of zoom region.
     """
-    
+
     def __init__(self, *args):
         """Constructor.
 
@@ -668,10 +699,21 @@ class IPlot(QMainWindow):
         graceButton.setPixmap(QPixmap(grace_xpm))
         self.toolBar.addSeparator()
 
+        mouseComboBox = QComboBox(self.toolBar)
+        for name in ('3 buttons (PyQwt)',
+                     '1 button',
+                     '2 buttons',
+                     '3 buttons (Qwt)'):
+            mouseComboBox.insertItem(name)
+        mouseComboBox.setCurrentItem(self.getZoomerMouseEventSet())
+        self.toolBar.addSeparator()
+        
         QWhatsThis.whatsThisButton(self.toolBar)
 
         self.connect(printButton, SIGNAL('clicked()'), self.printPlot)
         self.connect(graceButton, SIGNAL('clicked()'), self.gracePlot)
+        self.connect(mouseComboBox, SIGNAL('activated(int)'),
+                     self.setZoomerMouseEventSet)
 
         self.statusBar().message("Move the mouse within the plot canvas"
                                  " to show the cursor position.")
@@ -687,13 +729,53 @@ class IPlot(QMainWindow):
                        'The hardcopy output of Grace is better for\n'
                        'scientific journals and LaTeX documents.')
         
-        QWhatsThis.add(self.__plot.legend(),
-                       'Clicking on a legend button\n'
-                       'toggles the visibility of a curve.')
+        QWhatsThis.add(
+            mouseComboBox,
+            'Configure the mouse events for the QwtPlotZoomer.\n\n'
+            '3 buttons (PyQwt style):\n'
+            '- left-click & drag to zoom\n'
+            '- middle-click to unzoom all\n'
+            '- right-click to walk down the stack\n'
+            '- shift-right-click to walk up the stack.\n'
+            '1 button:\n'
+            '- click & drag to zoom\n'
+            '- control-click to unzoom all\n'
+            '- alt-click to walk down the stack\n'
+            '- shift-alt-click to walk up the stack.\n'
+            '2 buttons:\n'
+            '- left-click & drag to zoom\n'
+            '- right-click to unzoom all\n'
+            '- alt-left-click to walk down the stack\n'
+            '- alt-shift-left-click to walk up the stack.\n'
+            '3 buttons (Qwt style):\n'
+            '- left-click & drag to zoom\n'
+            '- right-click to unzoom all\n'
+            '- middle-click to walk down the stack\n'
+            '- shift-middle-click to walk up the stack.\n\n'
+            'If some of those key combinations interfere with\n'
+            'your Window manager, press the:\n'
+            '- escape-key to unzoom all\n'
+            '- minus-key to walk down the stack\n'
+            '- plus-key to walk up the stack.'
+            )
 
-        QWhatsThis.add(self.__plot.canvas(),
-                       'Zooming\n'
-                       'Zooming')
+        QWhatsThis.add(self.__plot.legend(),
+                       'Clicking on a legend button toggles\n'
+                       'a curve between hidden and shown.')
+
+        QWhatsThis.add(
+            self.__plot.canvas(),
+            'Clicking on a legend button toggles a curve\n'
+            'between hidden and shown.\n\n'
+            'A QwtPlotZoomer lets you zoom infinitely deep\n'
+            'by saving the zoom states on a stack. You can:\n'
+            '- select a zoom region\n'
+            '- unzoom all\n'
+            '- walk down the stack\n'
+            '- walk up the stack.\n\n'
+            'The combo box in the toolbar lets you attach\n'
+            'different sets of mouse events to those actions.'
+            )
 
         self.resize(700, 500)
         self.show()
@@ -719,7 +801,7 @@ class IPlot(QMainWindow):
     # onMouseMoved()
         
     def __getattr__(self, attr):
-        """Delegate to QMainWindow and Plot
+        """Inherit everything from QMainWindow and Plot
         """
         if hasattr(QMainWindow, attr):
             return getattr(self.sipThis, attr)
@@ -741,8 +823,8 @@ import random
 def testPlot():
     x = arange(-2*pi, 2*pi, 0.01)
     p = Plot(Curve(x, cos(x), Pen(Magenta, 2), "cos(x)"),
-             Axis(Bottom, "x axis"),
-             Axis(Left, "linear y axis"),
+             Axis(Bottom, "linear x-axis"),
+             Axis(Left, "linear y-axis"),
              Axis(Right, Logarithmic, "logarithmic y axis"),             
              Curve(x, exp(x), Pen(Red), "exp(x)", Right),
              ("PyQwt demo based on Qwt-%s (http://qwt.sf.net)"
@@ -756,9 +838,9 @@ def testPlot():
 def testIPlot():
     x = arange(-2*pi, 2*pi, 0.01)
     p = IPlot(Curve(x, cos(x), Pen(Magenta, 2), "cos(x)"),
-              Axis(Bottom, "x axis"),
-              Axis(Left, "linear y axis"),
-              Axis(Right, Logarithmic, "logarithmic y axis"),
+              Axis(Bottom, "linear x-axis"),
+              Axis(Left, "linear y-axis"),
+              Axis(Right, Logarithmic, "logarithmic y-axis"),
               Curve(x, exp(x), Pen(Red), "exp(x)", Right),
               ("PyQwt demo based on Qwt-%s (http://qwt.sf.net)"
                % QWT_VERSION_STR))
