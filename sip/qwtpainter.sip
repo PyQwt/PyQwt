@@ -49,20 +49,14 @@ public:
 %End
 %End
 
-    static void setScaleMetrics(const QPaintDevice *, const QPaintDevice *);
-    static void resetScaleMetrics();
-    static double scaleMetricsX();
-    static double scaleMetricsY();
+    static void setMetricsMap(const QPaintDevice *, const QPaintDevice *);
+    static void setMetricsMap(const QwtMetricsMap &);
+    static void resetMetricsMap();
+    static const QwtMetricsMap &metricsMap();
 
     static void setDeviceClipping(bool);
     static bool deviceClipping();
 
-    static QRect invScale(const QRect &, const QPainter * = 0);
-    static QPoint invScale(const QPoint &, const QPainter * = 0);
-    static QRect scale(const QRect &, const QPainter * = 0);
-    static QPoint scale(const QPoint &, const QPainter * = 0);
-    static QPointArray scale(const QPointArray &, const QPainter * = 0);
-    
     static void setClipRect(QPainter *, const QRect &);
 
     static void drawText(QPainter *, int, int,
@@ -88,9 +82,6 @@ public:
     static void drawPolygon(QPainter *, const QPointArray &);
     static void drawPolyline(QPainter *, const QPointArray &);
     static void drawPoint(QPainter *, int, int);
-
-    static QRect map(const QWMatrix &, const QRect &);
-    static QPointArray map(const QWMatrix &, const QPointArray &);
 
     static void drawRoundFrame(QPainter *, const QRect &, int,
                                const QColorGroup &, bool);

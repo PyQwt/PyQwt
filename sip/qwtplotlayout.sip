@@ -66,8 +66,8 @@ public:
     void setCanvasMargin(int);
     int canvasMargin() const;
 
-    void setAlignCanvasToTicks(bool);
-    bool alignCanvasToTicks() const;
+    void setAlignCanvasToScales(bool);
+    bool alignCanvasToScales() const;
 
     void setSpacing(int);
     int spacing() const;

@@ -64,6 +64,7 @@
 %Include qwtglobal.sip
 %Include qwtgrid.sip
 %Include qwtknob.sip
+%Include qwtlayoutmetrics.sip
 %Include qwtlegend.sip
 %Include qwtlegendbutton.sip
 %Include qwtmarker.sip
