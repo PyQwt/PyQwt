@@ -29,8 +29,12 @@
   {http://pyqwt.sourceforge.net/support/PyQt-win-nc-3.8.zip}}
 \newcommand{\snapshot}{\ulink{snapshot}
   {http://www.river-bank.demon.co.uk/download/snapshots}}
+\newcommand{\Numeric}{\ulink{Numeric}
+  {http://www.numpy.org}}
 \newcommand{\NumericTarGz}{\ulink{Numeric-23.1.tar.gz}
   {http://prdownloads.sourceforge.net/numpy/Numeric-23.1.tar.gz?download}}
+\newcommand{\numarray}{\ulink{numarray}
+  {http://www.stsci.edu/resources/software_hardware/numarray}}
 \newcommand{\numarrayTarGz}{\ulink{numarray-0.9.tar.gz}
   {http://prdownloads.sourceforge.net/numpy/numarray-0.9.tar.gz?download}}
 \newcommand{\PyQwtTarGz}{\ulink{PyQwt-4.0rc0.tar.gz}
@@ -55,9 +59,7 @@
 \newcommand{\PrerequisitesEnd}{
 To exploit the full power of the QwtPlot widget, you should install at
 least one the Numerical Python extensions:
-\ulink{Numeric}{http://www.numpy.org}
-or its successor
-\ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
+\Numeric{} or its successor \numarray{}.
 I am using \NumericTarGz{} and \numarrayTarGz{}. 
 Versions of Numeric later than 21.0 are supported.
 Numarray is newer and therefore less stable than Numeric, so get the latest!
@@ -174,10 +176,9 @@ on your hard disk or \Qwt{} on the web.
 
 \section{The Python Numerical Extension modules \label{numeric-intro}}
 
-The \ulink{Numeric}{http://www.numpy.org/index.html}
-and \ulink{numarray}{http://stsdas.stsci.edu/numarray/index.html}
-modules extend Python with multi-dimensional array types and a complete
-set of 'standard' functions and operators to manipulate the arrays.
+The \Numeric{} and \numarray{} modules extend Python with multi-dimensional
+array types and a complete set of 'standard' functions and operators to
+manipulate the arrays.
 
 Python together with at least one of those modules is an ideal language
 experimental numerical and scientific computing (as powerful as APL, MatLab,
