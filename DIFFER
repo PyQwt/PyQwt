@@ -1,39 +1,72 @@
 #!/usr/bin/env python
 
+import getopt
 import glob
 import os
-import popen2
+import sys
 
-suffixes = [
-    '.array',
-    '.canvas',
-    '.version'
-    ]
 
-directories = [
-    os.path.join('qwt-sources', 'include'),
-    os.path.join('qwt-sources', 'src')
-    ]
+def differ(suffixes, directories):
+    patches = []
+    for suffix in suffixes:
+        patch = ''
+        for directory in directories:
+            backups = glob.glob(os.path.join(directory, '*' + suffix))
+            for backup in backups:
+                file = backup[:-len(suffix)]
+                if os.path.exists(file):
+                    stdin, stdout = os.popen2('diff -au %s %s'
+                                              % (backup, file))
+                    patch += stdout.read()
+        patches.append((suffix, patch))
+    return patches
 
-patches = []
+# differ()
 
-for suffix in suffixes:
-    patch = ''
-    for directory in directories:
-        backups = glob.glob(os.path.join(directory, '*' + suffix))
-        for backup in backups:
-            file = backup[:-len(suffix)]
-            if os.path.exists(file):
-                stdin, stdout = os.popen2('diff -au %s %s' % (backup, file))
-                patch += stdout.read() 
-    patches.append((suffix, patch))
-    output = open('qwt%s.patch' % suffix, 'w')
-    print >> output, patch,
-                
-output = open('patches.py', 'w')
-print >> output, 'patches =', patches    
+def usage():
+    print "DIFFER [-h] [-d 'dir1 dir2 ..'] [-s 'suf1 suf2 ..']" 
+
+# usage()
+
+def main():
+    try:
+        options, arguments = getopt.getopt(sys.argv[1:], "hs:d:")
+    except getopt.GetoptError:
+        usage()
+        sys.exit()
+
+    suffixes = []
+    directories = []
+    for (option, argument) in options:
+        if option in ('-d', '--directories'):
+            directories = argument.split()
+        elif option in ('-h', '--help'):
+            usage()
+            sys.exit()
+        elif option in ('-s', '--suffixes'):
+            suffixes = argument.split()
+
+    if os.path.exists('patches.py'):
+        local = {}
+        execfile('patches.py', globals(), local)
+        old_patches = local['patches']
+    else:
+        old_patches = []
+
+    patches = differ(suffixes, directories)
+    
+    if patches != old_patches:
+        output = open('patches.py', 'w')
+        print >> output, 'patches =', patches
+        for suffix, patch in patches:
+            output = open('qwt%s.patch' % suffix, 'w')
+            print >> output, patch,
+
+# main()
+
+if __name__ == '__main__':
+    main()
 
 # Local Variables: ***
 # mode: python ***
 # End: ***
-

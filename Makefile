@@ -1,9 +1,12 @@
 PWD := $(shell pwd)
+
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
 CVS-DATE := "14 Jun 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
+DIFFERS := -d 'qwt-sources/include qwt-sources/src'
+DIFFERS += -s '.array .canvas .version'
 
 all:
 	python setup.py build 2>&1 | tee LOG.all
@@ -29,12 +32,12 @@ force: distclean
 
 # build a tarball that 'mirrors' CVS
 cvs: clean
-	python DIFFER
+	python DIFFER $(DIFFERS)
 	python setup.py sdist -t MANIFEST.cvs 2>&1 | tee LOG.cvs
 
 # build a distribution tarball
 dist: clean doc
-	python DIFFER
+	python DIFFER $(DIFFERS)
 	python setup.py sdist --formats=gztar 2>&1 | tee LOG.dist
 
 # create a Qwt source tree compatible with PyQwt 
@@ -69,7 +72,7 @@ free:
 	cp dist/*.tar.gz ../Free 
 
 diff:
-	python DIFFER
+	python DIFFER $(DIFFERS)
 
 patch:
 	cd qwt-sources; patch -p1 -b -z .array <$(PWD)/qwt.array.patch
