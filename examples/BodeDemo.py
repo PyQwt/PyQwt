@@ -230,7 +230,7 @@ class BodeDemo(QMainWindow):
             QwtPicker.AlwaysOn,
             self.plot.canvas())
         self.picker.setRubberBandPen(QPen(Qt.green))
-        self.picker.setCursorLabelPen(QPen(Qt.yellow))
+        self.picker.setCursorLabelPen(QPen(Qt.cyan))
  
         self.setCentralWidget(self.plot)
 
