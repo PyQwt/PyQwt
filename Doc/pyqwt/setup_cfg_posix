@@ -9,11 +9,6 @@
 #
 # >>> import pyqtconfig; print pyqtconfig.Configuration().pyqt_sip_dir
 #
-# If you get an AttributeError and have installed PyQt-3.9, do not worry.
-# The module pyqtconfig has a bug.  Pretend to be the Python interpreter and
-# determine the value of pyqtconfig._pkg_config['pyqt_sip_dir'].
-# PyQwt works around this bug.
-#
 # If you get an ImportError you must rebuild sip and PyQt with the configure.py
 # script instead of the build.py script.
 #
@@ -36,12 +31,12 @@
 #
 # to extract all files from the RPM package, including the sources for PyQt.
 #
-# To use the PyQt*-3.9 sources next to PyQwt-4.0, uncomment:
-#sip_file_dirs=../PyQt-x11-gpl-3.9/sip
 # To use the PyQt*-3.10 sources next to PyQwt-4.0, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.10/sip
 # To use the PyQt*-3.11 sources next to PyQwt-4.0, uncomment:
 #sip_file_dirs=../PyQt-x11-gpl-3.11/sip
+# To use the PyQt*-3.12 sources next to PyQwt-4.0, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.12/sip
 #
 #
 # Some %ConvertToSubClassCode handwritten code uses 'dynamic_cast<>()' which is
