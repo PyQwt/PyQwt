@@ -205,7 +205,7 @@ class CpuStat:
             file.close()
             for line in lines:
                 words = line.split()
-                if words[0] == "cpu" and len(words) == 5:
+                if words[0] == "cpu" and len(words) >= 5:
                     return map(float, words[1:])
         else:
             result = CpuStat.dummyValues[CpuStat.counter]
