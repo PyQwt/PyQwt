@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '3.9'
+version = '3.10'
 
 #
 # SIP VERSION
@@ -199,10 +199,11 @@ verbose = 0
 if os.name == 'posix':
     for dir in ['examples']:
         os.chdir(dir)
-        for lib in glob.glob('../build/lib*/*'):
+        for lib in glob.glob('../build/lib*-%s.%s/*' % sys.version_info[:2]):
             link = lib.split(os.sep)[-1]
-            if not os.path.exists(link):
-                os.symlink(lib, link)
+            if os.path.islink(link):
+                os.remove(link)
+            os.symlink(lib, link)
         os.chdir('..')
 else:
     print "FIXME"

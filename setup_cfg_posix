@@ -2,86 +2,79 @@
 # A line starting with '#' is a comment
 #
 [run_sip]
-# The 'run_sip' command transforms the sip/*.sip files into
-# *.cpp, *.h and *.py files.
-# It requires also the PyQt-*/sip/*.sip files that have been
-# used to build PyQt.
-# The option 'sip_file_dirs' indicates the command 'run_sip'
-# where to find the PyQt-*/sip/*.sip files.
+# The 'run_sip' command transforms the sip/*.sip files into *.cpp, *.h, and 
+# *.py (for sip-3.x) files.  It requires also the PyQt-*/sip/*/*.sip files used
+# to build PyQt.  To find out where the */*.sip files have been installed, type
+# the following line into the Python interpreter:
 #
-# If you cannot find those files on your system, you have to
-# get the source code that has been used to build PyQt.
-# Get EXACTLY the same version!
+# >>> import pyqtconfig; print pyqtconfig.Configuration().pyqt_sip_dir
 #
-# To determine which version of PyQt is installed, run
-# python -c 'import qt; print qt.PYQT_VERSION'
-# or
-# python -c 'import qt; print qt.PYQT_VERSION_STR'
+# If you get an AttributeError and have installed PyQt-3.9, do not worry.
+# The module pyqtconfig has a bug.  Pretend to be the Python interpreter and
+# determine the value of pyqtconfig._pkg_config['pyqt_sip_dir'].
+# PyQwt works around this bug.
 #
-# Handy TIP for an RPM based system:
-# Get the matching PyQt-*.src.rpm (Mandrake, Red Hat) or
-# PyQt-*.spm (SuSE) and run the command:
+# If you get an ImportError you must rebuild sip and PyQt with the configure.py
+# script instead of the build.py script.
+#
+# If there are */*.sip files in pyqt_sip_dir, your PyQt installation is suited
+# to build PyQwt (assuming there is no version mismatch between the PyQt
+# extension module and the */*.sip files).
+# 
+# If you have no */*.sip files on your system, you have to install a a PyQt
+# development package or get the source code. Get EXACTLY the same version!
+#
+# To find out which version of PyQt is installed, type the the following line
+# into the Python interpreter:
+#
+# >>> import qt; print qt.PYQT_VERSION_STR
+#
+# If you have an RPM based system, you can get the matching PyQt-*.src.rpm and
+# run the command:
 #
 #       rpm2cpio PyQt-*.src.rpm | cpio --extract
 #
-# to extract all files from the RPM package, including the
-# sources for PyQt.
+# to extract all files from the RPM package, including the sources for PyQt.
 #
-# I install PyQt's sip files in /usr/share/sip. 
-sip_file_dirs=/usr/share/sip
-# To use the PyQt*-3.8.1 sources next to PyQwt-3.8, uncomment:
-#sip_file_dirs=../PyQt-x11-gpl-3.8.1/sip
-# To use the PyQt*-3.8 sources next to PyQwt-3.8, uncomment:
-#sip_file_dirs=../PyQt-x11-gpl-3.8/sip
-# To use the PyQt*-3.7 sources next to PyQwt-3.8, uncomment:
-#sip_file_dirs=../PyQt-x11-gpl-3.7/sip
-# To use the PyQt*-3.6 sources next to PyQwt-3.8, uncomment:
-#sip_file_dirs=../PyQt-x11-gpl-3.6/sip
-# To use the PyQt*-3.5 sources next to PyQwt-3.8, uncomment:
-#sip_file_dirs=../PyQt-x11-gpl-3.5/sip
-# To use the PyQt*-3.4 sources next to PyQwt-3.8, uncomment:
-#sip_file_dirs=../PyQt-x11-gpl-3.4/sip
+# To use the PyQt*-3.9 sources next to PyQwt-3.9, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.9/sip
 #
 #
-# Some %ConvertToSubClassCode handwritten code uses 'dynamic_cast<>()'
-# which is not supported by all compilers and/or compiler options. 
-# The option 'sip_x_features' indicates the 'run_sip' command whether
-# to disable a list of features (separated by ',').
+# Some %ConvertToSubClassCode handwritten code uses 'dynamic_cast<>()' which is
+# not supported by all compilers and/or compiler options.  The option
+# 'sip_x_features' indicates the 'run_sip' command whether to disable a list of
+# features (separated by ',').
 #sip_x_features=CXX_DYNAMIC_CAST
 #
-#
-# To speed up compilation, concatenate the *.cpp files made by sip.
-# The option 'concatenate' indicates the 'run_sip' command whether
-# to concatenate or not.
+# To speed up compilation, concatenate the *.cpp files made by sip.  The option
+# 'concatenate' indicates the 'run_sip' command whether to concatenate or not.
 concatenate=0
 #concatenate=1
 #
-# For development, using the ccache program (http://ccache.samba.org)
-# is better than concatenating. See the 'build_ext' command.
+# For development, using the ccache program (http://ccache.samba.org) is better
+# than concatenating. See the 'build_ext' command.
 #
 #
 [build_ext]
-# The option 'ccache' indicates the command 'build_ext' to use
-# the compiler cache program, if found.
-# Purist may want to set 'ccache=0', if the Gnu C/C++-compilers
-# are symbolic links to ccache (man ccache), but invokations like
-# 'ccache ccache g++' are working fine.
+# The option 'ccache' indicates the command 'build_ext' to use  the compiler
+# cache program, if found.  Purist may want to set 'ccache=0', if the
+# Gnu C/C++-compilers are symbolic links to ccache (man ccache), but
+# invokations like 'ccache ccache g++' are working fine.
 #ccache=0
 ccache=1
 #
 #
 [bdist_rpm]
-# The 'use_rpm_opt_flags' option indicates the 'bdist_rpm' command
-# whether to use RPM_OPT_FLAGS or not. It is safer to use the compiler
-# flags which have been used to build Qt.
+# The 'use_rpm_opt_flags' option indicates the 'bdist_rpm' command whether to
+# use RPM_OPT_FLAGS or not. It is safer to use the compiler flags which have
+# been used to build Qt.
 use_rpm_opt_flags=0
 #
 #
 [install]
-# The option 'install-data' indicates the command 'install'
-# where to install the documentation and examples.
-# I want it in /usr/share/doc/PyQwt-3.8
-install_data=/usr/share/doc/PyQwt-3.8
+# The option 'install-data' indicates the command 'install' where to install
+# the documentation and examples. I want it in /usr/share/doc/PyQwt-3.10
+install_data=/usr/share/doc/PyQwt-3.10
 # If you prefer another directory, uncomment and edit: 
 #install_data=/2000/light/years/from/home
 #

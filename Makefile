@@ -48,7 +48,7 @@ cvs: clean
 	python setup.py sdist -t MANIFEST.cvs 2>&1 | tee LOG.cvs
 
 # build a distribution tarball
-dist: clean doc
+dist: all clean doc
 	python DIFFER $(DIFFERS)
 	unix2dos qwt-sources/win-tmake.bat 
 	python setup.py sdist --formats=gztar 2>&1 | tee LOG.dist
@@ -77,10 +77,12 @@ qwt-sources-ssh:
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
 	python PATCHER
+
+makefiles:
 	(cd qwt-sources; qmake qwt.pro)
 	(cd qwt-sources/examples; qmake examples.pro)
 
-build-qwt:
+build-qwt: makefiles
 	(cd qwt-sources; make CXX="$(CXX)")
 	(cd qwt-sources/examples; make CXX="$(CXX)")
 
@@ -94,14 +96,14 @@ diff:
 	python DIFFER $(DIFFERS)
 
 
-clean:
-	(cd qwt-sources; make distclean)
-	(cd qwt-sources/examples; make distclean)
+clean: makefiles
 	rm -f MANIFEST
 	find . -name '*~' -o -name '.mappedfiles' | xargs rm -f
 	rm -f *.pyc qwt/*.{cpp,h} qwt/_qwt.py
 
-distclean: clean
+distclean: clean makefiles
+	(cd qwt-sources; make distclean)
+	(cd qwt-sources/examples; make distclean)
 	(cd qwt-sources; qmake qwt.pro)
 	(cd qwt-sources/examples; qmake examples)
 	rm -rf build tmp/usr
