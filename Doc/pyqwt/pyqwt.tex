@@ -265,17 +265,24 @@ Here follows a small example:
   \item
     \class{Curve}, to add a curve to the plot.
   \item
-    \class{string} or a \class{QString}, to set the title of the plot.
+    \class{QString} or a \class{string}, to set the title of the plot.
+  \item
+    \class{int}, to attach a set of mouse events to the zoomer actions.
   \item
     (\class{int}, \class{int}), to set the size of the plot.
   \end{itemize}
 
-  \class{Plot} has an infinite deep stack of zoom regions.
-  You can select a new zoom region by pressing the left mouse button
-  inside the plot, dragging the mouse and releasing the button.
-  The old zoom region is pushed on the stack.
-  On each right-click inside the plot, an old zoom region is
-  popped from the stack.
+  \class{Plot} has an infinite deep stack of zoom regions. You can:
+  \begin{itemize}
+    \item
+      select a zoom region
+    \item
+      unzoom all
+    \item
+      walk down the stack
+    \item
+      walk up the stack.
+  \end{itemize}
 
   \class{Plot} uses \method{__getattr__()}, \function{hasattr()} and
   \function{getattr()} to inherit all methods of \class{QwtPlot}.
@@ -283,40 +290,41 @@ Here follows a small example:
 
 In addition, the class \class{Plot} defines the following methods:
 
+\begin{methoddesc}[Plot]{clearZoomStack}{self}
+Force autoscaling and clear the zoom stack.
+\end{methoddesc}
+
 \begin{methoddesc}[Plot]{formatCoordinates}{self, x, y}
-Formats mouse coordinates into (real world) plot coordinates.
+Format mouse coordinates as real world plot coordinates.
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{getZoomerMouseEventSet}{self}
+Return the index of the set of mouse events attached to the QwtPlotZoomer
+actions.
 \end{methoddesc}
 
 \begin{methoddesc}[Plot]{gracePlot}{self}
-Clones the plot to display it in Grace for very high quality output.
+Clone the plot into Grace for very high quality hard copy output.
 \end{methoddesc}
 
 \begin{methoddesc}[Plot]{plot}{self, *curves}
-Plots a list of curves.
+Plot a list of curves.
 \end{methoddesc}
 
 \begin{methoddesc}[Plot]{plotAxis}{self, orientation, options, title}
-Plots and enables an axis.
+Plot and enables an axis.
 \end{methoddesc}
 
 \begin{methoddesc}[Plot]{plotCurve}{self, curve}
-Plots a single curve.
+Plot a single curve.
 \end{methoddesc}
 
-\begin{methoddesc}[Plot]{onMouseMoved}{self, e}
-Is a SLOT for SIGNAL('plotMouseMoved(const QMouseEvent\&)').
-\end{methoddesc}
-
-\begin{methoddesc}[Plot]{onMousePressed}{self, e}
-Is a SLOT for SIGNAL('plotMousePressed(const QMouseEvent\&)'). 
-\end{methoddesc}
-
-\begin{methoddesc}[Plot]{onMouseReleased}{self, e}
-Is a SLOT for SIGNAL('plotMouseReleased(const QMouseEvent\&)').
+\begin{methoddesc}[Plot]{setZoomerMouseEventSet}{self, index}
+Attach the QwtPlotZoomer actions to set of mouse events.
 \end{methoddesc}
 
 \begin{methoddesc}[Plot]{toggleCurve}{self, key}
-Is a SLOT for SIGNAL('legendClicked(long)') to dis/enable a curve.
+Toggle a curve between hidden and shown.
 \end{methoddesc}
 
 \subsubsection{qwt.qplt.IPlot \label{intro-qplt-iplot}}
@@ -327,8 +335,9 @@ Is a SLOT for SIGNAL('legendClicked(long)') to dis/enable a curve.
   The data-directed interpretation of each optional argument is the
   same as for \class{Plot}.
 
-  The functionality of \class{Plot} is enhanced with a QToolBar with
-  buttons for printing and cloning into grace.
+  The functionality of \class{Plot} is enhanced with a tool bar with
+  buttons for printing and cloning into grace and a combo box to attach
+  the zoomer actions to a set of mouse events.
   In addition, the position of the cursor in the plot region is tracked
   and displayed in a status bar. 
 \end{classdesc}
