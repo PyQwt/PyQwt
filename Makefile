@@ -3,7 +3,7 @@ PWD := $(shell pwd)
 CXX := $(shell which ccache) $(CXX)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "09 Sep 2003 23:59:59 GMT"
+CVS-DATE := "05 Oct 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -18,19 +18,14 @@ FREE := $(HOME)/Free
 all:
 	python setup.py build 2>&1 | tee LOG.all
 
-doc: qwt-user-docs
+doc: qwt-docs
 	cp -pu setup_cfg_nt setup_cfg_posix Doc/pyqwt/
 	(cd Doc; make doc)
 	(cd examples; make html)
 
-qwt-user-docs: qwt-sources/doc/html/index.html
+qwt-docs: qwt-sources/doc/html/index.html
 
-qwt-sources/doc/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile.users
-	(cd qwt-sources; doxygen Doxyfile.users)
-
-qwt-devel-docs: qwt-sources/doc/devel/html/index.html
-
-qwt-sources/doc/devel/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile
+qwt-sources/doc/html/index.html: $(QWT-SOURCES) qwt-sources/Doxyfile
 	(cd qwt-sources; doxygen Doxyfile)
 
 install:
@@ -106,7 +101,7 @@ clean:
 	(cd qwt-sources/examples; make distclean)
 	rm -f MANIFEST
 	find . -name '*~' -o -name '.mappedfiles' | xargs rm -f
-	rm -f *.pyc qwt/*.{cpp,h}
+	rm -f *.pyc qwt/*.{cpp,h} qwt/__init__.py
 
 distclean: clean
 	(cd qwt-sources; qmake qwt.pro)

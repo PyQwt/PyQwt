@@ -51,7 +51,7 @@ public:
                   QWidget * = 0, const char * = 0);
 
     TextFormat textFormat() const;
-    virtual void setTextFormat(TextFormat);
+    void setTextFormat(TextFormat);
 
     virtual TextFormat usedTextFormat() const;
 
