@@ -67,8 +67,6 @@ public:
 		       const QwtPlotPrintFilter & = QwtPlotPrintFilter()) const
 	/PyName=printPlot/;
 
-    void clear();
-
 %If (Qwt_COMPAT)
     // Outline
 
@@ -122,9 +120,6 @@ public:
 
     QwtPlotCurve *curve(long);
     // dead code: const QwtPlotCurve *curve(long) const;
-
-    bool removeCurve(long);
-    void removeCurves();
 
     QwtArray<long> curveKeys() const;
     long closestCurve(int, int, int & /Out/,
@@ -183,6 +178,11 @@ public:
     void enableGridY(bool = 1);
     void enableGridYMin(bool = 1);
 
+    bool gridXEnabled() const;
+    bool gridXMinEnabled() const;
+    bool gridYEnabled() const;
+    bool gridYMinEnabled() const;
+
     void setGridXAxis(int);
     int gridXAxis() const;
     void setGridYAxis(int);
@@ -223,6 +223,7 @@ public:
 
     void setAxisLabelFormat(int, char, int);
     void axisLabelFormat(int, char & /Out/, int & /Out/, int & /Out/) const;
+
     void setAxisLabelAlignment(int, int);
     void setAxisLabelRotation(int, double);
 
@@ -250,9 +251,6 @@ public:
 
     QwtPlotMarker *marker(long);
     // dead code: const QwtPlotMarker *marker(long) const;
-
-    bool removeMarker(long);
-    void removeMarkers();
 
     long closestMarker(int, int, int & /Out/) const;
     QwtArray<long> markerKeys() const;
@@ -298,7 +296,7 @@ public:
     void enableLegend(bool, long = -1);
     bool legendEnabled(long) const;
 
-    void setLegendPos(int);
+    void setLegendPos(int, double = 0.0);
     int legendPos() const;
 
     void setLegendFont(const QFont &);
@@ -321,6 +319,14 @@ public:
     virtual bool event(QEvent *);
     
 public slots:
+    void clear();
+
+    bool removeCurve(long);
+    void removeCurves();
+
+    bool removeMarker(long);
+    void removeMarkers();
+
     virtual void replot();
 
 protected slots:
