@@ -158,9 +158,6 @@ int try_NumericArray_to_QImage(PyObject *in, QImage &out)
     return -1;
 }
 
-
-#endif // HAS_NUMERIC
-
 PyObject *to_np_array(const QImage &image)
 {
     PyArrayObject *result = 0;
@@ -257,6 +254,8 @@ PyObject *to_np_array(const QImage &image)
 
     return 0;
 }
+
+#endif // HAS_NUMERIC
 
 // Local Variables:
 // mode: C++
