@@ -30,7 +30,7 @@ all:
 	(cd examples; ln -sf ../configure/iqt)
 	(cd examples; ln -sf ../configure/qwt)
 
-log: distclean
+all-log: distclean
 	(cd configure; \
 	python configure.py -I $(INCDIR) -L $(LIBDIR) 2>&1 > ../LOG.all \
 	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.all)
@@ -38,18 +38,30 @@ log: distclean
 	(cd examples; ln -sf ../configure/qwt)
 
 420-static:
-	(cd configure; python configure.py -Q $(QWTDIR) \
-		2>&1 | tee ../LOG.420-static) \
-	&& (cd configure; $(MAKE) CXX="$(CXX)" \
-		2>&1 | tee --append ../LOG.420-static)
+4	(cd configure; \
+	python configure.py -Q $(QWTDIR) \
+	&& $(MAKE) CXX="$(CXX)")
+	(cd examples; ln -sf ../configure/iqt)
+	(cd examples; ln -sf ../configure/qwt)
+
+420-static-log:
+	(cd configure; \
+	python configure.py -Q $(QWTDIR) 2>&1 > ../LOG.420-static \
+	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.420-static)
 	(cd examples; ln -sf ../configure/iqt)
 	(cd examples; ln -sf ../configure/qwt)
 
 cvs-static:
-	(cd configure; python configure.py -Q ../qwt-sources \
-		2>&1 | tee ../LOG.cvs-static) \
-	&& (cd configure; $(MAKE) CXX="$(CXX)" \
-		2>&1 | tee --append ../LOG.cvs-static)
+	(cd configure; \
+	python configure.py -Q ../qwt-sources \
+	&& $(MAKE) CXX="$(CXX)")
+	(cd examples; ln -sf ../configure/iqt)
+	(cd examples; ln -sf ../configure/qwt)
+
+cvs-static-log:
+	(cd configure; \
+	python configure.py -Q ../qwt-sources  > ../LOG.cvs-static \
+	&& $(MAKE) CXX="$(CXX)" 2>&1 >> ../LOG.cvs-static)
 	(cd examples; ln -sf ../configure/iqt)
 	(cd examples; ln -sf ../configure/qwt)
 
@@ -74,7 +86,7 @@ cvs: clean
 	python setup.py sdist -t MANIFEST.cvs 2>&1 | tee LOG.cvs
 
 # build a distribution tarball
-dist: all clean doc
+dist: cvs-static clean doc
 	python DIFFER $(DIFFERS)
 	unix2dos qwt-sources/msvc-qmake.bat 
 	unix2dos qwt-sources/msvc-tmake.bat 
@@ -91,7 +103,7 @@ qwt-sources:
 	fi
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
-#	python PATCHER
+	python PATCHER
 
 qwt-sources-ssh:
 	rm -rf qwt-sources
@@ -103,7 +115,7 @@ qwt-sources-ssh:
 	fi
 	cp -vpur tmp/qwt qwt-sources
 	find $(CVS-TABS) | xargs perl -pi -e 's|\t|    |g'
-#	python PATCHER
+	python PATCHER
 
 makefiles:
 	(cd qwt-sources; qmake qwt.pro)
