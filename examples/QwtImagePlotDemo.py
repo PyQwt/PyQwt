@@ -19,16 +19,24 @@ def bytescale(data, cmin=None, cmax=None, high=255, low=0):
     bytedata = ((data*1.0-cmin)*scale + 0.4999).astype(UInt8)
     return bytedata + asarray(low).astype(UInt8)
 
+# bytescale()
+
 def linearX(nx, ny):
     return repeat(arange(nx, typecode = Float32)[:, NewAxis], ny, -1)
 
+# linearX()
+
 def linearY(nx, ny):
     return repeat(arange(ny, typecode = Float32)[NewAxis, :], nx, 0)
+
+# linearY()
 
 def square(n, min, max):
     x = arrayfns.span(min, max, n, n)
     y = transpose(x)
     return sin(x)*cos(y)
+
+# square()
 
 def rectangle(nx, ny, scale):
     # swap axes in the fromfunction call
@@ -41,6 +49,8 @@ def rectangle(nx, ny, scale):
 
     result = fromfunction(test, (ny, nx))
     return result
+
+# rectangle()
 
 
 class QwtPlotImage(QwtPlotMappedItem):
@@ -60,11 +70,13 @@ class QwtPlotImage(QwtPlotMappedItem):
             self.plot.setAxisScale(QwtPlot.xBottom, *xScale)
         else:
             self.xMap = QwtDiMap(0, shape[0], 0, shape[0])
+            self.plot.setAxisScale(QwtPlot.xBottom, 0, shape[0])
         if yScale:
             self.yMap = QwtDiMap(0, shape[1], yScale[0], yScale[1])
             self.plot.setAxisScale(QwtPlot.yLeft, *yScale)
         else:
             self.yMap = QwtDiMap(0, shape[1], 0, shape[1])
+            self.plot.setAxisScale(QwtPlot.yLeft, 0, shape[1])
         self.image = toQImage(bytescale(self.xyzs)).mirror(0, 1)
         for i in range(0, 256):
             self.image.setColor(i, qRgb(i, 0, 255-i))
@@ -78,6 +90,7 @@ class QwtPlotImage(QwtPlotMappedItem):
         and copy the visible region to scale it to the canvas.
         """
         # calculate y1, y2
+        # the scanline order (index y) is inverted with respect to the y-axis
         y1 = y2 = self.image.height()
         y1 *= (self.yMap.d2() - yMap.d2())
         y1 /= (self.yMap.d2() - self.yMap.d1())
@@ -85,12 +98,12 @@ class QwtPlotImage(QwtPlotMappedItem):
         y2 *= (self.yMap.d2() - yMap.d1())
         y2 /= (self.yMap.d2() - self.yMap.d1())
         y2 = min(self.image.height(), int(y2+0.5))
-        # calculate x1, x1
+        # calculate x1, x2 -- the pixel order (index x) is normal
         x1 = x2 = self.image.width()
-        x1 *= (self.xMap.d2() - xMap.d2())
+        x1 *= (xMap.d1() - self.xMap.d1())
         x1 /= (self.xMap.d2() - self.xMap.d1())
         x1 = max(0, int(x1-0.5))
-        x2 *= (self.xMap.d2() - xMap.d1())
+        x2 *= (xMap.d2() - self.xMap.d1())
         x2 /= (self.xMap.d2() - self.xMap.d1())
         x2 = min(self.image.width(), int(x2+0.5))
         # copy
@@ -102,8 +115,9 @@ class QwtPlotImage(QwtPlotMappedItem):
 
     # drawImage()
 
-# QwtPlotImage()
+# class QwtPlotImage
     
+
 class QwtImagePlot(QwtPlot):
 
     def __init__(self, *args):
@@ -157,16 +171,18 @@ class QwtImagePlot(QwtPlot):
         
         # replot
         self.replot()
-	
+
+    # __init__()
+
     def drawCanvasItems(self, painter, rectangle, maps, filter):
         self.plotImage.drawImage(
             painter, maps[QwtPlot.xBottom], maps[QwtPlot.yLeft])
         QwtPlot.drawCanvasItems(self, painter, rectangle, maps, filter)
 
+    # drawCanvasItems()
 
     def onMouseMoved(self, e):
         pass
-
 
     # onMouseMoved()
 
@@ -229,11 +245,16 @@ class QwtImagePlot(QwtPlot):
 
     # toggleCurve()
 
+# class QwtImagePlot
+
+
 def make():
     demo = QwtImagePlot()
     demo.resize(500, 300)
     demo.show()
     return demo
+
+# make()
 
 def main(args):
     app = QApplication(args)
@@ -241,6 +262,7 @@ def main(args):
     app.setMainWidget(demo)
     app.exec_loop()
 
+# main()
 
 # Admire
 if __name__ == '__main__':
