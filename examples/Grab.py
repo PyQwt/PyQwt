@@ -23,6 +23,7 @@ jobs = [
     'CurveDemo3',
     'DataDemo',
     'DialDemo',
+    'ErrorBarDemo',
     'EventFilterDemo',
     'MapDemo',
     'MultiDemo',
