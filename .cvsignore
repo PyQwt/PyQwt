@@ -1,3 +1,5 @@
+*.patch
+*.pyc
 .configure
 build
 dist
