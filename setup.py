@@ -139,11 +139,11 @@ if os.name == 'nt':
     for filename in [
         'BodeDemo.py',
         'CPUplot.py',
-        'CompassDemo.py',
         'CurveDemo1.py',
         'CurveDemo2.py',
         'CurveDemo3.py',
         'DataDemo.py',
+        'DialDemo.py',
         'MapDemo.py',
         'MinPackDemo.py',
         'MultiDemo.py',
