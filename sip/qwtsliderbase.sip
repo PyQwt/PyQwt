@@ -73,6 +73,9 @@ public:
 
     bool isReadOnly() const;
 
+    bool isValid() const;
+    void setValid(bool);
+
 public slots:
     void setValue(double);
     void fitValue(double);
@@ -94,6 +97,7 @@ protected:
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseReleaseEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
+    virtual void keyPressEvent(QKeyEvent *);
     virtual void wheelEvent(QWheelEvent *);
 
     virtual double getValue(const QPoint &) = 0;
