@@ -1,5 +1,6 @@
-Makefile
 iqt
-pyqwtconfig.py
 qwt
+tmp
+Makefile
+pyqwtconfig.py
 test*
