@@ -44,7 +44,6 @@ def customize_qt_compiler(compiler, make_info, type, ccache=None):
     compiler.macros.append(('QT_NODEBUG', None))
 
     compiler.include_dirs.append(make_info['INCDIR_QT'])
-    compiler.include_dirs.append(get_python_inc())
 
     compiler.library_dirs.append(make_info['LIBDIR_QT'])
 

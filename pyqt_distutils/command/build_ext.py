@@ -61,12 +61,18 @@ class build_ext(old_build_ext):
         self.qt_compiler = new_compiler(verbose=self.verbose,
                                          dry_run=self.dry_run,
                                          force=self.force)
-        
+
+        # FIXME: what kind of policy? before or after customizing
+        if self.include_dirs is not None:
+            self.qt_compiler.set_include_dirs(self.include_dirs)
+        # FIXME: what about the other options?
+
         customize_qt_compiler(self.qt_compiler,
                               get_config('qt').get('make'),
                               get_config('qt').get('type'),
                               get_config('ccache').get('ccache_program'))
 
+            
         for ext in self.extensions:
             if 'qt' in ext.config_jobs:
                 self.build_pyqt_extension(ext)
