@@ -1,6 +1,6 @@
 // The SIP interface definition file for QwtDiMap.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -73,15 +73,15 @@ public:
 
 %If (QWT_4_3_0 -)
 
-class QwtDiTransformation
+class QwtScaleTransformation
 {
 %TypeHeaderCode
 #include <qwt_dimap.h>
 %End
 
 public:
-    QwtDiTransformation();
-//    QwtDiTransformation(
+    QwtScaleTransformation();
+//    QwtScaleTransformation(
 //        double (*xForm)(double, double, double, double, double),
 //        double (*invXForm)(double, double, double, double, double)
 //    );
@@ -95,37 +95,37 @@ public:
 //    double (*xForm)(double, double, double, double, double);
 //    double (*invXForm)(double, double, double, double, double);
 
-}; // class QwtDiTransformation
+}; // class QwtScaleTransformation
 
 
-class QwtDiMap
+class QwtScaleMap
 {
 %TypeHeaderCode
 #include <qwt_dimap.h>
 %End
 
 public:
-    QwtDiMap();
-    QwtDiMap(int, int, double, double);
-    ~QwtDiMap();
+    QwtScaleMap();
+    QwtScaleMap(int, int, double, double);
+    ~QwtScaleMap();
 
     void setTransformation(bool);
-    void setTransformation(const QwtDiTransformation &);
-    const QwtDiTransformation &transformation() const;
+    void setTransformation(const QwtScaleTransformation &);
+    const QwtScaleTransformation &transformation() const;
 
-    void setIntRange(int, int);
-    void setDblRange(double, double);
+    void setPaintInterval(int, int);
+    void setScaleInterval(double, double);
 
     int transform(double) const;
     double invTransform(int) const;
 
     double xTransform(double) const;
 
-    int i1() const;
-    int i2() const;
+    double p1() const;
+    double p2() const;
 
-    double d1() const;
-    double d2() const;
+    double s1() const;
+    double s2() const;
 
     // FIXME: how to wrap QT_STATIC_CONST?
     static const double LogMin;

@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtGrid.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -43,8 +43,15 @@ class QwtGrid
 public:
     QwtGrid();
 
+%If (QWT_4_2_0 - QWT_4_3_0)
     virtual void draw(QPainter *, const QRect &,
 		      const QwtDiMap &, const QwtDiMap &) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+    virtual void draw(QPainter *, const QRect &,
+		      const QwtScaleMap &, const QwtScaleMap &) const;
+%End // (QWT_4_3_0 -)
 
     void enableX(bool);
     bool xEnabled() const;

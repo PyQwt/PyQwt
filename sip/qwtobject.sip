@@ -44,6 +44,7 @@ class __QwtObject__: public QObject
 };
 %End
 
+%If (QWT_4_2_0 - QWT_4_3_0)
 %ConvertToSubClassCode
     // The table of Python class objects indexed by their names.
     // The table must be sorted by name.
@@ -72,7 +73,40 @@ class __QwtObject__: public QObject
 
     sipClass = sipMapStringToClass(
         sipCpp->className(), map, sizeof(map)/sizeof(map[0]));
-%End
+%End // %ConvertToSubClassCode
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+%ConvertToSubClassCode
+    // The table of Python class objects indexed by their names.
+    // The table must be sorted by name.
+    static sipStringTypeClassMap map[] = {
+        { sipName_QwtAnalogClock, &sipClass_QwtAnalogClock },
+        { sipName_QwtArrowButton, &sipClass_QwtArrowButton },
+        { sipName_QwtCompass, &sipClass_QwtCompass },
+        { sipName_QwtCounter, &sipClass_QwtCounter },
+        { sipName_QwtDial, &sipClass_QwtDial },
+        { sipName_QwtDynGridLayout, &sipClass_QwtDynGridLayout },
+        { sipName_QwtKnob, &sipClass_QwtKnob },
+        { sipName_QwtLegend, &sipClass_QwtLegend },
+        { sipName_QwtLegendButton, &sipClass_QwtLegendButton },
+        { sipName_QwtLegendLabel, &sipClass_QwtLegendLabel },
+        { sipName_QwtPicker, &sipClass_QwtPicker },
+        { sipName_QwtPlot, &sipClass_QwtPlot },
+        { sipName_QwtPlotCanvas, &sipClass_QwtPlotCanvas },
+        { sipName_QwtPlotPicker, &sipClass_QwtPlotPicker },
+        { sipName_QwtPushButton, &sipClass_QwtPushButton },
+        { sipName_QwtScaleWidget, &sipClass_QwtScaleWidget },
+        { sipName_QwtSlider, &sipClass_QwtSlider },
+        { sipName_QwtSliderBase, &sipClass_QwtSliderBase },
+        { sipName_QwtThermo, &sipClass_QwtThermo },
+        { sipName_QwtWheel, &sipClass_QwtWheel },
+    };
+
+    sipClass = sipMapStringToClass(
+        sipCpp->className(), map, sizeof(map)/sizeof(map[0]));
+%End // %ConvertToSubClassCode
+%End // (QWT_4_3_0 -)
 };
 
 // Local Variables:

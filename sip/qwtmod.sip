@@ -58,10 +58,15 @@
 // Automagically generated files
 %Include QwtArrayDouble.sip
 %Include QwtArrayLong.sip
+%If (QWT_4_2_0 - QWT_4_3_0)
 %Include QwtArrayQwtDiMap.sip
+%End // (QWT_4_2_0 - QWT_4_3_0)
 %Include QwtArrayQwtDoublePoint.sip
 %Include QwtArrayQwtKeyPattern.sip
 %Include QwtArrayQwtMousePattern.sip
+%If (QWT_4_3_0 -)
+%Include QwtArrayQwtScaleMap.sip
+%End // (QWT_4_3_0 -)
 
 // Provide "static PyObject *sipSubClass___QwtObject__(const QObject *sipCpp)".
 %Include qwtobject.sip

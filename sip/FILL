@@ -101,6 +101,16 @@ print >> file, QWT_ARRAY_USER % {
     'ARRAY': 'QwtArrayQwtMousePattern',
     }
 
+file = open('QwtArrayQwtScaleMap.sip', 'w')
+print >> file, QWT_ARRAY_USER % {
+    'HEAD': ('\n#include <qwt_array.h>'
+             '\n#include <qwt_dimap.h>'
+             '\ntypedef QwtArray<QwtScaleMap> QwtArrayQwtScaleMap;'
+             ),
+    'ITEM': 'QwtScaleMap',
+    'ARRAY': 'QwtArrayQwtScaleMap',
+    }
+
 # Local Variables: ***
 # mode: python ***
 # End: ***

@@ -150,7 +150,7 @@ public:
     virtual QwtScaleDiv divide(
 	double, double, int, double) const = 0;
 
-    virtual const QwtDiTransformation transformation() const = 0;
+    virtual const QwtScaleTransformation transformation() const = 0;
 
     // FIXME: virtual QwtScaleDiv divide(double, double, int, int /Constrained/) const;
 
@@ -189,7 +189,7 @@ public:
 
     virtual QwtScaleDiv divide(double, double, int, double) const;
 
-    virtual const QwtDiTransformation transformation() const;
+    virtual const QwtScaleTransformation transformation() const;
 
 }; // class QwtLinearAutoScaler
 
@@ -207,7 +207,7 @@ public:
 
     virtual QwtScaleDiv divide(double, double, int, double) const;
 
-    virtual const QwtDiTransformation transformation() const;
+    virtual const QwtScaleTransformation transformation() const;
 
 }; // class QwtLog10AutoScaler
 

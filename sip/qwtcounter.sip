@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtCounter.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -50,6 +50,23 @@ public:
 
     QwtCounter(QWidget * /TransferThis/ = 0, char * = 0);
   
+%If (QWT_4_3_0 -)
+    bool editable() const;
+    void setEditable(bool);
+%End // (QWT_4_3_0 -)
+
+    void setNumButtons(int);
+    int numButtons() const;
+
+    void setIncSteps(QwtCounter::Button, int);
+    int incSteps(QwtCounter::Button) const;
+
+    virtual void setValue(double);
+    virtual QSizePolicy sizePolicy() const;
+    virtual QSize sizeHint() const;
+
+    virtual bool eventFilter(QObject *, QEvent *);
+
     double step() const;
     void setStep(double);
     double minVal() const;
@@ -63,16 +80,6 @@ public:
     void setStepButton3(int);
     int stepButton3() const;
     virtual double value() const;
-
-    void setNumButtons(int);
-    int numButtons() const;
-
-    void setIncSteps(QwtCounter::Button, int);
-    int incSteps(QwtCounter::Button) const;
-
-    virtual void setValue(double);
-    virtual QSizePolicy sizePolicy() const;
-    virtual QSize sizeHint() const;
 
 signals:
     void buttonReleased(double);  

@@ -1,5 +1,4 @@
 // The SIP interface definition file for mapped QwtArray types, implemented:
-//      QwtArray<QwtDiMap>,
 //      QwtArray<QwtDoublePoint>,
 //      QwtArray<QwtEventPattern::KeyPattern>,
 //      QwtArray<QwtEventPattern::MousePattern>.
@@ -36,69 +35,6 @@
 // for a non-free program.
 //
 // -- LICENSE --
-
-
-%MappedType QwtArray<QwtDiMap>
-{
-%TypeHeaderCode
-#include <qwt_array.h>
-#include <qwt_dimap.h>
-%End
-
-%ConvertFromTypeCode
-    if (!sipCpp)
-        return PyList_New(0);
-
-    PyObject *l = PyList_New(sipCpp->size());
-
-    if (0 == l)
-        return 0;
-
-    for (int i = 0; i < int(sipCpp->size()); i++) {
-        PyObject *object = sipBuildResult(0, "N",
-                                          new QwtDiMap((*sipCpp)[i]),
-                                          sipClass_QwtDiMap);
-
-        if ((0 == object) || (-1 == PyList_SetItem(l, i, object))) {
-            Py_XDECREF(object);
-            Py_DECREF(l);
-            return 0;
-        }             
-    }
-    
-    return l;
-%End // ConvertFromTypeCode
-
-%ConvertToTypeCode
-    if (0 == sipIsErr)
-        return PyList_Check(sipPy);
-
-    if (sipPy == Py_None) {
-        *sipCppPtr = 0;
-        return 0;
-    }
-    
-    QwtArray<QwtDiMap> *a = new QwtArray<QwtDiMap>(PyList_GET_SIZE(sipPy));
-    int iserr = 0;
-
-    for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
-        QwtDiMap *item = reinterpret_cast<QwtDiMap *>(
-            sipForceConvertTo_QwtDiMap(PyList_GET_ITEM(sipPy, i), &iserr));
-
-        if (!item || iserr) {
-            delete a;
-            *sipIsErr = 1;
-            return 0;
-        }
-
-        (*a)[i] = *item;
-    }
-
-    *sipCppPtr = a;
-
-    return 1;
-%End // ConvertToTypeCode
-}; // QwtArray<DiMap>
 
 
 %MappedType QwtArray<QwtDoublePoint>

@@ -115,25 +115,57 @@ public:
     void setSplineSize(int);
     int splineSize() const;
 
+%If (QWT_4_2_0 - QWT_4_3_0)
     virtual void draw(QPainter *, const QwtDiMap &, const QwtDiMap &,
 		      int = 0, int = -1);
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+    virtual void draw(QPainter *, const QwtScaleMap &, const QwtScaleMap &,
+		      int = 0, int = -1);
+%End // (QWT_4_3_0 -)
 
 protected:
     void init(const QString &);
     void copy(const QwtCurve &);
 
-    virtual void drawCurve(QPainter *, int,
-			   const QwtDiMap &, const QwtDiMap &, int, int);
-    virtual void drawSymbols(QPainter *, QwtSymbol &,
-			     const QwtDiMap &, const QwtDiMap &, int, int);
+%If (QWT_4_2_0 - QWT_4_3_0)
+    virtual void drawCurve(
+	QPainter *, int, const QwtDiMap &, const QwtDiMap &, int, int);
+    virtual void drawSymbols(
+	QPainter *, QwtSymbol &,
+	const QwtDiMap &, const QwtDiMap &, int, int);
 
     void drawLines(QPainter *, const QwtDiMap &, const QwtDiMap &, int, int);
     void drawSticks(QPainter *, const QwtDiMap &, const QwtDiMap &, int, int);
     void drawDots(QPainter *, const QwtDiMap &, const QwtDiMap &, int, int);
     void drawSteps(QPainter *, const QwtDiMap &, const QwtDiMap &, int, int);
     void drawSpline(QPainter *, const QwtDiMap &, const QwtDiMap &);
-    void closePolyline(const QwtDiMap &, const QwtDiMap &,
-		       QPointArray &) const;
+    void closePolyline(
+	const QwtDiMap &, const QwtDiMap &, QPointArray &) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+    virtual void drawCurve(
+	QPainter *, int, const QwtScaleMap &, const QwtScaleMap &, int, int);
+    virtual void drawSymbols(
+	QPainter *, QwtSymbol &,
+	const QwtScaleMap &, const QwtScaleMap &, int, int);
+
+    void drawLines(
+	QPainter *, const QwtScaleMap &, const QwtScaleMap &, int, int);
+    void drawSticks(
+	QPainter *, const QwtScaleMap &, const QwtScaleMap &, int, int);
+    void drawDots(
+	QPainter *, const QwtScaleMap &, const QwtScaleMap &, int, int);
+    void drawSteps(
+	QPainter *, const QwtScaleMap &, const QwtScaleMap &, int, int);
+    void drawSpline(
+	QPainter *, const QwtScaleMap &, const QwtScaleMap &);
+    void closePolyline(
+	const QwtScaleMap &, const QwtScaleMap &, QPointArray &) const;
+%End // (QWT_4_3_0 -)
+
     virtual void curveChanged();
     int verifyRange(int & /In,Out/, int & /In,Out/);
 };

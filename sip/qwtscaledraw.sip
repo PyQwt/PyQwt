@@ -34,6 +34,7 @@
 // -- LICENSE --
 
 
+%If (QWT_4_2_0 - QWT_4_3_0)
 class QwtScaleDraw: QwtDiMap
 {
 %TypeHeaderCode
@@ -57,13 +58,8 @@ public:
     QwtScaleDraw();
     virtual ~QwtScaleDraw();
     
-%If (QWT_4_2_0 - QWT_4_3_0)
     void setScale(const QwtScaleDiv &);
     void setScale(double, double, int, int, double = 0.0, int = 0);
-%End // (QWT_4_2_0 - QWT_4_3_0)
-%If (QWT_4_3_0 -)
-    void setScaleDiv(const QwtScaleDiv &);
-%End // (QWT_4_3_0 -)
 
     void setOptions(int);
     int options() const;
@@ -117,7 +113,92 @@ protected:
 
     QWMatrix labelWorldMatrix(const QFontMetrics &, const QPoint &,
 			      int, double, const QString &) const;
-};
+
+}; // class QwtScaleDraw
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+
+%If (QWT_4_3_0 -)
+class QwtScaleDraw: QwtScaleMap
+{
+%TypeHeaderCode
+#include <qwt_scldraw.h>
+%End
+
+public:
+    enum Orientation {
+	Bottom,
+	Top,
+	Left,
+	Right,
+	Round,
+    };
+
+    enum Option {
+	None = 0,
+	Backbone = 1,
+    };
+
+    QwtScaleDraw();
+    virtual ~QwtScaleDraw();
+    
+    void setScaleDiv(const QwtScaleDiv &);
+
+    void setOptions(int);
+    int options() const;
+
+    void setGeometry(int, int, int, Orientation);
+    int x() const;
+    int y() const;
+    int length() const;
+    Orientation orientation() const;
+
+    void setAngleRange(double, double);
+    void setLabelFormat(char, int, int = 0);
+    void setLabelAlignment(int);
+    void setLabelRotation(double);
+    void setTickLength(unsigned int, unsigned int, unsigned int);
+
+    void setMargin(uint, uint);
+
+    const QwtScaleDiv& scaleDiv() const;
+    int maxWidth(const QPen &, const QFontMetrics &) const;
+    int maxHeight(const QPen &, const QFontMetrics &) const;
+
+    void minBorderDist(const QFontMetrics &, int & /Out/, int & /Out/) const;
+    int minLabelDist(const QFontMetrics &) const;
+
+    int minHeight(const QPen &, const QFontMetrics &) const; 
+    int minWidth(const QPen &, const QFontMetrics &) const; 
+
+    void labelFormat(char & /Out/, int & /Out/, int & /Out/) const;
+        
+    int labelAlignment() const;
+    double labelRotation() const;
+
+    void tickLength(unsigned int &, unsigned int &, unsigned int &) const;
+    unsigned int majTickLength() const;
+         
+    virtual void draw(QPainter *) const;
+    virtual QString label(double) const;
+
+protected:
+    virtual void labelPlacement(const QFontMetrics &, double, QPoint &,
+				int & /Out/, double & /Out/) const;
+
+    virtual int maxLabelHeight(const QFontMetrics &) const;
+    virtual int maxLabelWidth(const QFontMetrics &) const;
+    QRect labelBoundingRect(const QFontMetrics &, double) const;
+
+    void drawTick(QPainter *, double, int) const;
+    void drawBackbone(QPainter *) const;
+    void drawLabel(QPainter *, double) const;
+
+    QWMatrix labelWorldMatrix(const QFontMetrics &, const QPoint &,
+			      int, double, const QString &) const;
+
+}; // class QwtScaleDraw
+%End // (QWT_4_3_0 -)
 
 
 // Local Variables:

@@ -34,6 +34,7 @@
 // -- LICENSE --
 
 
+%If (QWT_4_2_0 - QWT_4_3_0)
 class QwtScale: QWidget
 {
 %TypeHeaderCode
@@ -72,12 +73,7 @@ public:
     void setBaselineDist(int);
     int baseLineDist() const;
 
-%If (QWT_4_2_0 - QWT_4_3_0)
     void setScaleDiv(const QwtScaleDiv &);
-%End // (QWT_4_2_0 - QWT_4_3_0)
-%If (QWT_4_3_0 -)
-    // FIXME: void setScaleDiv(const QwtDiTransformation &, const QwtScaleDiv &sd);    
-%End // (QWT_4_3_0 -)
     void setScaleDraw(QwtScaleDraw *);
     const QwtScaleDraw *scaleDraw() const;
 
@@ -108,6 +104,80 @@ protected:
     void layoutScale(bool = 1);
 
 }; // class QwtScale
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+
+%If (QWT_4_3_0 -)
+class QwtScaleWidget: QWidget
+{
+%TypeHeaderCode
+#include <qwt_scale.h>
+%End
+
+public:
+    enum Position {
+	Left,
+	Right,
+	Top,
+	Bottom,
+    };
+
+    QwtScaleWidget(QWidget * /TransferThis/ = 0, const char * = 0);
+    QwtScaleWidget(Position, QWidget * /TransferThis/, const char * = 0);
+    virtual ~QwtScaleWidget();
+    
+    void setTitle(const QString &);
+    const QString title() const;
+
+    void setTitleColor(const QColor &);
+    const QColor titleColor() const;
+
+    void setTitleFont(const QFont &);
+    const QFont titleFont() const;
+
+    void setTitleAlignment(int);
+    int titleAlignment() const;
+
+    void setBorderDist(int, int);
+    int startBorderDist() const;
+    int endBorderDist() const;
+    void minBorderDist(int & /Out/, int & /Out/) const;
+
+    void setBaselineDist(int);
+    int baseLineDist() const;
+
+    void setScaleDiv(const QwtScaleTransformation &, const QwtScaleDiv &);
+    void setScaleDraw(QwtScaleDraw *);
+    const QwtScaleDraw *scaleDraw() const;
+
+    void setLabelFormat(char, int, int);
+    void labelFormat(char & /Out/, int & /Out/, int & /Out/) const;
+
+    void setLabelAlignment(int);
+    void setLabelRotation(double);
+
+    QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
+    virtual QSizePolicy sizePolicy() const;
+
+    int titleHeightForWidth(int) const;
+    int dimForLength(int, const QFontMetrics &) const;
+
+    void drawTitle(QPainter *, QwtScaleDraw::Orientation, const QRect &);
+
+    void setPosition(Position);
+    Position position() const;
+
+protected:
+    void draw(QPainter *) const;
+    void paintEvent(QPaintEvent *);
+    void resizeEvent(QResizeEvent *);
+    void scaleChange();
+    void fontChange(const QFont &);
+    void layoutScale(bool = 1);
+
+}; // class QwtScale
+%End // (QWT_4_3_0 -)
 
 
 // Local Variables:

@@ -120,7 +120,13 @@ public:
     // FIXME: QwtPlotCurveIterator curveIterator() const;
     // FIXME: QwtPlotMarkerIterator markerIterator() const;
 
+%If (QWT_4_2_0 - QWT_4_3_0)
     QwtDiMap canvasMap(int) const;
+%End
+
+%If (QWT_4_3_0 -)
+    QwtScaleMap canvasMap(int) const;
+%End
 
     double invTransform(int, int) const;
     int transform(int, double) const;
@@ -257,8 +263,8 @@ public:
 %End // (QWT_4_2_0 - QWT_4_3_0)
 
 %If (QWT_4_3_0 -)
-    // dead code: const QwtScale *axis(int) const;
-    const QwtScale *axis(int) const;
+    // dead code: const QwtScaleWidget *axis(int) const;
+    const QwtScaleWidget *axis(int) const;
 %End // (QWT_4_3_0 -)
 
     void setAxisLabelFormat(int, char, int);
@@ -399,10 +405,21 @@ protected:
     static bool axisValid(int);
 
     virtual void drawCanvas(QPainter *);
+
+%If (QWT_4_2_0 - QWT_4_3_0)
     virtual void drawCanvasItems(QPainter *,
                                  const QRect &, 
-                                 const QwtArray<QwtDiMap> &,
+                                 const QwtArrayQwtDiMap &,
                                  const QwtPlotPrintFilter &) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+    virtual void drawCanvasItems(QPainter *,
+                                 const QRect &, 
+                                 const QwtArrayQwtScaleMap &,
+                                 const QwtPlotPrintFilter &) const;
+%End // (QWT_4_3_0 -)
+
     virtual void drawContents(QPainter *);
 
     virtual void updateTabOrder();
@@ -420,10 +437,20 @@ protected:
     virtual void printTitle(QPainter *, const QRect &) const;
     virtual void printScale(
         QPainter *, int, int, int, int, const QRect &) const;
+
+%If (QWT_4_2_0 - QWT_4_3_0)
     virtual void printCanvas(QPainter *,
                              const QRect &,
-                             const QwtArray<QwtDiMap> &,
+                             const QwtArrayQwtDiMap &,
                              const QwtPlotPrintFilter &) const;
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+    virtual void printCanvas(QPainter *,
+                             const QRect &,
+                             const QwtArrayQwtScaleMap &,
+                             const QwtPlotPrintFilter &) const;
+%End // (QWT_4_3_0 -)
     virtual void printLegend(QPainter *, const QRect &) const;
 
 }; // class QwtPlotCanvas
