@@ -10,6 +10,7 @@ SOURCES := \
 
 
 doc: $(SOURCES)
+	if [ ! -e html/pyqwt ]; then mkdir html/pyqwt; fi
 	(cd html/pyqwt; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
 	cp -pu html/icons/*.png html/pyqwt
 	python tools/mkhowto --html --dir html/pyqwt \
@@ -21,6 +22,7 @@ doc: $(SOURCES)
 	date -u "+%Y-%m-%d %T" > doc
 
 htdoc: doc $(SOURCES)
+	if [ ! -e html/htdoc ]; then mkdir html/htdoc; fi
 	(cd html/htdoc; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
 	cp -pur html/pyqwt/* html/htdoc
 	python tools/sourceforge.py html/htdoc/*.html
