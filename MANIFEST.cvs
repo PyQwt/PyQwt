@@ -1,7 +1,7 @@
 # MANIFEST template file to make a CVS tree
 
 # Package stuff
-include ANNOUNCEMENT-3.6.TXT
+include ANNOUNCEMENT-3.7.TXT
 include AUTHORS COPYING COPYING.PyQwt
 include INSTALL MANIFEST* README* REGISTRATION.SF THANKS
 include DIFFER PATCHER patches.py

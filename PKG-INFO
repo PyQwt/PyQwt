@@ -1,8 +1,8 @@
 Metadata-Version: 1.0
 Name: PyQwt
-Version: 20030615
+Version: 3.7
 Summary: Python bindings for the Qwt library
-Home-page: http://gerard.vermeulen.free.fr
+Home-page: http://pyqwt.sourceforge.net
 Author: Gerard Vermeulen
 Author-email: gvermeul@grenoble.cnrs.fr
 License: GPL

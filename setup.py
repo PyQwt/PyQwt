@@ -228,7 +228,7 @@ setup(
     name              = "PyQwt",
     version           = version,
     description       = "Python bindings for the Qwt library",
-    url               = "http://gerard.vermeulen.free.fr",
+    url               = "http://pyqwt.sourceforge.net",
     author            = "Gerard Vermeulen",
     author_email      = "gvermeul@grenoble.cnrs.fr",
     license           = "GPL",
