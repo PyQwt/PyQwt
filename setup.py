@@ -24,7 +24,7 @@ else:
 name = 'PyQwt'
 qwtdir = 'qwt-sources'
 snapshot = '%04d%02d%02d' % (time.localtime()[:3])
-version = '3.8rc0'
+version = '3.8'
 
 #
 # CHECK FOR A RECENT PYTHON
