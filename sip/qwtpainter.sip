@@ -89,7 +89,8 @@ public:
     static QRect map(const QWMatrix &, const QRect &);
     static QPointArray map(const QWMatrix &, const QPointArray &);
 
-    static void drawRoundFrame(QPainter *, const QRect &, int, bool);
+    static void drawRoundFrame(QPainter *, const QRect &, int,
+                               const QColorGroup &, bool);
 };
 
 // Local Variables:

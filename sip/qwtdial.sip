@@ -42,6 +42,9 @@ class QwtDialScaleDraw: QwtScaleDraw
 public:
     QwtDialScaleDraw(QwtDial * /TransferThis/);
     virtual QString label(double) const;
+
+    void setPenWidth(uint);
+    uint penWidth() const;
 };
 
 class QwtDial: QwtSliderBase
