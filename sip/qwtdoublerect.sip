@@ -34,6 +34,64 @@
 // part of PyQwt.
 
 
+%MappedType QValueStack<QwtDoubleRect>
+{
+%HeaderCode
+#include <qwt_array.h>
+#include <qvaluestack.h>
+%End
+
+%ConvertFromTypeCode
+    if (!sipCpp)
+        return PyList_New(0);
+    
+    // FIXME: works because QValueStack is derived from QList 
+    PyObject *l = PyList_New(sipCpp->count());;
+
+    if (0 == l)
+        return 0;
+
+    for (int i = 0; i < int(sipCpp->count()); i++) {
+        PyObject *o;
+        if ((0 == (o = sipNewCppToSelf(new QwtDoubleRect((*sipCpp)[i]),
+                                       sipClass_QwtDoubleRect,
+                                       SIP_SIMPLE | SIP_PY_OWNED)))
+            || (-1 == PyList_SetItem(l, i, o))) {
+            Py_DECREF(l);
+            return 0;
+        }             
+    }
+    
+    return l;
+%End
+
+%ConvertToTypeCode
+    if (0 == sipIsErr)
+        return PyList_Check(sipPy);
+
+    // FIXME: can we use the fact that QValueStack is derived from QList? 
+    QValueStack<QwtDoubleRect> *c = new QValueStack<QwtDoubleRect>;
+    int iserr = 0;
+
+    for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
+        c->push(*(QwtDoubleRect *)(sipForceConvertTo_QwtDoubleRect(
+                                        PyList_GET_ITEM(sipPy, i), &iserr)));
+
+        if (iserr) {
+            delete c;
+            *sipIsErr = 1;
+            
+            return 0;
+        }
+    }
+
+    *sipCppPtr = c;
+
+    return 1;
+%End
+};
+
+
 class QwtDoublePoint
 {
 %HeaderCode

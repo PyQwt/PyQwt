@@ -1,4 +1,4 @@
-// The SIP interface definition for QwtPlotZoom.
+// The SIP interface definition for QwtPlotZoomer.
 //
 // Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
@@ -34,68 +34,10 @@
 // part of PyQwt.
 
 
-%MappedType QValueStack<QwtDoubleRect>
+class QwtPlotZoomer: QwtPlotPicker
 {
 %HeaderCode
-#include <qwt_array.h>
-#include <qvaluestack.h>
-%End
-
-%ConvertFromTypeCode
-    if (!sipCpp)
-        return PyList_New(0);
-    
-    // FIXME: works because QValueStack is derived from QList 
-    PyObject *l = PyList_New(sipCpp->count());;
-
-    if (0 == l)
-        return 0;
-
-    for (int i = 0; i < int(sipCpp->count()); i++) {
-        PyObject *o;
-        if ((0 == (o = sipNewCppToSelf(new QwtDoubleRect((*sipCpp)[i]),
-                                       sipClass_QwtDoubleRect,
-                                       SIP_SIMPLE | SIP_PY_OWNED)))
-            || (-1 == PyList_SetItem(l, i, o))) {
-            Py_DECREF(l);
-            return 0;
-        }             
-    }
-    
-    return l;
-%End
-
-%ConvertToTypeCode
-    if (0 == sipIsErr)
-        return PyList_Check(sipPy);
-
-    // FIXME: can we use the fact that QValueStack is derived from QList? 
-    QValueStack<QwtDoubleRect> *c = new QValueStack<QwtDoubleRect>;
-    int iserr = 0;
-
-    for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i) {
-        c->push(*(QwtDoubleRect *)(sipForceConvertTo_QwtDoubleRect(
-                                        PyList_GET_ITEM(sipPy, i), &iserr)));
-
-        if (iserr) {
-            delete c;
-            *sipIsErr = 1;
-            
-            return 0;
-        }
-    }
-
-    *sipCppPtr = c;
-
-    return 1;
-%End
-};
-
-
-class QwtPlotZoom: QwtPicker
-{
-%HeaderCode
-#include <qwt_plot_zoom.h>
+#include <qwt_plot_zoomer.h>
 %End
 
 public:
@@ -108,7 +50,7 @@ public:
 %End
 %End
 
-    QwtPlotZoom(QwtPlotCanvas *, const char * = 0);
+    QwtPlotZoomer(QwtPlotCanvas *, const char * = 0);
 
     virtual void setZoomBase();
 
@@ -116,16 +58,11 @@ public:
     QwtDoubleRect zoomRect() const;
 
     void setAxis(int, int);
-    // not implemented: void setXAxis(int);
-    // not implemented: void setYAxis(int);
-
-    int xAxis() const;
-    int yAxis() const;
 
     void setMaxStackDepth(int);
     int maxStackDepth() const;
 
-    // not implemented: const QValueStack<QwtDoubleRect> &zoomStack() const;
+    // dead code: const QValueStack<QwtDoubleRect> &zoomStack() const;
 
     QwtPlot *plot();
     // dead code: const QwtPlot *plot() const;
@@ -152,11 +89,10 @@ protected:
 
     virtual void canvasMousePressEvent(QMouseEvent *);
     virtual void canvasMouseReleaseEvent(QMouseEvent *);
+    virtual void canvasKeyPressEvent(QKeyEvent *);
 
     QwtDoubleRect scaleRect() const;
 
-    virtual QString cursorLabel(const QPoint &) const;
-    virtual QString cursorLabel(double, double) const;
     virtual void end(bool = TRUE);
 };
 

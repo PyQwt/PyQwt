@@ -1,4 +1,4 @@
-// The SIP interface definition for the Qwt module of PyQwt.
+// The SIP interface definition for QwtPlotPicker.
 //
 // Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
@@ -34,74 +34,67 @@
 // part of PyQwt.
 
 
-%Module qwt
-
-%Include features.sip
-
-%Import qtmod.sip
-
+class QwtPlotPicker: QwtPicker
+{
 %HeaderCode
-#include <qwt_python.h>
+#include <qwt_plot_picker.h>
 %End
 
-// Hack to improve rlcompleter support for PyQt&sip-3.6 and earlier
-%Include qwtgetlazynames.sip
+public:
+    enum Shape
+    {
+        HLine,
+        VLine,
+        Cross,
+        Rect,
+        Ellipse
+    };
+%If (SIP_DUMB_DIR)
+    void getLazyNames();
+%MemberCode
+    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
+	return getLazyNames(sipClassAttrTab_$C);
+    }
+%End
+%End
 
-// Normal include files
-%Include qwt.sip
-%Include qwtarrowbutton.sip
-%Include qwtautoscale.sip
-%Include qwtcompass.sip
-%Include qwtcompassrose.sip
-%Include qwtcounter.sip
-%Include qwtcurve.sip
-%Include qwtcurvedict.sip
-%Include qwtdblrange.sip
-%Include qwtdial.sip
-%Include qwtdialneedle.sip
-%Include qwtdimap.sip
-%Include qwtdoublerect.sip
-%Include qwtdyngridlayout.sip
-%Include qwtglobal.sip
-%Include qwtgrid.sip
-%Include qwtknob.sip
-%Include qwtlayoutmetrics.sip
-%Include qwtlegend.sip
-%Include qwtlegendbutton.sip
-%Include qwtlegenditem.sip
-%Include qwtlegendlabel.sip
-%Include qwtmarker.sip
-%Include qwtmarkerdict.sip
-%Include qwtmath.sip
-%Include qwtpicker.sip
-%Include qwtplot.sip
-%Include qwtplotcanvas.sip
-%Include qwtplotcurve.sip
-%Include qwtplotgrid.sip
-%Include qwtplotitem.sip
-%Include qwtplotlayout.sip
-%Include qwtplotmarker.sip
-%Include qwtplotpicker.sip
-%Include qwtplotzoomer.sip
-%Include qwtpaintbuffer.sip
-%Include qwtpainter.sip
-%Include qwtplotprintfilter.sip
-%Include qwtpushbutton.sip
-%Include qwtrect.sip
-%Include qwtscale.sip
-%Include qwtscalediv.sip
-%Include qwtscaledraw.sip
-%Include qwtscaleif.sip
-%Include qwtsliderbase.sip
-%Include qwtslider.sip
-%Include qwtspline.sip
-%Include qwtsymbol.sip
-%Include qwttext.sip
-%Include qwtthermo.sip
-%Include qwtwheel.sip
+    QwtPlotPicker(QwtPlotCanvas *, const char * = 0);
 
-// Image support
-%Include qwtqimage.sip
+    virtual void setAxis(int, int);
+
+    int xAxis() const;
+    int yAxis() const;
+
+    virtual void setShape(Shape);
+    Shape shape() const;
+
+    QwtPlot *plot();
+    // dead code: const QwtPlot *plot() const;
+    
+signals:
+    void moved(const QwtDoublePoint &);
+    void selected(const QwtDoublePoint &);
+    void selected(const QwtDoubleRect &);
+    // FIXME: void selected(const QwtArray<QwtDoublePoint> &);
+
+protected:
+    QwtDoubleRect scaleRect() const;
+
+    QwtDoubleRect invTransform(const QRect &) const;
+    QRect transform(const QwtDoubleRect &) const;
+
+    QwtDoublePoint invTransform(const QPoint &) const;
+    QPoint transform(const QwtDoublePoint &) const;
+
+    virtual QString cursorLabel(const QPoint &) const;
+    virtual QString cursorLabel(const QwtDoublePoint &) const;
+
+    virtual void drawRubberBand(QPainter *, const QRect &,
+                                const QPointArray &) const;
+
+    virtual void move(const QPoint &);
+    virtual void end(bool = TRUE);
+};
 
 // Local Variables:
 // mode: C++

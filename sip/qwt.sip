@@ -48,19 +48,22 @@ public:
 	Bottom = 0x08,
 	Center = 0x10
     };
+
+//#ifndef QWT_NO_COMPAT
     enum Shape {
-	HLine,
-	VLine,
-	Cross,
-	DiagCross,
-	Rect,
-	Ellipse,
-	Triangle,
-	UTriangle,
-	DTriangle,
-	LTriangle,
-	RTriangle
+        HLine,
+        VLine,
+        Cross,
+        Rect,
+        Ellipse,
+        Triangle,
+        UTriangle,
+        DTriangle,
+        LTriangle,
+        RTriangle
     };
+//#endif
+
     enum Errors {
 	ErrNone,
 	ErrNoMem,
