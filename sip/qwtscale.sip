@@ -1,6 +1,6 @@
 // The SIP interface definition file for QwtScale.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -72,7 +72,12 @@ public:
     void setBaselineDist(int);
     int baseLineDist() const;
 
+%If (QWT_4_2_0 - QWT_4_3_0)
     void setScaleDiv(const QwtScaleDiv &);
+%End // (QWT_4_2_0 - QWT_4_3_0)
+%If (QWT_4_3_0 -)
+    // FIXME: void setScaleDiv(const QwtDiTransformation &, const QwtScaleDiv &sd);    
+%End // (QWT_4_3_0 -)
     void setScaleDraw(QwtScaleDraw *);
     const QwtScaleDraw *scaleDraw() const;
 
@@ -101,7 +106,9 @@ protected:
     void scaleChange();
     void fontChange(const QFont &);
     void layoutScale(bool = 1);
-};
+
+}; // class QwtScale
+
 
 // Local Variables:
 // mode: C++

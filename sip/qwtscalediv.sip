@@ -82,7 +82,20 @@ public:
     };
 
     QwtScaleDiv();
-    QwtScaleDiv(bool, const QwtDoubleInterval &,
+    QwtScaleDiv(const QwtDoubleInterval &,
+		QwtArrayDouble, QwtArrayDouble, QwtArrayDouble); // FIXME??
+%MethodCode
+        // minor, medium, major instead of QwtArray<double> ticks[NTickTypes]
+
+	QwtArray<double> ticks[QwtScaleDiv::NTickTypes];
+	ticks[QwtScaleDiv::MinorTick] = *a1;
+	ticks[QwtScaleDiv::MediumTick] = *a2;
+	ticks[QwtScaleDiv::MajorTick] = *a3;
+
+	sipCpp = new QwtScaleDiv(*a0, ticks);
+%End
+
+    QwtScaleDiv(double, double, 
 		QwtArrayDouble, QwtArrayDouble, QwtArrayDouble); // FIXME??
 %MethodCode
         // minor, medium, major instead of QwtArray<double> ticks[NTickTypes]
@@ -92,26 +105,12 @@ public:
 	ticks[QwtScaleDiv::MediumTick] = *a3;
 	ticks[QwtScaleDiv::MajorTick] = *a4;
 
-	sipCpp = new QwtScaleDiv(a0, *a1, ticks);
-%End
-
-    QwtScaleDiv(bool, double, double, 
-		QwtArrayDouble, QwtArrayDouble, QwtArrayDouble); // FIXME??
-%MethodCode
-        // minor, medium, major instead of QwtArray<double> ticks[NTickTypes]
-
-	QwtArray<double> ticks[QwtScaleDiv::NTickTypes];
-	ticks[QwtScaleDiv::MinorTick] = *a3;
-	ticks[QwtScaleDiv::MediumTick] = *a4;
-	ticks[QwtScaleDiv::MajorTick] = *a5;
-
-	sipCpp = new QwtScaleDiv(a0, a1, a2, ticks);
+	sipCpp = new QwtScaleDiv(a0, a1, ticks);
 %End
 
     int operator==(const QwtScaleDiv &) const;
     int operator!=(const QwtScaleDiv &) const;
 
-    bool logScale() const;
     double lBound() const;
     double hBound() const;
 
@@ -121,7 +120,8 @@ public:
     bool isValid() const;
 
     void invert();
-};
+
+}; // class QwtScaleDiv
 
 %End // (QWT_4_3_0 - )
 

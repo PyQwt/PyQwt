@@ -106,7 +106,26 @@ protected:
 
 %If (QWT_4_3_0 -)
 
-class QwtAutoScaler
+class QwtScaleArithmetic
+{
+%TypeHeaderCode
+#include <qwt_autoscl.h>
+%End
+
+public:
+    QwtScaleArithmetic();
+    virtual ~QwtScaleArithmetic();
+
+    int compareEps(double, double, double) const;
+
+    double ceilEps(double, double) const;
+    double floorEps(double, double) const;
+
+    double divideEps(double, double) const;
+}; // class QwtScaleArithmetic
+
+
+class QwtAutoScaler: QwtScaleArithmetic /Abstract/
 {
 %TypeHeaderCode
 #include <qwt_autoscl.h>
@@ -126,9 +145,14 @@ public:
 
     virtual void autoScale(int, double &, double &, double &) const = 0;
 
-    virtual QwtScaleDiv divide(double, double, int, double) const = 0;
-
     virtual double stepSize(double, double, int) const = 0;
+
+    virtual QwtScaleDiv divide(
+	double, double, int, double) const = 0;
+
+    virtual const QwtDiTransformation transformation() const = 0;
+
+    // FIXME: virtual QwtScaleDiv divide(double, double, int, int /Constrained/) const;
 
     void changeOptions(int, bool);
     void setOptions(int);
@@ -143,8 +167,13 @@ public:
     double hiMargin() const;
 
 protected:
-    bool almostZero(double, double) const;
-};
+    bool contains(const QwtDoubleInterval &, double) const;
+    QwtArrayDouble strip(const QwtArrayDouble &,
+			 const QwtDoubleInterval &) const;
+    double divideInterval(double, int) const;
+
+    QwtDoubleInterval buildInterval(double) const;
+}; // class  QwtAutoScaler
 
 
 class QwtLinearAutoScaler: QwtAutoScaler
@@ -156,10 +185,13 @@ class QwtLinearAutoScaler: QwtAutoScaler
 public:
     virtual void autoScale(int, double &, double &, double &) const;
 
+    virtual double stepSize(double, double, int) const;
+
     virtual QwtScaleDiv divide(double, double, int, double) const;
 
-    virtual double stepSize(double, double, int) const;
-};
+    virtual const QwtDiTransformation transformation() const;
+
+}; // class QwtLinearAutoScaler
 
 
 class QwtLog10AutoScaler: QwtAutoScaler
@@ -171,10 +203,13 @@ class QwtLog10AutoScaler: QwtAutoScaler
 public:
     virtual void autoScale(int, double &, double &, double &) const;
 
+    virtual double stepSize(double, double, int) const;
+
     virtual QwtScaleDiv divide(double, double, int, double) const;
 
-    virtual double stepSize(double, double, int) const;
-};
+    virtual const QwtDiTransformation transformation() const;
+
+}; // class QwtLog10AutoScaler
 
 %End // (QWT_4_3_0 -)
 
@@ -182,4 +217,5 @@ public:
 // Local Variables:
 // mode: C++
 // c-file-style: "stroustrup"
+// indent-tabs-mode: nil
 // End:

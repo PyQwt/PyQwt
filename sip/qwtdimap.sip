@@ -34,6 +34,8 @@
 // -- LICENSE --
 
 
+%If (QWT_4_2_0 - QWT_4_3_0)
+
 class QwtDiMap
 {
 %TypeHeaderCode
@@ -64,9 +66,78 @@ public:
 
     static const double LogMin;
     static const double LogMax;
-};
+
+}; // class QwtDimap
+
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+%If (QWT_4_3_0 -)
+
+class QwtDiTransformation
+{
+%TypeHeaderCode
+#include <qwt_dimap.h>
+%End
+
+public:
+    QwtDiTransformation();
+//    QwtDiTransformation(
+//        double (*xForm)(double, double, double, double, double),
+//        double (*invXForm)(double, double, double, double, double)
+//    );
+
+    static double linearXForm(double, double, double, double, double);
+
+    static double logXForm(double, double, double, double, double);
+    static double logInvXForm(double, double, double, double, double);
+
+
+//    double (*xForm)(double, double, double, double, double);
+//    double (*invXForm)(double, double, double, double, double);
+
+}; // class QwtDiTransformation
+
+
+class QwtDiMap
+{
+%TypeHeaderCode
+#include <qwt_dimap.h>
+%End
+
+public:
+    QwtDiMap();
+    QwtDiMap(int, int, double, double);
+    ~QwtDiMap();
+
+    void setTransformation(bool);
+    void setTransformation(const QwtDiTransformation &);
+    const QwtDiTransformation &transformation() const;
+
+    void setIntRange(int, int);
+    void setDblRange(double, double);
+
+    int transform(double) const;
+    double invTransform(int) const;
+
+    double xTransform(double) const;
+
+    int i1() const;
+    int i2() const;
+
+    double d1() const;
+    double d2() const;
+
+    // FIXME: how to wrap QT_STATIC_CONST?
+    static const double LogMin;
+    static const double LogMax;
+
+}; // class QwtDiMap
+
+%End // (QWT_4_3_0 -)
+
 
 // Local Variables:
 // mode: C++
 // c-file-style: "stroustrup"
+// indent-tabs-mode: nil
 // End:

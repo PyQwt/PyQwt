@@ -1,6 +1,6 @@
 // The SIP interface definition file for QwtPlotCanvas.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -67,6 +67,7 @@ protected:
 
     void drawCanvas(QPainter * = 0);
 
+%If (QWT_4_2_0 - QWT_4_3_0)
 %If (Qwt_COMPAT)
 public:
     void enableOutline(bool);
@@ -87,10 +88,14 @@ protected:
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseReleaseEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
-%End
-};
+%End // (Qwt_COMPAT)
+%End // (QWT_4_2_0 - QWT_4_3_0)
+
+}; // class QwtPlotCanvas
+
 
 // Local Variables:
 // mode: C++
 // c-file-style: "stroustrup"
+// indent-tabs-mode: nil
 // End:

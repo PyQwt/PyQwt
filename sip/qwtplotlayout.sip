@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtPlotLayout.
 //
-// Copyright (C) 2001-2004 Gerard Vermeulen
+// Copyright (C) 2001-2005 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt. 
@@ -70,10 +70,12 @@ public:
     void setLegendRatio(double);
     double legendRatio() const;
 
+%If (QWT_4_2_0 - QWT_4_3_0)
 %If (Qwt_COMPAT)
     void setLegendPos(int, double = 0.0);
     int legendPos() const;
 %End
+%End // (QWT_4_2_0 - QWT_4_3_0)
 
     virtual QSize minimumSizeHint(const QwtPlot *) const;
     virtual void activate(const QwtPlot *, QRect &, int = 0);

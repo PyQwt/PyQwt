@@ -57,10 +57,13 @@ public:
     QwtScaleDraw();
     virtual ~QwtScaleDraw();
     
-    void setScale(const QwtScaleDiv &);
 %If (QWT_4_2_0 - QWT_4_3_0)
+    void setScale(const QwtScaleDiv &);
     void setScale(double, double, int, int, double = 0.0, int = 0);
 %End // (QWT_4_2_0 - QWT_4_3_0)
+%If (QWT_4_3_0 -)
+    void setScaleDiv(const QwtScaleDiv &);
+%End // (QWT_4_3_0 -)
 
     void setOptions(int);
     int options() const;
@@ -120,4 +123,5 @@ protected:
 // Local Variables:
 // mode: C++
 // c-file-style: "stroustrup"
+// indent-tabs-mode: nil
 // End:

@@ -77,6 +77,7 @@ public:
                        const QwtPlotPrintFilter & = QwtPlotPrintFilter()) const
         /PyName=printPlot/;
 
+%If (QWT_4_2_0 - QWT_4_3_0)
 %If (Qwt_COMPAT)
     // Outline
 
@@ -86,7 +87,8 @@ public:
     Qwt::Shape outlineStyle() const;
     void setOutlinePen(const QPen &);
     const QPen& outlinePen() const;
-%End
+%End // (Qwt_COMPAT)
+%End // (QWT_4_2_0 - QWT_4_3_0)
 
     // Layout
 
@@ -341,10 +343,12 @@ public:
     void setLegendPosition(Position);
     Position legendPosition() const;
 
+%If (QWT_4_2_0 - QWT_4_3_0)
 %If (Qwt_COMPAT)
     void setLegendPos(int, double = 0.0);
     int legendPos() const;
-%End
+%End // (Qwt_COMPAT)
+%End // (QWT_4_2_0 - QWT_4_3_0)
 
     void setLegendFont(const QFont &);
     const QFont legendFont() const;
@@ -379,12 +383,14 @@ public slots:
 protected slots:
     virtual void lgdClicked();
 
+%If (QWT_4_2_0 - QWT_4_3_0)
 %If (Qwt_COMPAT)
 signals:
     void plotMousePressed(const QMouseEvent &);
     void plotMouseReleased(const QMouseEvent &);
     void plotMouseMoved(const QMouseEvent &);
-%End
+%End // (Qwt_COMPAT)
+%End // (QWT_4_2_0 - QWT_4_3_0)
 signals:
     void legendClicked(long);
 
@@ -419,7 +425,8 @@ protected:
                              const QwtArray<QwtDiMap> &,
                              const QwtPlotPrintFilter &) const;
     virtual void printLegend(QPainter *, const QRect &) const;
-};
+
+}; // class QwtPlotCanvas
 
 
 // Local Variables:
