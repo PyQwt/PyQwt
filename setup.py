@@ -29,7 +29,7 @@ version = '3.9'
 #
 # SIP VERSION
 #
-sip_version = get_config('sip').get('version')
+sip_version = get_config('sip').get('sip_version')
 if sip_version and sip_version < 0x030900:
     raise SystemExit, ("Building '%s' with requires sip-3.9 or sip-4.0" % name)
 
@@ -84,7 +84,8 @@ if sip_version < 0x040000:
     dotted_name = 'qwt.lib_qwtc'
 else:
     dotted_name = 'qwt._qwt'
-    
+
+
 pyqwt = Extension(
     dotted_name,
     sources,
