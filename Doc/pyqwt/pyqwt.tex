@@ -1,31 +1,58 @@
 \documentclass{manual}
 
 % Links
-\newcommand{\mailinglist}{\ulink{mailing list}{mailto:pyqwt-users@lists.sourceforge.net}}
-\newcommand{\Qwt}{\ulink{Qwt}{http://qwt.sourceforge.net}}
-\newcommand{\Grace}{\ulink{Grace}{http://plasma-gate.weizmann.ac.il/Grace/}}
+\newcommand{\mailinglist}{\ulink{mailing list}
+  {mailto:pyqwt-users@lists.sourceforge.net}}
+\newcommand{\Qwt}{\ulink{Qwt}
+  {http://qwt.sourceforge.net}}
+\newcommand{\Grace}{\ulink{Grace}
+  {http://plasma-gate.weizmann.ac.il/Grace/}}
 
 % Source code
-\newcommand{\Download}{\ulink{download}{http://pyqwt.sourceforge.net/download.html}}
-\newcommand{\Snapshot}{\ulink{snapshot}{http://pyqwt.sourceforge.net/snapshot}}
-\newcommand{\NewSip}{\ulink{sip-4.0rc3.tar.gz}{http://pyqwt.sourceforge.net/support/sip-4.0.rc3.tar.gz}}
-\newcommand{\OldSip}{\ulink{sip-3.10.1.tar.gz}{http://pyqwt.sourceforge.net/support/sip-3.10.1.tar.gz}}
-\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}{http://pyqwt.sourceforge.net/support/sip-win-nc-3.8.zip}}
-\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.11.tar.gz}{http://pyqwt.sourceforge.net/support/PyQt-x11-gpl-3.11.tar.gz}}
-\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}{http://pyqwt.sourceforge.net/support/PyQt-win-nc-3.8.zip}}
-\newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
-\newcommand{\NumericTarGz}{\ulink{Numeric-23.1.tar.gz}{http://prdownloads.sourceforge.net/numpy/Numeric-23.1.tar.gz?download}}
-\newcommand{\numarrayTarGz}{\ulink{numarray-0.9.tar.gz}{http://prdownloads.sourceforge.net/numpy/numarray-0.9.tar.gz?download}}
-\newcommand{\PyQwtTarGz}{\ulink{PyQwt-4.0.tar.gz}{http://prdownloads.sourceforge.net/pyqwt/PyQwt-4.0.tar.gz?download}}
-\newcommand{\ReadMePatches}{\ulink{README}{http://pyqwt.sourceforge.net/patches/README}}
+\newcommand{\Download}{\ulink{download}
+  {http://pyqwt.sourceforge.net/download.html}}
+\newcommand{\Snapshot}{\ulink{snapshot}
+  {http://pyqwt.sourceforge.net/snapshot}}
+\newcommand{\NewSip}{\ulink{sip-4.0rc3.tar.gz}
+  {http://pyqwt.sourceforge.net/support/sip-4.0.rc3.tar.gz}}
+\newcommand{\OldSip}{\ulink{sip-3.10.1.tar.gz}
+  {http://pyqwt.sourceforge.net/support/sip-3.10.1.tar.gz}}
+\newcommand{\NewSipMac}{\ulink{sip-4.0rc3.tar.gz}
+  {http://www.river-bank.demon.co.uk/download/sip/sip-4.0rc3.tar.gz}}
+\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.8.zip}
+  {http://pyqwt.sourceforge.net/support/sip-win-nc-3.8.zip}}
+\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.11.tar.gz}
+  {http://pyqwt.sourceforge.net/support/PyQt-x11-gpl-3.11.tar.gz}}
+\newcommand{\PyQtMac}{\ulink{PyQt-mac-gpl-3.11.tar.gz}
+  {http://pyqwt.sourceforge.net/support/PyQt-mac-gpl-3.11.tar.gz}}
+\newcommand{\PyQtCom}{\ulink{Buy PyQt}
+  {http://www.riverbankcomputing.co.uk/pyqt/buy.php}}
+\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.8.zip}
+  {http://pyqwt.sourceforge.net/support/PyQt-win-nc-3.8.zip}}
+\newcommand{\snapshot}{\ulink{snapshot}
+  {http://www.river-bank.demon.co.uk/download/snapshots}}
+\newcommand{\NumericTarGz}{\ulink{Numeric-23.1.tar.gz}
+  {http://prdownloads.sourceforge.net/numpy/Numeric-23.1.tar.gz?download}}
+\newcommand{\numarrayTarGz}{\ulink{numarray-0.9.tar.gz}
+  {http://prdownloads.sourceforge.net/numpy/numarray-0.9.tar.gz?download}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-4.0.tar.gz}
+  {http://prdownloads.sourceforge.net/pyqwt/PyQwt-4.0.tar.gz?download}}
+\newcommand{\ReadMePatches}{\ulink{README}
+  {http://pyqwt.sourceforge.net/patches/README}}
 
 % Installers for MS-Windows
-\newcommand{\PythonExe}{\ulink{Python-2.3.3.exe}{http://www.python.org/ftp/python/2.3.3/Python-2.3.3.exe}}
-\newcommand{\NumericExe}{\ulink{Numeric-23.1.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/Numeric-23.1.win32-py2.3.exe?download}}
-\newcommand{\NumArrayExe}{\ulink{numarray-0.9.win32-py2.3.exe}{http://prdownloads.sourceforge.net/numpy/numarray-0.9.win32-py2.3.exe?download}}
-\newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}{ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
-\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.8.exe}{http://pyqwt.sourceforge.net/download/PyQt-win-nc-3.8.exe}}
-\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.8.win32-py2.3.exe}{http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8.win32-py2.3.exe?download}}
+\newcommand{\PythonExe}{\ulink{Python-2.3.3.exe}
+  {http://www.python.org/ftp/python/2.3.3/Python-2.3.3.exe}}
+\newcommand{\NumericExe}{\ulink{Numeric-23.1.win32-py2.3.exe}
+  {http://prdownloads.sourceforge.net/numpy/Numeric-23.1.win32-py2.3.exe?download}}
+\newcommand{\numarrayExe}{\ulink{numarray-0.9.win32-py2.3.exe}
+  {http://prdownloads.sourceforge.net/numpy/numarray-0.9.win32-py2.3.exe?download}}
+\newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}
+  {ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
+\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.8.exe}
+  {http://pyqwt.sourceforge.net/download/PyQt-win-nc-3.8.exe}}
+\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.8.win32-py2.3.exe}
+  {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-3.8.win32-py2.3.exe?download}}
 
 \newcommand{\Future}{
 \begin{notice}[warning]
@@ -481,24 +508,27 @@ Feedback, please.
 
 \NonCommercial{}
 
-You can install PyQwt on \POSIX{} (Unix, Linux, Mac OS X) and Microsoft Windows
-operating systems:
+You can install PyQwt on the \POSIX{} (Unix, Linux), Mac OS X,
+and Microsoft Windows operating systems:
 \begin{enumerate}
   \item
+    see \ref{prerequisites} for the required software packages needed 
+    to build  and install.
+  \item
+    see \ref{build-configure} for build and installation instructions.
+    Recommended unless you want to make an installer (.rpm on some
+    Linux  systems and .exe on Microsoft Windows).
+  \item
+    see \ref{build-setup} for build and installation instructions.
+    Only recommended if you want to make an installer (.rpm on some
+    Linux  systems and .exe on Microsoft Windows).
+  \item
     see \ref{win-binary-install} for instructions on the use of the binary
-    Windows installer, to be used with the non-commercial releases of
+    Windows installer, to be used with the old non-commercial releases of
     Qt and PyQt.
-  \item
-    see \ref{posix-source-install} for installation instructions starting
-    from source code on \POSIX{} operating systems (Unix, Linux and Mac OS X).
-  \item
-    see \ref{win-source-install} for installation instructions starting from
-    source code on Windows with MSVC and Qt-Non-Commercial.
-    Thanks to feedback from developers with a commercial Qt license the
-    installation scripts have been adapted to Qt-3.0.x, Qt-3.1.x,  Qt-3.2.x
-    and Qt-3.3.x.
-    Contact the \mailinglist{}, if you run into problems.
 \end{enumerate}
+
+Contact the \mailinglist{}, if you run into problems.
 
 \begin{notice}[note]
 The \mailinglist{} is a subscribers-only list to reduce spam.  I appreciate
@@ -512,71 +542,42 @@ and PyQt on Windows depends on \strong{your} feedback, because I do not have
 access to those versions of Qt and PyQt.
 \end{notice}
 
-\section{Binary Installation on Windows \label{win-binary-install}}
+\section{Build prerequisites \label{prerequisites}}
 
-\NonCommercial{}
-
-First, you have to install Python, Numeric, Qt-Non-Commercial and
-PyQt-Non-Commercial by executing the following installation programs:
-\begin{enumerate}
-  \item
-    \PythonExe{}
-  \item
-    \NumericExe{}
-  \item
-    \QtNcExe{}
-  \item
-    \PyQtExe{}
-\end{enumerate}
-Then, run \PyQwtExe{} and you are set.
-Example programs and documentation for PyQwt and \Qwt{} are installed in the
-folder \file{C:/Python23/PyQwt}.
-
-
-\section{Source installation on \POSIX{} \label{posix-source-install}}
-
-The installation instructions in this section are for the Unix, Linux and
-MacOSX operating systems.
-The \file{configure.py} script works on more platforms than the \file{setup.py}
-script and is recommended for normal installations.
-The \file{setup.py} script has advantages for development and packaging.
- 
-\subsection{Prerequisites for building PyQwt on \POSIX{} \label{posix-prereq}}
+\subsection{Build prerequisites for PyQwt on \POSIX{}}
 
 \Future{}
 
-Recent versions of the following software should be installed on your system:
+Build prerequisites for \PyQwtTarGz{} on \POSIX{} are:
 \begin{enumerate}
   \item
     \ulink{Python}{http://www.python.org}.\\
-    \PyQwtTarGz{} is compatible with Python-2.3.x, Python-2.2.x, and probably
-    with Python-2.1.x.
-    Earlier versions of Python are not supported.
+    Supported versions: Python-2.3.x, Python-2.2.x, and probably
+    also Python-2.1.x.
   \item
     \ulink{Qt}{http://www.trolltech.com}.\\
-    \PyQwtTarGz{} is compatible with Qt-3.3.x, Qt-3.2.x, Qt-3.1.x, Qt-3.0.x,
+    Supported versions: Qt-3.3.x, Qt-3.2.x, Qt-3.1.x, Qt-3.0.x,
     Qt-2.3.1 and Qt-2.3.0.
-    Earlier versions of Qt are not supported.
   \item
     \NewSip{} (requires at least Python-2.3.0) or \OldSip{}.\\
-    \PyQwtTarGz{} is compatible with sip-4.0, -3.10.1, -3.10, and -3.9, but the
-    most recent version gets most testing.
-    You may also try a \snapshot{} at your own risk.
-  \item
-    \PyQtGpl{}.\\
-    \PyQwtTarGz{} is compatible with PyQt-3.11, -3.10 and -3.9, but the most
+    Supported versions: sip-4.0, -3.10.1, and -3.10, but the most
     recent version gets most testing.
     You may also try a \snapshot{} at your own risk.
   \item
-    Read \ReadMePatches{} to check out bug fixes and upgrades.
+    \PyQtGpl{}.\\
+    Supported versions: PyQt-3.11, and -3.10, but the most recent
+    version gets most testing.
+    You may also try a \snapshot{} at your own risk.
+  \item
+    \ReadMePatches{} for bug fixes and upgrades.
 \end{enumerate}
 
 \begin{notice}[note]
-  You must install sip and PyQt with the 'configure.py' script instead of the
-  deprecated 'build.py' script.
+  You must install sip and PyQt with the 'configure.py' script instead
+  of the deprecated 'build.py' script.
 \end{notice}
 
-To exploit the full power of PyQwt's plot widget, you should install at
+To exploit the full power of the QwtPlot widget, you should install at
 least one the Numerical Python extensions:
 \ulink{Numeric}{http://www.numpy.org}
 or its successor
@@ -588,22 +589,118 @@ Numarray is newer and therefore less stable than Numeric, so get the latest!
 The source package \PyQwtTarGz{} contains a version the \Qwt{} library based
 on version 4.2.0rc2.
 
+\subsection{Build prerequisites for PyQwt on Mac OS X}
 
-\subsection{Build on \POSIX{} using \file{configure.py}\label{posix-configure}}
+\Future{}
+
+Build prerequisites for \PyQwtTarGz{} on Mac OS X are:
+\begin{enumerate}
+  \item
+    \ulink{Python}{http://www.python.org}.\\
+    Supported versions: Python-2.3.x.
+  \item
+    \ulink{Qt}{http://www.trolltech.com}.\\
+    Supported versions: Qt-3.3.x, Qt-3.2.x, Qt-3.1.x, and Qt-3.0.x.
+  \item
+    \NewSipMac{}.\\
+    Supported versions: sip-4.0.
+    You may also try a \snapshot{} at your own risk.
+  \item
+    \PyQtMac{}.\\
+    Supported versions: PyQt-3.11, and -3.10, but the most recent
+    version gets most testing.
+    You may also try a \snapshot{} at your own risk.
+  \item
+    \ReadMePatches{} for bug fixes and upgrades.
+\end{enumerate}
+
+\begin{notice}[note]
+  You must install sip and PyQt with the 'configure.py' script instead of the
+  deprecated 'build.py' script.
+\end{notice}
+
+To exploit the full power of the QwtPlot widget, you should install at
+least one the Numerical Python extensions:
+\ulink{Numeric}{http://www.numpy.org}
+or its successor
+\ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
+I am using \NumericTarGz{} and \numarrayTarGz{}. 
+Versions of Numeric later than 21.0 are supported.
+Numarray is newer and therefore less stable than Numeric, so get the latest!
+
+The source package \PyQwtTarGz{} contains a version the \Qwt{} library based
+on version 4.2.0rc2.
+
+\subsection{Build prerequisites for PyQwt on Windows}
+
+\Future{}
+
+\NonCommercial{}
+
+Build prerequisites for \PyQwtTarGz{} on Mac OS X are:
+\begin{enumerate}
+  \item
+    \PythonExe{}
+    Supported versions: Python-2.3.x, Python-2.2.x, and probably
+    also Python-2.1.x.
+  \item
+    \ulink{Qt}{http://www.trolltech.com}.\\
+    Supported versions: Qt-3.3.x, Qt-3.2.x, Qt-3.1.x, Qt-3.0.x,
+    Qt-2.3.1 and Qt-2.3.0.
+  \item
+    \NewSip{} (requires at least Python-2.3.0) or \OldSip{}.\\
+    Supported versions: sip-4.0, -3.10.1, and -3.10, but the most
+    recent version gets most testing.
+    You may also try a \snapshot{} at your own risk.
+  \item
+    \PyQtCom{}.\\
+    Supported versions: PyQt-3.11, and -3.10, but the most recent
+    version gets most testing.
+    You may also try a \snapshot{} at your own risk.
+  \item
+    \ReadMePatches{} for bug fixes and upgrades.
+\end{enumerate}
+
+\begin{notice}[note]
+  You must install sip and PyQt with the 'configure.py' script instead of the
+  deprecated 'build.py' script.
+\end{notice}
+
+To exploit the full power of the QwtPlot widget, you should install at
+least one the Numerical Python extensions:
+\ulink{Numeric}{http://www.numpy.org}
+or its successor
+\ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
+I recommend \NumericExe{} and/or \numarrayExe{}. 
+Versions of Numeric later than 21.0 are supported.
+Numarray is newer and therefore less stable than Numeric, so get the latest!
+
+The source package \PyQwtTarGz{} contains a version the \Qwt{} library based
+on version 4.2.0rc2.
+You have to install recent releases of Python and Numeric:
+
+\begin{notice}[warning]
+  Most installation problems are related to the presence of
+  old executables (\file{sip.exe}),
+  old libraries (\file{libqt*.exp}, \file{libqt*.lib}, \file{lib.qt*.pyd},
+  \file{libsip.exp}, \file{libsip.lib}, \file{libsip.pyd}),
+  old header files (\file{sip.h}, \file{sipQt.h})
+  or old Python files (\file{qt*.py}, \file{qt*.pyc}).
+\end{notice}
+
+
+\section{Build with \file{configure.py}\label{build-configure}}
 
 \Future{}
 
 \begin{notice}[warning]
-The configuration module of PyQt-3.9 is broken, making it impossible to use 
+A bug in the configuration module of PyQt-3.9 makes it impossible to use 
 the \file{configure.py} script of PyQwt.
-Solutions are to upgrade to more recent versions of sip and PyQt or to 
-to use the \file{setup.py} script as explained in \ref{posix-setup}.
 \end{notice}
 
 \begin{enumerate}
 \item
-  Unpack \PyQwtTarGz{} and read \ReadMePatches{} to check for minor bug fixes
-  and upgrades.
+  Unpack \PyQwtTarGz{} and read \ReadMePatches{} to check for patches.
 \item
   Configure PyQt by running the following commands:
   \begin{verbatim}
@@ -627,7 +724,10 @@ make install
   \end{verbatim}
 \end{enumerate}
 
-\subsection{Build on \POSIX{} using \file{setup.py}\label{posix-setup}}
+
+\section{Build with \file{setup.py}\label{build-setup}}
+
+\subsection{Build on \POSIX{} with \file{setup.py}\label{posix-setup}}
 
 \Future{}
 
@@ -724,88 +824,8 @@ python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.9/sip build
   \var{sip_file_dirs} in the configuration file.
 \end{notice}
 
-\section{Source Installation on Windows \label{win-source-install}}
 
-The installation instructions in this section are for Windows.
-
-The \file{configure.py} script allows you to compile PyQwt with a different
-Visual C++ compiler than the compiler used for building Python.
-
-Building PyQwt from source on Windows for Microsoft Visual C++ with the
-\file{setup.py} script  produces a PyQwt*.exe installer at no cost!
-I have only experience with building such an installer for \QtNcExe{},
-but I know from feedback that the procedure for Qt-3.x.x is similar.
-
-\subsection{Prerequisites for building PyQwt on Windows
-  \label{win-source-prereq}}
-
-\Future{}
-
-\NonCommercial{}
-
-You have to install recent releases of Python and Numeric:
-\begin{enumerate}
-  \item
-    \PythonExe{}
-  \item
-    \NumericExe{}
-\end{enumerate}
-
-\PyQwtTarGz{} should work with sip-3.9, sip-3.10, sip-3.10.1, sip-4.0,
-PyQt-3.9-Commercial, PyQt-3.10-Commercial and PyQt-3.11-Commercial.
-Install sip and PyQt with the new 'configure.py'
-script instead of the deprecated 'build.py' script and make sure that the
-*/*.sip files are installed in the location indicated by
-\code{pyqtconfig._pkg_config['pyqt_sip_dir']}.
-
-\begin{notice}[warning]
-  Most installation problems are related to the presence of
-  old executables (\file{sip.exe}),
-  old libraries (\file{libqt*.exp}, \file{libqt*.lib}, \file{lib.qt*.pyd},
-  \file{libsip.exp}, \file{libsip.lib}, \file{libsip.pyd}),
-  old header files (\file{sip.h}, \file{sipQt.h})
-  or old Python files (\file{qt*.py}, \file{qt*.pyc}).
-\end{notice}
-
-\subsection{Build on Windows using \file{configure.py}\label{win-configure}}
-
-\Future{}
-
-\begin{notice}[warning]
-The configuration module of PyQt-3.9 is broken, making it impossible to use 
-the \file{configure.py} script of PyQwt.
-Solutions are to upgrade to more recent versions of sip and PyQt or to 
-to use the \file{setup.py} script as explained in \ref{win-setup}.
-\end{notice}
-
-\begin{enumerate}
-\item
-  Unpack \PyQwtTarGz{} and read \ReadMePatches{} to check for minor bug fixes
-  and upgrades.
-\item
-  Configure PyQt by running the following commands:
-  \begin{verbatim}
-cd PyQwt-4.0
-cd configure
-python configure.py
-  \end{verbatim}
-  This assumes that the correct Python interpreter is on your path.
-  The configure.py script takes many options.
-  Use the "-h" command line option to display a full list of the available
-  options.
-\item
-  The next step is to build PyQt using your platform's make command.
-  \begin{verbatim}
-make
-  \end{verbatim}
-\item
-  The final step is to install PyQt by running the following command.
-  \begin{verbatim}
-make install
-  \end{verbatim}
-\end{enumerate}
-
-\subsection{Build on Windows using \file{setup.py} \label{win-setup}}
+\subsection{Build on Windows with \file{setup.py} \label{win-setup}}
 
 \Future{}
 
@@ -853,6 +873,27 @@ python setup.py build --force >log.txt
   \end{verbatim}
   and mail the file \file{log.txt} to the \mailinglist{}.
 \end{notice}
+
+
+\section{Binary Installation on Windows \label{win-binary-install}}
+
+\NonCommercial{}
+
+First, you have to install Python, Numeric, Qt-Non-Commercial and
+PyQt-Non-Commercial by executing the following installation programs:
+\begin{enumerate}
+  \item
+    \PythonExe{}
+  \item
+    \NumericExe{}
+  \item
+    \QtNcExe{}
+  \item
+    \PyQtExe{}
+\end{enumerate}
+Then, run \PyQwtExe{} and you are set.
+Example programs and documentation for PyQwt and \Qwt{} are installed
+in the folder \file{C:/Python23/PyQwt}.
 
 
 \chapter{PyQwt Module Reference \label{reference}}
