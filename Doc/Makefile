@@ -22,7 +22,7 @@ doc: $(SOURCES)
 
 htdoc: doc $(SOURCES)
 	(cd html/htdoc; rm -f *.css *.dat *.html *.idx *.old *.pl *.gif)
-	cp -pu html/pyqwt/* html/htdoc
+	cp -pur html/pyqwt/* html/htdoc
 	python tools/sourceforge.py html/htdoc/*.html
 	date -u "+%Y-%m-%d %T" > htdoc
 
