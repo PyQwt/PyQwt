@@ -38,7 +38,7 @@ all-log: distclean
 	(cd examples; ln -sf ../configure/qwt)
 
 420-static:
-4	(cd configure; \
+	(cd configure; \
 	python configure.py -Q $(QWTDIR) \
 	&& $(MAKE) CXX="$(CXX)")
 	(cd examples; ln -sf ../configure/iqt)
