@@ -28,6 +28,7 @@ jobs = [
     'RadioDemo',
     'SimpleDemo',
     'SliderDemo',
+    'StackOrder',
     ]
 
 def expose(jobs, cache = {}):

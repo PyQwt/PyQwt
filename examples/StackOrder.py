@@ -2,101 +2,152 @@
 
 # Contributed by Tomaz Curk in a bug report showing that the stack order of the
 # curves was dependent on the number of curves. This has been fixed in Qwt.
-# Beautified by Gerard Vermeulen.
+#
+# QwtBarCurve is an idea of Tomaz Curk.
+#
+# Beautified and expanded by Gerard Vermeulen.
 
 import sys
 import math
 from qt import *
 from qwt import *
 
-class BarQwtCurve(QwtPlotCurve):
+class QwtBarCurve(QwtPlotCurve):
 
-    def __init__(self, parent, text):
-        QwtPlotCurve.__init__(self, parent, text)
-        self.color = Qt.black
-
+    def __init__(self, parent, penColor=Qt.black, brushColor=Qt.white):
+        QwtPlotCurve.__init__(self, parent)
+        self.penColor = penColor
+        self.brushColor = brushColor
+        
     # __init__()
     
-    def draw(self, p, xMap, yMap, f, t):
-        p.setBackgroundMode(Qt.TransparentMode)
-        p.setBackgroundColor(self.color)
-        p.setBrush(self.color)
-        p.setPen(QPen(Qt.red, 2))
-        if t < 0:
-            t = self.dataSize() - 1
-        if divmod(f, 2)[1] != 0:
-            f -= 1
-        if divmod(t, 2)[1] == 0:
-            t += 1
-        for i in range(f, t+1, 2):
+    def draw(self, painter, xMap, yMap, start, stop):
+        """Draws rectangles with the corners taken from the x- and y-arrays.
+        """
+        if type(self.penColor) == type(Qt.black):
+            painter.setPen(QPen(self.penColor, 2))
+        else:
+            painter.setPen(QPen(Qt.NoPen))
+        if type(self.brushColor) == type(Qt.white):
+            painter.setBrush(self.brushColor)
+        if stop == -1:
+            stop = self.dataSize()
+        # force 'start' and 'stop' to be even and positive
+        if start & 1:
+            start -= 1
+        if stop & 1:
+            stop -= 1
+        start = max(start, 0)
+        stop = max(stop, 0)
+        for i in range(start, stop, 2):
             px1 = xMap.transform(self.x(i))
             py1 = yMap.transform(self.y(i))
             px2 = xMap.transform(self.x(i+1))
             py2 = yMap.transform(self.y(i+1))
-            p.drawRect(px1, py1, (px2 - px1), (py2 - py1))
+            painter.drawRect(px1, py1, (px2 - px1), (py2 - py1))
 
     # draw()
 
-# class BarQwtCurve
+# class QwtBarCurve
 
-class StackOrderDemo(QMainWindow):
+class QwtBarPlotDemo(QMainWindow):
 
+    table = {
+        'none': None,
+        'black': Qt.black,
+        'blue': Qt.blue,
+        'cyan': Qt.cyan,
+        'gray': Qt.gray,
+        'green': Qt.green,
+        'magenta': Qt.magenta,
+        'red': Qt.red,
+        'white': Qt.white,
+        'yellow': Qt.yellow,
+        }
+    
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
 
-        self.graph = QwtPlot("Check the stack order of the bars: "
-                             "leftclick and drag to zoom, "
-                             "rightclick to unzoom.", self)
-        self.setCentralWidget(self.graph)
+        self.plot = QwtPlot("last bar on top: "
+                            "left-click&drag to zoom, "
+                            "right-click to unzoom.", self)
+        self.plot.plotLayout().setCanvasMargin(0)
+        self.plot.plotLayout().setAlignCanvasToTicks(True)
+        self.setCentralWidget(self.plot)
 
-        # The mouse
-        self.graph.canvas().setMouseTracking(1)
+        # Initialize zooming
+        self.plot.canvas().setMouseTracking(True)
         self.statusBar().message("Move the cursor with the plot"
                                  " to show the cursor position")
         self.zoomStack = []
-        self.connect(self.graph,
+
+        # Connect the mouse SIGNALs from self.plot to the onMouseXx SLOTs
+        self.connect(self.plot,
                      SIGNAL('plotMouseMoved(const QMouseEvent&)'),
                      self.onMouseMoved)
-        self.connect(self.graph,
+        self.connect(self.plot,
                      SIGNAL('plotMousePressed(const QMouseEvent&)'),
                      self.onMousePressed)
-        self.connect(self.graph,
+        self.connect(self.plot,
                      SIGNAL('plotMouseReleased(const QMouseEvent&)'),
                      self.onMouseReleased)
 
-        # The number of bars -- the widget gets slow for more than 1000 bars
+        # Initialize the toolbar
         self.toolBar = QToolBar(self)
+        QLabel("Pen:", self.toolBar)
+        self.penComboBox = QComboBox(self.toolBar)
+        for name in self.table.keys():
+            self.penComboBox.insertItem(name)
+        self.penComboBox.setCurrentText('black')
+        QLabel("Brush:", self.toolBar)
+        self.brushComboBox = QComboBox(self.toolBar)
+        for name in self.table.keys():
+            self.brushComboBox.insertItem(name)
+        self.brushComboBox.setCurrentText('red')
         self.toolBar.setStretchableWidget(QWidget(self.toolBar))
-        counterBox = QHBox(self.toolBar)
-        counterBox.setSpacing(10)
-        QLabel("Number of bars", counterBox)
-        self.counter = QwtCounter(counterBox)
+        QLabel("Bars:", self.toolBar)
+        self.counter = QwtCounter(self.toolBar)
         self.counter.setRange(0, 10000, 1)
-        self.counter.setValue(0)
         self.counter.setNumButtons(3)
-        self.connect(self.counter, SIGNAL('valueChanged(double)'), self.plot)
-        self.graph.replot()
+
+        # Connect SIGNALs from the toolbar widgets to the self.go SLOT
+        self.connect(self.counter, SIGNAL('valueChanged(double)'), self.go)
+        self.connect(self.penComboBox, SIGNAL('activated(int)'), self.go)
+        self.connect(self.brushComboBox, SIGNAL('activated(int)'), self.go)
+
+        # Finalize
+        self.counter.setValue(10)
+        self.go(self.counter.value())
 
     # __init__()
-    
-    def plot(self, x):
-        """Create and plot a sequence of int(x) curves (bars)"""
-        self.graph.removeCurves()
 
-        for i in range(int(x)):
-            curve = BarQwtCurve(self.graph, str(100+i))
-            curve.color = Qt.blue
-            ckey = self.graph.insertCurve(curve)
-            self.graph.setCurveStyle(ckey, QwtCurve.UserCurve)
-            self.graph.setCurveData(ckey, [i, i+1.4], [0.3*i, 5.0+0.3*i])
+    def go(self, x):
+        """Create and plot a sequence bars taking into account the controls"""
+        self.plot.removeCurves()
 
-        self.graph.replot()
+        penColor = self.table[str(self.penComboBox.currentText())]
+        brushColor = self.table[str(self.brushComboBox.currentText())]
+
+        # x is a float on 'valueChanged(double)'
+        # x is an int on 'activated(int)'
+        if type(x) == type(0):
+            x = int(self.counter.value())
+            
+        for i in range(x):
+            curve = QwtBarCurve(self.plot, penColor, brushColor)
+            key = self.plot.insertCurve(curve)
+            self.plot.setCurveStyle(key, QwtCurve.UserCurve)
+            self.plot.setCurveData(key, [i, i+1.4], [0.3*i, 5.0+0.3*i])
+
+        self.plot.replot()
+
+    # draw()
 
     def onMouseMoved(self, e):
         self.statusBar().message(
             "x = %+.6g, y = %.6g"
-            % (self.graph.invTransform(QwtPlot.xBottom, e.pos().x()),
-               self.graph.invTransform(QwtPlot.yLeft, e.pos().y())))
+            % (self.plot.invTransform(QwtPlot.xBottom, e.pos().x()),
+               self.plot.invTransform(QwtPlot.yLeft, e.pos().y())))
 
     # onMouseMoved()
     
@@ -105,16 +156,16 @@ class StackOrderDemo(QMainWindow):
             # Python semantics: self.pos = e.pos() does not work; force a copy
             self.xpos = e.pos().x()
             self.ypos = e.pos().y()
-            self.graph.enableOutline(1)
-            self.graph.setOutlinePen(QPen(Qt.black))
-            self.graph.setOutlineStyle(Qwt.Rect)
+            self.plot.enableOutline(1)
+            self.plot.setOutlinePen(QPen(Qt.black))
+            self.plot.setOutlineStyle(Qwt.Rect)
             self.zooming = 1
             if self.zoomStack == []:
                 self.zoomState = (
-                    self.graph.axisScale(QwtPlot.xBottom).lBound(),
-                    self.graph.axisScale(QwtPlot.xBottom).hBound(),
-                    self.graph.axisScale(QwtPlot.yLeft).lBound(),
-                    self.graph.axisScale(QwtPlot.yLeft).hBound(),
+                    self.plot.axisScale(QwtPlot.xBottom).lBound(),
+                    self.plot.axisScale(QwtPlot.xBottom).hBound(),
+                    self.plot.axisScale(QwtPlot.yLeft).lBound(),
+                    self.plot.axisScale(QwtPlot.yLeft).hBound(),
                     )
         elif Qt.RightButton == e.button():
             self.zooming = 0
@@ -129,35 +180,47 @@ class StackOrderDemo(QMainWindow):
             xmax = max(self.xpos, e.pos().x())
             ymin = min(self.ypos, e.pos().y())
             ymax = max(self.ypos, e.pos().y())
-            self.graph.setOutlineStyle(Qwt.Cross)
-            xmin = self.graph.invTransform(QwtPlot.xBottom, xmin)
-            xmax = self.graph.invTransform(QwtPlot.xBottom, xmax)
-            ymin = self.graph.invTransform(QwtPlot.yLeft, ymin)
-            ymax = self.graph.invTransform(QwtPlot.yLeft, ymax)
+            self.plot.setOutlineStyle(Qwt.Cross)
+            xmin = self.plot.invTransform(QwtPlot.xBottom, xmin)
+            xmax = self.plot.invTransform(QwtPlot.xBottom, xmax)
+            ymin = self.plot.invTransform(QwtPlot.yLeft, ymin)
+            ymax = self.plot.invTransform(QwtPlot.yLeft, ymax)
             if xmin == xmax or ymin == ymax:
                 return
             self.zoomStack.append(self.zoomState)
             self.zoomState = (xmin, xmax, ymin, ymax)
-            self.graph.enableOutline(0)
+            self.plot.enableOutline(0)
         elif Qt.RightButton == e.button():
             if len(self.zoomStack):
                 xmin, xmax, ymin, ymax = self.zoomStack.pop()
             else:
                 return
 
-        self.graph.setAxisScale(QwtPlot.xBottom, xmin, xmax)
-        self.graph.setAxisScale(QwtPlot.yLeft, ymin, ymax)
-        self.graph.replot()
+        self.plot.setAxisScale(QwtPlot.xBottom, xmin, xmax)
+        self.plot.setAxisScale(QwtPlot.yLeft, ymin, ymax)
+        self.plot.replot()
 
     # onMouseReleased()
 
 # class StackOrderDemo
 
-# Admire
-a = QApplication(sys.argv)
-w = StackOrderDemo()
-a.setMainWidget(w)
-w.resize(800, 600)
-w.show()
-a.exec_loop()
+def main(args):
+    app = QApplication(args)
+    demo = make()
+    app.setMainWidget(demo)
+    app.exec_loop()
+
+# main()
+
+def make():
+    demo = QwtBarPlotDemo()
+    demo.resize(512, 512)
+    demo.show()
+    return demo
+
+# make()
+
+# Admire!
+if __name__ == '__main__':
+    main(sys.argv)
 
