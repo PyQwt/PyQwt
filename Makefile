@@ -1,7 +1,7 @@
 PWD := $(shell pwd)
 
 CVS-QWT := :pserver:anonymous@cvs.sourceforge.net:/cvsroot/qwt
-CVS-DATE := "26 Jul 2003 23:59:59 GMT"
+CVS-DATE := "30 Jul 2003 23:59:59 GMT"
 CVS-TABS := qwt-sources -name '*.h' -o -name '*.cpp' -o -name '*.pro'
 CVS-QWT-SSH := :ext:gvermeul@cvs.sourceforge.net:/cvsroot/qwt
 
@@ -61,7 +61,7 @@ qwt-sources:
 	rm -rf qwt-sources
 	mkdir -p tmp
 	if [ -e tmp/qwt ]; then \
-	    (cd tmp; cvs -q -z3 -d $(CVS-QWT) update -D $(CVS-DATE) qwt); \
+	    (cd tmp; cvs -q -z3 -d $(CVS-QWT) update -D $(CVS-DATE) -d qwt); \
 	else \
 	    (cd tmp; cvs -q -z3 -d $(CVS-QWT) checkout -D $(CVS-DATE) qwt); \
 	fi
@@ -73,7 +73,7 @@ qwt-sources-ssh:
 	rm -rf qwt-sources
 	mkdir -p tmp
 	if [ -e tmp/qwt ]; then \
-	    (cd tmp; cvs -q -z3 -d $(CVS-QWT-SSH) update qwt); \
+	    (cd tmp; cvs -q -z3 -d $(CVS-QWT-SSH) update -d qwt); \
 	else \
 	    (cd tmp; cvs -q -z3 -d $(CVS-QWT-SSH) checkout qwt); \
 	fi
