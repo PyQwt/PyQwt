@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import commands
+import os
+
+execfile('patches.py')
+
+for suffix, patch in patches:
+    stdin, stdout = os.popen2('patch -p0 -b -z %s' % (suffix,))
+    stdin.write(patch)
+
+# Local Variables: ***
+# mode: python ***
+# End: ***
+

@@ -1,0 +1,1081 @@
+\documentclass{manual}
+
+% Links
+\newcommand{\me}{\ulink{me}{mailto:gvermeul@grenoble.cnrs.fr}}
+\newcommand{\Qwt}{\ulink{Qwt}{http://qwt.sourceforge.net}}
+
+% Source code
+\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.6.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/sip-x11-gpl-3.6.tar.gz}}
+\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.6.zip}{http://www.river-bank.demon.co.uk/download/PyQt/sip-win-nc-3.6.zip}}
+\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.6.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.6.tar.gz}}
+\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.6.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.6.zip.gz}}
+\newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.6.tar.gz}{http://gerard.vermeulen.free.fr/PQwt-3.6.tar.gz}}
+\newcommand{\PyQwtTarBz}{\ulink{PyQwt-3.6.tar.bz2}{http://gerard.vermeulen.free.fr/PQwt-3.6.tar.bz2}}
+\newcommand{\PyQwtZip}{\ulink{PyQwt-3.6.zip}{http://gerard.vermeulen.free.fr/PyQwt-3.6.zip}}
+
+% Installers for MS-Windows
+\newcommand{\PythonExe}{\ulink{Python-2.2.2.exe}{http://www.python.org/ftp/python/2.2.2/Python-2.2.2.exe}}
+\newcommand{\NumericExe}{\ulink{Numeric-23.0.win32-py2.2.exe}{http://gerard.vermeulen.free.fr/support/Numeric-23.0.win32-py2.2.exe}}
+\newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}{ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
+\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.6.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.6.exe}}
+\newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.6.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.6.exe}}
+\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.6.win32-py2.2.exe}{http://gerard.vermeulen.free.fr/PyQwt\_Qt230-3.6.win32-py2.2.exe}}
+
+\title{PyQwt Manual}
+
+% boilerplate.tex?
+\author{Gerard Vermeulen}
+
+\date{\today}
+\release{3.6}
+%\setreleaseinfo{cvs}
+\setshortversion{3.6}
+
+\makeindex
+
+\begin{document}
+
+\maketitle
+
+% This makes the contents more accessible from the front page of the HTML.
+\ifhtml
+\chapter*{Front Matter \label{front}}
+\fi
+
+\input{copyright}
+
+
+\begin{abstract}
+
+\noindent
+PyQwt is a set of Python bindings for the \Qwt{} library featuring fast
+plotting of lists, tuples and arrays provided by the Python extensions
+\module{Numeric} and \module{numarray}.
+
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Introduction \label{introduction}}
+
+\section{Qwt \label{qwt-intro}}
+
+Qwt is library based on the Qt GUI library from Troll Tech AS.
+The Qwt library contains widgets and components useful for technical and
+scientific purposes.
+It includes the following widgets:
+\begin{itemize}
+  \item
+    \class{QwtCompass}: a very fancy QDial-like widget to display and
+    control a direction.
+  \item
+    \class{QwtCounter}: a QSpinBox-like widget to display and control
+    a bounded floating point value.
+  \item
+    \class{QwtDial}: a QDial-like widget to display and control a
+    floating point value.
+  \item
+    \class{QwtKnob}: a potentiometer-like widget to display and control
+    a bounded floating point value.
+  \item
+    \class{QwtPlot}: a widget to plot two-dimensional data points.
+  \item
+    \class{QwtSlider}: a QSlider-like widget to display and control a
+    bounded floating point value.
+  \item
+    \class{QwtThermo}: a thermometer-like widget to display a floating
+    point value. 
+  \item
+    \class{QwtWheel}: a wheel-like widget with its axis parallel to
+    the computer screen to control a floating point value over a very
+    large range in very small steps.
+\end{itemize}
+The widgets are documented in the
+\ulink{Qwt manual}{qwt/index.html}
+on your hard disk or \Qwt{} on the web.
+
+
+\section{Numeric \label{numeric-intro}}
+
+The \ulink{Numerical Python Extensions}{http://www.numpy.org}
+(also known as Numeric or NumPy) turn Python in an ideal language for
+experimental numerical and scientific computing (MatLab- or IDL-like,
+but Python offers a superior programming language).
+NumPy defines a new data type "array" and a very complete of operators and
+functions to manipulate NumPy arrays.
+Look at the following simple example:
+
+\verbatiminput{numeric.example}
+
+The function call \samp{arange(0.0, 10.0, 3.0)} returns a NumPy array of 4
+equidistant points from 0 to 9 inclusive: \samp{array([ 0., 3., 6., 9.])}.
+The function call \samp{sin(x)} and statement \samp{x*x} show that
+\samp{sin} and \samp{*} manipulate NumPy arrays element by element.
+All this in C, for a manifold speedup with respect to pure Python.
+
+
+\section{PyQwt \label{pyqwt-intro}}
+
+FIXME: nice intro.
+
+
+\subsection{PyCute \label{pycute-intro}}
+
+\program{PyCute} embeds a Python shell in a \class{QMultiLineEdit} widget
+(Qt-2.x) or a \class{QTextEdit} widget (Qt-3.x) that works nicely with
+\module{qwt.qplt}, see \ref{qwt-qplt}.
+
+Possible invokations of the \program{PyCute} are:
+\begin{verbatim}
+PyCute --demo
+\end{verbatim}
+or:
+\begin{verbatim}
+PyCute
+\end{verbatim}
+or from the examples directory:
+\begin{verbatim}
+PyCute ICompass.py
+\end{verbatim}
+
+The first command creates a PyCute shell and executes eight Python statements
+to create a \class{Plot} and an \class{IPlot} widget.
+
+Both widgets allow you to select a new zoom region by pressing the left button,
+dragging the mouse and releasing the left button.
+The previous zoom region is placed on an infinite stack, so that you can
+unzoom to previous zoom regions by clicking the right button.
+
+Both widgets allow you to hide/unhide curves by clicking on a legend item.
+
+In addition, the \class{IPlot} widgets displays the plot coordinates in the
+status bar and has a toolbar buttons to print and to clone the plot into
+\ulink{Grace}{http://plasma-gate.weizmann.ac.il/Grace/}.
+Grace is a WYSIWYG plot program that produces output very well adapted to
+scientific journals.
+
+The second command gives you a plain PyCute shell and the third command 
+interpretes the ICompass.py program.
+
+Type \kbd{Control-D} to exit the shell.
+ 
+
+\subsection{iqt \label{iqt-intro}}
+
+The programming style \emph{imposed} by PyQt (and other GUI toolkit wrappers)
+is to create an application instance with some widgets and to enter into an
+event loop that locks you from the Python command line interpreter.
+
+Module \module{iqt} enables you to:
+\begin{itemize}
+\item
+  create and control (Py)Qt widgets from the command line interpreter or an
+  enhanced interpreter like \ulink{ipython}{http://ipython.scipy.org}.
+\item
+  to interact with those widgets through (Py)Qt's GUI.
+\end{itemize}
+
+Module \module{iqt} works by hooking \cfunction{qApp->processEvents()} on the
+event hook of the readline module.
+The GNU readline library closes the event loop by calling 
+\cfunction{qApp->processEvent()} at a maximum rate of 10 times per second
+while reading your keyboard input.
+
+To see how \module{iqt} works, play with \file{ICompass.py} by running
+\begin{verbatim}
+python -i ICompass.py
+\end{verbatim}
+or
+\begin{verbatim}
+python ICompass.py
+\end{verbatim}
+or
+\begin{verbatim}
+ipython ICompass.py
+\end{verbatim}
+
+\begin{notice}[warning]
+  Applying the builtin function \function{dir()} on classes made by sip-3.6
+  and earlier does only return names of attributes and methods that have
+  been used before (due to a lazy import mechanism).
+
+  This behavior impairs the usefulness of the module \module{rlcompleter}.
+  The classes in PyQwt offer a method \method{getLazyNames()} as an
+  alternative to be used in combination with the modules
+  \module{iqt.rlcompleter} and \module{iqt.FlexCompleter} instead of
+  \module{rlcompleter} in the standard Python library and
+  \module{IPython.FlexCompleter}.
+
+  Full support for the builtin function \function{dir()} is present in
+  the snapshots sip\&PyQt-x11-gpl-snapshot-20030531; in this case the
+  standard readline completers will work. 
+\end{notice}
+
+\begin{notice}[warning]
+  The module \module{iqt} will not work with a MSVC-compiled Python, because
+  it has no \module{readline} module.
+\end{notice}
+
+
+\subsection{qwt.qplt \label{qwt-qplt}}
+
+The module \module{qwt.qplt} defines a tiny data-directed programming
+language to simplify the use of \class{QwtPlot} from the Python command
+line interpreter or from an embedded Python shell like in \program{PyCute}.
+Here follows a small example:
+
+\verbatiminput{qplt.example}
+
+\subsubsection{qwt.qplt.Plot \label{intro-qplt-plot}}
+
+\begin{classdesc}{Plot}{*arguments}
+  \class{Plot} takes any number of optional arguments.
+  The data-directed interpretation of each optional argument is:
+  \begin{itemize}
+  \item
+    \class{Axis}, to enable and redefine an axis.
+  \item
+    \class{Curve}, to add a curve to the plot.
+  \item
+    \class{string} or a \class{QString}, to set the title of the plot.
+  \item
+    (\class{int}, \class{int}), to set the size of the plot.
+  \end{itemize}
+
+  \class{Plot} has an infinite deep stack of zoom regions.
+  You can select a new zoom region by pressing the left mouse button
+  inside the plot, dragging the mouse and releasing the button.
+  The old zoom region is pushed on the stack.
+  On each right-click inside the plot, an old zoom region is
+  popped from the stack.
+
+  \class{Plot} uses \method{__getattr__()}, \function{hasattr()} and
+  \function{getattr()} to inherit all methods of \class{QwtPlot}.
+\end{classdesc}
+
+In addition, the class \class{Plot} defines the following methods:
+
+\begin{methoddesc}[Plot]{formatCoordinates}{self, x, y}
+Formats mouse coordinates into (real world) plot coordinates.
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{gracePlot}{self}
+Clones the plot to display it in Grace for very high quality output.
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{plot}{self, *curves}
+Plots a list of curves.
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{plotAxis}{self, orientation, options, title}
+Plots and enables an axis.
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{plotCurve}{self, curve}
+Plots a single curve.
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{onMouseMoved}{self, e}
+Is a SLOT for SIGNAL('plotMouseMoved(const QMouseEvent\&)').
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{onMousePressed}{self, e}
+Is a SLOT for SIGNAL('plotMousePressed(const QMouseEvent\&)'). 
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{onMouseReleased}{self, e}
+Is a SLOT for SIGNAL('plotMouseReleased(const QMouseEvent\&)').
+\end{methoddesc}
+
+\begin{methoddesc}[Plot]{toggleCurve}{self, key}
+Is a SLOT for SIGNAL('legendClicked(long)') to dis/enable a curve.
+\end{methoddesc}
+
+\subsubsection{qwt.qplt.IPlot \label{intro-qplt-iplot}}
+
+\begin{classdesc}{IPlot}{*arguments}
+  \class{IPlot} is a main window with a Plot widget as central widget.
+
+  The data-directed interpretation of each optional argument is the
+  same as for \class{Plot}.
+
+  The functionality of \class{Plot} is enhanced with a QToolBar with
+  buttons for printing and cloning into grace.
+  In addition, the position of the cursor in the plot region is tracked
+  and displayed in a status bar. 
+\end{classdesc}
+
+\subsubsection{qwt.qplt.Curve \label{intro-qplt-curve}}
+
+\begin{classdesc}{Curve}{x, y, *arguments}
+  \class{Curve} takes two obligatory arguments followed by any number of
+  optional arguments. The arguments \var{x} and \var{y} must be sequences
+  of \class{float} objects.
+  The data-directed interpretation of each optional argument is:
+  \begin{itemize}
+  \item
+    \class{Axis}, to attach an axis to the curve.
+  \item
+    \class{Pen}, to select a pen to connect the data points.
+  \item
+    \class{Symbol}, to select a symbol to the data points.
+  \item
+    \class{string} or \class{QString},  to set the title of the curve.
+  \end{itemize}
+\end{classdesc}
+
+\begin{classdesc}{Axis}{*arguments}
+FIXME
+\end{classdesc}
+
+\begin{classdesc}{Pen}{*arguments}
+FIXME
+\end{classdesc}
+
+\begin{classdesc}{Symbol}{*arguments}
+FIXME
+\end{classdesc}
+
+\chapter{Installation \label{installation}}
+
+You can install PyQwt on \POSIX{} and Microsoft Windows operating systems:
+\begin{enumerate}
+  \item
+    see \ref{win-binary-install} for instructions on the use of the binary
+    Windows installer, to be used with the non-commercial releases of
+    Qt and PyQt.
+  \item
+    see \ref{posix-source-install} for installation instructions starting
+    from source code for Unix and Linux.
+  \item
+    see \ref{win-source-install} for installation instructions starting from
+    source code for Windows, MSVC and Qt-Non-Commercial.
+    Thanks to feedback from developers with a commercial Qt license the
+    installation scripts have been adapted to Qt-Educational, Qt-3.0.x
+    and Qt-3.1.x.
+    Contact \me, if you run into problems.
+\end{enumerate}
+\begin{notice}[note]
+The compatibility of PyQwt's build scripts with the educational and commercial
+packages of Qt and PyQt depends on \strong{your} feedback, because I do not
+have access to those versions of Qt and PyQt.
+\end{notice}
+
+\section{Binary Installation on Windows \label{win-binary-install}}
+
+First, you have to install Python, Numeric, Qt-Non-Commercial and
+PyQt-Non-Commercial by executing the following installation programs:
+\begin{enumerate}
+  \item
+    \PythonExe
+  \item
+    \NumericExe
+  \item
+    \QtNcExe
+  \item
+    \PyQtExe
+\end{enumerate}
+Then, run \PyQwtExe{} and you are set.  Example programs and documentation
+for PyQwt and \Qwt{} are installed in the folder \file{C:/Python22/PyQwt}.
+
+\section{Source installation on \POSIX{} \label{posix-source-install}}
+
+\subsection{Prerequisites for building PyQwt on \POSIX{}
+  \label{posix-prereq}}
+
+Recent versions of the following software should be installed on your system:
+\begin{enumerate}
+  \item
+    \ulink{Python}{http://www.python.org}.
+    I am using Python-2.3 and Python-2.2.x, but Python-2.1.x and probably
+    Python-2.0.x should also work.
+    Earlier versions of Python are not supported.
+  \item
+    \ulink{Qt}{http://www.trolltech.com}.
+    I am using Qt-3.1.x, Qt-3.0.x, Qt-2.3.1 and Qt-2.3.0.
+    Earlier versions of Qt are not supported.
+  \item
+    \SipGpl{}, sip-x11-gpl-3.5.tar.gz, sip-x11-3.4.tar.gz or
+    at your own risk a \snapshot.
+  \item
+    \PyQtGpl{}, PyQt-x11-gpl-3.5.tar.gz, PyQt-x11-3.4.tar.gz or
+    at your own risk a \snapshot.
+\end{enumerate}
+
+To exploit the full power of PyQwt's plot widget, you should install at
+least one the Numerical Python extensions:
+\ulink{Numeric}{http://www.numpy.org}
+or its successor
+\ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
+I am using Numeric-23.0 and Numeric-22.0, but Numeric-21.x should also
+work. Earlier versions Numeric are not supported.
+
+
+The source packages \PyQwtTarGz{} or \PyQwtTarBz{} contain a CVS version of
+the \Qwt{} library.
+
+\begin{notice}[note]
+In general, the version numbers of sip\&PyQt have to match (except
+for snapshots).
+\end{notice}
+
+\subsection{Build on \POSIX{} \label{posix-build}}
+
+\begin{enumerate}
+\item
+  Unpack \PyQwtTarGz{} or \PyQwtTarBz{} and run
+  \begin{verbatim}
+cd PyQwt-3.6
+  \end{verbatim}
+  {}
+\item
+  Edit the file \file{setup_cfg_posix} as explained in its comments.
+  \verbatiminput{setup_cfg_posix}
+  \strong{Initialize}{} \var{sip_file_dirs}{} \strong{correctly!}.
+\item
+  The environment variable \envvar{QTDIR} must be set to the Qt directory
+  containing the sub-directories \file{bin}, \file{lib} and \file{include}.
+  You may even try to install PyQwt on Qt installations with a non-standard
+  directory layout, if you set either \envvar{QTBINDIR} and/or
+  \envvar{QTINCDIR} and/or \envvar{QTLIBDIR}.
+\item
+  If you use Qt-2.3.x, the environment variable \envvar{TMAKESPEC} must be set
+  to the directory containing the file \file{tmake.conf} for your compiler.
+  If you use Qt-3.x, you may have to set the environment variable
+  \envvar{QMAKESPEC}.
+\item
+  Run
+  \begin{verbatim}
+python setup.py
+  \end{verbatim}
+  to build the PyQwt extension.
+\item
+  Play with the \file{*.py} files in the examples directory.
+  If everything works, you are ready to install.
+\item
+  After the removal of \emph{all} files of previous installations of PyQwt
+  in your Python library tree, you have the choice between installing:
+  \begin{verbatim}
+python setup.py install
+  \end{verbatim}
+  or anticipating future removal of your new PyQwt installation:
+  \begin{itemize}
+  \item
+    in case of a RPM based distribution, running
+\begin{verbatim}
+python setup.py bdist_rpm
+\end{verbatim}
+    makes RPM packages in the sub-directory \file{dist}.
+    Uninstall an obsolete RPM package of PyQwt by running
+    \begin{verbatim}
+rpm -e PyQwt
+    \end{verbatim}
+    before installing a new RPM package with a command like
+    \begin{verbatim}
+rpm -Uvh dist/PyQwt*.i586.rpm
+    \end{verbatim}
+    {}
+  \item
+    in other cases, running
+    \begin{verbatim}
+python setup.py bdist_dumb
+    \end{verbatim}
+    makes a "dumb" distribution: an archive to be unpacked under /.
+    If you keep the archive, you you have a trace of the installed files.
+    Debian users may be able to convert the archive to a Debian package
+    with \program{alien}.
+  \end{itemize}
+\end{enumerate}
+
+\begin{notice}[note]
+  The PyQtDistutils scripts will guide you in setting the environment variable
+  \envvar{QTDIR} (and \envvar{TMAKEPATH} or \envvar{QMAKESPEC}, if required).
+\end{notice}
+
+\begin{notice}[note]
+  If you get a message:
+  \begin{verbatim}
+sip: Unable to find file "qtmod.sip"
+error: command '/usr/bin/sip' failed with exit status 1
+  \end{verbatim}
+  the initialization of \var{sip_file_dirs} is wrong.
+\end{notice}
+
+\begin{notice}[note]
+  If you are desperate, run:
+  \begin{verbatim}
+make force
+  \end{verbatim}
+  and mail the file \file{LOG.force} to \me.
+\end{notice}
+
+\begin{notice}[note]
+  Look at the Makefile for examples how to use
+  \begin{verbatim}
+python setup.py command --options
+  \end{verbatim}
+  For example, the command:
+  \begin{verbatim}
+python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.6/sip build
+  \end{verbatim}
+  tries to build the extension, overruling any initialization of
+  \var{sip_file_dirs} in the configuration file.
+\end{notice}
+
+\section{Source Installation on Windows \label{win-source-install}}
+
+Building PyQwt from source on Windows with Microsoft Visual C++ uses the
+Python Distutils tools: it produces a PyQwt*.exe installer at no cost!
+I have only experience with building such an installer for \QtNcExe{},
+but I know from feedback that the procedure for Qt-3.x.x is similar.
+
+\subsection{Prerequisites for building PyQwt on Windows
+  \label{win-source-prereq}}
+
+You have to install recent releases of Python, Numeric, and Qt-Non-Commercial,
+by running:
+\begin{enumerate}
+  \item
+    \PythonExe
+  \item
+    \NumericExe
+  \item
+    \QtNcExe{}.
+\end{enumerate}
+
+\begin{notice}[note]
+Presumably, there is also a Qt-Educational installer, but I have no
+idea how Qt-Commercial is delivered.
+\end{notice}
+
+You have to make sure that your installation of sip and PyQt allows you to
+build PyQwt:
+\begin{enumerate}
+  \item
+    If you are going to use PyQt-win-nc-3.6 (tested) or PyQt-win-edu-3.6
+    (untested), remove \emph{all} files belonging to other releases of sip
+    and PyQt and do a custom install to select the SIP tools.
+    In this case you can skip rebuilding of sip and PyQt.
+
+  \item
+    If you have installed PyQt\&sip-3.6-Commercial and did not delete the
+    build trees, you can \emph{probably} skip rebuilding of sip and PyQt.
+
+  \item
+    In all other cases, you have to rebuild sip and PyQt to make sure that
+    all necessary are present for the build of PyQwt.
+\end{enumerate}
+
+\begin{notice}[warning]
+  My initial build of PyQwt for PyQt-3.6 failed, because the installer did
+  not overwrite the files \file{C:/Python22/include/sip.h} and
+  \file{C:/Python22/include/sipQt.h} belonging to a previous PyQt
+  installation.
+\end{notice}
+
+
+\subsubsection{Windows build procedure for SIP and PyQt
+  \label{win-sip-pyqt-build}}
+
+\begin{notice}[note]
+The build procedures for the PyQt\&sip-Commercial and PyQt\&sip-Educational
+are very similar to the build procedure of PyQt\&sip-NonCommercial.
+Of course, you should have installed Qt-Commercial or Qt-Educational and you
+have to start from the appropiate zip files in the procedure below.
+\end{notice}
+
+The build procedure for sip and PyQt starting from
+\SipNcZip{} and \PyQtNcZip{} is:
+\begin{enumerate}
+  \item
+    Unzip \SipNcZip{} into for instance \file{C:/MyStuff}.
+    Read the \file{README} in the sip source tree and \file{win-sip.bat} batch
+    file in the PyQwt sources.
+    Use the batch file to install sip (the generated Makefile in the siplib
+    folder to install two necessary header files are buggy).
+  \item
+    Unzip \PyQtNcZip{} into for instance \file{C:/MyStuff}. 
+    Read the \file{README} in the PyQt source tree and the \file{win-pyqt.bat}
+    batch file in the PyQwt sources.
+    Use the batch file to install PyQt. It builds all of PyQt and does a
+    partial install: the documentation and examples are missing, but all the
+    necessary library and Python files are there!
+\end{enumerate}
+
+\begin{notice}[warning]
+  Do not run
+  \begin{verbatim}
+nmake install
+  \end{verbatim}
+  because it may delete the necessary export libraries.
+\end{notice}
+
+\begin{notice}[warning]
+  Most bug reports are related to he presence of
+  old executables (\file{sip.exe}),
+  old libraries (\file{libqt*.exp}, \file{libqt*.lib}, \file{lib.qt*.pyd},
+  \file{libsip.exp}, \file{libsip.lib}, \file{libsip.pyd}),
+  old header files (\file{sip.h}, \file{sipQt.h})
+  or old Python files (\file{qt*.py}, \file{qt*.pyc}).
+\end{notice}
+
+\begin{notice}[warning]
+  You may need to complete the file \file{win-pyqt.bat} to add Python wrapper
+  files that are not part of PyQt-win-nc-3.6.
+\end{notice}
+
+\begin{notice}[note]
+  PyQt's link step is long enough for a lunch.
+\end{notice}
+
+\begin{notice}[note]
+  To build \program{pyuic}, I have copied the source tree of
+  the \code{zlib} library to \file{C:/qt/src/3rdparty/zlib}, because
+  it is missing from \QtNcExe.
+\end{notice}
+
+\subsection{Build on Windows \label{win-build}}
+
+\begin{enumerate}
+\item
+  Unpack \PyQwtZip{} into for instance \file{C:/MyStuff} and run
+  \begin{verbatim}
+cd PyQwt-3.6
+  \end{verbatim}
+  {}
+\item
+  Edit the file \file{setup_cfg_nt} as explained in its comments.
+  \verbatiminput{setup_cfg_nt}
+  \strong{Initialize}{} \var{sip_file_dirs}{} \strong{correctly!}.
+\item
+  The commands
+  \begin{verbatim}
+python setup.py bdist
+  \end{verbatim}
+  or
+  \begin{verbatim}
+python setup.py bdist_wininst
+  \end{verbatim}
+  will make an installer in the sub-directory \file{dist}.
+\end{enumerate}
+
+\begin{notice}[note]
+  The PyQtDistutils rely on the environment variables \envvar{QTDIR},
+  \envvar{TMAKESPEC} for Qt-2.x and \envvar{QMAKESPEC} for Qt-3.x.
+\end{notice}
+
+\begin{notice}[note]
+  If you get a message:
+  \begin{verbatim}
+sip: Unable to find file "qtmod.sip"
+error: command '/usr/bin/sip' failed with exit status 1
+  \end{verbatim}
+  the initialization of \var{sip_file_dirs} is wrong.
+\end{notice}
+
+\begin{notice}[note]
+  If you are desperate, run:
+  \begin{verbatim}
+python setup.py build --force >log.txt
+  \end{verbatim}
+  and mail the file \file{log.txt} to \me.
+\end{notice}
+
+
+\chapter{PyQwt Module Reference \label{reference}}
+
+The reference should be used in conjunction with the
+\ulink{Qwt manual}{qwt/index.html}.
+Only the differences specific to the Python bindings are documented here.
+
+In this chapter, \emph{is not yet implemented} implies that the feature can
+be easily implemented if needed, \emph{is not implemented} implies that the
+feature is not easily implemented, and \emph{is not Pythonic} implies that
+the feature will not be implemented because it violates the Python philosophy
+(e.g. may use dangling pointers).
+
+If a class is described as being \emph{fully implemented} then all non-private
+member functions and all public class variables have been implemented.
+
+Undocumented classes have not yet been implemented or are still experimental.
+
+The classes in the Qwt library have quite a few protected attributes.
+They are not yet available in Python (as far as I know, sip wraps
+protected member function, but not protected attributes).
+I may try to implement protected attributes on demand.
+
+\begin{classdesc}{QwtArrowButton}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtAutoScale}{*args}
+
+  \begin{itemize}
+  
+    \item{adjust}. C++ declaration:
+      \begin{verbatim}
+void adjust(double minVal, double maxVal, int reset = 0);
+void adjust(double* x, int size, int reset = 0);
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+autoScale.adjust(minVal, maxVal, reset = 0)
+autoScale.adjust(x, reset = 0)
+    \end{verbatim}
+      The first form takes two floats and a boolean.
+      The second form takes a list, tuple or NumPy array of floats and a
+      boolean.
+
+  \end{itemize}
+\end{classdesc}
+
+\begin{classdesc}{QwtCompass}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtCompassMagnetNeedle}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtCompassRose}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtCompassScaleDraw}{*args}
+\emph{is fully implemented}. This class is experimental.
+\end{classdesc}
+
+\begin{classdesc}{QwtCompassSimpleRose}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtCompassWindArrow}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtCurve}{*args}
+
+  \begin{itemize}
+
+    \item{setData}. C++ declaration:
+      \begin{verbatim}
+void setData(double* x, double* y, int size)
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+curve.setData(x, y)
+      \end{verbatim}
+      \var{x} and \var{y} can be any combination of lists, tuples and Numeric
+      arrays of floats.
+      All sequences are internally truncated to the length of the shortest
+      sequence.
+
+    \item{setRawData}. C++ declaration:
+      \begin{verbatim}
+      void setRawData(double* x, double* y, int size)
+      \end{verbatim}
+      \code{setRawData} \emph{is not Pythonic}.
+
+    \item{verifyRange}. C++ declaration:
+      \begin{verbatim}
+      int verifyRange(int& i1, int& i2);
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+      length, first, last = curve.verifyRange(i1, i2)
+      \end{verbatim}
+
+  \end{itemize}
+\end{classdesc}
+
+\begin{classdesc}{QwtDial}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDialScaleDraw}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDialNeedle}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDialSimpleNeedle}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDiMap}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtDblRange}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{Qwt}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtGrid}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtKnob}{*args}
+\emph{is fully implemented}. See QwtSliderBase.
+\end{classdesc}
+
+\begin{classdesc}{QwtLegend}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtLegendItem}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtMarker}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPaintBuffer}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPainter}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlot}{*args}
+
+  \begin{itemize}
+
+    \item{print}. C++ declaration:
+      \begin{verbatim}
+void print(QPrinter &, const QwtPlotPrintFilter &);
+void print(QPainter *, const QRect &, const QwtPlotPrintFilter &);
+      \end{verbatim}
+      \code{print} has been renamed to \code{printPlot} in Python.
+
+    \item{curveKeys}. C++ declaration:
+      \begin{verbatim}
+QArray<long> curveKeys() const;
+      \end{verbatim}
+      \code{curveKeys} returns a list containing the keys of all curves.
+
+    \item{closestCurve}. C++ declaration:
+      \begin{verbatim}
+long closestCurve(int xPos, int yPos, int& distance) const;
+long closestCurve(int xPos, int yPos, int& distance,
+                  double& xVal, double& yVal, int& index) const;
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+key, distance, xVal, yVal, index = plot.closestCurve(xPos, yPos)
+      \end{verbatim}
+
+    \item{setCurveData}. C++ declaration:
+      \begin{verbatim}
+bool setCurveData(long key, double *x, double *y, int size);
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+plot.setCurveData(key, x, y)
+      \end{verbatim}
+      \code{key} is an index to the curve and \code{x} and \code{y} are any
+      combination of lists, tuples or NumPy arrays of Python floats.
+      All sequences are internally truncated to the length of the shortest
+      sequence.
+
+    \item{setCurveRawData}. C++ declaration:
+      \begin{verbatim}
+bool setCurveRawData(long key, double* x, double* y, int size);
+      \end{verbatim}
+      \code{setCurveRawData} is not Pythonic.
+
+    \item{axisMargins}. C++ declaration:
+      \begin{verbatim}
+bool axisMargins(int axis, double& lowMargin, double& highMargin) const;
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+valid, lowMargin, highMargin = plot.axisMargins(axis)
+      \end{verbatim}
+      If the axis is valid, valid=1. If the axis is invalid, valid=0.
+
+    \item{axisLabelFormat}. C++ declaration:
+      \begin{verbatim}
+void axisLabelFormat(int axis, char& format, int& precision, int& width) const;
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+format, precision, width = plot.axisLabelFormat(axis)
+      \end{verbatim}
+
+    \item{closestMarker}. C++ declaration:
+      \begin{verbatim}
+long closestMarker(int xPos, int yPos, int& distance) const;
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+key, distance = plot.closestMarker(xPos, yPos)
+      \end{verbatim}
+      \code{closestMarker} takes the x- and y-coordinates of a point and
+      returns a tuple containing the key of the closest marker and the distance
+      between the closest marker and the point.
+
+    \item{markerKeys}. C++ declaration:
+      \begin{verbatim}
+QArray<long> markerKeys() const;
+      \end{verbatim}
+      \code{markerKeys} returns a list containing the keys of all markers.
+
+    \item{markerPos}. C++ declaration:
+      \begin{verbatim}
+void markerPos(long key, double& x, double& y) const;
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+x, y = plot.markerPos(key)
+      \end{verbatim}
+      \code{markerPos} takes the key of a marker and returns a tuple containing
+      the x- and y-coordinates.
+
+  \end{itemize}
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotCanvas}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotCurve}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotGrid}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotItem}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotLayout}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotMappedItem}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtPlotPrintFilter}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtRect}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtScale}{*args}
+{is fully implemented}.
+
+  \begin{itemize}
+
+    \item{labelFormat}. C++ declaration:
+      \begin{verbatim}
+void labelFormat(char& format, int& precision, int& width) const;
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+format, precision, width = scale.labelFormat()
+      \end{verbatim}
+
+    \item{minBorderDist}. C++ declaration:
+      \begin{verbatim}
+void minBorderDist(int& start, int& end) const;
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+start, end = scale.minBorderDist()
+      \end{verbatim}
+
+  \end{itemize}
+\end{classdesc}
+
+\begin{classdesc}{QwtScaleDiv}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtScaleDraw}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtScaleIf}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtSlider}{*args}
+\emph{is fully implemented}. See QwtSliderBase.
+\end{classdesc}
+
+\begin{classdesc}{QwtSliderBase}{*args}
+\emph{is fully implemented}.
+
+  \begin{itemize}
+
+    \item{getScrollMode}. C++ declaration:
+      \begin{verbatim}
+virtual void getScrollMode(const QPoint& point, int& mode, int& direction) = 0;
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+mode, direction = sliderBase.getScrollMode(point)
+      \end{verbatim}
+      See QwtKnob, QwtSlider and QwtWheel.
+
+  \end{itemize}
+\end{classdesc}
+
+\begin{classdesc}{QwtSpline}{*args}
+  
+  \begin{itemize}
+
+    \item{recalc}. C++ declaration:
+      \begin{verbatim}
+int recalc(double* x, double* y, int n, bool periodic = 0);
+      \end{verbatim}
+      Python usage:
+      \begin{verbatim}
+errorCode = spline.recalc(x, y, periodic)
+      \end{verbatim}
+      \var{x} and \var{y} are a sequence of floats and \var{periodic} is a
+      boolean.
+      The sequences can be a list, a tuple or a NumPy array and all sequences
+      are internally truncated to the length of the shortest sequence.
+
+    \item{copyValues}. C++ declaration:
+      \begin{verbatim}
+void copyValues(int enable = 1);
+      \end{verbatim}
+      copyValues is not Pythonic.
+
+  \end{itemize}
+\end{classdesc}
+ 
+\begin{classdesc}{QwtSymbol}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtThermo}{*args}
+\emph{is fully implemented}.
+\end{classdesc}
+
+\begin{classdesc}{QwtWheel}{*args}
+\emph{is fully implemented}. See QwtSliderBase.
+\end{classdesc}
+
+%begin{latexonly}
+\renewcommand{\indexname}{Index}
+%end{latexonly}
+\input{\jobname.ind}
+
+\end{document}

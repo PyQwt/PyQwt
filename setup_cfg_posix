@@ -1,0 +1,56 @@
+# Start of 'setup_cfg_posix'.
+# A line starting with '#' is a comment
+#
+[run_sip]
+# The 'run_sip' command transforms the sip/*.sip files into
+# *.cpp, *.h and *.py files.
+# It requires also the PyQt-*/sip/*.sip files that have been
+# used to build PyQt.
+# The option 'sip_file_dirs' indicate the command 'run_sip'
+# where to find the PyQt-*/sip/*.sip files.
+#
+# If you cannot find those files on your system, you have to
+# get the source code that has been used to build PyQt.
+# Get EXACTLY the same version!
+#
+# To determine which version of PyQt is installed, run
+# python -c 'import qt; print qt.PYQT_VERSION'
+# or
+# python -c 'import qt; print qt.PYQT_VERSION_STR'
+#
+# Handy TIP for an RPM based system:
+# Get the matching PyQt-*.src.rpm (Mandrake, Red Hat) or
+# PyQt-*.spm (SuSE) and run the command:
+#
+#       rpm2cpio PyQt-*.src.rpm | cpio --extract
+#
+# to extract all files from the RPM package, including the
+# sources for PyQt.
+#
+# I install PyQt's sip files in /usr/share/sip/qt. 
+sip_file_dirs=/usr/share/sip/qt
+# To use the PyQt*-3.6 sources next to PyQwt-3.6, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.6/sip
+# To use the PyQt*-3.5 sources next to PyQwt-3.6, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.5/sip
+# To use the PyQt*-3.4 sources next to PyQwt-3.6, uncomment:
+#sip_file_dirs=../PyQt-x11-gpl-3.4/sip
+#
+# To speed up compilation, concatenate the *.cpp files made by sip.
+# The option 'concatenate' indicates the 'run_sip' command whether
+# to concatenate or not.
+concatenate=0
+#concatenate=1
+#
+# IMHO, using http://ccache.samba.org is better than concatenating.
+#
+#
+[install]
+# The option 'install-data' indicates the command 'install'
+# where to install the documentation and examples.
+# I want it in /usr/share/doc/PyQwt-3.6
+install_data=/usr/share/doc/PyQwt-3.6
+# If you prefer another directory, uncomment and edit: 
+#install_data=/2000/light/years/from/home
+#
+# End of 'setup_cfg_posix'.

@@ -1,0 +1,39 @@
+Dear Windows Programmer/User,
+
+I am a Linux fanatic and do not use PyQwt on Windows for any real work.
+
+Q: So, why has PyQwt been ported to Windows?
+A: There are several answers: 
+   (1) it is fun.
+   (2) to show off (using Win4Lin to run Windows-98 under Linux).
+   (3) to increase the user base of PyQwt. You know, Linux users strive for
+       world domination, believing they can make a better world :-)
+   (4) to improve PyQwt: portable software gets more testing meaning less bugs.
+
+Q: How long will I continue maintaining PyQwt for Windows?
+A: As long as it is fun and do not loose money on it, meaning:
+   (1) receive lots of feedback.
+   (2) as long as non-commercial versions for Qt and PyQt are available.
+
+Of course, I'll accept being sponsored :-)
+
+Q: Can you make money with it?
+A: No and yes.
+   
+   The Qt Non Commercial license version 1.0 (see LICENSE) forbids you to
+   make money with the non-commercial Windows version of PyQwt.
+   
+   But, if you buy licenses for Qt and PyQt, you can rebuild PyQwt for use
+   in a commercial product. In this case, you are free to modify the code
+   of PyQwt as long as you respect the copyright and the freedom of your
+   users as required by the GNU Public License (see COPYING). 
+
+   I will appreciate, if you let me know that PyQwt is being used in
+   a commercial product and if you let me know your modifications, but
+   you are not obliged to do so.
+   
+   However, the GNU Public License implies that you should distribute PyQwt
+   separately, so that your users know that they are using free software.
+   
+
+Best regards -- Gerard Vermeulen

@@ -1,0 +1,32 @@
+Building a snapshot of PyQwt requires a compatible snapshot of Qwt.
+
+-------------------------------------------------------------------------------
+
+The first step is to checkout or update PyQwt:
+
+cvs -d:pserver:anonymous@cvs.pyqwt.sourceforge.net:/cvsroot/pyqwt checkout \
+        pyqwt
+
+or
+
+cvs -d:pserver:anonymous@cvs.pyqwt.sourceforge.net:/cvsroot/pyqwt -d update \
+        pyqwt
+
+-------------------------------------------------------------------------------
+
+The second step is to get a compatible version of Qwt. The Makefile in the
+working copy PyQwt 'knows' how to checkout or update Qwt to a compatible
+version:
+
+make qwt-sources
+
+This command creates or updates a working copy in tmp/qwt.  The working
+copy is used to create a patched version of Qwt in qwt-sources.
+
+-------------------------------------------------------------------------------
+
+WARNING: sometimes the cvs server for anonymous users is running from a
+backup server.  This may lead to build errors when the working copies
+of PyQwt and Qwt do not match.
+
+Good luck -- Gerard Vermeulen

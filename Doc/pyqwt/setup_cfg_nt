@@ -1,0 +1,21 @@
+# Start of 'setup_cfg_nt'.
+# A line starting with '#' is a comment.
+#
+[run_sip]
+# The 'run_sip' command transforms the sip/*.sip files into
+# *.cpp, *.h and *.py files.
+# It requires also the PyQt-*/sip/*.sip files that have been
+# used to build PyQt.
+# The option 'sip_file_dirs' indicate the command 'run_sip'
+# where to find the PyQt-*/sip/*.sip files.
+#
+# If you cannot find those files on your system, see the
+# documentation: 'Prerequisites for Windows'.
+#
+# Running PyQt-win-*-3.6.exe and selecting the SIP tools
+# puts PyQt's sip files in *:\Python22\PyQt\sip
+sip_file_dirs=C:\Python22\PyQt\sip
+# If you have rebuilt PyQt from source, uncomment and edit:
+#sip_file_dirs=C:\MyStuff\PyQt-win-nc-3.6\sip
+#
+# End of 'setup_cfg_nt'.

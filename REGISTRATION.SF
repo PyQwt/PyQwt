@@ -1,0 +1,49 @@
+PyQwt is a set of Python bindings for the Qwt C++ class library.  The Qwt
+library extends the Qt framework with widgets for scientific and engineering
+applications.   It provides a widget to plot 2-dimensional data and various
+widgets to display and control bounded or unbounded floating point values.
+
+PyQwt requires and extends PyQt, a set of Python bindings for Qt.
+
+It is highly recommended to use PyQwt with either Numeric, numarray or both.
+Numeric and/or numarray extend the Python language with new data types that
+make Python an ideal language for numerical computing and experimentation like
+MatLab and IDL.
+
+PyQwt solves the problem of integrating PyQt, the Numerical Python extensions
+and SciPy (http://www.scipy.org) in a Python application or in an interactive
+Python session.  
+
+
+Other requested information:
+
+* software used to develop PyQwt
+  - Python (http://www.python.org)
+  - Qt (http://www.trolltech.com)
+  - Qwt (http://qwt.sourceforge.net)
+  - sip (http://www.riverbackcomputing.co.uk/sip)
+    sip is an interface generator for Python to wrap Qt based libraries.
+  - PyQt (http://www.riverbankcomputing.co.uk/pyqt)
+  - Numeric (http://www.numpy.org)
+  - numarray (http://www.stsci.edu/resources/software_hardware/numarray)
+  - C++ compiler
+
+* supported platforms
+  - Posix (Mac OS X is not yet supported due to limitations of sip)
+  - MS-Windows
+
+* features
+  - PyQwt wraps all widgets of Qwt.
+  - PyQwt interfaces the QwtPlot widget to the Numerical arrays of the
+    Python extensions Numeric and numarray.
+  - command line interpreter support for PyQt and PyQwt widgets.
+  - widgets to display 3-dimensional data (under development).
+
+* major obstacles
+  - none. PyQwt exists already for several years and is performing well.
+
+* information about any existing source code
+  - http://gerard.vermeulen.free.fr for information and screenshots
+  - http://gerard.vermeulen.free.fr/PyQwt-20030605.tar.gz is a snapshot for
+    a new release of PyQwt.
+

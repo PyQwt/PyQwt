@@ -1,0 +1,47 @@
+# MANIFEST template file to make a distribution tarball
+
+# Package stuff
+include	ANNOUNCEMENT-3.6.TXT
+include AUTHORS COPYING COPYING.PyQwt
+include INSTALL MANIFEST* README* REGISTRATION.SF THANKS
+include DIFFER PATCHER patches.py
+include Makefile
+include setup_cfg_nt setup_cfg_posix
+include win-pyqt.bat win-sip.bat
+
+exclude setup.cfg
+
+# PyQtDistutils
+graft pyqt_distutils
+
+# Examples
+graft examples
+recursive-exclude examples *.html *.png *.pyc
+recursive-exclude examples/iqt
+recursive-exclude examples/qwt
+
+# Junk
+recursive-include junk *.py
+
+# Numerical Python interface
+graft numpy
+
+# sip files
+graft sip
+
+# qwt package
+graft qwt
+recursive-exclude qwt __init__.py
+
+# iqt package
+graft iqt
+
+# Qwt stuff
+graft qwt-sources
+
+# Documentation
+graft Doc
+
+# Local Variables: ***
+# mode: sh ***
+# End: ***

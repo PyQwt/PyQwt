@@ -1,0 +1,14 @@
+Mark Colclough		<m.s.colclough@bham.ac.uk>
+
+Mark is author of PyQwt-0.10.1, a set of Python bindings for PyQt/sip-0.10.1, 
+to be found at http://www.cm.ph.bham.ac.uk/software/pyqt.
+He is responsible for the magic of QwtSliderBase.getScrollMode() and the
+subclasses QwtKnob, QwtSlider and QwtWheel.  Does he understand it?
+
+Gerard Vermeulen	<gvermeul@grenoble.cnrs.fr>
+
+Gerard has written a few C++ programs using Qt-1.44 and Qwt-0.2.0, regretting
+his Python interpreter with the Numeric extensions.  He discovered PyQt-2.2,
+wanted a PyQwt to plot NumPy arrays, started coding, got stuck and searched
+the PyKDE mailing list.  Mark's original PyQwt bindings and the source code of
+PyQt and sip have been invaluable sources of information to him.

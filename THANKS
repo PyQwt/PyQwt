@@ -1,0 +1,26 @@
+Thomas Malik
+- for posting his distutils scripts on the PyKDE mailing list
+
+John J. Lee
+- for testing the distutils scripts and his extensive bug report 
+- for reporting a bug in QwtPlot.enableLegend()
+
+Andreas Gerber
+- for finishing DataDemo.py and reporting a bug in QwtPlot.setCurveData()
+
+Hans-Peter Jansen
+- for reporting a printing bug in BodeDemo.py
+- for finishing CPUloadDemo.py
+- for CurveDemo3.py
+- for reporting bad looking behaviour of QwtCounter
+
+Peter Lipa
+- for triggering PyCute.py
+- for reporting a QwtPlotCanvas bug in Qwt-20020807 on Windows
+
+Serge Boiko
+- for histtool.py
+
+Giacomo Brussino
+- for trying it on Irix: quite a few bugs got exposed and quashed.
+

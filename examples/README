@@ -1,0 +1,26 @@
+Working examples:
+	BodeDemo.py
+	CPUloadDemo.py (Linux only)
+	CPUplot.py
+        CompassDemo.py
+	CurveDemo1.py
+	CurveDemo2.py
+	CurveDemo3.py
+	DataDemo.py
+        Grab.py (eventually in combination with PyCute)
+        ICompass.py (with iqt, maining a readline module)
+        LenaDemo.py
+	MapDemo.py
+	MemInfoDemo.py (Linux only)
+	MinPackDemo.py (requires SciPy)
+        MultiDemo.py (plots list, tuples, Numeric arrays and numarray arrays)
+        QwtImagePlotDemo.py
+	RadioDemo.py
+	SimpleDemo.py
+	SliderDemo.py
+        StackOrder.py
+	histtool.py
+
+For debugging reference counts:
+	RefCountDemo.py
+

@@ -1,0 +1,31 @@
+NOTES FOR QWT
+
+- TMAKE
+
+To make a Makefile for nmake on Windows:
+	tmake -t lib qwt.pro -o Makefile
+
+- DESIGN
+
+Splitting the current QwtPlotCanvas into a QwtCanvas and a QwtPlotCanvas
+has the advantage of making the mouse event handling available to other
+widgets than a QwtPlot.
+
+NOTES FOR SIP
+
+- DO NOT RETURN CONSTANT REFERENCES TO OBJECTS
+
+Changing a sip function definitions to return an object instead of a
+constant reference to an object suppresses g++'s "returning a reference
+to a temporary" warnings, eliminates Irix compiler errors and mysterious
+crashes on Windows.
+In conclusion, there is not always a 1 to 1 mapping between *.sip and *.h
+files with respect to member function return types:
+
+        const QPen &pen() const;
+
+may become
+
+        QPen pen() const;
+
+in some cases.
