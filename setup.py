@@ -42,6 +42,7 @@ sources = (glob.glob(os.path.join(qwtdir, 'src', '*.cpp')) +
            glob.glob(os.path.join('numpy', '*.cpp')))
 
 moc_sources = [
+    '%s/include/qwt_analog_clock.h' % qwtdir,
     '%s/include/qwt_compass.h' % qwtdir,
     '%s/include/qwt_counter.h' % qwtdir,
     '%s/include/qwt_dial.h' % qwtdir,
