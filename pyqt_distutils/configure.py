@@ -72,7 +72,7 @@ def get_config(name):
 
 class ConfigError(Exception):
     """
-    Failed to import sipconfig of pyqtconfig
+    Failed to import sipconfig and/or pyqtconfig
 
     You must install sip and PyQt with 'configure.py' instead of 'build.py'
     """
