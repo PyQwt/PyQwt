@@ -52,6 +52,15 @@ class build_ext(old_build_ext):
     def initialize_options(self):
         old_build_ext.initialize_options(self)
         self.ccache = 0
+
+    # initialize_options()
+    
+    def finalize_options(self):
+        # Distutils in Python up to 2.3 does not allow multiple libraries :-/
+        self.ensure_string_list('libraries')
+        old_build_ext.finalize_options(self)
+
+    # finalize options()
         
     def build_extensions(self):
 
@@ -62,17 +71,29 @@ class build_ext(old_build_ext):
                                          dry_run=self.dry_run,
                                          force=self.force)
 
-        # FIXME: what kind of policy? before or after customizing
-        if self.include_dirs is not None:
-            self.qt_compiler.set_include_dirs(self.include_dirs)
-        # FIXME: what about the other options?
-
         customize_qt_compiler(self.qt_compiler,
                               get_config('qt').get('make'),
                               get_config('qt').get('type'),
                               get_config('ccache').get('ccache_program'))
-
             
+        if self.include_dirs is not None:
+            self.qt_compiler.set_include_dirs(self.include_dirs)
+        if self.define is not None:
+            # 'define' option is a list of (name,value) tuples
+            for (name,value) in self.define:
+                self.qt_compiler.define_macro(name, value)
+        if self.undef is not None:
+            for macro in self.undef:
+                self.qt_compiler.undefine_macro(macro)
+        if self.libraries is not None:
+            self.qt_compiler.set_libraries(self.libraries)
+        if self.library_dirs is not None:
+            self.qt_compiler.set_library_dirs(self.library_dirs)
+        if self.rpath is not None:
+            self.qt_compiler.set_runtime_library_dirs(self.rpath)
+        if self.link_objects is not None:
+            self.qt_compiler.set_link_objects(self.link_objects)
+
         for ext in self.extensions:
             if 'qt' in ext.config_jobs:
                 self.build_pyqt_extension(ext)
