@@ -1,6 +1,6 @@
 // The SIP interface definition for QwtPlotPrintFilter.h.
 //
-// Copyright (C) 2001-2003 Gerard Vermeulen
+// Copyright (C) 2001-2004 Gerard Vermeulen
 // Copyright (C) 2000 Mark Colclough
 //
 // This file is part of PyQwt.
@@ -42,8 +42,9 @@ public:
         PrintTitle = 2,
         PrintLegend = 4,
         PrintGrid = 8,
-        PrintBackground = 16,
-        PrintAll = ~0
+        PrintCanvasBackground = 16,
+        PrintWidgetBackground = 32,
+        PrintAll = ~PrintWidgetBackground,
     }; 
 
     enum Item {
@@ -57,7 +58,8 @@ public:
         MinorGrid,
         CanvasBackground,
         AxisScale,
-        AxisTitle
+        AxisTitle,
+        WidgetBackground,
     };
 
     QwtPlotPrintFilter();

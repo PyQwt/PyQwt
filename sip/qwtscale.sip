@@ -44,6 +44,7 @@ public:
 	Bottom,
     };
 
+    QwtScale(QWidget * /TransferThis/ = 0, const char * = 0);
     QwtScale(Position, QWidget * /TransferThis/, const char * = 0);
     virtual ~QwtScale();
     
