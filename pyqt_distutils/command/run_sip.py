@@ -91,10 +91,10 @@ class run_sip(Command):
         if self.sip_file_dirs:
             self.sip_file_dirs = self.sip_file_dirs.split(os.pathsep)
 
-        self.sip_t_tags = self.ensure_string_list('sip_t_tags')
+        self.ensure_string_list('sip_t_tags')
         self.sip_t_tags = self.sip_t_tags or []
- 
-        self.sip_x_features = self.ensure_string_list('sip_x_features')
+
+        self.ensure_string_list('sip_x_features')
         self.sip_x_features = self.sip_x_features or []
 
     # finalize_options()
