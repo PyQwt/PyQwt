@@ -161,7 +161,6 @@ protected:
 	return Py_BuildValue("(iii)", length, first, last);
     }
 %End
-    virtual void updateRangeCache();
 };
 
 // Local Variables:

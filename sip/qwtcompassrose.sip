@@ -89,9 +89,8 @@ public:
 		      int, double,
 		      QPalette::ColorGroup = QPalette::Active) const;
 
-    static void drawRose(QPainter *, const QPoint &,
-			 int, double, double, int, int, double,
-			 const QColor &, const QColor &);
+    static void drawRose(QPainter *, const QColorGroup &, const QPoint &,
+                         int, double, double, int, int, double);
 };
 
 // Local Variables:

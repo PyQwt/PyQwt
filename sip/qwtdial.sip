@@ -40,6 +40,9 @@ public:
     QwtDialScaleDraw(QwtDial * /TransferThis/);
     virtual QString label(double) const;
 
+    void showLabels(bool);
+    bool visibleLabels() const;
+
     void setPenWidth(uint);
     uint penWidth() const;
 };
@@ -51,11 +54,16 @@ class QwtDial: QwtSliderBase
 %End
 
 public:
-    enum Shadow
-    {
+    enum Shadow {
         Plain = QFrame::Plain,
         Raised = QFrame::Raised,
-        Sunken = QFrame::Sunken
+        Sunken = QFrame::Sunken,
+    };
+
+    enum ScaleOptions {
+        ScaleBackbone = 1,
+        ScaleTicks = 2,
+        ScaleLabel = 4
     };
 
     enum Mode {
@@ -92,6 +100,9 @@ public:
     void setScale(int, int, double = 0.0);
 
     void setScaleArc(double, double);
+    void setScaleOptions(int);
+    void setScaleTicks(int, int, int, int = 1);
+
     double minScaleArc() const;
     double maxScaleArc() const;
 
@@ -115,12 +126,13 @@ public:
 
     // setAutoDelete
 protected:
-    virtual void keyPressEvent(QKeyEvent *);
     virtual void paintEvent(QPaintEvent *);
     virtual void resizeEvent(QResizeEvent *);
+    virtual void keyPressEvent(QKeyEvent *);
 
     virtual void drawFrame(QPainter *);
     virtual void drawContents(QPainter *) const;
+    virtual void drawFocusIndicator(QPainter *) const;
 
     virtual void drawScale(QPainter *, const QPoint &,
 			   int, double, double, double) const;

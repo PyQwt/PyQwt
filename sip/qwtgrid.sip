@@ -29,12 +29,12 @@
 // for a non-free program.
 
 
+class QwtGrid
+{
 %HeaderCode
 #include <qwt_grid.h>
 %End
 
-class QwtGrid
-{
 public:
 %If (SIP_DUMB_DIR)
     void getLazyNames();

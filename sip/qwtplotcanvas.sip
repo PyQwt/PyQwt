@@ -66,7 +66,9 @@ protected:
 
     virtual void frameChanged();
     virtual void drawContents(QPainter *);
-    virtual void paintFocus(QPainter *, const QRect &);
+    virtual void drawFocusIndicator(QPainter *, const QRect &);
+
+    void drawCanvas(QPainter * = 0);
 
 %If (Qwt_COMPAT)
 public:

@@ -58,6 +58,8 @@ public:
     const QPalette &palette() const;
 protected:
     const QColorGroup &colorGroup(QPalette::ColorGroup) const;
+    static void drawKnob(QPainter *, const QPoint &,
+                         int, const QBrush &, bool);
 };
 
 class QwtDialSimpleNeedle: QwtDialNeedle
@@ -67,10 +69,9 @@ class QwtDialSimpleNeedle: QwtDialNeedle
 %End
 
 public:
-    enum Style
-    {
+    enum Style {
         Arrow,
-        Ray
+        Ray,
     };
 
 %If (SIP_DUMB_DIR)
@@ -88,13 +89,11 @@ public:
     virtual void draw(QPainter *, const QPoint &, int,
 		      double, QPalette::ColorGroup = QPalette::Active) const;
 
-    static void drawArrowNeedle(QPainter *, const QPoint &,
-				int, int, double, bool,
-				const QColor &, const QColor &);
+    static void drawArrowNeedle(QPainter *, const QColorGroup &,
+                                const QPoint &, int, int, double, bool);
     
-    static void drawRayNeedle(QPainter *, const QPoint &,
-			      int, int, double, bool,
-			      const QColor &, const QColor &);
+    static void drawRayNeedle(QPainter *, const QColorGroup &,
+                              const QPoint &, int, int, double, bool);
 
     void setWidth(int);
     int width() const;
@@ -107,10 +106,9 @@ class QwtCompassMagnetNeedle: QwtDialNeedle
 %End
 
 public:
-    enum Style
-    {
+    enum Style {
         TriangleStyle,
-        ThinStyle
+        ThinStyle,
     };
 
 %If (SIP_DUMB_DIR)
@@ -129,16 +127,14 @@ public:
     virtual void draw(QPainter *, const QPoint &, int, double,
 		      QPalette::ColorGroup = QPalette::Active) const;
 
-    static void drawTriangleNeedle(QPainter *, const QPoint &,
-				   int, double,
-				   const QColor &, const QColor &);
+    static void drawTriangleNeedle(QPainter *, const QColorGroup &,
+                                   const QPoint &, int, double);
 
-    static void drawThinNeedle(QPainter *, const QPoint &,
-			       int, double,
-			       const QColor &, const QColor &, const QColor &);
+    static void drawThinNeedle(QPainter *, const QColorGroup &,
+                               const QPoint &, int, double);
 
 protected:
-    static void drawPointer(QPainter *, const QColor &,
+    static void drawPointer(QPainter *, const QBrush &,
 			    int, const QPoint &,
 			    int, int, double);
 };
@@ -150,10 +146,9 @@ class QwtCompassWindArrow: QwtDialNeedle
 %End
 
 public:
-    enum Style
-    {
+    enum Style {
         Style1,
-        Style2
+        Style2,
     };
 
 %If (SIP_DUMB_DIR)
@@ -173,11 +168,11 @@ public:
 		      int, double,
 		      QPalette::ColorGroup = QPalette::Active) const;
 
-    static void drawStyle1Needle(QPainter *, const QPoint &,
-				 int, double, const QColor &, const QColor &);
+    static void drawStyle1Needle(QPainter *, const QColorGroup &,
+                                 const QPoint &, int, double);
 
-    static void drawStyle2Needle(QPainter *, const QPoint &,
-				 int, double, const QColor &, const QColor &);
+    static void drawStyle2Needle(QPainter *, const QColorGroup &,
+                                 const QPoint &, int, double);
 };
 
 // Local Variables:
