@@ -227,9 +227,10 @@ class BodeDemo(QMainWindow):
             QwtPlot.yLeft,
             QwtPicker.PointSelection | QwtPicker.DragSelection,
             QwtPlotPicker.CrossRubberBand,
-            QwtPicker.AlwaysOff,
+            QwtPicker.AlwaysOn,
             self.plot.canvas())
         self.picker.setRubberBandPen(QPen(Qt.green))
+        self.picker.setCursorLabelPen(QPen(Qt.yellow))
  
         self.setCentralWidget(self.plot)
 
