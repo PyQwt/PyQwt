@@ -77,7 +77,7 @@ public:
 %End
 %End
 
-    virtual ~QwtPickerMachine();
+    // virtual ~QwtPickerMachine();
 
     //! Transition
     virtual QValueList<QwtPickerMachine::Command> transition(

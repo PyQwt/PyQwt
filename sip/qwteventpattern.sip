@@ -109,7 +109,7 @@ public: // recalled, because sip seems to have lost its memory
 %End
 
     QwtEventPattern();
-    virtual ~QwtEventPattern();
+    // virtual ~QwtEventPattern();
 
     void initMousePattern(int);
     void initKeyPattern();

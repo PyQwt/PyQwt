@@ -56,7 +56,7 @@ public:
     QwtLegendItem();
     QwtLegendItem(const QwtSymbol &, const QPen &);
 
-    virtual ~QwtLegendItem();
+    // virtual ~QwtLegendItem();
 
     void setIdentifierMode(int);
     int identifierMode() const;

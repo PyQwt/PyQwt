@@ -69,8 +69,10 @@ public:
     const QwtDoublePoint operator*(double) const;
     const QwtDoublePoint operator/(double) const;
 
+%If (SIP_ALL_OPERATORS)
     QwtDoublePoint &operator+=(const QwtDoublePoint &);
     QwtDoublePoint &operator-=(const QwtDoublePoint &);
+%End
     QwtDoublePoint &operator*=(double);
     QwtDoublePoint &operator/=(double);
 
@@ -121,8 +123,10 @@ public:
     const QwtDoubleSize operator*(double) const;
     const QwtDoubleSize operator/(double) const;
 
+%If (SIP_ALL_OPERATORS)
     QwtDoubleSize &operator+=(const QwtDoubleSize &);
     QwtDoubleSize &operator-=(const QwtDoubleSize &);
+%End
     QwtDoubleSize &operator*=(double);
     QwtDoubleSize &operator/=(double);
 };
@@ -189,8 +193,11 @@ public:
 
     QwtDoubleRect  operator|(const QwtDoubleRect &) const;
     QwtDoubleRect  operator&(const QwtDoubleRect &) const;
+%If (SIP_ALL_OPERATORS)
     QwtDoubleRect &operator|=(const QwtDoubleRect &);
     QwtDoubleRect &operator&=(const QwtDoubleRect &);
+%End
+
     bool operator==( const QwtDoubleRect &) const;
     bool operator!=( const QwtDoubleRect &) const;
 

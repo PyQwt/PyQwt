@@ -88,7 +88,7 @@ public:
 
     QwtPicker(QWidget * = 0, const char * = 0);
     QwtPicker(int, RubberBand,DisplayMode, QWidget *, const char * = 0);
-    virtual ~QwtPicker();
+    // virtual ~QwtPicker();
 
     virtual void setSelectionFlags(int);
     int selectionFlags() const;

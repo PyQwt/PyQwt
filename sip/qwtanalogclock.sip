@@ -53,7 +53,7 @@ public:
 %End
 
     QwtAnalogClock(QWidget * /TransferThis/ = 0, const char* = 0);
-    virtual ~QwtAnalogClock();
+    // virtual ~QwtAnalogClock();
 
     virtual void setHand(Hand, QwtDialNeedle * /Transfer/);
     // dead code: const QwtDialNeedle *hand(Hand) const;
