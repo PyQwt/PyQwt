@@ -106,7 +106,7 @@ class BodePlot(QwtPlot):
         fn = 'luxy sans [b&h]' # ??
         fn = 'arial'           # ??
         fn = 'verdana'         # works best
-        self.setTitle('Frequency Response a 2<sup>nd</sub>-order System')
+        self.setTitle('Frequency Response of a 2<sup>nd</sup>-order System')
         self.setTitleFont(QFont(fn, 16, QFont.Bold))
         
         self.setCanvasBackground(Qt.darkBlue)
@@ -152,26 +152,30 @@ class BodePlot(QwtPlot):
         self.mrk1 = self.insertMarker()
         self.setMarkerLineStyle(self.mrk1, QwtMarker.VLine)
         self.setMarkerPos(self.mrk1, 0.0, 0.0)
+        self.setMarkerLinePen(self.mrk1, QPen(Qt.green, 2, Qt.DashDotLine))
         self.setMarkerLabelAlign(self.mrk1, Qt.AlignRight | Qt.AlignBottom)
-        self.setMarkerPen(self.mrk1, QPen(Qt.green, 2, Qt.DashDotLine))
-        self.setMarkerFont(self.mrk1, QFont(fn, 12, QFont.Bold))
+        self.setMarkerLabel(self.mrk1, '', QFont(fn, 12, QFont.Bold),
+                            Qt.green, QPen(Qt.NoPen), QBrush(Qt.red))
 
         self.mrk2 = self.insertLineMarker('', QwtPlot.yLeft)
+        self.setMarkerLinePen(self.mrk2, QPen(Qt.red, 2, Qt.DashDotLine))
         self.setMarkerLabelAlign(self.mrk2, Qt.AlignRight | Qt.AlignBottom)
-        self.setMarkerPen(self.mrk2, QPen(QColor(Qt.red), 2, Qt.DashDotLine))
-        self.setMarkerFont(self.mrk2, QFont(fn, 12, QFont.Bold))
+        self.setMarkerLabel(self.mrk2, '', QFont(fn, 12, QFont.Bold),
+                            Qt.red, QPen(Qt.NoPen),
+                            QBrush(self.canvasBackground()))
         self.setMarkerSymbol(self.mrk2, QwtSymbol(
             QwtSymbol.Diamond, QBrush(Qt.yellow), QPen(Qt.green), QSize(7,7)))
 
         # text marker
-        m = self.insertMarker(QString(
-            u'[1-(\u03c9/\u03c9<sub>0</sub>)<sup>2</sup>+2j\u03c9/Q]'
-            '<sup>-1</sup>'))
+        m = self.insertMarker()
         self.setMarkerPos(m, 0.1, -20.0)
         self.setMarkerLabelAlign(m, Qt.AlignRight | Qt.AlignBottom)
-        self.setMarkerFont(m, QFont(fn, 12, QFont.Bold, False))
-        self.setMarkerPen(m, QPen(Qt.blue))
-        
+        self.setMarkerLabel(
+            m,
+            QString(u'[1-(\u03c9/\u03c9<sub>0</sub>)<sup>2</sup>+2j\u03c9/Q]'
+                    '<sup>-1</sup>'),
+            QFont(fn, 12, QFont.Bold, False),
+            Qt.blue, QPen(Qt.red, 2), QBrush(Qt.yellow))
         self.setDamp(0.01)
             
 
@@ -188,10 +192,10 @@ class BodePlot(QwtPlot):
         i3 = argmax(where(less(a, -3.0), a, -100.0))
         f3 = f[i3] - (a[i3]+3.0)*(f[i3]-f[i3-1])/(a[i3]-a[i3-1])
         self.setMarkerPos(self.mrk1, f3, 0.0)
-        self.setMarkerLabel(self.mrk1, '-3 dB at f = %4g' % f3)
+        self.setMarkerLabelText(self.mrk1, '-3 dB at f = %4g' % f3)
         imax = argmax(a)
         self.setMarkerPos(self.mrk2, f[imax], a[imax]);
-        self.setMarkerLabel(self.mrk2, 'Peak: %4g dB' % a[imax])
+        self.setMarkerLabelText(self.mrk2, 'Peak: %4g dB' % a[imax])
 
         self.replot()
 
@@ -232,7 +236,6 @@ class BodeDemo(QMainWindow):
         self.cntDamp.setRange(0.01, 5.0, 0.01)
         self.cntDamp.setValue(0.01)
     
-        #self.toolBar(self.toolBar)
         self.statusBar()
 
         self.showInfo(cursorInfo)
@@ -253,15 +256,19 @@ class BodeDemo(QMainWindow):
 
     def printPlot(self):
         try:
-            p = QPrinter(QPrinter.HighResolution)
+            #printer = QPrinter()
+            #printer = QPrinter(QPrinter.ScreenResolution)
+            #printer = QPrinter(QPrinter.PrinterResolution)
+            printer = QPrinter(QPrinter.HighResolution)
+            #printer = QPrinter(QPrinter.Compatible)
         except AttributeError:
-            p = QPrinter()
-        p.setColorMode(QPrinter.Color)
-        p.setOutputToFile(True)
-        p.setOutputFileName('test.ps')
-        #p = QPrinter()
-        if p.setup():
-            self.plot.printPlot(p);
+            printer = QPrinter()
+        printer.setOrientation(QPrinter.Landscape)
+        printer.setColorMode(QPrinter.Color)
+        printer.setOutputToFile(True)
+        printer.setOutputFileName('test-%s.ps' % qVersion())
+        if printer.setup():
+            self.plot.printPlot(printer)
 
     def zoom(self, on):
         if on:
