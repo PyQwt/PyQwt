@@ -38,7 +38,7 @@ class QwtPlotGrid: QwtGrid, QwtPlotMappedItem
 
 public:
     QwtPlotGrid(QwtPlot * /TransferThis/);
-protected:
+
     virtual void gridChanged();
 };
 
