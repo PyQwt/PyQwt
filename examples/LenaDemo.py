@@ -15,7 +15,7 @@ class LenaPlot(QwtPlot):
         self.plotLayout().setCanvasMargin(0)
 	self.setTitle('A Background Demonstration')
         self.setAutoLegend(1)
-        self.setLegendPos(Qwt.Right)
+        self.setLegendPosition(QwtPlot.Right)
 	# set axis titles
 	self.setAxisTitle(QwtPlot.xBottom, 'x -->')
 	self.setAxisTitle(QwtPlot.yLeft, 'y -->')

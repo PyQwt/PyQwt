@@ -128,7 +128,7 @@ class QwtImagePlot(QwtPlot):
         self.plotLayout().setAlignCanvasToScales(1)
 	self.setTitle('QwtImagePlot: (un)zoom & (un)hide')
         self.setAutoLegend(1)
-        self.setLegendPos(Qwt.Right)
+        self.setLegendPosition(QwtPlot.Right)
 	# set axis titles
 	self.setAxisTitle(QwtPlot.xBottom, 'time (s)')
 	self.setAxisTitle(QwtPlot.yLeft, 'frequency (Hz)')

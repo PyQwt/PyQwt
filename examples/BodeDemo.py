@@ -142,7 +142,7 @@ class BodePlot(QwtPlot):
         # legend
         self.setAutoLegend(True)
         self.enableLegend(True)
-        self.setLegendPos(Qwt.Bottom)
+        self.setLegendPosition(QwtPlot.Bottom)
         self.setLegendFrameStyle(QFrame.Box | QFrame.Sunken)
 
         # grid 

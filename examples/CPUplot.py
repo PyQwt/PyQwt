@@ -313,7 +313,7 @@ class CpuPlot(QwtPlot):
         self.setCanvasBackground(Qt.darkGray)
         
         self.setAutoLegend(1)
-        self.setLegendPos(Qwt.Right)
+        self.setLegendPosition(QwtPlot.Right)
         
         self.setAxisTitle(QwtPlot.xBottom, "System Uptime [h:m:s]")
 

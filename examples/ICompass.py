@@ -8,7 +8,7 @@ class Compass(QwtCompass):
     def __init__(self, *args):
         QwtCompass.__init__(self, *args)
         self.setLineWidth(6)        
-        self.setFrameShadow(QFrame.Raised)
+        self.setFrameShadow(QwtDial.Raised)
         self.setRose(QwtSimpleCompassRose(8, 2))
         self.scaleDraw().setTickLength(0, 0, 3)
         self.setNeedle(QwtCompassMagnetNeedle(

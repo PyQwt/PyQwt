@@ -71,9 +71,9 @@ class CurveDemo(QFrame):
         for curve in self.curves:
             curve.setData(self.x, self.y)
         self.xMap = QwtDiMap()
-        self.xMap.setDblRange(-0.5, 10.5, 0.0)
+        self.xMap.setDblRange(-0.5, 10.5)
         self.yMap = QwtDiMap()
-        self.yMap.setDblRange(-1.1, 1.1, 0.0)
+        self.yMap.setDblRange(-1.1, 1.1)
 
 
     def drawContents(self, painter):

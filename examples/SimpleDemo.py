@@ -14,7 +14,7 @@ class SimplePlot(QwtPlot):
 	# make a QwtPlot widget
 	self.setTitle('A Simple PyQwt Plot Demonstration')
         self.setAutoLegend(1)
-        self.setLegendPos(Qwt.Right)
+        self.setLegendPosition(QwtPlot.Right)
 	# set axis titles
 	self.setAxisTitle(QwtPlot.xBottom, 'x -->')
 	self.setAxisTitle(QwtPlot.yLeft, 'y -->')

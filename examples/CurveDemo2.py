@@ -33,8 +33,8 @@ class CurveDemo(QFrame):
         curve.setSymbol(QwtSymbol(
             QwtSymbol.Cross, QBrush(), QPen(Qt.yellow, 2), QSize(7, 7)))
         self.tuples.append((curve,
-                            QwtDiMap(0, 100, -1.5, 1.5, False),
-                            QwtDiMap(0, 100, 0.0, 2*pi, False)))
+                            QwtDiMap(0, 100, -1.5, 1.5),
+                            QwtDiMap(0, 100, 0.0, 2*pi)))
         # curve 2
         curve = QwtCurve()
         curve.setPen(QPen(QColor(200, 150, 50), 1, Qt.DashDotDotLine))
@@ -42,24 +42,24 @@ class CurveDemo(QFrame):
         curve.setSymbol(QwtSymbol(
             QwtSymbol.Ellipse, QBrush(Qt.blue), QPen(Qt.yellow), QSize(5, 5)))
         self.tuples.append((curve,
-                            QwtDiMap(0, 100, 0.0, 2*pi, False),
-                            QwtDiMap(0, 100, -3.0, 1.1, False)))
+                            QwtDiMap(0, 100, 0.0, 2*pi),
+                            QwtDiMap(0, 100, -3.0, 1.1)))
         # curve 3
         curve = QwtCurve()
         curve.setPen(QPen(QColor(100, 200, 150)))
         curve.setStyle(
             QwtCurve.Spline, QwtCurve.Periodic | QwtCurve.Parametric)
         self.tuples.append((curve,
-                            QwtDiMap(0, 100, -1.1, 3.0, False),
-                            QwtDiMap(0, 100, -1.1, 3.0, False)))
+                            QwtDiMap(0, 100, -1.1, 3.0),
+                            QwtDiMap(0, 100, -1.1, 3.0)))
         # curve 4
         curve = QwtCurve()
         curve.setPen(QPen(Qt.red))
         curve.setStyle(QwtCurve.Spline)
         curve.setSplineSize(200)
         self.tuples.append((curve,
-                            QwtDiMap(0, 100, -5.0, 1.1, False),
-                            QwtDiMap(0, 100, -1.1, 5.0, False)))
+                            QwtDiMap(0, 100, -5.0, 1.1),
+                            QwtDiMap(0, 100, -1.1, 5.0)))
         # data
         self.phase = 0.0
         self.base = arrayrange(0.0, 2.01*pi, 2*pi/(USize-1))
