@@ -45,7 +45,7 @@ public:
     virtual QwtDoubleRect boundingRect() const;
 };
 
-class QwtDoublePointData
+class QwtDoublePointData: QwtData
 {
 %TypeHeaderCode
 #include <qwt_data.h>
@@ -59,6 +59,7 @@ public:
     virtual double y(size_t) const;
     virtual QwtDoubleRect boundingRect() const;
 };
+
 
 // Local Variables:
 // mode: C++
