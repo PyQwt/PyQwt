@@ -21,7 +21,7 @@ Main changes in PyQwt-3.8:
 2. PyQwt inherits from Qwt the support for Qt's rich text format in QwtPlot
    to display equations like E=mc<sup>2</sup>.
    Caveat: in principle, a truetype font with full unicode support is better
-   to typeset of equations.
+   to typeset equations.
 
 3. Bug fixes to support event filtering code (see EventFilterDemo.py). 
 
