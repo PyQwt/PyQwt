@@ -60,6 +60,7 @@
 %Include qwtdial.sip
 %Include qwtdialneedle.sip
 %Include qwtdimap.sip
+%Include qwtdoublerect.sip
 %Include qwtdyngridlayout.sip
 %Include qwtglobal.sip
 %Include qwtgrid.sip
@@ -72,6 +73,7 @@
 %Include qwtmarker.sip
 %Include qwtmarkerdict.sip
 %Include qwtmath.sip
+%Include qwtpicker.sip
 %Include qwtplot.sip
 %Include qwtplotcanvas.sip
 %Include qwtplotcurve.sip
@@ -79,6 +81,7 @@
 %Include qwtplotitem.sip
 %Include qwtplotlayout.sip
 %Include qwtplotmarker.sip
+%Include qwtplotzoom.sip
 %Include qwtpaintbuffer.sip
 %Include qwtpainter.sip
 %Include qwtplotprintfilter.sip
