@@ -33,7 +33,7 @@
 // part of PyQwt.
 
 
-class QwtLegendButton: QPushButton
+class QwtLegendButton: QwtPushButton
 {
 %HeaderCode
 #include <qwt_legend.h>
@@ -45,7 +45,8 @@ public:
     {
         NoIdentifier = 0,
         ShowLine = 1,
-        ShowSymbol = 2
+        ShowSymbol = 2,
+        ShowText = 4,
     };
 
 %If (SIP_DUMB_DIR)
@@ -57,7 +58,7 @@ public:
 %End
 %End
 
-    QwtLegendButton(QWidget * = 0, const char* = 0);
+    QwtLegendButton(QWidget * = 0, const char * = 0);
     QwtLegendButton(const QwtSymbol &, const QPen &, const QString &,
 		    QWidget * = 0, const char * = 0);
 
@@ -70,9 +71,6 @@ public:
     void setCurvePen(const QPen &);
 
     virtual void drawContents(QPainter *, const QRect &) const;
-
-    virtual QSize sizeHint() const;
-    virtual QSize minimumSizeHint() const;
 
 protected:
     virtual void updateIconset();

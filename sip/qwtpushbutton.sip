@@ -1,6 +1,5 @@
-// The SIP interface definition for the Qwt module of PyQwt.
+// The SIP interface definition for QwtPushButton.
 //
-// Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
 //
 // This file is part of PyQwt.
@@ -34,68 +33,44 @@
 // part of PyQwt.
 
 
-%Module qwt
-
-%Include features.sip
-
-%Import qtmod.sip
-
+class QwtPushButton: QPushButton
+{
 %HeaderCode
-#include <qwt_python.h>
+#include <qwt_push_button.h>
 %End
 
-// Hack to improve rlcompleter support for PyQt&sip-3.6 and earlier
-%Include qwtgetlazynames.sip
+public:
+%If (SIP_DUMB_DIR)
+    void getLazyNames();
+%MemberCode
+    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
+	return getLazyNames(sipClassAttrTab_$C);
+    }
+%End
+%End
 
-// Normal include files
-%Include qwt.sip
-%Include qwtarrowbutton.sip
-%Include qwtautoscale.sip
-%Include qwtcompass.sip
-%Include qwtcompassrose.sip
-%Include qwtcounter.sip
-%Include qwtcurve.sip
-%Include qwtcurvedict.sip
-%Include qwtdblrange.sip
-%Include qwtdial.sip
-%Include qwtdialneedle.sip
-%Include qwtdimap.sip
-%Include qwtdyngridlayout.sip
-%Include qwtglobal.sip
-%Include qwtgrid.sip
-%Include qwtknob.sip
-%Include qwtlayoutmetrics.sip
-%Include qwtlegend.sip
-%Include qwtlegendbutton.sip
-%Include qwtmarker.sip
-%Include qwtmarkerdict.sip
-%Include qwtmath.sip
-%Include qwtplot.sip
-%Include qwtplotcanvas.sip
-%Include qwtplotcurve.sip
-%Include qwtplotgrid.sip
-%Include qwtplotitem.sip
-%Include qwtplotlayout.sip
-%Include qwtplotmarker.sip
-%Include qwtpaintbuffer.sip
-%Include qwtpainter.sip
-%Include qwtplotprintfilter.sip
-%Include qwtpushbutton.sip
-%Include qwtrect.sip
-%Include qwtscale.sip
-%Include qwtscalediv.sip
-%Include qwtscaledraw.sip
-%Include qwtscaleif.sip
-%Include qwtsliderbase.sip
-%Include qwtslider.sip
-%Include qwtspline.sip
-%Include qwtsymbol.sip
-%Include qwttext.sip
-%Include qwtthermo.sip
-%Include qwtwheel.sip
+    QwtPushButton(QWidget * = 0, const char * = 0);
+    QwtPushButton(const QString &, QWidget * = 0, const char * = 0);
+    QwtPushButton(const QIconSet &, const QString &,
+                  QWidget * = 0, const char * = 0);
 
-// Image support
-%Include qwtqimage.sip
+    TextFormat textFormat() const;
+    virtual void setTextFormat(TextFormat);
+
+    virtual TextFormat usedTextFormat() const;
+
+    int alignment() const;
+    virtual void setAlignment(int);
+
+    void setIndent(int);
+    int indent() const;
+
+    virtual QSize sizeHint() const;
+    virtual int heightForWidth(int) const;
+
+protected:
+    virtual void drawButtonLabel(QPainter *);
+};
 
 // Local Variables:
 // mode: C++

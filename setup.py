@@ -50,6 +50,7 @@ moc_sources = [
     '%s/include/qwt_legend.h' % qwtdir,
     '%s/include/qwt_plot.h' % qwtdir,
     '%s/include/qwt_plot_canvas.h' % qwtdir,
+    '%s/include/qwt_push_button.h' % qwtdir,
     '%s/include/qwt_scale.h' % qwtdir,
     '%s/include/qwt_sldbase.h' % qwtdir,
     '%s/include/qwt_slider.h' % qwtdir,
