@@ -359,6 +359,8 @@ class Plot(QwtPlot):
         if saveall:
             time.sleep(pause)
             g('saveall "%s"' % saveall)
+            time.sleep(pause)
+            g.kill()
             
     # gracePlot()
         
