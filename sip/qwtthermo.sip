@@ -48,17 +48,38 @@ public:
     QwtThermo(QWidget * /TransferThis/ = 0, const char * = 0);
 
     void setOrientation(Qt::Orientation, ScalePos);
+
+    void setScalePosition(ScalePos);
+    ScalePos scalePosition() const;
+
     void setBorderWidth(int);
+    int borderWidth() const;
+
     void setFillColor(const QColor &);
+    const QColor &fillColor() const;
+
     void setAlarmColor(const QColor &);
+    const QColor &alarmColor() const;
+
     void setAlarmLevel(double);
-    void setAlarmEnabled (int);
+    double alarmLevel() const;
+
+    void setAlarmEnabled(bool);
+    bool alarmEnabled() const;
+
     void setPipeWidth(int);
+    int pipeWidth() const;
+
+    void setMaxValue(double);
+    double maxValue() const;
+
+    void setMinValue(double);
+    double minValue() const;
+
+    double value() const;
+
     void setRange(double, double);
     void setMargin(int);
-    double maxValue();
-    double minValue();
-    double value();
 
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
