@@ -52,6 +52,19 @@
 \newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-4.0rc0.win32-py2.3.exe}
   {http://prdownloads.sourceforge.net/pyqwt/PyQwt\_Qt230-4.0rc0.win32-py2.3.exe?download}}
 
+\newcommand{\PrerequisitesEnd}{
+To exploit the full power of the QwtPlot widget, you should install at
+least one the Numerical Python extensions:
+\ulink{Numeric}{http://www.numpy.org}
+or its successor
+\ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
+I am using \NumericTarGz{} and \numarrayTarGz{}. 
+Versions of Numeric later than 21.0 are supported.
+Numarray is newer and therefore less stable than Numeric, so get the latest!
+
+The source package \PyQwtTarGz{} contains a 20040605 CVS snapshot
+of the \Qwt{} library with a few patches.
+}
 \newcommand{\Future}{
 \begin{notice}[warning]
 This documentation is for the future PyQwt-4.0 which is only available from
@@ -71,7 +84,7 @@ be inaccurate or obsolete.
 \end{notice}
 }
 \renewcommand{\NonCommercial}{}
-%\renewcommand{\Future}{}
+\renewcommand{\Future}{}
 
 \title{PyQwt Manual}
 
@@ -576,17 +589,7 @@ Build prerequisites for \PyQwtTarGz{} on \POSIX{} are:
   of the deprecated 'build.py' script.
 \end{notice}
 
-To exploit the full power of the QwtPlot widget, you should install at
-least one the Numerical Python extensions:
-\ulink{Numeric}{http://www.numpy.org}
-or its successor
-\ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
-I am using \NumericTarGz{} and \numarrayTarGz{}. 
-Versions of Numeric later than 21.0 are supported.
-Numarray is newer and therefore less stable than Numeric, so get the latest!
-
-The source package \PyQwtTarGz{} contains a version the \Qwt{} library based
-on Qwt-4.2.0rc1.
+\PrerequisitesEnd{}
 
 \subsection{Build prerequisites for PyQwt on Mac OS X}
 
@@ -618,17 +621,8 @@ Build prerequisites for \PyQwtTarGz{} on Mac OS X are:
   deprecated 'build.py' script.
 \end{notice}
 
-To exploit the full power of the QwtPlot widget, you should install at
-least one the Numerical Python extensions:
-\ulink{Numeric}{http://www.numpy.org}
-or its successor
-\ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
-I am using \NumericTarGz{} and \numarrayTarGz{}. 
-Versions of Numeric later than 21.0 are supported.
-Numarray is newer and therefore less stable than Numeric, so get the latest!
+\PrerequisitesEnd{}
 
-The source package \PyQwtTarGz{} contains a version the \Qwt{} library based
-on version 4.2.0rc2.
 
 \subsection{Build prerequisites for PyQwt on Windows}
 
@@ -665,17 +659,7 @@ Build prerequisites for \PyQwtTarGz{} on Windows are:
   deprecated 'build.py' script.
 \end{notice}
 
-To exploit the full power of the QwtPlot widget, you should install at
-least one the Numerical Python extensions:
-\ulink{Numeric}{http://www.numpy.org}
-or its successor
-\ulink{numarray}{http://www.stsci.edu/resources/software_hardware/numarray}.
-I recommend \NumericExe{} and/or \numarrayExe{}. 
-Versions of Numeric later than 21.0 are supported.
-Numarray is newer and therefore less stable than Numeric, so get the latest!
-
-The source package \PyQwtTarGz{} contains a version the \Qwt{} library based
-on version 4.2.0rc2.
+\PrerequisitesEnd{}
 
 \begin{notice}[warning]
   Most installation problems are related to the presence of
@@ -693,7 +677,7 @@ on version 4.2.0rc2.
 
 \begin{enumerate}
 \item
-  Unpack \PyQwtTarGz{} and read \ReadMePatches{} to check for patches.
+  Unpack \PyQwtTarGz{} and read this \ReadMePatches{} to check for patches.
 \item
   Configure PyQt by running the following commands:
   \begin{verbatim}
