@@ -213,7 +213,7 @@ public:
 %If (QWT_4_3_0 - )
     QwtAutoScaler *autoScaler(int);
     // dead code: const QwtAutoScaler *autoScaler(int) const;
-    void setAutoScaler(int, QwtAutoScaler *);
+    void setAutoScaler(int, QwtAutoScaler * /Transfer/);
 %End // (QWT_4_3_0 - )
 
     void setAxisAutoScale(int);
