@@ -8,17 +8,16 @@ include DIFFER PATCHER patches.py
 include Makefile
 include setup_cfg_nt setup_cfg_posix
 include win-pyqt.bat win-sip.bat
-include .cvsignore
 
 exclude setup.cfg
 
 # PyQtDistutils
 graft pyqt_distutils
-recursive-exclude pyqt_distutils *.pyc
+recursive-exclude pyqt_distutils *.pyc *cvsignore*
 
 # Examples
 graft examples
-recursive-exclude examples *.html *.png *.pyc
+recursive-exclude examples *.html *.png *.pyc *cvsignore*
 recursive-exclude examples/iqt *
 recursive-exclude examples/qwt *
 
@@ -33,18 +32,22 @@ graft sip
 
 # qwt package
 graft qwt
-recursive-exclude qwt __init__.py
+recursive-exclude qwt __init__.py *cvsignore*
 
 # iqt package
 graft iqt
+recursive-exclude iqt *cvsignore*
 
 # Qwt stuff
 graft qwt-sources
+prune qwt-sources/admin
 prune qwt-sources/doc/devel
+recursive-exclude qwt-sources *.LOG *cvsignore*
 
 # Documentation
 graft Doc
 prune Doc/html/htdoc
+recursive-exclude Doc *cvsignore*
 
 # Local Variables: ***
 # mode: sh ***
