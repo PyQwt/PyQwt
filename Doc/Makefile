@@ -2,6 +2,7 @@ FREE := $(HOME)/Free
 
 SOURCES := \
 	pyqwt/QwtArrayLongExample.txt \
+	pyqwt/configure.help \
 	pyqwt/copyright.tex \
 	pyqwt/numeric.example \
 	pyqwt/pyqwt.tex \
@@ -28,6 +29,9 @@ htdoc: doc $(SOURCES)
 	cp -pur html/pyqwt/* html/htdoc
 	python tools/sourceforge.py html/htdoc/*.html
 	date -u "+%Y-%m-%d %T" > htdoc
+
+pyqwt/configure.help: ../configure/configure.py
+	../configure/configure.py --help > pyqwt/configure.help
 
 free:
 	mkdir -p $(FREE)/html
