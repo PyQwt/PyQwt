@@ -5,22 +5,21 @@
 \newcommand{\Qwt}{\ulink{Qwt}{http://qwt.sourceforge.net}}
 
 % Source code
-\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.6.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/sip-x11-gpl-3.6.tar.gz}}
-\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.6.zip}{http://www.river-bank.demon.co.uk/download/PyQt/sip-win-nc-3.6.zip}}
-\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.6.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.6.tar.gz}}
-\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.6.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.6.zip.gz}}
+\newcommand{\SipGpl}{\ulink{sip-x11-gpl-3.7.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/sip-x11-gpl-3.7.tar.gz}}
+\newcommand{\SipNcZip}{\ulink{sip-win-nc-3.7.zip}{http://www.river-bank.demon.co.uk/download/PyQt/sip-win-nc-3.7.zip}}
+\newcommand{\PyQtGpl}{\ulink{PyQt-x11-gpl-3.7.tar.gz}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.7.tar.gz}}
+\newcommand{\PyQtNcZip}{\ulink{PyQt-win-nc-3.7.zip}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.7.zip.gz}}
 \newcommand{\snapshot}{\ulink{snapshot}{http://www.river-bank.demon.co.uk/download/snapshots}}
-\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.6.tar.gz}{http://gerard.vermeulen.free.fr/PQwt-3.6.tar.gz}}
+\newcommand{\PyQwtTarGz}{\ulink{PyQwt-3.7.tar.gz}{http://sourceforge.net/projects/pyqwt/PyQwt-3.7.tar.gz}}
 \newcommand{\PyQwtShot}{\ulink{PyQwt-snapshot}{http://gerard.vermeulen.free.fr/index.html\#snapshot}}
-\newcommand{\PyQwtZip}{\ulink{PyQwt-3.6.zip}{http://gerard.vermeulen.free.fr/PyQwt-3.6.zip}}
 
 % Installers for MS-Windows
-\newcommand{\PythonExe}{\ulink{Python-2.2.2.exe}{http://www.python.org/ftp/python/2.2.2/Python-2.2.2.exe}}
+\newcommand{\PythonExe}{\ulink{Python-2.2.3.exe}{http://www.python.org/ftp/python/2.2.2/Python-2.2.3.exe}}
 \newcommand{\NumericExe}{\ulink{Numeric-23.0.win32-py2.2.exe}{http://gerard.vermeulen.free.fr/support/Numeric-23.0.win32-py2.2.exe}}
 \newcommand{\QtNcExe}{\ulink{QtWin230-NonCommercial.exe}{ftp://ftp.trolltech.com/qt/non-commercial/QtWin230-NonCommercial.exe}}
-\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.6.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.6.exe}}
-\newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.6.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.6.exe}}
-\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.6.win32-py2.2.exe}{http://gerard.vermeulen.free.fr/PyQwt\_Qt230-3.6.win32-py2.2.exe}}
+\newcommand{\PyQtExe}{\ulink{PyQt-win-nc-3.7.exe}{http://www.river-bank.demon.co.uk/download/PyQt/PyQt-win-nc-3.7.exe}}
+\newcommand{\PyQtEduExe}{\ulink{PyQt-win-edu-msvc-3.7.exe}{http://www.riverbankcomputing.co.uk/download/PyQt-win-edu-msvc-3.7.exe}}
+\newcommand{\PyQwtExe}{\ulink{PyQwt\_Qt230-3.7.win32-py2.2.exe}{http://sourceforge.net/projects/pyqwt/PyQwt\_Qt230-3.7.win32-py2.2.exe}}
 
 \title{PyQwt Manual}
 
@@ -28,9 +27,9 @@
 \author{Gerard Vermeulen}
 
 \date{\today}
-\release{3.6}
+\release{3.7}
 %\setreleaseinfo{cvs}
-\setshortversion{3.6}
+\setshortversion{3.7}
 
 \makeindex
 
@@ -208,8 +207,7 @@ ipython ICompass.py
   \module{IPython.FlexCompleter}.
 
   Full support for the builtin function \function{dir()} is present in
-  the snapshots sip\&PyQt-x11-gpl-snapshot-20030531; in this case the
-  standard readline completers will work. 
+  sip-3.7; in this case the standard readline completers will work. 
 \end{notice}
 
 \begin{notice}[warning]
@@ -432,11 +430,11 @@ Recent versions of the following software should be installed on your system:
     I am using Qt-3.1.x, Qt-3.0.x, Qt-2.3.1 and Qt-2.3.0.
     Earlier versions of Qt are not supported.
   \item
-    \SipGpl{}, sip-x11-gpl-3.5.tar.gz, sip-x11-3.4.tar.gz or
-    at your own risk a \snapshot.
+    \SipGpl{}, sip-x11-gpl-3.6.tar.gz, sip-x11-gpl-3.5.tar.gz,
+    sip-x11-3.4.tar.gz or at your own risk a \snapshot.
   \item
-    \PyQtGpl{}, PyQt-x11-gpl-3.5.tar.gz, PyQt-x11-3.4.tar.gz or
-    at your own risk a \snapshot.
+    \PyQtGpl{}, PyQt-x11-gpl-3.6.tar.gz, PyQt-x11-gpl-3.5.tar.gz,
+    PyQt-x11-3.4.tar.gz or at your own risk a \snapshot.
 \end{enumerate}
 
 To exploit the full power of PyQwt's plot widget, you should install at
@@ -462,7 +460,7 @@ for snapshots).
 \item
   Unpack \PyQwtTarGz{} or \PyQwtShot{} and run
   \begin{verbatim}
-cd PyQwt-3.6
+cd PyQwt-3.7
   \end{verbatim}
   {}
 \item
@@ -553,7 +551,7 @@ python setup.py command --options
   \end{verbatim}
   For example, the command:
   \begin{verbatim}
-python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.6/sip build
+python setup.py run_sip --sip-file-dirs=../PyQt-x11-gpl-3.7/sip build
   \end{verbatim}
   tries to build the extension, overruling any initialization of
   \var{sip_file_dirs} in the configuration file.
@@ -589,13 +587,13 @@ You have to make sure that your installation of sip and PyQt allows you to
 build PyQwt:
 \begin{enumerate}
   \item
-    If you are going to use PyQt-win-nc-3.6 (tested) or PyQt-win-edu-3.6
+    If you are going to use PyQt-win-nc-3.7 (tested) or PyQt-win-edu-3.7
     (untested), remove \emph{all} files belonging to other releases of sip
     and PyQt and do a custom install to select the SIP tools.
     In this case you can skip rebuilding of sip and PyQt.
 
   \item
-    If you have installed PyQt\&sip-3.6-Commercial and did not delete the
+    If you have installed PyQt\&sip-3.7-Commercial and did not delete the
     build trees, you can \emph{probably} skip rebuilding of sip and PyQt.
 
   \item
@@ -615,10 +613,10 @@ build PyQwt:
   \label{win-sip-pyqt-build}}
 
 \begin{notice}[note]
-The build procedures for the PyQt\&sip-Commercial and PyQt\&sip-Educational
-are very similar to the build procedure of PyQt\&sip-NonCommercial.
-Of course, you should have installed Qt-Commercial or Qt-Educational and you
-have to start from the appropiate zip files in the procedure below.
+The build procedure for PyQt\&sip-Commercial is very similar to the build
+procedure for PyQt\&sip-NonCommercial.
+Of course, you should have installed Qt-Commercial and you have to start from
+the appropiate zip files in the procedure below.
 \end{notice}
 
 The build procedure for sip and PyQt starting from
@@ -658,7 +656,7 @@ nmake install
 
 \begin{notice}[warning]
   You may need to complete the file \file{win-pyqt.bat} to add Python wrapper
-  files that are not part of PyQt-win-nc-3.6.
+  files that are not part of PyQt-win-nc-3.7.
 \end{notice}
 
 \begin{notice}[note]
@@ -675,10 +673,10 @@ nmake install
 
 \begin{enumerate}
 \item
-  Unpack \PyQwtZip{} or \PyQwtShot{} into for instance \file{C:/MyStuff} and
+  Unpack \PyQwtTarGz{} or \PyQwtShot{} into for instance \file{C:/MyStuff} and
   run
   \begin{verbatim}
-cd PyQwt-3.6
+cd PyQwt-3.7
   \end{verbatim}
   {}
 \item
