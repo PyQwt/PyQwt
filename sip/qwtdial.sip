@@ -1,6 +1,7 @@
 // The SIP interface definition for QwtDial
 //
-// Copyright (C) 2003 Gerard Vermeulen
+// Copyright (C) 2000 Mark Colclough
+// Copyright (C) 2001-2003 Gerard Vermeulen
 //
 // This file is part of PyQwt.
 //
@@ -112,6 +113,10 @@ public:
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
 
+    virtual void setScaleDraw(QwtDialScaleDraw *);
+    QwtDialScaleDraw *scaleDraw();
+    // dead code: const QwtDialScaleDraw *scaleDraw() const;
+
     // setAutoDelete
 protected:
     virtual void keyPressEvent(QKeyEvent *);
@@ -127,10 +132,6 @@ protected:
 
     virtual void drawNeedle(QPainter *, const QPoint &,
 			    int, double, QPalette::ColorGroup) const;
-
-    virtual void setScaleDraw(QwtDialScaleDraw * /Transfer/);
-    QwtDialScaleDraw *scaleDraw();
-    // dead code: const QwtDialScaleDraw *scaleDraw();
 
     virtual QString scaleLabel(double) const;
     void updateScale();

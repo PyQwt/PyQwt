@@ -1,4 +1,4 @@
-// The SIP interface definition for the Qwt module of PyQwt.
+// The SIP interface definition for QwtAnalogClock.
 //
 // Copyright (C) 2000 Mark Colclough
 // Copyright (C) 2001-2003 Gerard Vermeulen
@@ -34,76 +34,48 @@
 // part of PyQwt.
 
 
-%Module qwt
-
-%Include features.sip
-
-%Import qtmod.sip
-
+class QwtAnalogClock: QwtDial
+{
 %HeaderCode
-#include <qwt_python.h>
+#include <qwt_analog_clock.h>
 %End
 
-// Hack to improve rlcompleter support for PyQt&sip-3.6 and earlier
-%Include qwtgetlazynames.sip
+public:
+    enum Hand {
+        SecondHand,
+        MinuteHand,
+        HourHand,
+        NHands,
+    };
+%If (SIP_DUMB_DIR)
+    void getLazyNames();
+%MemberCode
+    if (sipParseArgs(&sipArgsParsed, sipArgs, "")) {
+	return getLazyNames(sipClassAttrTab_$C);
+    }
+%End
+%End
 
-// Normal include files
-%Include qwt.sip
-%Include qwtanalogclock.sip
-%Include qwtarray.sip
-%Include qwtarrowbutton.sip
-%Include qwtautoscale.sip
-%Include qwtcompass.sip
-%Include qwtcompassrose.sip
-%Include qwtcounter.sip
-%Include qwtcurve.sip
-%Include qwtcurvedict.sip
-%Include qwtdblrange.sip
-%Include qwtdial.sip
-%Include qwtdialneedle.sip
-%Include qwtdimap.sip
-%Include qwtdoublerect.sip
-%Include qwtdyngridlayout.sip
-%Include qwtglobal.sip
-%Include qwtgrid.sip
-%Include qwtknob.sip
-%Include qwtlayoutmetrics.sip
-%Include qwtlegend.sip
-%Include qwtlegendbutton.sip
-%Include qwtlegenditem.sip
-%Include qwtlegendlabel.sip
-%Include qwtmarker.sip
-%Include qwtmarkerdict.sip
-%Include qwtmath.sip
-%Include qwtpicker.sip
-%Include qwtplot.sip
-%Include qwtplotcanvas.sip
-%Include qwtplotcurve.sip
-%Include qwtplotgrid.sip
-%Include qwtplotitem.sip
-%Include qwtplotlayout.sip
-%Include qwtplotmarker.sip
-%Include qwtplotpicker.sip
-%Include qwtplotzoomer.sip
-%Include qwtpaintbuffer.sip
-%Include qwtpainter.sip
-%Include qwtplotprintfilter.sip
-%Include qwtpushbutton.sip
-%Include qwtrect.sip
-%Include qwtscale.sip
-%Include qwtscalediv.sip
-%Include qwtscaledraw.sip
-%Include qwtscaleif.sip
-%Include qwtsliderbase.sip
-%Include qwtslider.sip
-%Include qwtspline.sip
-%Include qwtsymbol.sip
-%Include qwttext.sip
-%Include qwtthermo.sip
-%Include qwtwheel.sip
+    QwtAnalogClock(QWidget* = 0, const char* = 0);
+    virtual ~QwtAnalogClock();
 
-// Image support
-%Include qwtqimage.sip
+    virtual void setHand(Hand, QwtDialNeedle *);
+    // dead code: const QwtDialNeedle *hand(Hand) const;
+    QwtDialNeedle *hand(Hand);
+
+public slots:
+    void setCurrentTime();
+    void setTime(const QTime & = QTime::currentTime());
+
+protected:
+    virtual QString scaleLabel(double) const;
+
+    virtual void drawNeedle(QPainter *, const QPoint &,
+        int, double, QPalette::ColorGroup) const;
+
+    virtual void drawHand(QPainter *, Hand, const QPoint &,
+        int, double, QPalette::ColorGroup) const;
+};
 
 // Local Variables:
 // mode: C++
