@@ -37,6 +37,12 @@ class QwtPainter
 %End
 
 public:
+    enum TextXorRopMode {
+        textNormalMode = 0,
+        textFontSubstitutionMode = 1,
+        textPixmapBufferMode = 2,
+    };
+
     static void setMetricsMap(const QPaintDevice *, const QPaintDevice *);
     static void setMetricsMap(const QwtMetricsMap &);
     static void resetMetricsMap();
@@ -75,6 +81,9 @@ public:
                                const QColorGroup &, bool);
 
     static QPointArray clip(const QPointArray &);
+
+    static int textXorRopMode();
+    static int setTextXorRopMode(TextXorRopMode);
 };
 
 // Local Variables:
