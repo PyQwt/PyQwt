@@ -1,10 +1,22 @@
 # Start of 'setup_cfg_nt'.
 # A line starting with '#' is a comment.
 #
-# After installing sip-3.9&PyQt-3.9-Commercial with the 'configure.py', all
+# After installing sip & PyQt-Commercial >=3.10 with 'configure.py', almost all
 # configuration information can be obtained from sipconfig and pyqtconfig.
 #
-# So, this file can be empty.
+# FIXME: so, this file can be empty, if I have fixed this:
+#
+[run_sip]
+# Some %ConvertToSubClassCode handwritten code uses 'dynamic_cast<>()' which is
+# not supported by all compilers and/or compiler options.
+#
+# For win32-msvc and win32-msvc.net
+# If the -GR flag is not set, exclude the feature 'CXX_DYNAMIC_CAST'
+#
+# The option 'sip_x_features' indicates the 'run_sip' command whether to
+# disable a list of features (separated by ',').
+sip_x_features=CXX_DYNAMIC_CAST
+#sip_x_features=
 #
 # Local Variables: ***
 # mode: sh ***
